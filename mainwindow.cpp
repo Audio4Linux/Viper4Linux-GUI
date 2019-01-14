@@ -6,9 +6,16 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <map>
+#include <sstream>
+#include <stdexcept>
+#include <algorithm>
+#include "configlist.h"
+#include <ostream>
+#include <QMessageBox>
 
 using namespace std;
-
+std::map<std::string, std::string> options;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,16 +29,365 @@ MainWindow::MainWindow(QWidget *parent) :
     strcat(result,"/.config/viper4linux/audio.conf");
     ui->path->setText(result);
 
+    reloadConfig();
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
+    connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
+    connect(ui->reload, SIGNAL(clicked()), this, SLOT(reloadConfig()));
+
+        connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
+    connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(updatevbfreq()));
+      connect( ui->vbmode , SIGNAL(valueChanged(int)),this, SLOT(updatevbmode()));
+      connect( ui->difflvl , SIGNAL(valueChanged(int)),this, SLOT(updatedifflvl()));
+      connect( ui->vhplvl , SIGNAL(valueChanged(int)),this, SLOT(updatevhplvl()));
+      connect( ui->roomsize , SIGNAL(valueChanged(int)),this, SLOT(updateroomsize()));
+      connect( ui->roomwidth , SIGNAL(valueChanged(int)),this, SLOT(updateroomwidth()));
+      connect( ui->roomdamp , SIGNAL(valueChanged(int)),this, SLOT(updateroomdamp()));
+      connect( ui->wet , SIGNAL(valueChanged(int)),this, SLOT(updatewet()));
+      connect( ui->dry , SIGNAL(valueChanged(int)),this, SLOT(updatedry()));
+      connect( ui->colmwide , SIGNAL(valueChanged(int)),this, SLOT(updatecolmwide()));
+      connect( ui->colmmidimg , SIGNAL(valueChanged(int)),this, SLOT(updatecolmmidimg()));
+      connect( ui->colmdepth, SIGNAL(valueChanged(int)),this, SLOT(updatecolmdepth()));
+      connect( ui->vclvl, SIGNAL(valueChanged(int)),this, SLOT(updatevclvl()));
+      connect( ui->vcmode, SIGNAL(valueChanged(int)),this, SLOT(updatevcmode()));
+      connect( ui->gain , SIGNAL(valueChanged(int)),this, SLOT(updategain()));
+      connect( ui->maxgain , SIGNAL(valueChanged(int)),this, SLOT(updatemaxgain()));
+      connect( ui->maxvol , SIGNAL(valueChanged(int)),this, SLOT(updatemaxvol()));
+      connect( ui->limiter , SIGNAL(valueChanged(int)),this, SLOT(updatelimiter()));
+      connect( ui->outputpan , SIGNAL(valueChanged(int)),this, SLOT(updateoutputpan()));
+      connect( ui->outvolume , SIGNAL(valueChanged(int)),this, SLOT(updateoutvolume()));
+    connect(ui->vcurelvl, SIGNAL(valueChanged(int)),this, SLOT(updatevcurelvl()));
+    connect(ui->axmode, SIGNAL(valueChanged(int)),this, SLOT(updateaxmode()));
+    connect(ui->barkfreq, SIGNAL(valueChanged(int)),this, SLOT(updatebarkfreq()));
+    connect(ui->barkcon, SIGNAL(valueChanged(int)),this, SLOT(updatebarkcon()));
+    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(updatecomprelease()));
+    connect(ui->compgain, SIGNAL(valueChanged(int)),this, SLOT(updatecompgain()));
+    connect(ui->compwidth, SIGNAL(valueChanged(int)),this, SLOT(updatecompwidth()));
+    connect(ui->comp_ratio, SIGNAL(valueChanged(int)),this, SLOT(updatecomp_ratio()));
+    connect(ui->comp_thres, SIGNAL(valueChanged(int)),this, SLOT(updatecomp_thres()));
+    connect(ui->compattack, SIGNAL(valueChanged(int)),this, SLOT(updatecompattack()));
+    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(updatecomprelease()));
+    connect(ui->a_adapt, SIGNAL(valueChanged(int)),this, SLOT(updatea_adapt()));
+    connect(ui->a_crest, SIGNAL(valueChanged(int)),this, SLOT(updatea_crest()));
+    connect(ui->a_maxatk, SIGNAL(valueChanged(int)),this, SLOT(updatea_maxatk()));
+    connect(ui->a_maxrel, SIGNAL(valueChanged(int)),this, SLOT(updatea_maxrel()));
+    connect(ui->a_kneewidth, SIGNAL(valueChanged(int)),this, SLOT(updatea_kneewidth()));
+    connect(ui->eq1, SIGNAL(valueChanged(int)),this, SLOT(updateeq1()));
+    connect(ui->eq2, SIGNAL(valueChanged(int)),this, SLOT(updateeq2()));
+    connect(ui->eq3, SIGNAL(valueChanged(int)),this, SLOT(updateeq3()));
+    connect(ui->eq4, SIGNAL(valueChanged(int)),this, SLOT(updateeq4()));
+    connect(ui->eq5, SIGNAL(valueChanged(int)),this, SLOT(updateeq5()));
+    connect(ui->eq6, SIGNAL(valueChanged(int)),this, SLOT(updateeq6()));
+    connect(ui->eq7, SIGNAL(valueChanged(int)),this, SLOT(updateeq7()));
+    connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(updateeq8()));
+    connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(updateeq9()));
+    connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(updateeq10()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::loadConfig(string key,string value){
+    cout << key << " -> " << value << endl;
+    switch (resolveConfig(key)) {
+    case fx_enable: {
+        break;
+    }
+    case tube_enable: {
+        if(value=="true") ui->tubesim->setCheckState(Qt::CheckState::Checked);
+        else ui->tubesim->setChecked(false);
+        break;
+    }
+    case colm_enable: {
+        if(value=="true") ui->colm->setChecked(true);
+        else ui->colm->setChecked(false);
+        break;
+    }
+    case colm_widening: {
+        ui->colmwide->setValue(std::stoi(value));
+        break;
+    }
+    case colm_depth: {
+        ui->colmdepth->setValue(std::stoi(value));
+        break;
+    }
+    case colm_midimage: {
+        ui->colmmidimg->setValue(std::stoi(value));
+        break;
+    }
+    case vc_enable: {
+        if(value=="true") ui->clarity->setChecked(true);
+        else ui->clarity->setChecked(false);
+        break;
+    }
+    case vc_mode: {
+        ui->vcmode->setValue(std::stoi(value));
+        break;
+    }
+    case vc_level: {
+        ui->vclvl->setValue(std::stoi(value));
+        break;
+    }
+    case vb_enable: {
+        if(value=="true") ui->vb->setChecked(true);
+        else ui->vb->setChecked(false);
+        break;
+    }
+    case vb_mode: {
+        ui->vbmode->setValue(std::stoi(value));
+        break;
+    }
+    case vb_freq: {
+        ui->vbfreq->setValue(std::stoi(value));
+        break;
+    }
+    case vb_gain: {
+        ui->vbgain->setValue(std::stoi(value));
+        break;
+    }
+    case vhe_enable: {
+        if(value=="true") ui->vhp->setChecked(true);
+        else ui->vhp->setChecked(false);
+        break;
+    }
+    case vhe_level: {
+        ui->vhplvl->setValue(std::stoi(value));
+        break;
+    }
+    case ds_enable: {
+        if(value=="true") ui->diff->setChecked(true);
+        else ui->diff->setChecked(false);
+        break;
+    }
+    case ds_level: {
+        ui->difflvl->setValue(std::stoi(value));
+        break;
+    }
+    case reverb_enable: {
+        if(value=="true") ui->reverb->setChecked(true);
+        else ui->reverb->setChecked(false);
+        break;
+    }
+    case reverb_roomsize: {
+        ui->roomsize->setValue(std::stoi(value));
+        break;
+    }
+    case reverb_width: {
+        ui->roomwidth->setValue(std::stoi(value));
+        break;
+    }
+    case reverb_damp: {
+        ui->roomdamp->setValue(std::stoi(value));
+        break;
+    }
+    case reverb_wet: {
+        ui->wet->setValue(std::stoi(value));
+        break;
+    }
+    case reverb_dry: {
+        ui->dry->setValue(std::stoi(value));
+        break;
+    }
+    case agc_enable: {
+        if(value=="true") ui->agc->setChecked(true);
+        else ui->agc->setChecked(false);
+        break;
+    }
+    case agc_ratio: {
+        ui->gain->setValue(std::stoi(value));
+        break;
+    }
+    case agc_maxgain: {
+        ui->maxgain->setValue(std::stoi(value));
+        break;
+    }
+    case agc_volume: {
+        ui->maxvol->setValue(std::stoi(value));
+        break;
+    }
+    case lim_threshold: {
+        ui->limiter->setValue(std::stoi(value));
+        break;
+    }
+    case out_pan: {
+        ui->outputpan->setValue(std::stoi(value));
+        break;
+    }
+    case out_volume: {
+        ui->outvolume->setValue(std::stoi(value));
+        break;
+    }
+    case eq_enable: {
+        if(value=="true") ui->enable_eq->setChecked(true);
+        else ui->enable_eq->setChecked(false);
+        break;
+    }
+    case eq_band1: {
+        ui->eq1->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band2: {
+        ui->eq2->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band3: {
+        ui->eq3->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band4: {
+        ui->eq4->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band5: {
+        ui->eq5->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band6: {
+        ui->eq6->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band7: {
+        ui->eq7->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band8: {
+        ui->eq8->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band9: {
+        ui->eq9->setValue(std::stoi(value));
+        break;
+    }
+    case eq_band10: {
+        ui->eq10->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_enable: {
+        if(value=="true") ui->enable_comp->setChecked(true);
+        else ui->enable_comp->setChecked(false);
+        break;
+    }
+    case fetcomp_autogain: {
+        if(value=="false") ui->m_gain->setChecked(true);
+        else ui->m_gain->setChecked(false);
+        break;
+    }
+    case fetcomp_autoknee: {
+        if(value=="false") ui->m_width->setChecked(true);
+        else ui->m_width->setChecked(false);
+        break;
+    }
+    case fetcomp_autoattack: {
+        if(value=="false") ui->m_attack->setChecked(true);
+        else ui->m_attack->setChecked(false);
+        break;
+    }
+    case fetcomp_autorelease: {
+        if(value=="false") ui->m_release->setChecked(true);
+        else ui->m_release->setChecked(false);
+        break;
+    }
+    case fetcomp_noclip: {
+        if(value=="true") ui->noclip->setChecked(true);
+        else ui->noclip->setChecked(false);
+        break;
+    }
+    case fetcomp_threshold: {
+        ui->comp_thres->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_gain: {
+        ui->compgain->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_kneewidth: {
+        ui->compwidth->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_ratio: {
+        ui->comp_ratio->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_attack: {
+        ui->compattack->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_release: {
+        ui->comprelease->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_meta_adapt: {
+        ui->a_adapt->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_meta_crest: {
+        ui->a_crest->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_meta_maxattack: {
+        ui->a_maxatk->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_meta_maxrelease: {
+        ui->a_maxrel->setValue(std::stoi(value));
+        break;
+    }
+    case fetcomp_meta_kneemulti: {
+        ui->a_kneewidth->setValue(std::stoi(value));
+        break;
+    }
+    case cure_enable: {
+        if(value=="true") ui->vcure->setChecked(true);
+        else ui->vcure->setChecked(false);
+        break;
+    }
+    case cure_level: {
+        ui->vcurelvl->setValue(std::stoi(value));
+        break;
+    }
+    case ax_enable: {
+        if(value=="true") ui->ax->setChecked(true);
+        else ui->ax->setChecked(false);
+        break;
+    }
+    case ax_mode: {
+        ui->axmode->setValue(std::stoi(value));
+        break;
+    }
+    case vse_enable: {
+        if(value=="true") ui->vse->setChecked(true);
+        else ui->vse->setChecked(false);
+        break;
+    }
+    case vse_ref_bark: {
+        ui->barkfreq->setValue(std::stoi(value));
+        break;
+    }
+    case vse_bark_cons: {
+        ui->barkcon->setValue(std::stoi(value));
+        break;
+    }
+    case conv_enable: {
+        if(value=="true") ui->conv->setChecked(true);
+        else ui->conv->setChecked(false);
+        break;
+    }
+    case conv_cc_level: {
+        ui->convcc->setValue(std::stoi(value));
+        break;
+    }
+    case conv_ir_path: {
+        if(value.size() <= 2) break;
+        value = value.substr(1, value.size() - 2);
+        QString ir = QString::fromStdString(value);
+        ui->convpath->setText(ir);
+        break;
+    }
+    }
+}
+
 void MainWindow::ConfirmConf(){
-    cout << getEQ() << endl;
 
     QString qpath = ui->path->text();
     string path = qpath.toUtf8().constData();
@@ -43,8 +399,7 @@ void MainWindow::ConfirmConf(){
     config += getMaster();
     config += getEQ();
     config += getComp();
-    config += "#PLACEHOLDER\n";
-    config += "conv_enable=false\nconv_ir_path=\nconv_cc_level=0\nvse_enable=false\nvse_ref_bark=7600\nvse_bark_cons=10\ncure_enable=false\ncure_level=0\nax_enable=false\nax_mode=0\n";
+    config += getMisc();
 
     ofstream myfile(path);
     if (myfile.is_open())
@@ -58,6 +413,46 @@ void MainWindow::ConfirmConf(){
     system("pactl set-sink-mute 0 0");
 
 }
+void MainWindow::Reset(){
+    std::filebuf fb;
+    fb.open (ui->path->text().toUtf8().constData(),std::ios::out);
+    std::ostream os(&fb);
+    os << default_config;
+    fb.close();
+
+    cout << default_config << endl;
+    reloadConfig();
+    ConfirmConf();
+}
+void MainWindow::reloadConfig(){
+    cout << "Reloading..." << endl;
+    std::ifstream cFile(ui->path->text().toUtf8().constData());
+       if (cFile.is_open())
+       {
+           std::string line;
+           while(getline(cFile, line)){
+               line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
+                                    line.end());
+
+               if(line[0] == '#' || line.empty() || line == "") continue;
+               auto delimiterPos = line.find("=");
+               auto name = line.substr(0, delimiterPos);
+               auto value = line.substr(delimiterPos + 1);
+               loadConfig(name,value);
+           }
+           cFile.close();
+       }
+       else {
+           std::cerr << "Couldn't open config file for reading.\n";
+           QMessageBox msgBox;
+           msgBox.setText("Couldn't open config file for reading.");
+           msgBox.setInformativeText("Change the path to the audio.conf file in the bottom left corner.");
+           msgBox.setStandardButtons(QMessageBox::Ok);
+           msgBox.setDefaultButton(QMessageBox::Ok);
+           msgBox.setIcon(QMessageBox::Icon::Critical);
+           int ret = msgBox.exec();
+       }
+}
 void MainWindow::ResetEQ(){
     ui->eq1->setValue(0);
     ui->eq2->setValue(0);
@@ -70,6 +465,50 @@ void MainWindow::ResetEQ(){
     ui->eq8->setValue(0);
     ui->eq9->setValue(0);
     ui->eq10->setValue(0);
+}
+string MainWindow::getMisc(){
+    string out;
+    string n = "\n";
+
+    QString vcurelvl = QString::number(ui->vcurelvl->value());
+    QString axmode = QString::number(ui->axmode->value());
+
+    QString refbark = QString::number(ui->barkfreq->value());
+    QString conbark = QString::number(ui->barkcon->value());
+    QString convcc = QString::number(ui->comprelease->value());
+    QString convir = ui->convpath->text();
+
+    out += "cure_enable=";
+    if(ui->vcure->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "cure_level=";
+    out += vcurelvl.toUtf8().constData() + n;
+
+    out += "ax_enable=";
+    if(ui->ax->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "ax_mode=";
+    out += axmode.toUtf8().constData() + n;
+
+    out += "vse_enable=";
+    if(ui->vse->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "vse_ref_bark=";
+    out += refbark.toUtf8().constData() + n;
+    out += "vse_bark_cons=";
+    out += conbark.toUtf8().constData() + n;
+
+    out += "conv_enable=";
+    if(ui->conv->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "conv_cc_level=";
+    out += convcc.toUtf8().constData() + n;
+    out += "conv_ir_path=\"";
+    out += convir.toUtf8().constData();
+    out += "\"" + n;
+
+
+    return out;
 }
 string MainWindow::getComp() {
     string out;
@@ -295,6 +734,8 @@ string MainWindow::getMain() {
     out += colmwide + n;
     out += "colm_depth=";
     out += colmdepth + n;
+    out += "colm_midimage=";
+    out += colmdepth + n;
 
     //CLARITY
     out += "vc_enable=";
@@ -354,4 +795,194 @@ out += "out_volume=";
 out += out_volume + n;
 
 return out;
+}
+
+void MainWindow::updatevbfreq(){
+ui->info->setText(QString::number( ui->vbfreq->value() ));
+}
+
+void MainWindow::updatevbmode(){
+ui->info->setText(QString::number( ui->vbmode->value() ));
+}
+
+void MainWindow::updatedifflvl(){
+ui->info->setText(QString::number( ui->difflvl->value() ));
+}
+
+void MainWindow::updatevhplvl(){
+ui->info->setText(QString::number( ui->vhplvl->value() ));
+}
+
+void MainWindow::updateroomsize(){
+ui->info->setText(QString::number( ui->roomsize->value()));
+}
+
+void MainWindow::updateroomwidth(){
+ui->info->setText(QString::number( ui->roomwidth->value() ));
+}
+
+void MainWindow::updateroomdamp(){
+ui->info->setText(QString::number( ui->roomdamp->value() ));
+}
+
+void MainWindow::updatewet(){
+ui->info->setText(QString::number( ui->wet->value() ));
+}
+
+void MainWindow::updatedry(){
+ui->info->setText(QString::number( ui->dry->value() ));
+}
+
+void MainWindow::updatecolmwide(){
+ui->info->setText(QString::number( ui->colmwide->value()));
+}
+
+void MainWindow::updatecolmmidimg(){
+ui->info->setText(QString::number( ui->colmmidimg->value() ));
+}
+
+void MainWindow::updatecolmdepth(){
+ui->info->setText(QString::number( ui->colmdepth->value() ));
+}
+
+void MainWindow::updatevclvl(){
+ui->info->setText(QString::number( ui->vclvl->value() ));
+}
+
+void MainWindow::updatevcmode(){
+ui->info->setText(QString::number( ui->vcmode->value() ));
+}
+
+void MainWindow::updategain(){
+ui->info->setText(QString::number( ui->gain->value() ));
+}
+
+void MainWindow::updatemaxgain(){
+ui->info->setText(QString::number( ui->maxgain->value() ));
+}
+
+void MainWindow::updatemaxvol(){
+ui->info->setText(QString::number( ui->maxvol->value() ));
+}
+
+void MainWindow::updatelimiter(){
+ui->info->setText(QString::number( ui->limiter->value() ));
+}
+
+void MainWindow::updateoutputpan(){
+ui->info->setText(QString::number( ui->outputpan->value()));
+}
+
+void MainWindow::updateoutvolume(){
+ui->info->setText(QString::number( ui->outvolume->value() ));
+}
+
+void MainWindow::updatevcurelvl(){
+ui->info->setText(QString::number(ui->vcurelvl->value()));
+}
+
+void MainWindow::updateaxmode(){
+ui->info->setText(QString::number(ui->axmode->value()));
+}
+
+void MainWindow::updatebarkfreq(){
+ui->info->setText(QString::number(ui->barkfreq->value()));
+}
+
+void MainWindow::updatebarkcon(){
+ui->info->setText(QString::number(ui->barkcon->value()));
+}
+
+void MainWindow::updatecomprelease(){
+ui->info->setText(QString::number(ui->comprelease->value()));
+}
+
+void MainWindow::updatecompgain(){
+ui->info->setText(QString::number(ui->compgain->value()));
+}
+
+void MainWindow::updatecompwidth(){
+ui->info->setText(QString::number(ui->compwidth->value()));
+}
+
+void MainWindow::updatecomp_ratio(){
+ui->info->setText(QString::number(ui->comp_ratio->value()));
+}
+
+void MainWindow::updatecomp_thres(){
+ui->info->setText(QString::number(ui->comp_thres->value()));
+}
+
+void MainWindow::updatecompattack(){
+ui->info->setText(QString::number(ui->compattack->value()));
+}
+
+void MainWindow::updatea_adapt(){
+ui->info->setText(QString::number(ui->a_adapt->value()));
+}
+
+void MainWindow::updatea_crest(){
+ui->info->setText(QString::number(ui->a_crest->value()));
+}
+
+void MainWindow::updatea_maxatk(){
+ui->info->setText(QString::number(ui->a_maxatk->value()));
+}
+
+void MainWindow::updatea_maxrel(){
+ui->info->setText(QString::number(ui->a_maxrel->value()));
+}
+
+void MainWindow::updatea_kneewidth(){
+ui->info->setText(QString::number(ui->a_kneewidth->value()));
+}
+
+void MainWindow::updatecc(){
+ui->info->setText(QString::number(ui->convcc->value()));
+}
+
+void MainWindow::updateeq1(){
+ui->info->setText(QString::number(ui->eq1->value()));
+}
+
+void MainWindow::updateeq2(){
+ui->info->setText(QString::number(ui->eq2->value()));
+}
+
+void MainWindow::updateeq3(){
+ui->info->setText(QString::number(ui->eq3->value()));
+}
+
+void MainWindow::updateeq4(){
+ui->info->setText(QString::number(ui->eq4->value()));
+}
+
+void MainWindow::updateeq5(){
+ui->info->setText(QString::number(ui->eq5->value()));
+}
+
+void MainWindow::updateeq6(){
+ui->info->setText(QString::number(ui->eq6->value()));
+}
+
+void MainWindow::updateeq7(){
+ui->info->setText(QString::number(ui->eq7->value()));
+}
+
+void MainWindow::updateeq8(){
+ui->info->setText(QString::number(ui->eq8->value()));
+}
+
+void MainWindow::updateeq9(){
+ui->info->setText(QString::number(ui->eq9->value()));
+}
+
+void MainWindow::updateeq10(){
+ui->info->setText(QString::number(ui->eq10->value()));
+}
+
+
+constexpr unsigned int str2int(const char* str, int h = 0)
+{
+    return !str[h] ? 5381 : (str2int(str, h+1) * 33) ^ str[h];
 }

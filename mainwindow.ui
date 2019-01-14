@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -39,7 +39,7 @@
         <x>10</x>
         <y>10</y>
         <width>211</width>
-        <height>171</height>
+        <height>111</height>
        </rect>
       </property>
       <property name="title">
@@ -54,9 +54,9 @@
       <widget class="QSlider" name="vbfreq">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>191</width>
+         <x>110</x>
+         <y>80</y>
+         <width>91</width>
          <height>20</height>
         </rect>
        </property>
@@ -96,7 +96,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>34</y>
          <width>131</width>
          <height>16</height>
         </rect>
@@ -108,8 +108,8 @@
       <widget class="QSpinBox" name="vbmode">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>50</y>
+         <x>110</x>
+         <y>30</y>
          <width>41</width>
          <height>26</height>
         </rect>
@@ -121,11 +121,14 @@
       <widget class="QSlider" name="vbgain">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>140</y>
-         <width>191</width>
+         <x>110</x>
+         <y>60</y>
+         <width>91</width>
          <height>20</height>
         </rect>
+       </property>
+       <property name="toolTipDuration">
+        <number>2</number>
        </property>
        <property name="minimum">
         <number>0</number>
@@ -135,9 +138,6 @@
        </property>
        <property name="value">
         <number>0</number>
-       </property>
-       <property name="tracking">
-        <bool>true</bool>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -150,7 +150,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>120</y>
+         <y>60</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -166,7 +166,7 @@
         <x>230</x>
         <y>10</y>
         <width>211</width>
-        <height>131</height>
+        <height>91</height>
        </rect>
       </property>
       <property name="title">
@@ -181,9 +181,9 @@
       <widget class="QSlider" name="vclvl">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>171</width>
+         <x>100</x>
+         <y>60</y>
+         <width>101</width>
          <height>20</height>
         </rect>
        </property>
@@ -210,7 +210,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>80</y>
+         <y>60</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -223,7 +223,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>34</y>
          <width>131</width>
          <height>16</height>
         </rect>
@@ -235,8 +235,8 @@
       <widget class="QSpinBox" name="vcmode">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>50</y>
+         <x>100</x>
+         <y>30</y>
          <width>41</width>
          <height>26</height>
         </rect>
@@ -246,11 +246,71 @@
        </property>
       </widget>
      </widget>
+     <widget class="QGroupBox" name="vcure">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>110</y>
+        <width>211</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Viper Cure+</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <widget class="QSlider" name="vcurelvl">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>32</y>
+         <width>121</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>2</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="tracking">
+        <bool>true</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>32</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Level</string>
+       </property>
+      </widget>
+     </widget>
      <widget class="QCheckBox" name="tubesim">
       <property name="geometry">
        <rect>
-        <x>231</x>
-        <y>150</y>
+        <x>11</x>
+        <y>131</y>
         <width>181</width>
         <height>23</height>
        </rect>
@@ -1340,7 +1400,7 @@
        <string>Prevent Clipping</string>
       </property>
       <property name="checked">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -1643,7 +1703,7 @@
         <x>10</x>
         <y>10</y>
         <width>211</width>
-        <height>161</height>
+        <height>101</height>
        </rect>
       </property>
       <property name="title">
@@ -1658,9 +1718,9 @@
       <widget class="QSlider" name="colmwide">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>50</y>
-         <width>191</width>
+         <x>80</x>
+         <y>30</y>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -1700,7 +1760,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>50</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -1712,9 +1772,9 @@
       <widget class="QSlider" name="colmmidimg">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>90</y>
-         <width>191</width>
+         <x>80</x>
+         <y>50</y>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -1741,7 +1801,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>110</y>
+         <y>70</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -1753,9 +1813,9 @@
       <widget class="QSlider" name="colmdepth">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>130</y>
-         <width>191</width>
+         <x>80</x>
+         <y>70</y>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -1776,6 +1836,223 @@
        </property>
        <property name="invertedControls">
         <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="vse">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>10</y>
+        <width>211</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Spectrum Extend</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>32</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Ref. Bark Freq.</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="barkfreq">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>71</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>800</number>
+       </property>
+       <property name="maximum">
+        <number>20000</number>
+       </property>
+       <property name="value">
+        <number>7600</number>
+       </property>
+       <property name="tracking">
+        <bool>true</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_25">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>121</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bark Recontruct Lvl</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="barkcon">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>50</y>
+         <width>71</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>10</number>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>10</number>
+       </property>
+       <property name="tracking">
+        <bool>true</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="conv">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>90</y>
+        <width>211</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Convolver</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <widget class="QLabel" name="label_23">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>32</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>IR Response</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="convpath">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>30</y>
+         <width>111</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>/home/response.ir</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_26">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>65</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Cross-Channel</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="convcc">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>64</y>
+         <width>101</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="ax">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>211</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Analog X</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <widget class="QLabel" name="label_24">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>32</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Mode</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="axmode">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>27</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>2</number>
        </property>
       </widget>
      </widget>
@@ -1812,6 +2089,53 @@
     </property>
     <property name="placeholderText">
      <string>Path to V4L Configuration File</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="reset">
+    <property name="geometry">
+     <rect>
+      <x>319</x>
+      <y>240</y>
+      <width>61</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
+    </property>
+    <property name="icon">
+     <iconset theme="ok">
+      <normaloff>.</normaloff>.</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="reload">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>240</y>
+      <width>31</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../baseline-refresh-24px.svg</normaloff>../baseline-refresh-24px.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QLabel" name="info">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>242</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
