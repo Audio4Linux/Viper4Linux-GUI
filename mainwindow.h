@@ -14,7 +14,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    Ui::MainWindow *ui;
+    string getPath();
+    bool getAutoFx();
+    void setAutoFx(bool autofx);
+    bool getMuteOnRestart();
+    void setMuteOnRestart(bool on);
+    void setPath(string npath);
+    void loadAppConfig(bool once = false);
     string getMain();
     string getBass();
     string getSurround();
@@ -22,12 +29,16 @@ public:
     string getEQ();
     string getComp();
     string getMisc();
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
+    void Reset();
+    void Restart();
+    void reloadConfig();
+private slots:
     void ConfirmConf();
     void ResetEQ();
-    void Reset();
-    void reloadConfig();
+    void OpenSettings();
 
     void updatevbfreq();
     void updatevbmode();
@@ -76,9 +87,10 @@ public slots:
     void updateeq10();
     void updatecc();
 private:
-    Ui::MainWindow *ui;
-    constexpr unsigned int str2int(const char* str, int h = 0);
     void loadConfig(string key, string value);
+    void decodeAppConfig(string key, string value);
+    void OnUpdate();
+    void SaveAppConfig(bool, string,bool);
 };
 
 #endif // MAINWINDOW_H

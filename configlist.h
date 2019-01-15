@@ -73,6 +73,12 @@ enum Config {
     conv_ir_path,
     unknown
 };
+enum AppConfig {
+    configpath,
+    autoapply,
+    mutedRestart,
+    unknownApp
+};
 Config resolveConfig(std::string input) {
     if( input == "fx_enable" ) return fx_enable;
     if( input == "tube_enable" ) return tube_enable;
@@ -144,6 +150,13 @@ Config resolveConfig(std::string input) {
     if( input == "conv_ir_path" ) return conv_ir_path;
    return unknown;
 }
+AppConfig resolveAppConfig(std::string input) {
+    if( input == "configpath" ) return configpath;
+    if( input == "autoapply" ) return autoapply;
+    if( input == "muteOnRestart" ) return mutedRestart;
+   return unknownApp;
+}
 std::string default_config = "fx_enable=true\nconv_enable=false\nconv_ir_path=\nconv_cc_level=0\nvhe_enable=false\nvhe_level=0\nvse_enable=false\nvse_ref_bark=7600\nvse_bark_cons=10\neq_enable=false\neq_band1=0\neq_band2=0\neq_band3=0\neq_band4=0\neq_band5=0\neq_band6=0\neq_band7=0\neq_band8=0\neq_band9=0\neq_band10=0\ncolm_enable=false\ncolm_widening=100\ncolm_depth=0\nds_enable=false\nds_level=0\nreverb_enable=false\nreverb_roomsize=30\nreverb_width=40\nreverb_damp=10\nreverb_wet=20\nreverb_dry=80\nagc_enable=false\nagc_ratio=100\nagc_volume=100\nagc_maxgain=100\nvb_enable=false\nvb_mode=0\nvb_freq=76\nvb_gain=0\nvc_enable=false\nvc_mode=0\nvc_level=0\ncure_enable=false\ncure_level=0\ntube_enable=false\nax_enable=false\nax_mode=0\nfetcomp_enable=false\nfetcomp_threshold=0\nfetcomp_ratio=0\nfetcomp_kneewidth=0\nfetcomp_autoknee=true\nfetcomp_gain=0\nfetcomp_autogain=true\nfetcomp_attack=51\nfetcomp_autoattack=true\nfetcomp_release=38\nfetcomp_autorelease=true\nfetcomp_meta_kneemulti=50\nfetcomp_meta_maxattack=88\nfetcomp_meta_maxrelease=88\nfetcomp_meta_crest=61\nfetcomp_meta_adapt=66\nfetcomp_noclip=true\nout_volume=100\nout_pan=0\nlim_threshold=100";
+std::string default_appconfig = "path=\"\"\nautoapply=false\nmuteOnRestart=true";
 
 #endif // CONFIGLIST_H

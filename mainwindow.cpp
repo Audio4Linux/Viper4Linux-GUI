@@ -1,5 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "settings.h"
+#include "ui_settings.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -12,10 +14,16 @@
 #include <algorithm>
 #include "configlist.h"
 #include <ostream>
+#include <QApplication>
 #include <QMessageBox>
 
 using namespace std;
 std::map<std::string, std::string> options;
+string path;
+string appcpath;
+bool autofx;
+bool muteOnRestart;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -27,35 +35,42 @@ MainWindow::MainWindow(QWidget *parent) :
     char result[100];
     strcpy(result,homedir);
     strcat(result,"/.config/viper4linux/audio.conf");
-    ui->path->setText(result);
+    char result2[100];
+    strcpy(result2,homedir);
+    strcat(result2,"/.config/viper4linux/ui.conf");
+    path = result;
+    appcpath = result2;
 
+    loadAppConfig();
     reloadConfig();
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
+    connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
     connect(ui->reload, SIGNAL(clicked()), this, SLOT(reloadConfig()));
 
-        connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
+    connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
+    connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
     connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(updatevbfreq()));
-      connect( ui->vbmode , SIGNAL(valueChanged(int)),this, SLOT(updatevbmode()));
-      connect( ui->difflvl , SIGNAL(valueChanged(int)),this, SLOT(updatedifflvl()));
-      connect( ui->vhplvl , SIGNAL(valueChanged(int)),this, SLOT(updatevhplvl()));
-      connect( ui->roomsize , SIGNAL(valueChanged(int)),this, SLOT(updateroomsize()));
-      connect( ui->roomwidth , SIGNAL(valueChanged(int)),this, SLOT(updateroomwidth()));
-      connect( ui->roomdamp , SIGNAL(valueChanged(int)),this, SLOT(updateroomdamp()));
-      connect( ui->wet , SIGNAL(valueChanged(int)),this, SLOT(updatewet()));
-      connect( ui->dry , SIGNAL(valueChanged(int)),this, SLOT(updatedry()));
-      connect( ui->colmwide , SIGNAL(valueChanged(int)),this, SLOT(updatecolmwide()));
-      connect( ui->colmmidimg , SIGNAL(valueChanged(int)),this, SLOT(updatecolmmidimg()));
-      connect( ui->colmdepth, SIGNAL(valueChanged(int)),this, SLOT(updatecolmdepth()));
-      connect( ui->vclvl, SIGNAL(valueChanged(int)),this, SLOT(updatevclvl()));
-      connect( ui->vcmode, SIGNAL(valueChanged(int)),this, SLOT(updatevcmode()));
-      connect( ui->gain , SIGNAL(valueChanged(int)),this, SLOT(updategain()));
-      connect( ui->maxgain , SIGNAL(valueChanged(int)),this, SLOT(updatemaxgain()));
-      connect( ui->maxvol , SIGNAL(valueChanged(int)),this, SLOT(updatemaxvol()));
-      connect( ui->limiter , SIGNAL(valueChanged(int)),this, SLOT(updatelimiter()));
-      connect( ui->outputpan , SIGNAL(valueChanged(int)),this, SLOT(updateoutputpan()));
-      connect( ui->outvolume , SIGNAL(valueChanged(int)),this, SLOT(updateoutvolume()));
+    connect( ui->vbmode , SIGNAL(valueChanged(int)),this, SLOT(updatevbmode()));
+    connect( ui->difflvl , SIGNAL(valueChanged(int)),this, SLOT(updatedifflvl()));
+    connect( ui->vhplvl , SIGNAL(valueChanged(int)),this, SLOT(updatevhplvl()));
+    connect( ui->roomsize , SIGNAL(valueChanged(int)),this, SLOT(updateroomsize()));
+    connect( ui->roomwidth , SIGNAL(valueChanged(int)),this, SLOT(updateroomwidth()));
+    connect( ui->roomdamp , SIGNAL(valueChanged(int)),this, SLOT(updateroomdamp()));
+    connect( ui->wet , SIGNAL(valueChanged(int)),this, SLOT(updatewet()));
+    connect( ui->dry , SIGNAL(valueChanged(int)),this, SLOT(updatedry()));
+    connect( ui->colmwide , SIGNAL(valueChanged(int)),this, SLOT(updatecolmwide()));
+    connect( ui->colmmidimg , SIGNAL(valueChanged(int)),this, SLOT(updatecolmmidimg()));
+    connect( ui->colmdepth, SIGNAL(valueChanged(int)),this, SLOT(updatecolmdepth()));
+    connect( ui->vclvl, SIGNAL(valueChanged(int)),this, SLOT(updatevclvl()));
+    connect( ui->vcmode, SIGNAL(valueChanged(int)),this, SLOT(updatevcmode()));
+    connect( ui->gain , SIGNAL(valueChanged(int)),this, SLOT(updategain()));
+    connect( ui->maxgain , SIGNAL(valueChanged(int)),this, SLOT(updatemaxgain()));
+    connect( ui->maxvol , SIGNAL(valueChanged(int)),this, SLOT(updatemaxvol()));
+    connect( ui->limiter , SIGNAL(valueChanged(int)),this, SLOT(updatelimiter()));
+    connect( ui->outputpan , SIGNAL(valueChanged(int)),this, SLOT(updateoutputpan()));
+    connect( ui->outvolume , SIGNAL(valueChanged(int)),this, SLOT(updateoutvolume()));
     connect(ui->vcurelvl, SIGNAL(valueChanged(int)),this, SLOT(updatevcurelvl()));
     connect(ui->axmode, SIGNAL(valueChanged(int)),this, SLOT(updateaxmode()));
     connect(ui->barkfreq, SIGNAL(valueChanged(int)),this, SLOT(updatebarkfreq()));
@@ -384,13 +399,56 @@ void MainWindow::loadConfig(string key,string value){
         ui->convpath->setText(ir);
         break;
     }
+    case unknown: {
+        cout << "Config-List Enum: Unknown" << endl;
+        break;
+    }
+    }
+}
+void MainWindow::decodeAppConfig(string key,string value){
+    cout << "AppConf: " << key << " -> " << value << endl;
+    switch (resolveAppConfig(key)) {
+    case autoapply: {
+        if(value=="true") autofx=true;
+        else autofx=false;
+        break;
+    }
+    case configpath: {
+        if(value.size() <= 2) break;
+        path = value.substr(1, value.size() - 2);
+        break;
+    }
+    case mutedRestart: {
+        if(value=="true") muteOnRestart=true;
+        else muteOnRestart=false;
+        break;
+    }
+    }
+}
+void MainWindow::SaveAppConfig(bool afx = autofx, string cpath = path, bool muteRestart = muteOnRestart){
+    string appconfig;
+    stringstream converter1;
+    converter1 << boolalpha << afx;
+    appconfig += "autoapply=" + converter1.str() + "\n";
+    appconfig += "configpath=\"" + cpath + "\"\n";
+
+    stringstream converter2;
+    converter2 << boolalpha << muteRestart;
+    appconfig += "muteOnRestart=" + converter2.str() + "\n";
+
+    ofstream myfile(appcpath);
+    if (myfile.is_open())
+    {
+        myfile << appconfig;
+        myfile.close();
+    }
+    else{
+        cerr << "Unable to open file. Checking...";
+        loadAppConfig();
     }
 }
 
 void MainWindow::ConfirmConf(){
-
-    QString qpath = ui->path->text();
-    string path = qpath.toUtf8().constData();
 
     string config = "fx_enable=true\n";
     config += getMain();
@@ -404,18 +462,78 @@ void MainWindow::ConfirmConf(){
     ofstream myfile(path);
     if (myfile.is_open())
     {
-      myfile << config;
-      myfile.close();
+        myfile << config;
+        myfile.close();
     }
-    else cout << "Unable to open file";
-    system("pactl set-sink-mute 0 1");
+    else cerr << "Unable to open file";
+
+    if(muteOnRestart) system("pactl set-sink-mute 0 1");
     system("viper restart");
-    system("pactl set-sink-mute 0 0");
+    if(muteOnRestart) system("pactl set-sink-mute 0 0");
 
 }
+void MainWindow::Restart(){
+    if(muteOnRestart) system("pactl set-sink-mute 0 1");
+    system("viper restart");
+    if(muteOnRestart) system("pactl set-sink-mute 0 0");
+}
+void MainWindow::loadAppConfig(bool once){
+    cout << "Reloading App Config..." << endl;
+    std::ifstream cFile(appcpath);
+    if (cFile.is_open())
+    {
+        std::string line;
+        while(getline(cFile, line)){
+            line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
+                       line.end());
+
+            if(line[0] == '#' || line.empty() || line == "") continue;
+            auto delimiterPos = line.find("=");
+            auto name = line.substr(0, delimiterPos);
+            auto value = line.substr(delimiterPos + 1);
+            decodeAppConfig(name,value);
+        }
+        cFile.close();
+    }
+    else {
+        cerr << "Couldn't open app config file for reading.\n";
+        ofstream outfile(appcpath);
+        outfile << default_appconfig << endl;
+        outfile.close();
+        if(!once)loadAppConfig(true);
+    }
+}
+void MainWindow::OpenSettings(){
+    auto setting = new settings(this);
+    setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
+    setting->show();
+}
+string MainWindow::getPath(){
+    return path;
+}
+bool MainWindow::getAutoFx(){
+    return autofx;
+}
+void MainWindow::setAutoFx(bool afx){
+    autofx = afx;
+    SaveAppConfig();
+}
+bool MainWindow::getMuteOnRestart(){
+    return muteOnRestart;
+}
+void MainWindow::setMuteOnRestart(bool on){
+    muteOnRestart = on;
+    SaveAppConfig();
+}
+void MainWindow::setPath(string npath){
+    path = npath;
+    reloadConfig();
+    SaveAppConfig();
+}
+
 void MainWindow::Reset(){
     std::filebuf fb;
-    fb.open (ui->path->text().toUtf8().constData(),std::ios::out);
+    fb.open (path,std::ios::out);
     std::ostream os(&fb);
     os << default_config;
     fb.close();
@@ -426,32 +544,32 @@ void MainWindow::Reset(){
 }
 void MainWindow::reloadConfig(){
     cout << "Reloading..." << endl;
-    std::ifstream cFile(ui->path->text().toUtf8().constData());
-       if (cFile.is_open())
-       {
-           std::string line;
-           while(getline(cFile, line)){
-               line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
-                                    line.end());
+    std::ifstream cFile(path);
+    if (cFile.is_open())
+    {
+        std::string line;
+        while(getline(cFile, line)){
+            line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
+                       line.end());
 
-               if(line[0] == '#' || line.empty() || line == "") continue;
-               auto delimiterPos = line.find("=");
-               auto name = line.substr(0, delimiterPos);
-               auto value = line.substr(delimiterPos + 1);
-               loadConfig(name,value);
-           }
-           cFile.close();
-       }
-       else {
-           std::cerr << "Couldn't open config file for reading.\n";
-           QMessageBox msgBox;
-           msgBox.setText("Couldn't open config file for reading.");
-           msgBox.setInformativeText("Change the path to the audio.conf file in the bottom left corner.");
-           msgBox.setStandardButtons(QMessageBox::Ok);
-           msgBox.setDefaultButton(QMessageBox::Ok);
-           msgBox.setIcon(QMessageBox::Icon::Critical);
-           int ret = msgBox.exec();
-       }
+            if(line[0] == '#' || line.empty() || line == "") continue;
+            auto delimiterPos = line.find("=");
+            auto name = line.substr(0, delimiterPos);
+            auto value = line.substr(delimiterPos + 1);
+            loadConfig(name,value);
+        }
+        cFile.close();
+    }
+    else {
+        std::cerr << "Couldn't open config file for reading.\n";
+        QMessageBox msgBox;
+        msgBox.setText("Couldn't open config file for reading.");
+        msgBox.setInformativeText("Change the path to the audio.conf file in the bottom left corner.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Icon::Critical);
+        msgBox.exec();
+    }
 }
 void MainWindow::ResetEQ(){
     ui->eq1->setValue(0);
@@ -638,7 +756,6 @@ string MainWindow::getBass() {
     out += vbgain + n;
     return out;
 }
-
 string MainWindow::getSurround() {
     string out;
     string n = "\n";
@@ -699,7 +816,6 @@ string MainWindow::getSurround() {
 
     return out;
 }
-
 string MainWindow::getMain() {
     string out;
     string n = "\n";
@@ -748,241 +864,238 @@ string MainWindow::getMain() {
 
     return out;
 }
-
 string MainWindow::getMaster() {
-string out;
-string n = "\n";
+    string out;
+    string n = "\n";
 
-int a = ui->gain->value();
-int b = ui->maxgain->value();
-int c = ui->maxvol->value();
-int d = ui->limiter->value();
-int e = ui->outputpan->value();
-int f = ui->outvolume->value();
+    int a = ui->gain->value();
+    int b = ui->maxgain->value();
+    int c = ui->maxvol->value();
+    int d = ui->limiter->value();
+    int e = ui->outputpan->value();
+    int f = ui->outvolume->value();
 
-char gain[sizeof(a)];
-sprintf(gain, "%d", a);
-char maxgain[sizeof(b)];
-sprintf(maxgain, "%d", b);
-char maxvol[sizeof(c)];
-sprintf(maxvol, "%d", c);
+    char gain[sizeof(a)];
+    sprintf(gain, "%d", a);
+    char maxgain[sizeof(b)];
+    sprintf(maxgain, "%d", b);
+    char maxvol[sizeof(c)];
+    sprintf(maxvol, "%d", c);
 
-char limiter[sizeof(d)];
-sprintf(limiter, "%d", d);
-char outputpan[sizeof(e)];
-sprintf(outputpan, "%d", e);
-char out_volume[sizeof(f)];
-sprintf(out_volume, "%d", f);
+    char limiter[sizeof(d)];
+    sprintf(limiter, "%d", d);
+    char outputpan[sizeof(e)];
+    sprintf(outputpan, "%d", e);
+    char out_volume[sizeof(f)];
+    sprintf(out_volume, "%d", f);
 
 
-//GAIN CONTROL
-out += "agc_enable=";
-if(ui->agc->isChecked())out += "true" + n;
-else out += "false" + n;
-out += "agc_ratio=";
-out += gain + n;
-out += "agc_maxgain=";
-out += maxgain + n;
-out += "agc_volume=";
-out += maxvol + n;
+    //GAIN CONTROL
+    out += "agc_enable=";
+    if(ui->agc->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "agc_ratio=";
+    out += gain + n;
+    out += "agc_maxgain=";
+    out += maxgain + n;
+    out += "agc_volume=";
+    out += maxvol + n;
 
-//MASTER
-out += "lim_threshold=";
-out += limiter + n;
-out += "out_pan=";
-out += outputpan + n;
-out += "out_volume=";
-out += out_volume + n;
+    //MASTER
+    out += "lim_threshold=";
+    out += limiter + n;
+    out += "out_pan=";
+    out += outputpan + n;
+    out += "out_volume=";
+    out += out_volume + n;
 
-return out;
+    return out;
 }
 
 void MainWindow::updatevbfreq(){
-ui->info->setText(QString::number( ui->vbfreq->value() ));
+    ui->info->setText(QString::number( ui->vbfreq->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatevbmode(){
-ui->info->setText(QString::number( ui->vbmode->value() ));
+    ui->info->setText(QString::number( ui->vbmode->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatedifflvl(){
-ui->info->setText(QString::number( ui->difflvl->value() ));
+    ui->info->setText(QString::number( ui->difflvl->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatevhplvl(){
-ui->info->setText(QString::number( ui->vhplvl->value() ));
+    ui->info->setText(QString::number( ui->vhplvl->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updateroomsize(){
-ui->info->setText(QString::number( ui->roomsize->value()));
+    ui->info->setText(QString::number( ui->roomsize->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateroomwidth(){
-ui->info->setText(QString::number( ui->roomwidth->value() ));
+    ui->info->setText(QString::number( ui->roomwidth->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updateroomdamp(){
-ui->info->setText(QString::number( ui->roomdamp->value() ));
+    ui->info->setText(QString::number( ui->roomdamp->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatewet(){
-ui->info->setText(QString::number( ui->wet->value() ));
+    ui->info->setText(QString::number( ui->wet->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatedry(){
-ui->info->setText(QString::number( ui->dry->value() ));
+    ui->info->setText(QString::number( ui->dry->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatecolmwide(){
-ui->info->setText(QString::number( ui->colmwide->value()));
+    ui->info->setText(QString::number( ui->colmwide->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecolmmidimg(){
-ui->info->setText(QString::number( ui->colmmidimg->value() ));
+    ui->info->setText(QString::number( ui->colmmidimg->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatecolmdepth(){
-ui->info->setText(QString::number( ui->colmdepth->value() ));
+    ui->info->setText(QString::number( ui->colmdepth->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatevclvl(){
-ui->info->setText(QString::number( ui->vclvl->value() ));
+    ui->info->setText(QString::number( ui->vclvl->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatevcmode(){
-ui->info->setText(QString::number( ui->vcmode->value() ));
+    ui->info->setText(QString::number( ui->vcmode->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updategain(){
-ui->info->setText(QString::number( ui->gain->value() ));
+    ui->info->setText(QString::number( ui->gain->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatemaxgain(){
-ui->info->setText(QString::number( ui->maxgain->value() ));
+    ui->info->setText(QString::number( ui->maxgain->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatemaxvol(){
-ui->info->setText(QString::number( ui->maxvol->value() ));
+    ui->info->setText(QString::number( ui->maxvol->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatelimiter(){
-ui->info->setText(QString::number( ui->limiter->value() ));
+    ui->info->setText(QString::number( ui->limiter->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updateoutputpan(){
-ui->info->setText(QString::number( ui->outputpan->value()));
+    ui->info->setText(QString::number( ui->outputpan->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateoutvolume(){
-ui->info->setText(QString::number( ui->outvolume->value() ));
+    ui->info->setText(QString::number( ui->outvolume->value() ));
+    OnUpdate();
 }
-
 void MainWindow::updatevcurelvl(){
-ui->info->setText(QString::number(ui->vcurelvl->value()));
+    ui->info->setText(QString::number(ui->vcurelvl->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateaxmode(){
-ui->info->setText(QString::number(ui->axmode->value()));
+    ui->info->setText(QString::number(ui->axmode->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatebarkfreq(){
-ui->info->setText(QString::number(ui->barkfreq->value()));
+    ui->info->setText(QString::number(ui->barkfreq->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatebarkcon(){
-ui->info->setText(QString::number(ui->barkcon->value()));
+    ui->info->setText(QString::number(ui->barkcon->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecomprelease(){
-ui->info->setText(QString::number(ui->comprelease->value()));
+    ui->info->setText(QString::number(ui->comprelease->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecompgain(){
-ui->info->setText(QString::number(ui->compgain->value()));
+    ui->info->setText(QString::number(ui->compgain->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecompwidth(){
-ui->info->setText(QString::number(ui->compwidth->value()));
+    ui->info->setText(QString::number(ui->compwidth->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecomp_ratio(){
-ui->info->setText(QString::number(ui->comp_ratio->value()));
+    ui->info->setText(QString::number(ui->comp_ratio->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecomp_thres(){
-ui->info->setText(QString::number(ui->comp_thres->value()));
+    ui->info->setText(QString::number(ui->comp_thres->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecompattack(){
-ui->info->setText(QString::number(ui->compattack->value()));
+    ui->info->setText(QString::number(ui->compattack->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatea_adapt(){
-ui->info->setText(QString::number(ui->a_adapt->value()));
+    ui->info->setText(QString::number(ui->a_adapt->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatea_crest(){
-ui->info->setText(QString::number(ui->a_crest->value()));
+    ui->info->setText(QString::number(ui->a_crest->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatea_maxatk(){
-ui->info->setText(QString::number(ui->a_maxatk->value()));
+    ui->info->setText(QString::number(ui->a_maxatk->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatea_maxrel(){
-ui->info->setText(QString::number(ui->a_maxrel->value()));
+    ui->info->setText(QString::number(ui->a_maxrel->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatea_kneewidth(){
-ui->info->setText(QString::number(ui->a_kneewidth->value()));
+    ui->info->setText(QString::number(ui->a_kneewidth->value()));
+    OnUpdate();
 }
-
 void MainWindow::updatecc(){
-ui->info->setText(QString::number(ui->convcc->value()));
+    ui->info->setText(QString::number(ui->convcc->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq1(){
-ui->info->setText(QString::number(ui->eq1->value()));
+    ui->info->setText(QString::number(ui->eq1->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq2(){
-ui->info->setText(QString::number(ui->eq2->value()));
+    ui->info->setText(QString::number(ui->eq2->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq3(){
-ui->info->setText(QString::number(ui->eq3->value()));
+    ui->info->setText(QString::number(ui->eq3->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq4(){
-ui->info->setText(QString::number(ui->eq4->value()));
+    ui->info->setText(QString::number(ui->eq4->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq5(){
-ui->info->setText(QString::number(ui->eq5->value()));
+    ui->info->setText(QString::number(ui->eq5->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq6(){
-ui->info->setText(QString::number(ui->eq6->value()));
+    ui->info->setText(QString::number(ui->eq6->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq7(){
-ui->info->setText(QString::number(ui->eq7->value()));
+    ui->info->setText(QString::number(ui->eq7->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq8(){
-ui->info->setText(QString::number(ui->eq8->value()));
+    ui->info->setText(QString::number(ui->eq8->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq9(){
-ui->info->setText(QString::number(ui->eq9->value()));
+    ui->info->setText(QString::number(ui->eq9->value()));
+    OnUpdate();
 }
-
 void MainWindow::updateeq10(){
-ui->info->setText(QString::number(ui->eq10->value()));
+    ui->info->setText(QString::number(ui->eq10->value()));
+    OnUpdate();
 }
-
-
-constexpr unsigned int str2int(const char* str, int h = 0)
-{
-    return !str[h] ? 5381 : (str2int(str, h+1) * 33) ^ str[h];
+void MainWindow::OnUpdate(){
+    if(autofx)ConfirmConf();
 }

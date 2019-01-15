@@ -2075,22 +2075,6 @@
       <normaloff>.</normaloff>.</iconset>
     </property>
    </widget>
-   <widget class="QLineEdit" name="path">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>240</y>
-      <width>191</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>~/.config/viper4linux/audio.conf</string>
-    </property>
-    <property name="placeholderText">
-     <string>Path to V4L Configuration File</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="reset">
     <property name="geometry">
      <rect>
@@ -2111,11 +2095,14 @@
    <widget class="QPushButton" name="reload">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>10</x>
       <y>240</y>
       <width>31</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload V4L Config&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
      <string/>
@@ -2128,14 +2115,44 @@
    <widget class="QLabel" name="info">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>186</x>
       <y>242</y>
-      <width>61</width>
+      <width>121</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="settingsBtn">
+    <property name="geometry">
+     <rect>
+      <x>46</x>
+      <y>240</y>
+      <width>31</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../baseline-settings-20px.svg</normaloff>../baseline-settings-20px.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="restart">
+    <property name="geometry">
+     <rect>
+      <x>82</x>
+      <y>240</y>
+      <width>91</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Restart V4L</string>
     </property>
    </widget>
   </widget>
