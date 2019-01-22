@@ -21,6 +21,7 @@ public:
     bool getMuteOnRestart();
     void setMuteOnRestart(bool on);
     void setPath(string npath);
+    void setIRS(string irs,bool apply=true);
     void loadAppConfig(bool once = false);
     string getMain();
     string getBass();
@@ -36,10 +37,11 @@ public slots:
     void Restart();
     void reloadConfig();
 private slots:
+    void OpenConv();
     void ConfirmConf();
     void ResetEQ();
     void OpenSettings();
-
+    void updatevbgain();
     void updatevbfreq();
     void updatevbmode();
     void updatedifflvl();
@@ -87,10 +89,10 @@ private slots:
     void updateeq10();
     void updatecc();
 private:
-    void loadConfig(string key, string value);
-    void decodeAppConfig(string key, string value);
+    void loadConfig(const string& key, string value);
+    void decodeAppConfig(const string& key, const string& value);
     void OnUpdate();
-    void SaveAppConfig(bool, string,bool);
+    void SaveAppConfig(bool, const string&,bool);
 };
 
 #endif // MAINWINDOW_H

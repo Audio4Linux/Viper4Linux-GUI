@@ -1,7 +1,8 @@
-﻿#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "settings.h"
 #include "ui_settings.h"
+#include "convolver.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -16,6 +17,7 @@
 #include <ostream>
 #include <QApplication>
 #include <QMessageBox>
+#include <utility>
 
 using namespace std;
 std::map<std::string, std::string> options;
@@ -48,10 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
     connect(ui->reload, SIGNAL(clicked()), this, SLOT(reloadConfig()));
+    connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));
 
     connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
     connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(updatevbfreq()));
+    connect( ui->vbgain, SIGNAL(valueChanged(int)),this, SLOT(updatevbgain()));
     connect( ui->vbmode , SIGNAL(valueChanged(int)),this, SLOT(updatevbmode()));
     connect( ui->difflvl , SIGNAL(valueChanged(int)),this, SLOT(updatedifflvl()));
     connect( ui->vhplvl , SIGNAL(valueChanged(int)),this, SLOT(updatevhplvl()));
@@ -103,7 +107,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-void MainWindow::loadConfig(string key,string value){
+void MainWindow::loadConfig(const string& key,string value){
     cout << key << " -> " << value << endl;
     switch (resolveConfig(key)) {
     case fx_enable: {
@@ -405,12 +409,12 @@ void MainWindow::loadConfig(string key,string value){
     }
     }
 }
-void MainWindow::decodeAppConfig(string key,string value){
+void MainWindow::decodeAppConfig(const string& key,const string& value){
     cout << "AppConf: " << key << " -> " << value << endl;
     switch (resolveAppConfig(key)) {
+    case unknownApp: {break;}
     case autoapply: {
-        if(value=="true") autofx=true;
-        else autofx=false;
+        autofx = value=="true";
         break;
     }
     case configpath: {
@@ -419,13 +423,16 @@ void MainWindow::decodeAppConfig(string key,string value){
         break;
     }
     case mutedRestart: {
-        if(value=="true") muteOnRestart=true;
-        else muteOnRestart=false;
+        muteOnRestart = value=="true";
         break;
     }
     }
 }
-void MainWindow::SaveAppConfig(bool afx = autofx, string cpath = path, bool muteRestart = muteOnRestart){
+void MainWindow::setIRS(string irs,bool apply){
+    ui->convpath->setText(QString::fromStdString((irs)));
+    if(apply)ConfirmConf();
+}
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -487,8 +494,8 @@ void MainWindow::loadAppConfig(bool once){
             line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
                        line.end());
 
-            if(line[0] == '#' || line.empty() || line == "") continue;
-            auto delimiterPos = line.find("=");
+            if(line[0] == '#' || line.empty() || line.empty()) continue;
+            auto delimiterPos = line.find('=');
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
             decodeAppConfig(name,value);
@@ -502,6 +509,11 @@ void MainWindow::loadAppConfig(bool once){
         outfile.close();
         if(!once)loadAppConfig(true);
     }
+}
+void MainWindow::OpenConv(){
+    auto c = new Convolver(this);
+    c->setFixedSize(c->geometry().width(),c->geometry().height());
+    c->show();
 }
 void MainWindow::OpenSettings(){
     auto setting = new settings(this);
@@ -526,7 +538,7 @@ void MainWindow::setMuteOnRestart(bool on){
     SaveAppConfig();
 }
 void MainWindow::setPath(string npath){
-    path = npath;
+    path = std::move(npath);
     reloadConfig();
     SaveAppConfig();
 }
@@ -552,8 +564,8 @@ void MainWindow::reloadConfig(){
             line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
                        line.end());
 
-            if(line[0] == '#' || line.empty() || line == "") continue;
-            auto delimiterPos = line.find("=");
+            if(line[0] == '#' || line.empty() || line.empty()) continue;
+            auto delimiterPos = line.find('=');
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
             loadConfig(name,value);
@@ -911,21 +923,27 @@ string MainWindow::getMaster() {
 
     return out;
 }
-
+void MainWindow::updatevbgain(){
+    ui->info->setText(QString::number( ui->vbgain->value() ));
+    OnUpdate();
+}
 void MainWindow::updatevbfreq(){
-    ui->info->setText(QString::number( ui->vbfreq->value() ));
+    ui->info->setText(QString::number( ui->vbfreq->value() ) + "Hz");
     OnUpdate();
 }
 void MainWindow::updatevbmode(){
-    ui->info->setText(QString::number( ui->vbmode->value() ));
+    if(ui->vbmode->value()==0) ui->info->setText("Natural Bass");
+    else if(ui->vbmode->value()==1) ui->info->setText("Pure Bass+");
+    else if(ui->vbmode->value()==2) ui->info->setText("Subwoofer");
+    else ui->info->setText("Mode "+QString::number( ui->vbmode->value() ));
     OnUpdate();
 }
 void MainWindow::updatedifflvl(){
-    ui->info->setText(QString::number( ui->difflvl->value() ));
+    ui->info->setText(QString::number( ui->difflvl->value() ) + "ms");
     OnUpdate();
 }
 void MainWindow::updatevhplvl(){
-    ui->info->setText(QString::number( ui->vhplvl->value() ));
+    ui->info->setText("Level " + QString::number( ui->vhplvl->value() ));
     OnUpdate();
 }
 void MainWindow::updateroomsize(){
@@ -965,7 +983,10 @@ void MainWindow::updatevclvl(){
     OnUpdate();
 }
 void MainWindow::updatevcmode(){
-    ui->info->setText(QString::number( ui->vcmode->value() ));
+    if(ui->vcmode->value()==0) ui->info->setText("Natural");
+    else if(ui->vcmode->value()==1) ui->info->setText("OZone+");
+    else if(ui->vcmode->value()==2) ui->info->setText("XHiFi");
+    else ui->info->setText("Mode "+QString::number( ui->vcmode->value() ));
     OnUpdate();
 }
 void MainWindow::updategain(){
@@ -981,7 +1002,7 @@ void MainWindow::updatemaxvol(){
     OnUpdate();
 }
 void MainWindow::updatelimiter(){
-    ui->info->setText(QString::number( ui->limiter->value() ));
+    ui->info->setText(QString::number( ui->limiter->value() )+"%");
     OnUpdate();
 }
 void MainWindow::updateoutputpan(){
@@ -989,23 +1010,23 @@ void MainWindow::updateoutputpan(){
     OnUpdate();
 }
 void MainWindow::updateoutvolume(){
-    ui->info->setText(QString::number( ui->outvolume->value() ));
+    ui->info->setText(QString::number( ui->outvolume->value())+"%");
     OnUpdate();
 }
 void MainWindow::updatevcurelvl(){
-    ui->info->setText(QString::number(ui->vcurelvl->value()));
+    ui->info->setText("Level " + QString::number(ui->vcurelvl->value()));
     OnUpdate();
 }
 void MainWindow::updateaxmode(){
-    ui->info->setText(QString::number(ui->axmode->value()));
+    ui->info->setText("Mode "+QString::number(ui->axmode->value()));
     OnUpdate();
 }
 void MainWindow::updatebarkfreq(){
-    ui->info->setText(QString::number(ui->barkfreq->value()));
+    ui->info->setText(QString::number(ui->barkfreq->value())+"Hz");
     OnUpdate();
 }
 void MainWindow::updatebarkcon(){
-    ui->info->setText(QString::number(ui->barkcon->value()));
+    ui->info->setText("Level"+QString::number(ui->barkcon->value()));
     OnUpdate();
 }
 void MainWindow::updatecomprelease(){

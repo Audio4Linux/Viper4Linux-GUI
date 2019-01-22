@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -1976,7 +1976,7 @@
         <rect>
          <x>90</x>
          <y>30</y>
-         <width>111</width>
+         <width>91</width>
          <height>25</height>
         </rect>
        </property>
@@ -2008,6 +2008,19 @@
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="conv_select">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>30</y>
+         <width>21</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>...</string>
        </property>
       </widget>
      </widget>
@@ -2108,8 +2121,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../baseline-refresh-24px.svg</normaloff>../baseline-refresh-24px.svg</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/download.svg</normaloff>:/main/download.svg</iconset>
     </property>
    </widget>
    <widget class="QLabel" name="info">
@@ -2138,8 +2151,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../baseline-settings-20px.svg</normaloff>../baseline-settings-20px.svg</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/settings.svg</normaloff>:/main/settings.svg</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="restart">
@@ -2147,17 +2160,29 @@
      <rect>
       <x>82</x>
       <y>240</y>
-      <width>91</width>
+      <width>31</width>
       <height>25</height>
      </rect>
     </property>
-    <property name="text">
+    <property name="toolTip">
      <string>Restart V4L</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/refresh.svg</normaloff>:/main/refresh.svg</iconset>
     </property>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

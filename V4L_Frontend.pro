@@ -27,18 +27,27 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    settings.cpp
+    settings.cpp \
+    convolver.cpp
 
 HEADERS += \
         mainwindow.h \
     configlist.h \
-    settings.h
+    settings.h \
+    convolver.h \
+    main.h
 
 FORMS += \
         mainwindow.ui \
-    settings.ui
+    settings.ui \
+    convolver.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
+
+RESOURCES += \
+    resources.qrc

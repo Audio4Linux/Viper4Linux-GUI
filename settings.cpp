@@ -1,7 +1,6 @@
 #include "settings.h"
 #include "ui_settings.h"
-#include "mainwindow.h"
-#include "main.cpp"
+#include "main.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -20,7 +19,7 @@ ui(new Ui::settings){
     strcpy(result,homedir);
     strcat(result,"/.config/viper4linux/audio.conf");
     string path = mainwin->getPath();
-    if(path=="") ui->path->setText(QString::fromUtf8(result));
+    if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
     ui->autofx->setChecked(mainwin->getAutoFx());
     ui->muteonrestart->setChecked(mainwin->getMuteOnRestart());

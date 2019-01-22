@@ -1,21 +1,25 @@
+ #ifndef MAIN
+#define MAIN
+#endif
+
 #include "mainwindow.h"
+#include "main.h"
 #include "settings.h"
 #include <QApplication>
 #include <string>
 #include <iostream>
 
 using namespace std;
-MainWindow *mainwin;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setQuitOnLastWindowClosed( false );
+    QApplication::setQuitOnLastWindowClosed( false );
     MainWindow w;
-    settings s;
     mainwin = &w;
     w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.show();
-    a.setQuitOnLastWindowClosed( true );
+    QApplication::setQuitOnLastWindowClosed( true );
 
-    return a.exec();
+    return QApplication::exec();
 }
+
