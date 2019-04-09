@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <QString>
+#include <QCloseEvent>
 
 using namespace std;
 Convolver::Convolver(QWidget *parent) :
@@ -37,6 +38,7 @@ Convolver::~Convolver()
     delete ui;
 }
 void Convolver::closeWindow(){
+    mainwin->enableConvBtn(true);
     this->close();
 }
 void Convolver::reload(){
@@ -50,4 +52,9 @@ void Convolver::reload(){
 void Convolver::updateIR(){
     QString path = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
     mainwin->setIRS(path.toUtf8().constData());
+}
+void Convolver::reject()
+{
+    mainwin->enableConvBtn(true);
+    QDialog::reject();
 }

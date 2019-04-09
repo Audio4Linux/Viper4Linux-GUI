@@ -16,20 +16,18 @@ class MainWindow : public QMainWindow
 public:
     Ui::MainWindow *ui;
     string getPath();
+    string getPeakSource();
+    void enablePeakBtn(bool on);
+    void enableSetBtn(bool on);
+    void enableConvBtn(bool on);
     bool getAutoFx();
     void setAutoFx(bool autofx);
     bool getMuteOnRestart();
     void setMuteOnRestart(bool on);
     void setPath(string npath);
-    void setIRS(string irs,bool apply=true);
+    void setIRS(const string& irs,bool apply=true);
     void loadAppConfig(bool once = false);
-    string getMain();
-    string getBass();
-    string getSurround();
-    string getMaster();
-    string getEQ();
-    string getComp();
-    string getMisc();
+    void UpdatePeakSource(string source);
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
@@ -37,6 +35,7 @@ public slots:
     void Restart();
     void reloadConfig();
 private slots:
+    void OpenPeak();
     void OpenConv();
     void ConfirmConf();
     void ResetEQ();
@@ -93,6 +92,15 @@ private:
     void decodeAppConfig(const string& key, const string& value);
     void OnUpdate();
     void SaveAppConfig(bool, const string&,bool);
+    void closeEvent (QCloseEvent *event);
+    string getMain();
+    string getBass();
+    string getSurround();
+    string getMaster();
+    string getEQ();
+    string getComp();
+    string getMisc();
+    void ConnectActions();
 };
 
 #endif // MAINWINDOW_H

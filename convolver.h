@@ -14,7 +14,8 @@ class Convolver : public QDialog
 public:
     explicit Convolver(QWidget *parent = nullptr);
     ~Convolver();
-public slots:
+private slots:
+    void reject();
     void reload();
     void closeWindow();
     void updateIR();

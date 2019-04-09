@@ -28,19 +28,28 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     settings.cpp \
-    convolver.cpp
+    convolver.cpp \
+    peak.cpp \
+    qscale.cpp
 
 HEADERS += \
         mainwindow.h \
     configlist.h \
     settings.h \
     convolver.h \
-    main.h
+    main.h \
+    peak.h \
+    qscale.h \
+    qscale.h
 
 FORMS += \
         mainwindow.ui \
     settings.ui \
-    convolver.ui
+    convolver.ui \
+    peak.ui
+
+LIBS += /usr/lib/x86_64-linux-gnu/libpulse.so -lpulse \
+        /usr/lib/x86_64-linux-gnu/libpulse-simple.so -lpulse-simple
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
