@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>484</width>
-    <height>280</height>
+    <width>517</width>
+    <height>276</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,12 +19,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>461</width>
+      <width>501</width>
       <height>221</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -38,7 +38,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>111</height>
        </rect>
       </property>
@@ -54,9 +54,9 @@
       <widget class="QSlider" name="vbfreq">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>100</x>
          <y>80</y>
-         <width>91</width>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -89,7 +89,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Bass Frequency</string>
+        <string>Bass Freq</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_15">
@@ -97,7 +97,7 @@
         <rect>
          <x>10</x>
          <y>34</y>
-         <width>131</width>
+         <width>91</width>
          <height>16</height>
         </rect>
        </property>
@@ -108,7 +108,7 @@
       <widget class="QSpinBox" name="vbmode">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>100</x>
          <y>30</y>
          <width>41</width>
          <height>26</height>
@@ -121,9 +121,9 @@
       <widget class="QSlider" name="vbgain">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>100</x>
          <y>60</y>
-         <width>91</width>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -163,9 +163,9 @@
      <widget class="QGroupBox" name="clarity">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>250</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>91</height>
        </rect>
       </property>
@@ -181,9 +181,9 @@
       <widget class="QSlider" name="vclvl">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>110</x>
          <y>60</y>
-         <width>101</width>
+         <width>111</width>
          <height>20</height>
         </rect>
        </property>
@@ -211,7 +211,7 @@
         <rect>
          <x>10</x>
          <y>60</y>
-         <width>91</width>
+         <width>101</width>
          <height>16</height>
         </rect>
        </property>
@@ -235,7 +235,7 @@
       <widget class="QSpinBox" name="vcmode">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>110</x>
          <y>30</y>
          <width>41</width>
          <height>26</height>
@@ -249,9 +249,9 @@
      <widget class="QGroupBox" name="vcure">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>250</x>
         <y>110</y>
-        <width>211</width>
+        <width>231</width>
         <height>61</height>
        </rect>
       </property>
@@ -269,7 +269,7 @@
         <rect>
          <x>80</x>
          <y>32</y>
-         <width>121</width>
+         <width>141</width>
          <height>20</height>
         </rect>
        </property>
@@ -297,7 +297,7 @@
         <rect>
          <x>10</x>
          <y>32</y>
-         <width>51</width>
+         <width>71</width>
          <height>16</height>
         </rect>
        </property>
@@ -311,7 +311,7 @@
        <rect>
         <x>11</x>
         <y>131</y>
-        <width>181</width>
+        <width>231</width>
         <height>23</height>
        </rect>
       </property>
@@ -329,7 +329,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>81</height>
        </rect>
       </property>
@@ -347,7 +347,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -375,7 +375,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>91</width>
+         <width>191</width>
          <height>16</height>
         </rect>
        </property>
@@ -389,7 +389,7 @@
        <rect>
         <x>10</x>
         <y>100</y>
-        <width>211</width>
+        <width>231</width>
         <height>81</height>
        </rect>
       </property>
@@ -407,7 +407,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -435,7 +435,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>91</width>
+         <width>181</width>
          <height>16</height>
         </rect>
        </property>
@@ -447,9 +447,9 @@
      <widget class="QGroupBox" name="reverb">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>250</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>171</height>
        </rect>
       </property>
@@ -467,7 +467,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -495,7 +495,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>91</width>
+         <width>121</width>
          <height>16</height>
         </rect>
        </property>
@@ -508,7 +508,7 @@
         <rect>
          <x>10</x>
          <y>70</y>
-         <width>91</width>
+         <width>161</width>
          <height>16</height>
         </rect>
        </property>
@@ -521,7 +521,7 @@
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -586,9 +586,9 @@
       <widget class="QSlider" name="roomdamp">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>110</y>
-         <width>111</width>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -614,9 +614,9 @@
       <widget class="QSlider" name="wet">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>130</y>
-         <width>111</width>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -642,9 +642,9 @@
       <widget class="QSlider" name="dry">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>150</y>
-         <width>111</width>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -928,7 +928,7 @@
        <rect>
         <x>320</x>
         <y>20</y>
-        <width>82</width>
+        <width>101</width>
         <height>23</height>
        </rect>
       </property>
@@ -963,7 +963,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>141</width>
+        <width>251</width>
         <height>23</height>
        </rect>
       </property>
@@ -976,7 +976,7 @@
        <rect>
         <x>80</x>
         <y>40</y>
-        <width>111</width>
+        <width>131</width>
         <height>16</height>
        </rect>
       </property>
@@ -1021,7 +1021,7 @@
        <rect>
         <x>80</x>
         <y>60</y>
-        <width>111</width>
+        <width>131</width>
         <height>16</height>
        </rect>
       </property>
@@ -1038,9 +1038,9 @@
      <widget class="QGroupBox" name="m_width">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>140</x>
         <y>80</y>
-        <width>141</width>
+        <width>151</width>
         <height>51</height>
        </rect>
       </property>
@@ -1076,9 +1076,9 @@
      <widget class="QGroupBox" name="m_gain">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>140</x>
         <y>134</y>
-        <width>141</width>
+        <width>151</width>
         <height>51</height>
        </rect>
       </property>
@@ -1116,7 +1116,7 @@
        <rect>
         <x>10</x>
         <y>134</y>
-        <width>111</width>
+        <width>121</width>
         <height>51</height>
        </rect>
       </property>
@@ -1157,7 +1157,7 @@
        <rect>
         <x>10</x>
         <y>80</y>
-        <width>111</width>
+        <width>121</width>
         <height>51</height>
        </rect>
       </property>
@@ -1196,10 +1196,10 @@
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
-        <x>280</x>
-        <y>10</y>
-        <width>171</width>
-        <height>175</height>
+        <x>300</x>
+        <y>33</y>
+        <width>188</width>
+        <height>151</height>
        </rect>
       </property>
       <property name="title">
@@ -1216,7 +1216,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>151</width>
+         <width>168</width>
          <height>16</height>
         </rect>
        </property>
@@ -1262,9 +1262,9 @@
       <widget class="QSlider" name="a_maxatk">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>70</y>
-         <width>71</width>
+         <width>78</width>
          <height>20</height>
         </rect>
        </property>
@@ -1284,9 +1284,9 @@
       <widget class="QSlider" name="a_maxrel">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>90</y>
-         <width>71</width>
+         <width>77</width>
          <height>20</height>
         </rect>
        </property>
@@ -1308,7 +1308,7 @@
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>81</width>
+         <width>91</width>
          <height>17</height>
         </rect>
        </property>
@@ -1332,9 +1332,9 @@
       <widget class="QSlider" name="a_adapt">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>110</y>
-         <width>71</width>
+         <width>77</width>
          <height>20</height>
         </rect>
        </property>
@@ -1367,9 +1367,9 @@
       <widget class="QSlider" name="a_crest">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>99</x>
          <y>130</y>
-         <width>71</width>
+         <width>77</width>
          <height>20</height>
         </rect>
        </property>
@@ -1390,9 +1390,9 @@
      <widget class="QCheckBox" name="noclip">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>170</x>
         <y>10</y>
-        <width>121</width>
+        <width>161</width>
         <height>23</height>
        </rect>
       </property>
@@ -1413,7 +1413,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>171</height>
        </rect>
       </property>
@@ -1431,7 +1431,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -1459,7 +1459,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>91</width>
+         <width>211</width>
          <height>16</height>
         </rect>
        </property>
@@ -1472,7 +1472,7 @@
         <rect>
          <x>10</x>
          <y>70</y>
-         <width>91</width>
+         <width>211</width>
          <height>16</height>
         </rect>
        </property>
@@ -1485,7 +1485,7 @@
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -1513,7 +1513,7 @@
         <rect>
          <x>10</x>
          <y>110</y>
-         <width>91</width>
+         <width>211</width>
          <height>16</height>
         </rect>
        </property>
@@ -1526,7 +1526,7 @@
         <rect>
          <x>10</x>
          <y>130</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -1553,9 +1553,9 @@
      <widget class="QGroupBox" name="mastervol">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>250</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>171</height>
        </rect>
       </property>
@@ -1573,7 +1573,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -1601,7 +1601,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>91</width>
+         <width>201</width>
          <height>16</height>
         </rect>
        </property>
@@ -1614,7 +1614,7 @@
         <rect>
          <x>10</x>
          <y>70</y>
-         <width>91</width>
+         <width>151</width>
          <height>16</height>
         </rect>
        </property>
@@ -1627,7 +1627,7 @@
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -1655,7 +1655,7 @@
         <rect>
          <x>10</x>
          <y>110</y>
-         <width>111</width>
+         <width>171</width>
          <height>16</height>
         </rect>
        </property>
@@ -1668,7 +1668,7 @@
         <rect>
          <x>10</x>
          <y>130</y>
-         <width>191</width>
+         <width>211</width>
          <height>20</height>
         </rect>
        </property>
@@ -1702,7 +1702,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>101</height>
        </rect>
       </property>
@@ -1718,7 +1718,7 @@
       <widget class="QSlider" name="colmwide">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>100</x>
          <y>30</y>
          <width>121</width>
          <height>20</height>
@@ -1772,7 +1772,7 @@
       <widget class="QSlider" name="colmmidimg">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>100</x>
          <y>50</y>
          <width>121</width>
          <height>20</height>
@@ -1813,7 +1813,7 @@
       <widget class="QSlider" name="colmdepth">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>100</x>
          <y>70</y>
          <width>121</width>
          <height>20</height>
@@ -1842,9 +1842,9 @@
      <widget class="QGroupBox" name="vse">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>250</x>
         <y>10</y>
-        <width>211</width>
+        <width>231</width>
         <height>71</height>
        </rect>
       </property>
@@ -1862,7 +1862,7 @@
         <rect>
          <x>10</x>
          <y>32</y>
-         <width>91</width>
+         <width>141</width>
          <height>16</height>
         </rect>
        </property>
@@ -1873,7 +1873,7 @@
       <widget class="QSlider" name="barkfreq">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>150</x>
          <y>30</y>
          <width>71</width>
          <height>20</height>
@@ -1903,7 +1903,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>121</width>
+         <width>141</width>
          <height>16</height>
         </rect>
        </property>
@@ -1914,7 +1914,7 @@
       <widget class="QSlider" name="barkcon">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>150</x>
          <y>50</y>
          <width>71</width>
          <height>20</height>
@@ -1943,9 +1943,9 @@
      <widget class="QGroupBox" name="conv">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>250</x>
         <y>90</y>
-        <width>211</width>
+        <width>231</width>
         <height>91</height>
        </rect>
       </property>
@@ -1963,7 +1963,7 @@
         <rect>
          <x>10</x>
          <y>32</y>
-         <width>81</width>
+         <width>101</width>
          <height>16</height>
         </rect>
        </property>
@@ -1974,7 +1974,7 @@
       <widget class="QLineEdit" name="convpath">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>110</x>
          <y>30</y>
          <width>91</width>
          <height>25</height>
@@ -1989,7 +1989,7 @@
         <rect>
          <x>10</x>
          <y>65</y>
-         <width>91</width>
+         <width>111</width>
          <height>16</height>
         </rect>
        </property>
@@ -2000,7 +2000,7 @@
       <widget class="QSlider" name="convcc">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>120</x>
          <y>64</y>
          <width>101</width>
          <height>20</height>
@@ -2013,7 +2013,7 @@
       <widget class="QPushButton" name="conv_select">
        <property name="geometry">
         <rect>
-         <x>180</x>
+         <x>200</x>
          <y>30</y>
          <width>21</width>
          <height>25</height>
@@ -2029,7 +2029,7 @@
        <rect>
         <x>10</x>
         <y>120</y>
-        <width>211</width>
+        <width>231</width>
         <height>61</height>
        </rect>
       </property>
@@ -2074,7 +2074,7 @@
    <widget class="QPushButton" name="apply">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>430</x>
       <y>240</y>
       <width>80</width>
       <height>25</height>
@@ -2091,7 +2091,7 @@
    <widget class="QPushButton" name="reset">
     <property name="geometry">
      <rect>
-      <x>319</x>
+      <x>359</x>
       <y>240</y>
       <width>61</width>
       <height>25</height>
@@ -2128,9 +2128,9 @@
    <widget class="QLabel" name="info">
     <property name="geometry">
      <rect>
-      <x>186</x>
+      <x>160</x>
       <y>242</y>
-      <width>121</width>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -2141,7 +2141,7 @@
    <widget class="QPushButton" name="settingsBtn">
     <property name="geometry">
      <rect>
-      <x>46</x>
+      <x>77</x>
       <y>240</y>
       <width>31</width>
       <height>25</height>
@@ -2158,7 +2158,7 @@
    <widget class="QPushButton" name="restart">
     <property name="geometry">
      <rect>
-      <x>82</x>
+      <x>44</x>
       <y>240</y>
       <width>31</width>
       <height>25</height>
@@ -2176,6 +2176,29 @@
     <property name="icon">
      <iconset resource="resources.qrc">
       <normaloff>:/main/refresh.svg</normaloff>:/main/refresh.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="peak">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>240</y>
+      <width>31</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Restart V4L</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/eq.svg</normaloff>:/main/eq.svg</iconset>
     </property>
    </widget>
   </widget>

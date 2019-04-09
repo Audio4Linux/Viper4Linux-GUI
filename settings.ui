@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>262</width>
-    <height>136</height>
+    <width>284</width>
+    <height>258</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>100</y>
+     <x>190</x>
+     <y>220</y>
      <width>80</width>
      <height>25</height>
     </rect>
@@ -26,54 +26,103 @@
     <string>Save</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="path">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>10</x>
      <y>10</y>
-     <width>161</width>
-     <height>25</height>
+     <width>261</width>
+     <height>121</height>
     </rect>
    </property>
+   <property name="title">
+    <string>Main</string>
+   </property>
+   <widget class="QCheckBox" name="muteonrestart">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>87</y>
+      <width>241</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Mute when restarting Viper</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="path">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>27</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>31</y>
+      <width>81</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>V4L Config</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="autofx">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>241</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Auto-Apply FX</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>14</y>
-     <width>71</width>
-     <height>17</height>
+     <y>140</y>
+     <width>261</width>
+     <height>71</height>
     </rect>
    </property>
-   <property name="text">
-    <string>V4L Config</string>
+   <property name="title">
+    <string>VU Meter</string>
    </property>
-  </widget>
-  <widget class="QCheckBox" name="autofx">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>43</y>
-     <width>111</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Auto-Apply FX</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="muteonrestart">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>191</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Mute when restarting Viper</string>
-   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>33</y>
+      <width>71</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Source</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="source">
+    <property name="geometry">
+     <rect>
+      <x>71</x>
+      <y>30</y>
+      <width>181</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
