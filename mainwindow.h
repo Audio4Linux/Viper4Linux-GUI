@@ -35,6 +35,7 @@ public slots:
     void Restart();
     void reloadConfig();
 private slots:
+    void OnUpdate();
     void OpenPeak();
     void OpenConv();
     void ConfirmConf();
@@ -90,7 +91,6 @@ private slots:
 private:
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void OnUpdate();
     void SaveAppConfig(bool, const string&,bool);
     void closeEvent (QCloseEvent *event);
     string getMain();

@@ -1157,4 +1157,33 @@ void MainWindow::ConnectActions(){
     connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(updateeq8()));
     connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(updateeq9()));
     connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(updateeq10()));
+
+    connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->vcure , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->tubesim , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+
+    connect( ui->vhp , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->diff , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->reverb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+
+    connect( ui->enable_eq , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+
+    connect( ui->enable_comp , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->noclip , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->m_gain , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->m_width , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->m_attack , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->m_release , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+
+    connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->vcure , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->tubesim , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+
+    connect( ui->agc , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->colm , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->vse , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->conv , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->ax , SIGNAL(clicked()),this, SLOT(OnUpdate()));
 }
