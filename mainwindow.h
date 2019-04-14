@@ -29,18 +29,21 @@ public:
     void loadAppConfig(bool once = false);
     void UpdatePeakSource(string source);
     explicit MainWindow(QWidget *parent = nullptr);
+    void setEQ(const int *data);
     ~MainWindow();
 public slots:
     void Reset();
     void Restart();
     void reloadConfig();
 private slots:
+    void Log1();
     void OnUpdate();
     void OpenPeak();
     void OpenConv();
     void ConfirmConf();
     void ResetEQ();
     void OpenSettings();
+    void updatepreset();
     void updatevbgain();
     void updatevbfreq();
     void updatevbmode();
@@ -89,6 +92,7 @@ private slots:
     void updateeq10();
     void updatecc();
 private:
+    void updateeq(int);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
     void SaveAppConfig(bool, const string&,bool);

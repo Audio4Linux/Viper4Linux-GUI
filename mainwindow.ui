@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -689,10 +689,13 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
+      </property>
+      <property name="value">
+       <number>0</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -714,10 +717,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -739,10 +742,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -764,10 +767,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -789,10 +792,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -814,10 +817,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -839,10 +842,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -864,10 +867,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -889,10 +892,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -914,10 +917,10 @@
        <number>1200</number>
       </property>
       <property name="singleStep">
-       <number>50</number>
+       <number>1</number>
       </property>
       <property name="pageStep">
-       <number>100</number>
+       <number>50</number>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -926,7 +929,7 @@
      <widget class="QCheckBox" name="enable_eq">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>370</x>
         <y>20</y>
         <width>101</width>
         <height>23</height>
@@ -939,9 +942,9 @@
      <widget class="QPushButton" name="reset_eq">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>370</x>
         <y>150</y>
-        <width>81</width>
+        <width>111</width>
         <height>25</height>
        </rect>
       </property>
@@ -953,6 +956,407 @@
         <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
+     <widget class="QComboBox" name="eqpreset">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>50</y>
+        <width>111</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Presets...</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Acoustic</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Bass</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Bass 3X</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Beats</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Classic</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Clear</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Dubstep</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Electronic</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Explosion</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hardstyle</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hip-Hop</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Jazz</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Metal</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Pop</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>R&amp;B</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Rock</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Vocal Booster</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Volume Boost</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="log1">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>120</y>
+        <width>111</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dump</string>
+      </property>
+      <property name="icon">
+       <iconset theme="ok">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: darkgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>127</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>144</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>162</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>18</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>53</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>36</y>
+        <width>291</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: lightgray;</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>298</x>
+        <y>17</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>+12db</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_28">
+      <property name="geometry">
+       <rect>
+        <x>298</x>
+        <y>161</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>-12db</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>90</y>
+        <width>39</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0db</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_30">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>128</y>
+        <width>39</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>-6db</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_31">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>55</y>
+        <width>39</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>+6db</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <zorder>line_7</zorder>
+     <zorder>line_8</zorder>
+     <zorder>line_3</zorder>
+     <zorder>line_5</zorder>
+     <zorder>line</zorder>
+     <zorder>line_9</zorder>
+     <zorder>line_2</zorder>
+     <zorder>line_6</zorder>
+     <zorder>line_4</zorder>
+     <zorder>eq1</zorder>
+     <zorder>eq2</zorder>
+     <zorder>eq3</zorder>
+     <zorder>eq4</zorder>
+     <zorder>eq5</zorder>
+     <zorder>eq6</zorder>
+     <zorder>eq7</zorder>
+     <zorder>eq8</zorder>
+     <zorder>eq9</zorder>
+     <zorder>eq10</zorder>
+     <zorder>enable_eq</zorder>
+     <zorder>reset_eq</zorder>
+     <zorder>eqpreset</zorder>
+     <zorder>log1</zorder>
+     <zorder>label_27</zorder>
+     <zorder>label_28</zorder>
+     <zorder>label_29</zorder>
+     <zorder>label_30</zorder>
+     <zorder>label_31</zorder>
     </widget>
     <widget class="QWidget" name="comp">
      <attribute name="title">

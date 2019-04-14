@@ -20,6 +20,9 @@
 #include <QMessageBox>
 #include <utility>
 #include <QProcess>
+#include <QDebug>
+#include <math.h>
+#include <QMessageBox>
 
 using namespace std;
 std::map<std::string, std::string> options;
@@ -35,6 +38,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
+   ui->log1->setVisible(true);
+#else
+   ui->log1->setVisible(false);
+#endif
+
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
@@ -48,6 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadAppConfig();
     reloadConfig();
+
+    connect(ui->log1, SIGNAL(clicked()), this, SLOT(Log1()));
 
     ConnectActions();
 }
@@ -220,14 +231,20 @@ void MainWindow::setPath(string npath){
 }
 
 void MainWindow::Reset(){
-    std::filebuf fb;
-    fb.open (path,std::ios::out);
-    std::ostream os(&fb);
-    os << default_config;
-    fb.close();
 
-    reloadConfig();
-    ConfirmConf();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Are you sure?", "Reset Configuration",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        std::filebuf fb;
+        fb.open (path,std::ios::out);
+        std::ostream os(&fb);
+        os << default_config;
+        fb.close();
+
+        reloadConfig();
+        ConfirmConf();
+    }
 }
 void MainWindow::reloadConfig(){
     cout << "Reloading..." << endl;
@@ -901,6 +918,92 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     }
 }
+void MainWindow::setEQ(const int* data){
+    ui->eq1->setValue(data[0]);
+    ui->eq2->setValue(data[1]);
+    ui->eq3->setValue(data[2]);
+    ui->eq4->setValue(data[3]);
+    ui->eq5->setValue(data[4]);
+    ui->eq6->setValue(data[5]);
+    ui->eq7->setValue(data[6]);
+    ui->eq8->setValue(data[7]);
+    ui->eq9->setValue(data[8]);
+    ui->eq10->setValue(data[9]);
+
+    OnUpdate();
+}
+
+void MainWindow::Log1(){
+    cout << "{" << ui->eq1->value() << ",";
+    cout << ui->eq2->value() << ",";
+    cout << ui->eq3->value() << ",";
+    cout << ui->eq4->value() << ",";
+    cout << ui->eq5->value() << ",";
+    cout << ui->eq6->value() << ",";
+    cout << ui->eq7->value() << ",";
+    cout << ui->eq8->value() << ",";
+    cout << ui->eq9->value() << ",";
+    cout << ui->eq10->value() << "}";
+    cout << endl << endl;
+}
+
+void MainWindow::updatepreset(){
+    if(ui->eqpreset->currentText() == "Pop"){
+        setEQ(std::initializer_list<int>({0,0,0,125,250,500,-150,-300,-300,-300}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Rock"){
+        setEQ(std::initializer_list<int>({0,0,300,-1000,-150,75,300,300,300,300}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Jazz"){
+        setEQ(std::initializer_list<int>({0,0,273,600,-600,-250,250,-75,-75,-75}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Classic"){
+        setEQ(std::initializer_list<int>({0,0,-900,0,150,0,0,900,900,900}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Bass"){
+        setEQ(std::initializer_list<int>({1150,850,500,200,0,0,0,0,0,0}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Clear"){
+        setEQ(std::initializer_list<int>({350,650,950,650,350,125,500,900,1100,900}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Volume Boost"){
+        setEQ(std::initializer_list<int>({1200,1200,1200,1200,1200,1200,1200,1200,1200,1200}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Hip-Hop"){
+        setEQ(std::initializer_list<int>({450,400,150,300,-150,-150,150,-100,150,300}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Dubstep"){
+        setEQ(std::initializer_list<int>({1200,-1200,-750,-900,-1200,-1200,-750,0,-300,-50}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Explosion"){
+        setEQ(std::initializer_list<int>({300,600,900,700,600,500,600,350,1050,800}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Metal"){
+        setEQ(std::initializer_list<int>({1050,750,0,550,0,0,600,0,900,1200}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Vocal Booster"){
+        setEQ(std::initializer_list<int>({-150,-300,-300,150,350,350,300,150,0,-150}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Hardstyle"){
+        setEQ(std::initializer_list<int>({600,1200,0,-1200,300,650,0,-450,-800,-1050}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Acoustic"){
+        setEQ(std::initializer_list<int>({500,450,350,100,150,150,300,350,300,300}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "R&B"){
+        setEQ(std::initializer_list<int>({300,700,600,150,-200,-150,200,300,350,400}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Electronic"){
+        setEQ(std::initializer_list<int>({400,350,50,-50,-200,150,0,50,300,450}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Bass 3X"){
+        setEQ(std::initializer_list<int>({1200,0,-1200,-900,-350,-600,0,-500,0,300}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Beats"){
+        setEQ(std::initializer_list<int>({-550,-450,-400,-300,-150,0,0,0,0,0}).begin());
+    }
+    else ResetEQ();
+}
 
 void MainWindow::updatevbgain(){
     ui->info->setText(QString::number( ui->vbgain->value() ));
@@ -1056,44 +1159,60 @@ void MainWindow::updatecc(){
     ui->info->setText(QString::number(ui->convcc->value()));
     OnUpdate();
 }
+void MainWindow::updateeq(int f){
+    QString pre = "";
+    if(f < 0 ) pre = "-";
+    char buffer[9];
+    QString s;
+    if(to_string(abs(f)%100).length()==1)
+    {
+        snprintf(buffer, sizeof(buffer), "%02d", abs(f)%100);
+        s = pre + QString::number(abs(f)/100) + "."  + QString::fromUtf8(buffer) + "dB";
+    }
+    else{
+        s = pre + QString::number(abs(f)/100) + "."  + QString::number(abs(f%100)) + "dB";
+    }
+    ui->info->setText(s);
+}
+
 void MainWindow::updateeq1(){
-    ui->info->setText(QString::number(ui->eq1->value()));
+    updateeq(ui->eq1->value());
     OnUpdate();
 }
 void MainWindow::updateeq2(){
-    ui->info->setText(QString::number(ui->eq2->value()));
+    updateeq(ui->eq2->value());
     OnUpdate();
 }
 void MainWindow::updateeq3(){
-    ui->info->setText(QString::number(ui->eq3->value()));
+    updateeq(ui->eq3->value());
     OnUpdate();
 }
 void MainWindow::updateeq4(){
-    ui->info->setText(QString::number(ui->eq4->value()));
+    updateeq(ui->eq4->value());
     OnUpdate();
 }
 void MainWindow::updateeq5(){
-    ui->info->setText(QString::number(ui->eq5->value()));
+    updateeq(ui->eq5->value());
     OnUpdate();
 }
 void MainWindow::updateeq6(){
-    ui->info->setText(QString::number(ui->eq6->value()));
+    updateeq(ui->eq6->value());
     OnUpdate();
 }
 void MainWindow::updateeq7(){
-    ui->info->setText(QString::number(ui->eq7->value()));
+    updateeq(ui->eq7->value());
     OnUpdate();
 }
 void MainWindow::updateeq8(){
-    ui->info->setText(QString::number(ui->eq8->value()));
+    updateeq(ui->eq8->value());
     OnUpdate();
 }
 void MainWindow::updateeq9(){
-    ui->info->setText(QString::number(ui->eq9->value()));
+    updateeq(ui->eq9->value());
     OnUpdate();
 }
 void MainWindow::updateeq10(){
-    ui->info->setText(QString::number(ui->eq10->value()));
+    updateeq(ui->eq10->value());
     OnUpdate();
 }
 void MainWindow::OnUpdate(){
@@ -1157,6 +1276,7 @@ void MainWindow::ConnectActions(){
     connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(updateeq8()));
     connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(updateeq9()));
     connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(updateeq10()));
+    connect(ui->eqpreset, SIGNAL(currentIndexChanged(int)),this, SLOT(updatepreset()));
 
     connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
