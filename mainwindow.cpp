@@ -21,14 +21,17 @@
 #include <QProcess>
 #include <QDebug>
 #include <math.h>
-#include <QMessageBox>
+#include <QClipboard>
+#include "main.h"
+#include <vector>
 
 using namespace std;
-std::map<std::string, std::string> options;
-string path;
-string appcpath;
-bool autofx;
-bool muteOnRestart;
+
+static string path;
+static string appcpath;
+static bool autofx;
+static bool muteOnRestart;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -898,6 +901,38 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     }
 }
+
+void MainWindow::CopyEQ(){
+    string s = to_string(ui->eq1->value()) + "," + to_string(ui->eq2->value()) + "," + to_string(ui->eq3->value()) + "," + to_string(ui->eq4->value()) + "," + to_string(ui->eq5->value()) + ",";
+    s += to_string(ui->eq6->value()) + "," + to_string(ui->eq7->value()) + "," + to_string(ui->eq8->value()) + "," + to_string(ui->eq9->value()) + "," + to_string(ui->eq10->value());
+    QClipboard* a = app->clipboard();
+    a->setText(QString::fromStdString(s));
+}
+
+void MainWindow::PasteEQ(){
+    QClipboard* a = app->clipboard();
+     std::string str = a->text().toUtf8().constData();
+     std::vector<int> vect;
+
+     std::stringstream ss(str);
+
+     int i;
+
+     while (ss >> i)
+     {
+         vect.push_back(i);
+
+         if (ss.peek() == ',')
+             ss.ignore();
+     }
+
+     for (i=0; i< vect.size(); i++)
+         std::cout << vect.at(i)<<std::endl;
+     int data[100];
+     std::copy(vect.begin(), vect.end(), data);
+     setEQ(data);
+}
+
 void MainWindow::setEQ(const int* data){
     ui->eq1->setValue(data[0]);
     ui->eq2->setValue(data[1]);
@@ -1204,6 +1239,8 @@ void MainWindow::ConnectActions(){
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));
+connect(ui->copy_eq, SIGNAL(clicked()), this, SLOT(CopyEQ()));
+connect(ui->paste_eq, SIGNAL(clicked()), this, SLOT(PasteEQ()));
 
     connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
