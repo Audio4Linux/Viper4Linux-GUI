@@ -42,9 +42,6 @@ FORMS += \
     settings.ui \
     convolver.ui
 
-LIBS += /usr/lib/x86_64-linux-gnu/libpulse.so -lpulse \
-        /usr/lib/x86_64-linux-gnu/libpulse-simple.so -lpulse-simple
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
