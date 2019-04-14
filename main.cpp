@@ -8,12 +8,14 @@
 #include <QApplication>
 #include <string>
 #include <iostream>
+#include <QStyleFactory>
 
 using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QApplication::setQuitOnLastWindowClosed( false );
+    app = &a;
     MainWindow w;
     mainwin = &w;
     w.setFixedSize(w.geometry().width(),w.geometry().height());
@@ -22,4 +24,3 @@ int main(int argc, char *argv[])
 
     return QApplication::exec();
 }
-

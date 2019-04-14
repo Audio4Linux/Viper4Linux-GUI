@@ -7,4 +7,5 @@
   #define EXTERN extern
 #endif
 EXTERN MainWindow *mainwin;
+EXTERN QApplication *app;
 #endif // MAIN_H
