@@ -28,25 +28,19 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     settings.cpp \
-    convolver.cpp \
-    peak.cpp \
-    qscale.cpp
+    convolver.cpp
 
 HEADERS += \
         mainwindow.h \
     configlist.h \
     settings.h \
     convolver.h \
-    main.h \
-    peak.h \
-    qscale.h \
-    qscale.h
+    main.h
 
 FORMS += \
         mainwindow.ui \
     settings.ui \
-    convolver.ui \
-    peak.ui
+    convolver.ui
 
 LIBS += /usr/lib/x86_64-linux-gnu/libpulse.so -lpulse \
         /usr/lib/x86_64-linux-gnu/libpulse-simple.so -lpulse-simple

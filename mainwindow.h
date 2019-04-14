@@ -16,8 +16,6 @@ class MainWindow : public QMainWindow
 public:
     Ui::MainWindow *ui;
     string getPath();
-    string getPeakSource();
-    void enablePeakBtn(bool on);
     void enableSetBtn(bool on);
     void enableConvBtn(bool on);
     bool getAutoFx();
@@ -38,7 +36,6 @@ public slots:
 private slots:
     void Log1();
     void OnUpdate();
-    void OpenPeak();
     void OpenConv();
     void ConfirmConf();
     void ResetEQ();
@@ -96,7 +93,6 @@ private:
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
     void SaveAppConfig(bool, const string&,bool);
-    void closeEvent (QCloseEvent *event);
     string getMain();
     string getBass();
     string getSurround();

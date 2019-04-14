@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -2509,32 +2509,12 @@
       <normaloff>.</normaloff>.</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="reload">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>240</y>
-      <width>31</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload V4L Config&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/main/download.svg</normaloff>:/main/download.svg</iconset>
-    </property>
-   </widget>
    <widget class="QLabel" name="info">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>90</x>
       <y>242</y>
-      <width>151</width>
+      <width>191</width>
       <height>21</height>
      </rect>
     </property>
@@ -2545,7 +2525,7 @@
    <widget class="QPushButton" name="settingsBtn">
     <property name="geometry">
      <rect>
-      <x>77</x>
+      <x>46</x>
       <y>240</y>
       <width>31</width>
       <height>25</height>
@@ -2562,7 +2542,7 @@
    <widget class="QPushButton" name="restart">
     <property name="geometry">
      <rect>
-      <x>44</x>
+      <x>10</x>
       <y>240</y>
       <width>31</width>
       <height>25</height>
@@ -2580,29 +2560,6 @@
     <property name="icon">
      <iconset resource="resources.qrc">
       <normaloff>:/main/refresh.svg</normaloff>:/main/refresh.svg</iconset>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="peak">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>240</y>
-      <width>31</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Restart V4L</string>
-    </property>
-    <property name="toolTipDuration">
-     <number>-1</number>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/main/eq.svg</normaloff>:/main/eq.svg</iconset>
     </property>
    </widget>
   </widget>

@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "settings.h"
 #include "ui_settings.h"
-#include "peak.h"
 #include "convolver.h"
 #include <string>
 #include <iostream>
@@ -30,8 +29,6 @@ string path;
 string appcpath;
 bool autofx;
 bool muteOnRestart;
-string peakSource;
-peak* currentPeak;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -44,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
    ui->log1->setVisible(false);
 #endif
 
+   //qDebug() << QStyleFactory::keys();
+   //app.setStyle(QStyleFactory::create("Windows"));
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
@@ -136,10 +135,7 @@ void MainWindow::ConfirmConf(){
     Restart();
 
 }
-void MainWindow::closeEvent (QCloseEvent *event)
-{
-    currentPeak->close();
-}
+
 void MainWindow::Restart(){
     if(muteOnRestart) system("pactl set-sink-mute 0 1");
     system("viper restart");
@@ -177,30 +173,14 @@ void MainWindow::OpenConv(){
     c->setFixedSize(c->geometry().width(),c->geometry().height());
     c->show();
 }
-void MainWindow::OpenPeak(){
-    enablePeakBtn(false);
-    currentPeak = new peak(this);
-    currentPeak->show();
-}
-string MainWindow::getPeakSource(){
-    return peakSource;
-}
-void MainWindow::UpdatePeakSource(string source){
-    peakSource = std::move(source);
-    if(currentPeak){
-        if(currentPeak->isVisible())
-            currentPeak->reject();
-    }
-}
+
 void MainWindow::OpenSettings(){
     enableSetBtn(false);
     auto setting = new settings(this);
     setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
     setting->show();
 }
-void MainWindow::enablePeakBtn(bool on){
-    ui->peak->setEnabled(on);
-}
+
 void MainWindow::enableSetBtn(bool on){
     ui->settingsBtn->setEnabled(on);
 }
@@ -1037,15 +1017,15 @@ void MainWindow::updateroomwidth(){
     OnUpdate();
 }
 void MainWindow::updateroomdamp(){
-    ui->info->setText(QString::number( ui->roomdamp->value() ));
+    ui->info->setText(QString::number( ui->roomdamp->value() ) + "%");
     OnUpdate();
 }
 void MainWindow::updatewet(){
-    ui->info->setText(QString::number( ui->wet->value() ));
+    ui->info->setText(QString::number( ui->wet->value() ) + "%");
     OnUpdate();
 }
 void MainWindow::updatedry(){
-    ui->info->setText(QString::number( ui->dry->value() ));
+    ui->info->setText(QString::number( ui->dry->value() ) + "%");
     OnUpdate();
 }
 void MainWindow::updatecolmwide(){
@@ -1108,7 +1088,7 @@ void MainWindow::updatebarkfreq(){
     OnUpdate();
 }
 void MainWindow::updatebarkcon(){
-    ui->info->setText("Level"+QString::number(ui->barkcon->value()));
+    ui->info->setText("Level "+QString::number(ui->barkcon->value()));
     OnUpdate();
 }
 void MainWindow::updatecomprelease(){
@@ -1156,7 +1136,7 @@ void MainWindow::updatea_kneewidth(){
     OnUpdate();
 }
 void MainWindow::updatecc(){
-    ui->info->setText(QString::number(ui->convcc->value()));
+    ui->info->setText(QString::number(ui->convcc->value()) + "%");
     OnUpdate();
 }
 void MainWindow::updateeq(int f){
@@ -1223,9 +1203,7 @@ void MainWindow::ConnectActions(){
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
-    connect(ui->reload, SIGNAL(clicked()), this, SLOT(reloadConfig()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));
-    connect(ui->peak, SIGNAL(clicked()), this, SLOT(OpenPeak()));
 
     connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));

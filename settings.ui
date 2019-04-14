@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>284</width>
-    <height>258</height>
+    <height>175</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>220</y>
+     <y>140</y>
      <width>80</width>
      <height>25</height>
     </rect>
@@ -88,41 +88,18 @@
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_2">
+  <widget class="QPushButton" name="github">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>9</x>
      <y>140</y>
-     <width>261</width>
-     <height>71</height>
+     <width>171</width>
+     <height>25</height>
     </rect>
    </property>
-   <property name="title">
-    <string>VU Meter</string>
+   <property name="text">
+    <string>View Github Repo</string>
    </property>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>33</y>
-      <width>71</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Source</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="source">
-    <property name="geometry">
-     <rect>
-      <x>71</x>
-      <y>30</y>
-      <width>181</width>
-      <height>25</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
  </widget>
  <resources/>
