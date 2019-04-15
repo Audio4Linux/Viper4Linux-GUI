@@ -36,7 +36,6 @@ public slots:
 private slots:
     void CopyEQ();
     void PasteEQ();
-    void Log1();
     void OnUpdate();
     void OpenConv();
     void ConfirmConf();

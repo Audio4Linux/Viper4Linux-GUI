@@ -38,14 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
-   ui->log1->setVisible(true);
-#else
-   ui->log1->setVisible(false);
-#endif
-
-   //qDebug() << QStyleFactory::keys();
-   //app.setStyle(QStyleFactory::create("Windows"));
+    //qDebug() << QStyleFactory::keys();
+    //app.setStyle(QStyleFactory::create("Windows"));
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
@@ -59,8 +53,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadAppConfig();
     reloadConfig();
-
-    connect(ui->log1, SIGNAL(clicked()), this, SLOT(Log1()));
 
     ConnectActions();
 }
@@ -901,38 +893,35 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     }
 }
-
 void MainWindow::CopyEQ(){
     string s = to_string(ui->eq1->value()) + "," + to_string(ui->eq2->value()) + "," + to_string(ui->eq3->value()) + "," + to_string(ui->eq4->value()) + "," + to_string(ui->eq5->value()) + ",";
     s += to_string(ui->eq6->value()) + "," + to_string(ui->eq7->value()) + "," + to_string(ui->eq8->value()) + "," + to_string(ui->eq9->value()) + "," + to_string(ui->eq10->value());
     QClipboard* a = app->clipboard();
     a->setText(QString::fromStdString(s));
 }
-
 void MainWindow::PasteEQ(){
     QClipboard* a = app->clipboard();
-     std::string str = a->text().toUtf8().constData();
-     std::vector<int> vect;
+    std::string str = a->text().toUtf8().constData();
+    std::vector<int> vect;
 
-     std::stringstream ss(str);
+    std::stringstream ss(str);
 
-     int i;
+    int i;
 
-     while (ss >> i)
-     {
-         vect.push_back(i);
+    while (ss >> i)
+    {
+        vect.push_back(i);
 
-         if (ss.peek() == ',')
-             ss.ignore();
-     }
+        if (ss.peek() == ',')
+            ss.ignore();
+    }
 
-     for (i=0; i< vect.size(); i++)
-         std::cout << vect.at(i)<<std::endl;
-     int data[100];
-     std::copy(vect.begin(), vect.end(), data);
-     setEQ(data);
+    for (i=0; i< vect.size(); i++)
+        std::cout << vect.at(i)<<std::endl;
+    int data[100];
+    std::copy(vect.begin(), vect.end(), data);
+    setEQ(data);
 }
-
 void MainWindow::setEQ(const int* data){
     ui->eq1->setValue(data[0]);
     ui->eq2->setValue(data[1]);
@@ -947,21 +936,6 @@ void MainWindow::setEQ(const int* data){
 
     OnUpdate();
 }
-
-void MainWindow::Log1(){
-    cout << "{" << ui->eq1->value() << ",";
-    cout << ui->eq2->value() << ",";
-    cout << ui->eq3->value() << ",";
-    cout << ui->eq4->value() << ",";
-    cout << ui->eq5->value() << ",";
-    cout << ui->eq6->value() << ",";
-    cout << ui->eq7->value() << ",";
-    cout << ui->eq8->value() << ",";
-    cout << ui->eq9->value() << ",";
-    cout << ui->eq10->value() << "}";
-    cout << endl << endl;
-}
-
 void MainWindow::updatepreset(){
     if(ui->eqpreset->currentText() == "Pop"){
         setEQ(std::initializer_list<int>({0,0,0,125,250,500,-150,-300,-300,-300}).begin());
@@ -988,9 +962,9 @@ void MainWindow::updatepreset(){
         setEQ(std::initializer_list<int>({450,400,150,300,-150,-150,150,-100,150,300}).begin());
     }
     else if(ui->eqpreset->currentText() == "Dubstep"){
-        setEQ(std::initializer_list<int>({1200,-1200,-750,-900,-1200,-1200,-750,0,-300,-50}).begin());
+        setEQ(std::initializer_list<int>({1200,50,-200,-500,-500,-450,-250,0,-300,-50}).begin());
     }
-    else if(ui->eqpreset->currentText() == "Explosion"){
+    else if(ui->eqpreset->currentText() == "Movie"){
         setEQ(std::initializer_list<int>({300,600,900,700,600,500,600,350,1050,800}).begin());
     }
     else if(ui->eqpreset->currentText() == "Metal"){
@@ -1011,7 +985,7 @@ void MainWindow::updatepreset(){
     else if(ui->eqpreset->currentText() == "Electronic"){
         setEQ(std::initializer_list<int>({400,350,50,-50,-200,150,0,50,300,450}).begin());
     }
-    else if(ui->eqpreset->currentText() == "Bass 3X"){
+    else if(ui->eqpreset->currentText() == "Bass Deep"){
         setEQ(std::initializer_list<int>({1200,0,-1200,-900,-350,-600,0,-500,0,300}).begin());
     }
     else if(ui->eqpreset->currentText() == "Beats"){
@@ -1239,8 +1213,8 @@ void MainWindow::ConnectActions(){
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));
-connect(ui->copy_eq, SIGNAL(clicked()), this, SLOT(CopyEQ()));
-connect(ui->paste_eq, SIGNAL(clicked()), this, SLOT(PasteEQ()));
+    connect(ui->copy_eq, SIGNAL(clicked()), this, SLOT(CopyEQ()));
+    connect(ui->paste_eq, SIGNAL(clicked()), this, SLOT(PasteEQ()));
 
     connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
