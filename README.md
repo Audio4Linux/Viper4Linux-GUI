@@ -6,7 +6,7 @@ Unofficial UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
 #### Install Dependencies
 
 ```
-sudo apt install qtbase5-dev
+sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a
 ```
 #### Start Executable
 ```
