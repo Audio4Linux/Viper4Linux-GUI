@@ -965,11 +965,6 @@
       </item>
       <item>
        <property name="text">
-        <string>Bass Deep</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
         <string>Beats</string>
        </property>
       </item>
@@ -981,6 +976,11 @@
       <item>
        <property name="text">
         <string>Clear</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Deep Bass</string>
        </property>
       </item>
       <item>
@@ -1031,6 +1031,11 @@
       <item>
        <property name="text">
         <string>Rock</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Soft Bass</string>
        </property>
       </item>
       <item>

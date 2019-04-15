@@ -985,11 +985,14 @@ void MainWindow::updatepreset(){
     else if(ui->eqpreset->currentText() == "Electronic"){
         setEQ(std::initializer_list<int>({400,350,50,-50,-200,150,0,50,300,450}).begin());
     }
-    else if(ui->eqpreset->currentText() == "Bass Deep"){
+    else if(ui->eqpreset->currentText() == "Deep Bass"){
         setEQ(std::initializer_list<int>({1200,0,-1200,-900,-350,-600,0,-500,0,300}).begin());
     }
     else if(ui->eqpreset->currentText() == "Beats"){
         setEQ(std::initializer_list<int>({-550,-450,-400,-300,-150,0,0,0,0,0}).begin());
+    }
+    else if(ui->eqpreset->currentText() == "Soft Bass"){
+        setEQ(std::initializer_list<int>({1200,1034,900,700,600,500,600,350,1050,800}).begin());
     }
     else ResetEQ();
 }
