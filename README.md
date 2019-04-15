@@ -19,8 +19,8 @@ chmod +x V4L_GUI
   * Convolver Selection
 
 #### Screenshots
-![Screenshot1](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/screenshot1.png?raw=true)
-![Screenshot2](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/screenshot2.png?raw=true)
+![Screenshot1](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab1.png?raw=true)
+![Screenshot2](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3.png?raw=true)
 #### Credits
   * [Material Icons](https://material.io/tools/icons/)
   * [QScale by mmj](https://www.linux-apps.com/content/show.php/QScale?content=148053)
