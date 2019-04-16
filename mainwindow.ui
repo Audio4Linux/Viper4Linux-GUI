@@ -2538,7 +2538,7 @@
    <widget class="QLabel" name="info">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>180</x>
       <y>242</y>
       <width>261</width>
       <height>21</height>
@@ -2586,6 +2586,25 @@
     <property name="icon">
      <iconset resource="resources.qrc">
       <normaloff>:/main/refresh.svg</normaloff>:/main/refresh.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="disableFX">
+    <property name="geometry">
+     <rect>
+      <x>84</x>
+      <y>240</y>
+      <width>81</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Disable</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

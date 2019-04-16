@@ -110,7 +110,10 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
 
 void MainWindow::ConfirmConf(){
 
-    string config = "fx_enable=true\n";
+    string config = "fx_enable=";
+    if(!ui->disableFX->isChecked())config += "true\n";
+    else config += "false\n";
+
     config += getMain();
     config += getBass();
     config += getSurround();
@@ -595,6 +598,8 @@ void MainWindow::loadConfig(const string& key,string value){
     // cout << key << " -> " << value << endl;
     switch (resolveConfig(key)) {
     case fx_enable: {
+        if(value=="true") ui->disableFX->setChecked(false);
+        else ui->disableFX->setChecked(true);
         break;
     }
     case tube_enable: {
@@ -997,158 +1002,42 @@ void MainWindow::updatepreset(){
     else ResetEQ();
 }
 
-void MainWindow::updatevbgain(){
-    ui->info->setText(QString::number( ui->vbgain->value() ));
-    OnUpdate();
-}
-void MainWindow::updatevbfreq(){
-    ui->info->setText(QString::number( ui->vbfreq->value() ) + "Hz");
-    OnUpdate();
-}
-void MainWindow::updatevbmode(){
-    if(ui->vbmode->value()==0) ui->info->setText("Natural Bass");
-    else if(ui->vbmode->value()==1) ui->info->setText("Pure Bass+");
-    else if(ui->vbmode->value()==2) ui->info->setText("Subwoofer");
-    else ui->info->setText("Mode "+QString::number( ui->vbmode->value() ));
-    OnUpdate();
-}
-void MainWindow::updatedifflvl(){
-    ui->info->setText(QString::number( ui->difflvl->value() ) + "ms");
-    OnUpdate();
-}
-void MainWindow::updatevhplvl(){
-    ui->info->setText("Level " + QString::number( ui->vhplvl->value() ));
-    OnUpdate();
-}
-void MainWindow::updateroomsize(){
-    ui->info->setText(QString::number( ui->roomsize->value()));
-    OnUpdate();
-}
-void MainWindow::updateroomwidth(){
-    ui->info->setText(QString::number( ui->roomwidth->value() ));
-    OnUpdate();
-}
-void MainWindow::updateroomdamp(){
-    ui->info->setText(QString::number( ui->roomdamp->value() ) + "%");
-    OnUpdate();
-}
-void MainWindow::updatewet(){
-    ui->info->setText(QString::number( ui->wet->value() ) + "%");
-    OnUpdate();
-}
-void MainWindow::updatedry(){
-    ui->info->setText(QString::number( ui->dry->value() ) + "%");
-    OnUpdate();
-}
-void MainWindow::updatecolmwide(){
-    ui->info->setText(QString::number( ui->colmwide->value()));
-    OnUpdate();
-}
-void MainWindow::updatecolmmidimg(){
-    ui->info->setText(QString::number( ui->colmmidimg->value() ));
-    OnUpdate();
-}
-void MainWindow::updatecolmdepth(){
-    ui->info->setText(QString::number( ui->colmdepth->value() ));
-    OnUpdate();
-}
-void MainWindow::updatevclvl(){
-    ui->info->setText(QString::number( ui->vclvl->value() ));
-    OnUpdate();
-}
-void MainWindow::updatevcmode(){
-    if(ui->vcmode->value()==0) ui->info->setText("Natural");
-    else if(ui->vcmode->value()==1) ui->info->setText("OZone+");
-    else if(ui->vcmode->value()==2) ui->info->setText("XHiFi");
-    else ui->info->setText("Mode "+QString::number( ui->vcmode->value() ));
-    OnUpdate();
-}
-void MainWindow::updategain(){
-    ui->info->setText(QString::number( ui->gain->value() ));
-    OnUpdate();
-}
-void MainWindow::updatemaxgain(){
-    ui->info->setText(QString::number( ui->maxgain->value() ));
-    OnUpdate();
-}
-void MainWindow::updatemaxvol(){
-    ui->info->setText(QString::number( ui->maxvol->value() ));
-    OnUpdate();
-}
-void MainWindow::updatelimiter(){
-    ui->info->setText(QString::number( ui->limiter->value() )+"%");
-    OnUpdate();
-}
-void MainWindow::updateoutputpan(){
-    ui->info->setText(QString::number( ui->outputpan->value()));
-    OnUpdate();
-}
-void MainWindow::updateoutvolume(){
-    ui->info->setText(QString::number( ui->outvolume->value())+"%");
-    OnUpdate();
-}
-void MainWindow::updatevcurelvl(){
-    ui->info->setText("Level " + QString::number(ui->vcurelvl->value()));
-    OnUpdate();
-}
-void MainWindow::updateaxmode(){
-    ui->info->setText("Mode "+QString::number(ui->axmode->value()));
-    OnUpdate();
-}
-void MainWindow::updatebarkfreq(){
-    ui->info->setText(QString::number(ui->barkfreq->value())+"Hz");
-    OnUpdate();
-}
-void MainWindow::updatebarkcon(){
-    ui->info->setText("Level "+QString::number(ui->barkcon->value()));
-    OnUpdate();
-}
-void MainWindow::updatecomprelease(){
-    ui->info->setText(QString::number(ui->comprelease->value()));
-    OnUpdate();
-}
-void MainWindow::updatecompgain(){
-    ui->info->setText(QString::number(ui->compgain->value()));
-    OnUpdate();
-}
-void MainWindow::updatecompwidth(){
-    ui->info->setText(QString::number(ui->compwidth->value()));
-    OnUpdate();
-}
-void MainWindow::updatecomp_ratio(){
-    ui->info->setText(QString::number(ui->comp_ratio->value()));
-    OnUpdate();
-}
-void MainWindow::updatecomp_thres(){
-    ui->info->setText(QString::number(ui->comp_thres->value()));
-    OnUpdate();
-}
-void MainWindow::updatecompattack(){
-    ui->info->setText(QString::number(ui->compattack->value()));
-    OnUpdate();
-}
-void MainWindow::updatea_adapt(){
-    ui->info->setText(QString::number(ui->a_adapt->value()));
-    OnUpdate();
-}
-void MainWindow::updatea_crest(){
-    ui->info->setText(QString::number(ui->a_crest->value()));
-    OnUpdate();
-}
-void MainWindow::updatea_maxatk(){
-    ui->info->setText(QString::number(ui->a_maxatk->value()));
-    OnUpdate();
-}
-void MainWindow::updatea_maxrel(){
-    ui->info->setText(QString::number(ui->a_maxrel->value()));
-    OnUpdate();
-}
-void MainWindow::updatea_kneewidth(){
-    ui->info->setText(QString::number(ui->a_kneewidth->value()));
-    OnUpdate();
-}
-void MainWindow::updatecc(){
-    ui->info->setText(QString::number(ui->convcc->value()) + "%");
+void MainWindow::update(int d){
+    QObject* obj = sender();
+    QString pre = "";
+    QString post = "";
+
+    if(obj==ui->vbmode){
+        if(d==0) ui->info->setText("Natural Bass");
+        else if(d==1) ui->info->setText("Pure Bass+");
+        else if(d==2) ui->info->setText("Subwoofer");
+        else ui->info->setText("Mode "+QString::number( d ));
+    }
+    else if(obj==ui->vcmode){
+        if(d==0) ui->info->setText("Natural");
+        else if(d==1) ui->info->setText("OZone+");
+        else if(d==2) ui->info->setText("XHiFi");
+        else ui->info->setText("Mode "+QString::number( d ));
+    }
+    else if(obj==ui->eq1||obj==ui->eq2||obj==ui->eq3||obj==ui->eq4||obj==ui->eq5||obj==ui->eq6||obj==ui->eq7||obj==ui->eq8||obj==ui->eq9||obj==ui->eq10){
+        updateeq(d);
+    }
+    else{
+        if(obj==ui->vbfreq)post = "Hz";
+        else if(obj==ui->difflvl)post = "ms";
+        else if(obj==ui->vhplvl)pre = "Level ";
+        else if(obj==ui->roomdamp)post = "%";
+        else if(obj==ui->wet)post = "%";
+        else if(obj==ui->dry)post = "%";
+        else if(obj==ui->limiter)post = "%";
+        else if(obj==ui->outvolume)post = "%";
+        else if(obj==ui->vcurelvl)pre = "Level ";
+        else if(obj==ui->axmode)pre = "Mode ";
+        else if(obj==ui->barkcon)pre = "Level ";
+        else if(obj==ui->barkfreq)post = "Hz";
+        else if(obj==ui->convcc)post = "%";
+        ui->info->setText(pre + QString::number(d) + post);
+    }
     OnUpdate();
 }
 void MainWindow::updateeq(int f){
@@ -1167,132 +1056,89 @@ void MainWindow::updateeq(int f){
     ui->info->setText(s);
 }
 
-void MainWindow::updateeq1(){
-    updateeq(ui->eq1->value());
-    OnUpdate();
-}
-void MainWindow::updateeq2(){
-    updateeq(ui->eq2->value());
-    OnUpdate();
-}
-void MainWindow::updateeq3(){
-    updateeq(ui->eq3->value());
-    OnUpdate();
-}
-void MainWindow::updateeq4(){
-    updateeq(ui->eq4->value());
-    OnUpdate();
-}
-void MainWindow::updateeq5(){
-    updateeq(ui->eq5->value());
-    OnUpdate();
-}
-void MainWindow::updateeq6(){
-    updateeq(ui->eq6->value());
-    OnUpdate();
-}
-void MainWindow::updateeq7(){
-    updateeq(ui->eq7->value());
-    OnUpdate();
-}
-void MainWindow::updateeq8(){
-    updateeq(ui->eq8->value());
-    OnUpdate();
-}
-void MainWindow::updateeq9(){
-    updateeq(ui->eq9->value());
-    OnUpdate();
-}
-void MainWindow::updateeq10(){
-    updateeq(ui->eq10->value());
-    OnUpdate();
-}
 void MainWindow::OnUpdate(){
     if(autofx)ConfirmConf();
 }
 void MainWindow::ConnectActions(){
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));
+    connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(OnUpdate()));
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));
     connect(ui->copy_eq, SIGNAL(clicked()), this, SLOT(CopyEQ()));
     connect(ui->paste_eq, SIGNAL(clicked()), this, SLOT(PasteEQ()));
-
     connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
-    connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(updatecc()));
-    connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(updatevbfreq()));
-    connect( ui->vbgain, SIGNAL(valueChanged(int)),this, SLOT(updatevbgain()));
-    connect( ui->vbmode , SIGNAL(valueChanged(int)),this, SLOT(updatevbmode()));
-    connect( ui->difflvl , SIGNAL(valueChanged(int)),this, SLOT(updatedifflvl()));
-    connect( ui->vhplvl , SIGNAL(valueChanged(int)),this, SLOT(updatevhplvl()));
-    connect( ui->roomsize , SIGNAL(valueChanged(int)),this, SLOT(updateroomsize()));
-    connect( ui->roomwidth , SIGNAL(valueChanged(int)),this, SLOT(updateroomwidth()));
-    connect( ui->roomdamp , SIGNAL(valueChanged(int)),this, SLOT(updateroomdamp()));
-    connect( ui->wet , SIGNAL(valueChanged(int)),this, SLOT(updatewet()));
-    connect( ui->dry , SIGNAL(valueChanged(int)),this, SLOT(updatedry()));
-    connect( ui->colmwide , SIGNAL(valueChanged(int)),this, SLOT(updatecolmwide()));
-    connect( ui->colmmidimg , SIGNAL(valueChanged(int)),this, SLOT(updatecolmmidimg()));
-    connect( ui->colmdepth, SIGNAL(valueChanged(int)),this, SLOT(updatecolmdepth()));
-    connect( ui->vclvl, SIGNAL(valueChanged(int)),this, SLOT(updatevclvl()));
-    connect( ui->vcmode, SIGNAL(valueChanged(int)),this, SLOT(updatevcmode()));
-    connect( ui->gain , SIGNAL(valueChanged(int)),this, SLOT(updategain()));
-    connect( ui->maxgain , SIGNAL(valueChanged(int)),this, SLOT(updatemaxgain()));
-    connect( ui->maxvol , SIGNAL(valueChanged(int)),this, SLOT(updatemaxvol()));
-    connect( ui->limiter , SIGNAL(valueChanged(int)),this, SLOT(updatelimiter()));
-    connect( ui->outputpan , SIGNAL(valueChanged(int)),this, SLOT(updateoutputpan()));
-    connect( ui->outvolume , SIGNAL(valueChanged(int)),this, SLOT(updateoutvolume()));
-    connect(ui->vcurelvl, SIGNAL(valueChanged(int)),this, SLOT(updatevcurelvl()));
-    connect(ui->axmode, SIGNAL(valueChanged(int)),this, SLOT(updateaxmode()));
-    connect(ui->barkfreq, SIGNAL(valueChanged(int)),this, SLOT(updatebarkfreq()));
-    connect(ui->barkcon, SIGNAL(valueChanged(int)),this, SLOT(updatebarkcon()));
-    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(updatecomprelease()));
-    connect(ui->compgain, SIGNAL(valueChanged(int)),this, SLOT(updatecompgain()));
-    connect(ui->compwidth, SIGNAL(valueChanged(int)),this, SLOT(updatecompwidth()));
-    connect(ui->comp_ratio, SIGNAL(valueChanged(int)),this, SLOT(updatecomp_ratio()));
-    connect(ui->comp_thres, SIGNAL(valueChanged(int)),this, SLOT(updatecomp_thres()));
-    connect(ui->compattack, SIGNAL(valueChanged(int)),this, SLOT(updatecompattack()));
-    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(updatecomprelease()));
-    connect(ui->a_adapt, SIGNAL(valueChanged(int)),this, SLOT(updatea_adapt()));
-    connect(ui->a_crest, SIGNAL(valueChanged(int)),this, SLOT(updatea_crest()));
-    connect(ui->a_maxatk, SIGNAL(valueChanged(int)),this, SLOT(updatea_maxatk()));
-    connect(ui->a_maxrel, SIGNAL(valueChanged(int)),this, SLOT(updatea_maxrel()));
-    connect(ui->a_kneewidth, SIGNAL(valueChanged(int)),this, SLOT(updatea_kneewidth()));
-    connect(ui->eq1, SIGNAL(valueChanged(int)),this, SLOT(updateeq1()));
-    connect(ui->eq2, SIGNAL(valueChanged(int)),this, SLOT(updateeq2()));
-    connect(ui->eq3, SIGNAL(valueChanged(int)),this, SLOT(updateeq3()));
-    connect(ui->eq4, SIGNAL(valueChanged(int)),this, SLOT(updateeq4()));
-    connect(ui->eq5, SIGNAL(valueChanged(int)),this, SLOT(updateeq5()));
-    connect(ui->eq6, SIGNAL(valueChanged(int)),this, SLOT(updateeq6()));
-    connect(ui->eq7, SIGNAL(valueChanged(int)),this, SLOT(updateeq7()));
-    connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(updateeq8()));
-    connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(updateeq9()));
-    connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(updateeq10()));
-    connect(ui->eqpreset, SIGNAL(currentIndexChanged(int)),this, SLOT(updatepreset()));
+
+    connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->vbgain, SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->vbmode , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->difflvl , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->vhplvl , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->roomsize , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->roomwidth , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->roomdamp , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->wet , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->dry , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->colmwide , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->colmmidimg , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->colmdepth, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->vclvl, SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->vcmode, SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->gain , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->maxgain , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->maxvol , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->outputpan , SIGNAL(valueChanged(int)),this,  SLOT(update(int)));
+    connect( ui->limiter , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->outvolume , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->vcurelvl, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->axmode, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->barkfreq, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->barkcon, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->compgain, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->compwidth, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->comp_ratio, SIGNAL(valueChanged(int)),this,SLOT(update(int)));
+    connect(ui->comp_thres, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->compattack, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->a_adapt, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->a_crest, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->a_maxatk, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->a_maxrel, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->a_kneewidth, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq1, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq2, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq3, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq4, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq5, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq6, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq7, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+
+    connect(ui->eqpreset, SIGNAL(currentIndexChanged(int)),this,SLOT(updatepreset()));
 
     connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->vcure , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->tubesim , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-
     connect( ui->vhp , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->diff , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->reverb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-
     connect( ui->enable_eq , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-
     connect( ui->enable_comp , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->noclip , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->m_gain , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->m_width , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->m_attack , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->m_release , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-
     connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->vcure , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->tubesim , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-
     connect( ui->agc , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->colm , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->vse , SIGNAL(clicked()),this, SLOT(OnUpdate()));
