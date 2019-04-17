@@ -58,7 +58,7 @@ void settings::reject()
 }
 void settings::glava_help(){
     QMessageBox *msgBox = new QMessageBox(this);
-     msgBox->setText("This function kills the glava-process (desktop visualizer) and restarts it when applying a new config.\nThis prevents GLava to switch to another audio sink, when V4L is killed and restarted to activate the updated config.");
+     msgBox->setText("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting.");
      msgBox->setStandardButtons(QMessageBox::Ok);
      msgBox->setDefaultButton(QMessageBox::Ok);
      msgBox->exec();
