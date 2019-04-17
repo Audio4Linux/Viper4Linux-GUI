@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QMessageBox>
 
 using namespace std;
 static settings* obj;
@@ -31,16 +32,20 @@ settings::settings(QWidget *parent) :
     else ui->path->setText(QString::fromStdString(path));
     ui->autofx->setChecked(mainwin->getAutoFx());
     ui->muteonrestart->setChecked(mainwin->getMuteOnRestart());
+    ui->glavafix->setChecked(mainwin->getGFix());
     connect(ui->save, SIGNAL(clicked()), this, SLOT(submit()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
+    connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
 }
 settings::~settings(){
     delete ui;
 }
 void settings::submit(){
+    mainwin->setGFix(ui->glavafix->isChecked());
     mainwin->setPath(ui->path->text().toUtf8().constData());
     mainwin->setAutoFx(ui->autofx->isChecked());
     mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
+
     this->close();
 }
 void settings::github(){
@@ -50,4 +55,11 @@ void settings::reject()
 {
     mainwin->enableSetBtn(true);
     QDialog::reject();
+}
+void settings::glava_help(){
+    QMessageBox *msgBox = new QMessageBox(this);
+     msgBox->setText("This function kills the glava-process (desktop visualizer) and restarts it when applying a new config.\nThis prevents GLava to switch to another audio sink, when V4L is killed and restarted to activate the updated config.");
+     msgBox->setStandardButtons(QMessageBox::Ok);
+     msgBox->setDefaultButton(QMessageBox::Ok);
+     msgBox->exec();
 }

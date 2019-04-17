@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>284</width>
-    <height>175</height>
+    <height>195</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>140</y>
+     <y>160</y>
      <width>80</width>
      <height>25</height>
     </rect>
@@ -32,7 +32,7 @@
      <x>10</x>
      <y>10</y>
      <width>261</width>
-     <height>121</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="title">
@@ -87,12 +87,49 @@
      <string>Auto-Apply FX</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="glavafix">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>114</y>
+      <width>201</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fix GLava sink switching</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="glavafix_help">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>114</y>
+      <width>41</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(32, 74, 135);</string>
+    </property>
+    <property name="text">
+     <string>[?]</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="github">
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>140</y>
+     <y>160</y>
      <width>171</width>
      <height>25</height>
     </rect>

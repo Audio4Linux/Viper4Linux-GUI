@@ -21,6 +21,8 @@ public:
     bool getAutoFx();
     void setAutoFx(bool autofx);
     bool getMuteOnRestart();
+    bool getGFix();
+    void setGFix(bool);
     void setMuteOnRestart(bool on);
     void setPath(string npath);
     void setIRS(const string& irs,bool apply=true);
@@ -47,7 +49,7 @@ private:
     void updateeq(int);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void SaveAppConfig(bool, const string&,bool);
+    void SaveAppConfig(bool, const string&,bool,bool);
     string getMain();
     string getBass();
     string getSurround();

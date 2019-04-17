@@ -31,6 +31,7 @@ static string path;
 static string appcpath;
 static bool autofx;
 static bool muteOnRestart;
+static bool glava_fix;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -75,6 +76,10 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         path = value.substr(1, value.size() - 2);
         break;
     }
+    case glavafix: {
+        glava_fix = value=="true";
+        break;
+    }
     case mutedRestart: {
         muteOnRestart = value=="true";
         break;
@@ -85,7 +90,13 @@ void MainWindow::setIRS(const string& irs,bool apply){
     ui->convpath->setText(QString::fromStdString((irs)));
     if(apply)ConfirmConf();
 }
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart){
+void MainWindow::setGFix(bool f){
+    glava_fix = f;
+}
+bool MainWindow::getGFix(){
+    return glava_fix;
+}
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -95,6 +106,10 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     stringstream converter2;
     converter2 << boolalpha << muteRestart;
     appconfig += "muteOnRestart=" + converter2.str() + "\n";
+
+    stringstream converter3;
+    converter3 << boolalpha << g_fix;
+    appconfig += "glavafix=" + converter3.str() + "\n";
 
     ofstream myfile(appcpath);
     if (myfile.is_open())
@@ -136,7 +151,9 @@ void MainWindow::ConfirmConf(){
 
 void MainWindow::Restart(){
     if(muteOnRestart) system("pactl set-sink-mute 0 1");
+    if(glava_fix) system("killall -r glava");
     system("viper restart");
+    if(glava_fix) system("setsid glava -d &");
     if(muteOnRestart) system("pactl set-sink-mute 0 0");
 }
 void MainWindow::loadAppConfig(bool once){

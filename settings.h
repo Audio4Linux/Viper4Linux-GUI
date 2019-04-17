@@ -16,6 +16,7 @@ private slots:
         void submit();
         void reject();
         void github();
+        void glava_help();
 };
 
 #endif // SETTINGS_H
