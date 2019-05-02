@@ -1,6 +1,6 @@
 # Viper4Linux-GUI
 Unofficial UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
-
+  * Telegram: @ThePBone
   * [Binary Releases](https://github.com/ThePBone/Viper4Linux-GUI/releases)
 ## Usage
 #### Install Dependencies
