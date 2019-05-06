@@ -16,8 +16,11 @@ class MainWindow : public QMainWindow
 public:
     Ui::MainWindow *ui;
     string getPath();
+    void LoadPresetFile(QString);
+    void SavePresetFile(QString);
     void enableSetBtn(bool on);
     void enableConvBtn(bool on);
+    void enablePresetBtn(bool on);
     bool getAutoFx();
     void setAutoFx(bool autofx);
     bool getMuteOnRestart();
@@ -36,6 +39,7 @@ public slots:
     void Restart();
     void reloadConfig();
 private slots:
+    void OpenPreset();
     void CopyEQ();
     void PasteEQ();
     void OnUpdate();
@@ -45,6 +49,8 @@ private slots:
     void OpenSettings();
     void updatepreset();
     void update(int);
+    void LoadExternalFile();
+    void SaveExternalFile();
 private:
     void updateeq(int);
     void loadConfig(const string& key, string value);

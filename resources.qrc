@@ -4,5 +4,11 @@
         <file>settings.svg</file>
         <file>download.svg</file>
         <file>eq.svg</file>
+        <file>up.svg</file>
+        <file>down.svg</file>
+        <file>menu.svg</file>
+        <file>bookmark.svg</file>
+        <file>list.svg</file>
+        <file>queue.svg</file>
     </qresource>
 </RCC>

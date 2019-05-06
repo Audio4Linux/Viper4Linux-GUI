@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "settings.h"
+#include "preset.h"
 #include "ui_settings.h"
 #include "convolver.h"
 #include <string>
@@ -24,6 +25,10 @@
 #include <QClipboard>
 #include "main.h"
 #include <vector>
+#include <QMenu>
+#include <QAction>
+#include <QFile>
+#include <QFileDialog>
 
 using namespace std;
 
@@ -32,7 +37,9 @@ static string appcpath;
 static bool autofx;
 static bool muteOnRestart;
 static bool glava_fix;
-
+static bool settingsdlg_enabled=true;
+static bool presetdlg_enabled=true;
+static bool lockapply = false;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -55,12 +62,64 @@ MainWindow::MainWindow(QWidget *parent) :
     loadAppConfig();
     reloadConfig();
 
+    QMenu *menu = new QMenu();
+    menu->addAction("Reload Viper", this,SLOT(Restart()));
+    menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
+    menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
+    ui->toolButton->setMenu(menu);
+
     ConnectActions();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::LoadPresetFile(QString filename){
+    const QString src = filename;
+    const QString dest = QString::fromStdString(path);
+    if (QFile::exists(dest))QFile::remove(dest);
+
+    QFile::copy(src,dest);
+    cout << "Loading from " << filename.toUtf8().constData() << endl;
+    reloadConfig();
+    ConfirmConf();
+}
+void MainWindow::SavePresetFile(QString filename){
+    const QString src = QString::fromStdString(path);
+    const QString dest = filename;
+    if (QFile::exists(dest))QFile::remove(dest);
+
+    QFile::copy(src,dest);
+    cout << "Saving to " << filename.toUtf8().constData() << endl;
+}
+
+void MainWindow::LoadExternalFile(){
+    QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
+    if(filename=="")return;
+    const QString src = filename;
+    const QString dest = QString::fromStdString(path);
+    if (QFile::exists(dest))QFile::remove(dest);
+
+    QFile::copy(src,dest);
+    cout << "Loading from " << filename.toUtf8().constData() << endl;
+    reloadConfig();
+    ConfirmConf();
+}
+void MainWindow::SaveExternalFile(){
+    QString filename = QFileDialog::getSaveFileName(this,"Save current audio.conf","","*.conf");
+    if(filename=="")return;
+    QFileInfo fi(filename);
+    QString ext = fi.suffix();
+    if(ext!="conf")filename.append(".conf");
+
+    const QString src = QString::fromStdString(path);
+    const QString dest = filename;
+    if (QFile::exists(dest))QFile::remove(dest);
+
+    QFile::copy(src,dest);
+    cout << "Saving to " << filename.toUtf8().constData() << endl;
 }
 
 void MainWindow::decodeAppConfig(const string& key,const string& value){
@@ -190,14 +249,26 @@ void MainWindow::OpenConv(){
 }
 
 void MainWindow::OpenSettings(){
-    enableSetBtn(false);
-    auto setting = new settings(this);
-    setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
-    setting->show();
+    if(settingsdlg_enabled==true){
+        enableSetBtn(false);
+        auto setting = new settings(this);
+        setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
+        setting->show();
+    }
 }
-
+void MainWindow::OpenPreset(){
+    if(presetdlg_enabled==true){
+        enablePresetBtn(false);
+        auto preset = new Preset(this);
+        preset->setFixedSize(preset->geometry().width(),preset->geometry().height());
+        preset->show();
+    }
+}
 void MainWindow::enableSetBtn(bool on){
-    ui->settingsBtn->setEnabled(on);
+    settingsdlg_enabled=on;
+}
+void MainWindow::enablePresetBtn(bool on){
+    presetdlg_enabled=on;
 }
 void MainWindow::enableConvBtn(bool on){
     ui->conv_select->setEnabled(on);
@@ -242,6 +313,7 @@ void MainWindow::Reset(){
     }
 }
 void MainWindow::reloadConfig(){
+    lockapply=true;
     cout << "Reloading..." << endl;
     std::ifstream cFile(path);
     if (cFile.is_open())
@@ -269,6 +341,7 @@ void MainWindow::reloadConfig(){
         msgBox.setIcon(QMessageBox::Icon::Critical);
         msgBox.exec();
     }
+    lockapply=false;
 }
 void MainWindow::ResetEQ(){
     ui->eq1->setValue(0);
@@ -1074,18 +1147,20 @@ void MainWindow::updateeq(int f){
 }
 
 void MainWindow::OnUpdate(){
-    if(autofx)ConfirmConf();
+    if(autofx && !lockapply)ConfirmConf();
 }
 void MainWindow::ConnectActions(){
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));
     connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(OnUpdate()));
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
-    connect(ui->restart, SIGNAL(clicked()), this, SLOT(Restart()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));
     connect(ui->copy_eq, SIGNAL(clicked()), this, SLOT(CopyEQ()));
     connect(ui->paste_eq, SIGNAL(clicked()), this, SLOT(PasteEQ()));
-    connect(ui->settingsBtn, SIGNAL(clicked()), this, SLOT(OpenSettings()));
+
+    connect(ui->cpreset, SIGNAL(clicked()), this, SLOT(OpenPreset()));
+    connect(ui->set, SIGNAL(clicked()), this, SLOT(OpenSettings()));
+
 
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(update(int)));

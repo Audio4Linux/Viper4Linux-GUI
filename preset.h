@@ -14,9 +14,15 @@ class Preset : public QDialog
 public:
     explicit Preset(QWidget *parent = nullptr);
     ~Preset();
-
+private slots:
+    void reject();
+    void add();
+    void remove();
+    void load();
 private:
     Ui::Preset *ui;
+    QString pathAppend(const QString& path1, const QString& path2);
+    void UpdateList();
 };
 
 #endif // PRESET_H

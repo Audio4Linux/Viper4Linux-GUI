@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -2538,9 +2538,9 @@
    <widget class="QLabel" name="info">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>220</x>
       <y>242</y>
-      <width>181</width>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -2548,50 +2548,10 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="settingsBtn">
-    <property name="geometry">
-     <rect>
-      <x>46</x>
-      <y>240</y>
-      <width>31</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/main/settings.svg</normaloff>:/main/settings.svg</iconset>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="restart">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>240</y>
-      <width>31</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Restart V4L</string>
-    </property>
-    <property name="toolTipDuration">
-     <number>-1</number>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/main/refresh.svg</normaloff>:/main/refresh.svg</iconset>
-    </property>
-   </widget>
    <widget class="QPushButton" name="disableFX">
     <property name="geometry">
      <rect>
-      <x>84</x>
+      <x>120</x>
       <y>240</y>
       <width>91</width>
       <height>25</height>
@@ -2604,6 +2564,78 @@
      <bool>true</bool>
     </property>
     <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cpreset">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>240</y>
+      <width>31</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Custom Presets</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/queue.svg</normaloff>:/main/queue.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>15</width>
+      <height>15</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="set">
+    <property name="geometry">
+     <rect>
+      <x>46</x>
+      <y>240</y>
+      <width>31</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Settings</string>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/settings.svg</normaloff>:/main/settings.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>82</x>
+      <y>240</y>
+      <width>31</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="resources.qrc">
+      <normaloff>:/main/menu.svg</normaloff>:/main/menu.svg</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+    <property name="autoRaise">
      <bool>false</bool>
     </property>
    </widget>

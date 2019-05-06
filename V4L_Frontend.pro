@@ -28,19 +28,22 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     settings.cpp \
-    convolver.cpp
+    convolver.cpp \
+    preset.cpp
 
 HEADERS += \
         mainwindow.h \
     configlist.h \
     settings.h \
     convolver.h \
-    main.h
+    main.h \
+    preset.h
 
 FORMS += \
         mainwindow.ui \
     settings.ui \
-    convolver.ui
+    convolver.ui \
+    preset.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
