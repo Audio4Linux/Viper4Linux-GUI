@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Viper4Linux Frontend</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/main/viper.png</normaloff>:/main/viper.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">

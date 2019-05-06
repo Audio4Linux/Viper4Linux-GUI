@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Custom Presets</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/main/viper.png</normaloff>:/main/viper.png</iconset>
+  </property>
   <widget class="QPushButton" name="add">
    <property name="geometry">
     <rect>
@@ -79,6 +83,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
