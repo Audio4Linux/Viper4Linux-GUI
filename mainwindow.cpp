@@ -45,9 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    //qDebug() << QStyleFactory::keys();
-    //app.setStyle(QStyleFactory::create("Windows"));
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
@@ -76,6 +73,89 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//---Dialogs
+void MainWindow::OpenConv(){
+    enableConvBtn(false);
+    auto c = new Convolver(this);
+    c->setFixedSize(c->geometry().width(),c->geometry().height());
+    c->show();
+}
+void MainWindow::OpenSettings(){
+    if(settingsdlg_enabled==true){
+        enableSetBtn(false);
+        auto setting = new settings(this);
+        setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
+        setting->show();
+    }
+}
+void MainWindow::OpenPreset(){
+    if(presetdlg_enabled==true){
+        enablePresetBtn(false);
+        auto preset = new Preset(this);
+        preset->setFixedSize(preset->geometry().width(),preset->geometry().height());
+        preset->show();
+    }
+}
+void MainWindow::enableSetBtn(bool on){
+    settingsdlg_enabled=on;
+}
+void MainWindow::enablePresetBtn(bool on){
+    presetdlg_enabled=on;
+}
+void MainWindow::enableConvBtn(bool on){
+    ui->conv_select->setEnabled(on);
+}
+
+//---Apply
+void MainWindow::OnUpdate(){
+    if(autofx && !lockapply)ConfirmConf();
+}
+void MainWindow::ConfirmConf(){
+    string config = "fx_enable=";
+    if(!ui->disableFX->isChecked())config += "true\n";
+    else config += "false\n";
+
+    config += getMain();
+    config += getBass();
+    config += getSurround();
+    config += getMaster();
+    config += getEQ();
+    config += getComp();
+    config += getMisc();
+
+    ofstream myfile(path);
+    if (myfile.is_open())
+    {
+        myfile << config;
+        myfile.close();
+    }
+    else cerr << "Unable to open file";
+    Restart();
+}
+void MainWindow::Reset(){
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Are you sure?", "Reset Configuration",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        std::filebuf fb;
+        fb.open (path,std::ios::out);
+        std::ostream os(&fb);
+        os << default_config;
+        fb.close();
+
+        reloadConfig();
+        ConfirmConf();
+    }
+}
+void MainWindow::Restart(){
+    if(muteOnRestart) system("pactl set-sink-mute 0 1");
+    if(glava_fix) system("killall -r glava");
+    system("viper restart");
+    if(glava_fix) system("setsid glava -d &");
+    if(muteOnRestart) system("pactl set-sink-mute 0 0");
+}
+
+//---Save/Load Presets
 void MainWindow::LoadPresetFile(QString filename){
     const QString src = filename;
     const QString dest = QString::fromStdString(path);
@@ -94,7 +174,6 @@ void MainWindow::SavePresetFile(QString filename){
     QFile::copy(src,dest);
     cout << "Saving to " << filename.toUtf8().constData() << endl;
 }
-
 void MainWindow::LoadExternalFile(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
     if(filename=="")return;
@@ -122,6 +201,7 @@ void MainWindow::SaveExternalFile(){
     cout << "Saving to " << filename.toUtf8().constData() << endl;
 }
 
+//---UI Config Loader
 void MainWindow::decodeAppConfig(const string& key,const string& value){
     //cout << "AppConf: " << key << " -> " << value << endl;
     switch (resolveAppConfig(key)) {
@@ -144,76 +224,6 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         break;
     }
     }
-}
-void MainWindow::setIRS(const string& irs,bool apply){
-    ui->convpath->setText(QString::fromStdString((irs)));
-    if(apply)ConfirmConf();
-}
-void MainWindow::setGFix(bool f){
-    glava_fix = f;
-}
-bool MainWindow::getGFix(){
-    return glava_fix;
-}
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix){
-    string appconfig;
-    stringstream converter1;
-    converter1 << boolalpha << afx;
-    appconfig += "autoapply=" + converter1.str() + "\n";
-    appconfig += "configpath=\"" + cpath + "\"\n";
-
-    stringstream converter2;
-    converter2 << boolalpha << muteRestart;
-    appconfig += "muteOnRestart=" + converter2.str() + "\n";
-
-    stringstream converter3;
-    converter3 << boolalpha << g_fix;
-    appconfig += "glavafix=" + converter3.str() + "\n";
-
-    ofstream myfile(appcpath);
-    if (myfile.is_open())
-    {
-        myfile << appconfig;
-        myfile.close();
-    }
-    else{
-        cerr << "Unable to open file. Checking...";
-        loadAppConfig();
-    }
-}
-
-void MainWindow::ConfirmConf(){
-
-    string config = "fx_enable=";
-    if(!ui->disableFX->isChecked())config += "true\n";
-    else config += "false\n";
-
-    config += getMain();
-    config += getBass();
-    config += getSurround();
-    config += getMaster();
-    config += getEQ();
-    config += getComp();
-    config += getMisc();
-
-    ofstream myfile(path);
-    if (myfile.is_open())
-    {
-        myfile << config;
-        myfile.close();
-    }
-    else cerr << "Unable to open file";
-
-    Restart();
-
-}
-
-void MainWindow::Restart(){
-    if(muteOnRestart) system("pactl set-sink-mute 0 1");
-    if(glava_fix) system("killall -r glava");
-    system("viper restart");
-    if(glava_fix) system("setsid glava -d &");
-    if(muteOnRestart) system("pactl set-sink-mute 0 0");
 }
 void MainWindow::loadAppConfig(bool once){
     cout << "Reloading App Config..." << endl;
@@ -241,449 +251,67 @@ void MainWindow::loadAppConfig(bool once){
         if(!once)loadAppConfig(true);
     }
 }
-void MainWindow::OpenConv(){
-    enableConvBtn(false);
-    auto c = new Convolver(this);
-    c->setFixedSize(c->geometry().width(),c->geometry().height());
-    c->show();
-}
 
-void MainWindow::OpenSettings(){
-    if(settingsdlg_enabled==true){
-        enableSetBtn(false);
-        auto setting = new settings(this);
-        setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
-        setting->show();
-    }
-}
-void MainWindow::OpenPreset(){
-    if(presetdlg_enabled==true){
-        enablePresetBtn(false);
-        auto preset = new Preset(this);
-        preset->setFixedSize(preset->geometry().width(),preset->geometry().height());
-        preset->show();
-    }
-}
-void MainWindow::enableSetBtn(bool on){
-    settingsdlg_enabled=on;
-}
-void MainWindow::enablePresetBtn(bool on){
-    presetdlg_enabled=on;
-}
-void MainWindow::enableConvBtn(bool on){
-    ui->conv_select->setEnabled(on);
-}
-string MainWindow::getPath(){
-    return path;
-}
-bool MainWindow::getAutoFx(){
-    return autofx;
-}
-void MainWindow::setAutoFx(bool afx){
-    autofx = afx;
-    SaveAppConfig();
-}
-bool MainWindow::getMuteOnRestart(){
-    return muteOnRestart;
-}
-void MainWindow::setMuteOnRestart(bool on){
-    muteOnRestart = on;
-    SaveAppConfig();
-}
-void MainWindow::setPath(string npath){
-    path = std::move(npath);
-    reloadConfig();
-    SaveAppConfig();
-}
+//---UI Config Generator
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix){
+    string appconfig;
+    stringstream converter1;
+    converter1 << boolalpha << afx;
+    appconfig += "autoapply=" + converter1.str() + "\n";
+    appconfig += "configpath=\"" + cpath + "\"\n";
 
-void MainWindow::Reset(){
+    stringstream converter2;
+    converter2 << boolalpha << muteRestart;
+    appconfig += "muteOnRestart=" + converter2.str() + "\n";
 
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Are you sure?", "Reset Configuration",
-                                  QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes) {
-        std::filebuf fb;
-        fb.open (path,std::ios::out);
-        std::ostream os(&fb);
-        os << default_config;
-        fb.close();
+    stringstream converter3;
+    converter3 << boolalpha << g_fix;
+    appconfig += "glavafix=" + converter3.str() + "\n";
 
-        reloadConfig();
-        ConfirmConf();
-    }
-}
-void MainWindow::reloadConfig(){
-    lockapply=true;
-    cout << "Reloading..." << endl;
-    std::ifstream cFile(path);
-    if (cFile.is_open())
+    ofstream myfile(appcpath);
+    if (myfile.is_open())
     {
-        std::string line;
-        while(getline(cFile, line)){
-            line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
-                       line.end());
-
-            if(line[0] == '#' || line.empty() || line.empty()) continue;
-            auto delimiterPos = line.find('=');
-            auto name = line.substr(0, delimiterPos);
-            auto value = line.substr(delimiterPos + 1);
-            loadConfig(name,value);
-        }
-        cFile.close();
+        myfile << appconfig;
+        myfile.close();
     }
-    else {
-        std::cerr << "Couldn't open config file for reading.\n";
-        QMessageBox msgBox;
-        msgBox.setText("Couldn't open config file for reading.");
-        msgBox.setInformativeText("Change the path to the audio.conf file in the bottom left corner.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.setIcon(QMessageBox::Icon::Critical);
-        msgBox.exec();
+    else{
+        cerr << "Unable to open file. Checking...";
+        loadAppConfig();
     }
-    lockapply=false;
-}
-void MainWindow::ResetEQ(){
-    ui->eq1->setValue(0);
-    ui->eq2->setValue(0);
-    ui->eq3->setValue(0);
-    ui->eq3->setValue(0);
-    ui->eq4->setValue(0);
-    ui->eq5->setValue(0);
-    ui->eq6->setValue(0);
-    ui->eq7->setValue(0);
-    ui->eq8->setValue(0);
-    ui->eq9->setValue(0);
-    ui->eq10->setValue(0);
-}
-string MainWindow::getMisc(){
-    string out;
-    string n = "\n";
-
-    QString vcurelvl = QString::number(ui->vcurelvl->value());
-    QString axmode = QString::number(ui->axmode->value());
-
-    QString refbark = QString::number(ui->barkfreq->value());
-    QString conbark = QString::number(ui->barkcon->value());
-    QString convcc = QString::number(ui->comprelease->value());
-    QString convir = ui->convpath->text();
-
-    out += "cure_enable=";
-    if(ui->vcure->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "cure_level=";
-    out += vcurelvl.toUtf8().constData() + n;
-
-    out += "ax_enable=";
-    if(ui->ax->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "ax_mode=";
-    out += axmode.toUtf8().constData() + n;
-
-    out += "vse_enable=";
-    if(ui->vse->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "vse_ref_bark=";
-    out += refbark.toUtf8().constData() + n;
-    out += "vse_bark_cons=";
-    out += conbark.toUtf8().constData() + n;
-
-    out += "conv_enable=";
-    if(ui->conv->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "conv_cc_level=";
-    out += convcc.toUtf8().constData() + n;
-    out += "conv_ir_path=\"";
-    out += convir.toUtf8().constData();
-    out += "\"" + n;
-
-
-    return out;
-}
-string MainWindow::getComp() {
-    string out;
-    string n = "\n";
-    QString gain = QString::number(ui->compgain->value());
-    QString width = QString::number(ui->compwidth->value());
-    QString ratio = QString::number(ui->comp_ratio->value());
-    QString thres = QString::number(ui->comp_thres->value());
-    QString atk = QString::number(ui->compattack->value());
-    QString rel = QString::number(ui->comprelease->value());
-    QString adapt = QString::number(ui->a_adapt->value());
-    QString crest = QString::number(ui->a_crest->value());
-    QString maxatk = QString::number(ui->a_maxatk->value());
-    QString maxrel = QString::number(ui->a_maxrel->value());
-    QString maxwidth = QString::number(ui->a_kneewidth->value());
-
-    out += "fetcomp_enable=";
-    if(ui->enable_comp->isChecked())out += "true" + n;
-    else out += "false" + n;
-
-    out += "fetcomp_autogain=";
-    if(ui->m_gain->isChecked())out += "false" + n;
-    else out += "true" + n;
-    out += "fetcomp_autoknee=";
-    if(ui->m_width->isChecked())out += "false" + n;
-    else out += "true" + n;
-    out += "fetcomp_autoattack=";
-    if(ui->m_attack->isChecked())out += "false" + n;
-    else out += "true" + n;
-    out += "fetcomp_autorelease=";
-    if(ui->m_release->isChecked())out += "false" + n;
-    else out += "true" + n;
-
-    out += "fetcomp_noclip=";
-    if(ui->noclip->isChecked())out += "true" + n;
-    else out += "false" + n;
-
-    out += "fetcomp_threshold=";
-    out += thres.toUtf8().constData() + n;
-    out += "fetcomp_gain=";
-    out += gain.toUtf8().constData() + n;
-    out += "fetcomp_kneewidth=";
-    out += width.toUtf8().constData() + n;
-    out += "fetcomp_ratio=";
-    out += ratio.toUtf8().constData() + n;
-    out += "fetcomp_attack=";
-    out += atk.toUtf8().constData() + n;
-    out += "fetcomp_release=";
-    out += rel.toUtf8().constData() + n;
-    out += "fetcomp_meta_adapt=";
-    out += adapt.toUtf8().constData() + n;
-    out += "fetcomp_meta_crest=";
-    out += crest.toUtf8().constData() + n;
-    out += "fetcomp_meta_maxattack=";
-    out += maxatk.toUtf8().constData() + n;
-    out += "fetcomp_meta_maxrelease=";
-    out += maxrel.toUtf8().constData() + n;
-    out += "fetcomp_meta_kneemulti=";
-    out += maxwidth.toUtf8().constData() + n;
-
-    return out;
-}
-string MainWindow::getEQ() {
-    string out;
-    string n = "\n";
-    QString eq1 = QString::number(ui->eq1->value());
-    QString eq2 = QString::number(ui->eq2->value());
-    QString eq3 = QString::number(ui->eq3->value());
-    QString eq4 = QString::number(ui->eq4->value());
-    QString eq5 = QString::number(ui->eq5->value());
-    QString eq6 = QString::number(ui->eq6->value());
-    QString eq7 = QString::number(ui->eq7->value());
-    QString eq8 = QString::number(ui->eq8->value());
-    QString eq9 = QString::number(ui->eq9->value());
-    QString eq10 = QString::number(ui->eq10->value());
-
-    out += "eq_enable=";
-    if(ui->enable_eq->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "eq_band1=";
-    out += eq1.toUtf8().constData() + n;
-    out += "eq_band2=";
-    out += eq2.toUtf8().constData() + n;
-    out += "eq_band3=";
-    out += eq3.toUtf8().constData() + n;
-    out += "eq_band4=";
-    out += eq4.toUtf8().constData() + n;
-    out += "eq_band5=";
-    out += eq5.toUtf8().constData() + n;
-    out += "eq_band6=";
-    out += eq6.toUtf8().constData() + n;
-    out += "eq_band7=";
-    out += eq7.toUtf8().constData() + n;
-    out += "eq_band8=";
-    out += eq8.toUtf8().constData() + n;
-    out += "eq_band9=";
-    out += eq9.toUtf8().constData() + n;
-    out += "eq_band10=";
-    out += eq10.toUtf8().constData() + n;
-
-    return out;
-}
-string MainWindow::getBass() {
-    string out;
-    string n = "\n";
-
-    int c = ui->vbgain->value();
-    int d = ui->vbfreq->value();
-    int e = ui->vbmode->value();
-
-    char vbgain[sizeof(c)];
-    sprintf(vbgain, "%d", c);
-    char vbfreq[sizeof(d)];
-    sprintf(vbfreq, "%d", d);
-    char vbmode[sizeof(e)];
-    sprintf(vbmode, "%d", e);
-
-    //BASS
-    out += "vb_enable=";
-    if(ui->vb->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "vb_mode=";
-    out += vbmode + n;
-    out += "vb_freq=";
-    out += vbfreq + n;
-    out += "vb_gain=";
-    out += vbgain + n;
-    return out;
-}
-string MainWindow::getSurround() {
-    string out;
-    string n = "\n";
-
-    int a = ui->difflvl->value();
-    int b = ui->vhplvl->value();
-    int c = ui->roomsize->value();
-    int d = ui->roomwidth->value();
-    int e = ui->roomdamp->value();
-    int f = ui->wet->value();
-    int g = ui->dry->value();
-
-    char difflvl[sizeof(a)];
-    sprintf(difflvl, "%d", a);
-
-    char vhplvl[sizeof(b)];
-    sprintf(vhplvl, "%d", b);
-
-    char re_roomsize[sizeof(c)];
-    sprintf(re_roomsize, "%d", c);
-    char re_width[sizeof(d)];
-    sprintf(re_width, "%d", d);
-    char re_damp[sizeof(e)];
-    sprintf(re_damp, "%d", e);
-    char re_wet[sizeof(f)];
-    sprintf(re_wet, "%d", f);
-    char re_dry[sizeof(g)];
-    sprintf(re_dry, "%d", g);
-
-    //HEADSET ENGINE
-    out += "vhe_enable=";
-    if(ui->vhp->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "vhe_level=";
-    out += vhplvl + n;
-
-    //DIFFERENTIAL SOUND
-    out += "ds_enable=";
-    if(ui->diff->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "ds_level=";
-    out += difflvl + n;
-
-    //REVERB
-    out += "reverb_enable=";
-    if(ui->reverb->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "reverb_roomsize=";
-    out += re_roomsize + n;
-    out += "reverb_width=";
-    out += re_width + n;
-    out += "reverb_damp=";
-    out += re_damp + n;
-    out += "reverb_wet=";
-    out += re_wet + n;
-    out += "reverb_dry=";
-    out += re_dry + n;
-
-    return out;
-}
-string MainWindow::getMain() {
-    string out;
-    string n = "\n";
-
-    int a = ui->colmwide->value();
-    int b = ui->colmmidimg->value();
-    int c = ui->colmdepth->value();
-    int d = ui->vclvl->value();
-    int e = ui->vcmode->value();
-
-    char colmwide[sizeof(a)];
-    sprintf(colmwide, "%d", a);
-    char colmmidimg[sizeof(b)];
-    sprintf(colmmidimg, "%d", b);
-    char colmdepth[sizeof(c)];
-    sprintf(colmdepth, "%d", c);
-    char vclvl[sizeof(d)];
-    sprintf(vclvl, "%d", d);
-    char vcmode[sizeof(e)];
-    sprintf(vcmode, "%d", e);
-
-    //TUBE SIMULATOR
-    out += "tube_enable=";
-    if(ui->tubesim->checkState() == Qt::Unchecked)out += "false" + n;
-    else out += "true" + n;
-
-    //COLORFUL
-    out += "colm_enable=";
-    if(ui->colm->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "colm_widening=";
-    out += colmwide + n;
-    out += "colm_depth=";
-    out += colmdepth + n;
-    out += "colm_midimage=";
-    out += colmdepth + n;
-
-    //CLARITY
-    out += "vc_enable=";
-    if(ui->clarity->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "vc_mode=";
-    out += vcmode + n;
-    out += "vc_level=";
-    out += vclvl + n;
-
-    return out;
-}
-string MainWindow::getMaster() {
-    string out;
-    string n = "\n";
-
-    int a = ui->gain->value();
-    int b = ui->maxgain->value();
-    int c = ui->maxvol->value();
-    int d = ui->limiter->value();
-    int e = ui->outputpan->value();
-    int f = ui->outvolume->value();
-
-    char gain[sizeof(a)];
-    sprintf(gain, "%d", a);
-    char maxgain[sizeof(b)];
-    sprintf(maxgain, "%d", b);
-    char maxvol[sizeof(c)];
-    sprintf(maxvol, "%d", c);
-
-    char limiter[sizeof(d)];
-    sprintf(limiter, "%d", d);
-    char outputpan[sizeof(e)];
-    sprintf(outputpan, "%d", e);
-    char out_volume[sizeof(f)];
-    sprintf(out_volume, "%d", f);
-
-
-    //GAIN CONTROL
-    out += "agc_enable=";
-    if(ui->agc->isChecked())out += "true" + n;
-    else out += "false" + n;
-    out += "agc_ratio=";
-    out += gain + n;
-    out += "agc_maxgain=";
-    out += maxgain + n;
-    out += "agc_volume=";
-    out += maxvol + n;
-
-    //MASTER
-    out += "lim_threshold=";
-    out += limiter + n;
-    out += "out_pan=";
-    out += outputpan + n;
-    out += "out_volume=";
-    out += out_volume + n;
-
-    return out;
 }
 
+//---Viper Config Loader
+void MainWindow::reloadConfig(){
+lockapply=true;
+cout << "Reloading..." << endl;
+std::ifstream cFile(path);
+if (cFile.is_open())
+{
+    std::string line;
+    while(getline(cFile, line)){
+        line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
+                   line.end());
+
+        if(line[0] == '#' || line.empty() || line.empty()) continue;
+        auto delimiterPos = line.find('=');
+        auto name = line.substr(0, delimiterPos);
+        auto value = line.substr(delimiterPos + 1);
+        loadConfig(name,value);
+    }
+    cFile.close();
+}
+else {
+    std::cerr << "Couldn't open config file for reading.\n";
+    QMessageBox msgBox;
+    msgBox.setText("Couldn't open config file for reading.");
+    msgBox.setInformativeText("Change the path to the audio.conf file in the bottom left corner.");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Icon::Critical);
+    msgBox.exec();
+}
+lockapply=false;
+}
 void MainWindow::loadConfig(const string& key,string value){
     // cout << key << " -> " << value << endl;
     switch (resolveConfig(key)) {
@@ -988,35 +616,336 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     }
 }
-void MainWindow::CopyEQ(){
-    string s = to_string(ui->eq1->value()) + "," + to_string(ui->eq2->value()) + "," + to_string(ui->eq3->value()) + "," + to_string(ui->eq4->value()) + "," + to_string(ui->eq5->value()) + ",";
-    s += to_string(ui->eq6->value()) + "," + to_string(ui->eq7->value()) + "," + to_string(ui->eq8->value()) + "," + to_string(ui->eq9->value()) + "," + to_string(ui->eq10->value());
-    QClipboard* a = app->clipboard();
-    a->setText(QString::fromStdString(s));
+
+//---Viper Config Generator
+string MainWindow::getMisc(){
+    string out;
+    string n = "\n";
+
+    QString vcurelvl = QString::number(ui->vcurelvl->value());
+    QString axmode = QString::number(ui->axmode->value());
+
+    QString refbark = QString::number(ui->barkfreq->value());
+    QString conbark = QString::number(ui->barkcon->value());
+    QString convcc = QString::number(ui->comprelease->value());
+    QString convir = ui->convpath->text();
+
+    out += "cure_enable=";
+    if(ui->vcure->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "cure_level=";
+    out += vcurelvl.toUtf8().constData() + n;
+
+    out += "ax_enable=";
+    if(ui->ax->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "ax_mode=";
+    out += axmode.toUtf8().constData() + n;
+
+    out += "vse_enable=";
+    if(ui->vse->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "vse_ref_bark=";
+    out += refbark.toUtf8().constData() + n;
+    out += "vse_bark_cons=";
+    out += conbark.toUtf8().constData() + n;
+
+    out += "conv_enable=";
+    if(ui->conv->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "conv_cc_level=";
+    out += convcc.toUtf8().constData() + n;
+    out += "conv_ir_path=\"";
+    out += convir.toUtf8().constData();
+    out += "\"" + n;
+
+    return out;
 }
-void MainWindow::PasteEQ(){
-    QClipboard* a = app->clipboard();
-    std::string str = a->text().toUtf8().constData();
-    std::vector<int> vect;
+string MainWindow::getComp() {
+    string out;
+    string n = "\n";
+    QString gain = QString::number(ui->compgain->value());
+    QString width = QString::number(ui->compwidth->value());
+    QString ratio = QString::number(ui->comp_ratio->value());
+    QString thres = QString::number(ui->comp_thres->value());
+    QString atk = QString::number(ui->compattack->value());
+    QString rel = QString::number(ui->comprelease->value());
+    QString adapt = QString::number(ui->a_adapt->value());
+    QString crest = QString::number(ui->a_crest->value());
+    QString maxatk = QString::number(ui->a_maxatk->value());
+    QString maxrel = QString::number(ui->a_maxrel->value());
+    QString maxwidth = QString::number(ui->a_kneewidth->value());
 
-    std::stringstream ss(str);
+    out += "fetcomp_enable=";
+    if(ui->enable_comp->isChecked())out += "true" + n;
+    else out += "false" + n;
 
-    int i;
+    out += "fetcomp_autogain=";
+    if(ui->m_gain->isChecked())out += "false" + n;
+    else out += "true" + n;
+    out += "fetcomp_autoknee=";
+    if(ui->m_width->isChecked())out += "false" + n;
+    else out += "true" + n;
+    out += "fetcomp_autoattack=";
+    if(ui->m_attack->isChecked())out += "false" + n;
+    else out += "true" + n;
+    out += "fetcomp_autorelease=";
+    if(ui->m_release->isChecked())out += "false" + n;
+    else out += "true" + n;
 
-    while (ss >> i)
-    {
-        vect.push_back(i);
+    out += "fetcomp_noclip=";
+    if(ui->noclip->isChecked())out += "true" + n;
+    else out += "false" + n;
 
-        if (ss.peek() == ',')
-            ss.ignore();
-    }
+    out += "fetcomp_threshold=";
+    out += thres.toUtf8().constData() + n;
+    out += "fetcomp_gain=";
+    out += gain.toUtf8().constData() + n;
+    out += "fetcomp_kneewidth=";
+    out += width.toUtf8().constData() + n;
+    out += "fetcomp_ratio=";
+    out += ratio.toUtf8().constData() + n;
+    out += "fetcomp_attack=";
+    out += atk.toUtf8().constData() + n;
+    out += "fetcomp_release=";
+    out += rel.toUtf8().constData() + n;
+    out += "fetcomp_meta_adapt=";
+    out += adapt.toUtf8().constData() + n;
+    out += "fetcomp_meta_crest=";
+    out += crest.toUtf8().constData() + n;
+    out += "fetcomp_meta_maxattack=";
+    out += maxatk.toUtf8().constData() + n;
+    out += "fetcomp_meta_maxrelease=";
+    out += maxrel.toUtf8().constData() + n;
+    out += "fetcomp_meta_kneemulti=";
+    out += maxwidth.toUtf8().constData() + n;
 
-    for (i=0; i< vect.size(); i++)
-        std::cout << vect.at(i)<<std::endl;
-    int data[100];
-    std::copy(vect.begin(), vect.end(), data);
-    setEQ(data);
+    return out;
 }
+string MainWindow::getEQ() {
+    string out;
+    string n = "\n";
+    QString eq1 = QString::number(ui->eq1->value());
+    QString eq2 = QString::number(ui->eq2->value());
+    QString eq3 = QString::number(ui->eq3->value());
+    QString eq4 = QString::number(ui->eq4->value());
+    QString eq5 = QString::number(ui->eq5->value());
+    QString eq6 = QString::number(ui->eq6->value());
+    QString eq7 = QString::number(ui->eq7->value());
+    QString eq8 = QString::number(ui->eq8->value());
+    QString eq9 = QString::number(ui->eq9->value());
+    QString eq10 = QString::number(ui->eq10->value());
+
+    out += "eq_enable=";
+    if(ui->enable_eq->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "eq_band1=";
+    out += eq1.toUtf8().constData() + n;
+    out += "eq_band2=";
+    out += eq2.toUtf8().constData() + n;
+    out += "eq_band3=";
+    out += eq3.toUtf8().constData() + n;
+    out += "eq_band4=";
+    out += eq4.toUtf8().constData() + n;
+    out += "eq_band5=";
+    out += eq5.toUtf8().constData() + n;
+    out += "eq_band6=";
+    out += eq6.toUtf8().constData() + n;
+    out += "eq_band7=";
+    out += eq7.toUtf8().constData() + n;
+    out += "eq_band8=";
+    out += eq8.toUtf8().constData() + n;
+    out += "eq_band9=";
+    out += eq9.toUtf8().constData() + n;
+    out += "eq_band10=";
+    out += eq10.toUtf8().constData() + n;
+
+    return out;
+}
+string MainWindow::getBass() {
+    string out;
+    string n = "\n";
+
+    int c = ui->vbgain->value();
+    int d = ui->vbfreq->value();
+    int e = ui->vbmode->value();
+
+    char vbgain[sizeof(c)];
+    sprintf(vbgain, "%d", c);
+    char vbfreq[sizeof(d)];
+    sprintf(vbfreq, "%d", d);
+    char vbmode[sizeof(e)];
+    sprintf(vbmode, "%d", e);
+
+    //BASS
+    out += "vb_enable=";
+    if(ui->vb->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "vb_mode=";
+    out += vbmode + n;
+    out += "vb_freq=";
+    out += vbfreq + n;
+    out += "vb_gain=";
+    out += vbgain + n;
+    return out;
+}
+string MainWindow::getSurround() {
+    string out;
+    string n = "\n";
+
+    int a = ui->difflvl->value();
+    int b = ui->vhplvl->value();
+    int c = ui->roomsize->value();
+    int d = ui->roomwidth->value();
+    int e = ui->roomdamp->value();
+    int f = ui->wet->value();
+    int g = ui->dry->value();
+
+    char difflvl[sizeof(a)];
+    sprintf(difflvl, "%d", a);
+
+    char vhplvl[sizeof(b)];
+    sprintf(vhplvl, "%d", b);
+
+    char re_roomsize[sizeof(c)];
+    sprintf(re_roomsize, "%d", c);
+    char re_width[sizeof(d)];
+    sprintf(re_width, "%d", d);
+    char re_damp[sizeof(e)];
+    sprintf(re_damp, "%d", e);
+    char re_wet[sizeof(f)];
+    sprintf(re_wet, "%d", f);
+    char re_dry[sizeof(g)];
+    sprintf(re_dry, "%d", g);
+
+    //HEADSET ENGINE
+    out += "vhe_enable=";
+    if(ui->vhp->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "vhe_level=";
+    out += vhplvl + n;
+
+    //DIFFERENTIAL SOUND
+    out += "ds_enable=";
+    if(ui->diff->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "ds_level=";
+    out += difflvl + n;
+
+    //REVERB
+    out += "reverb_enable=";
+    if(ui->reverb->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "reverb_roomsize=";
+    out += re_roomsize + n;
+    out += "reverb_width=";
+    out += re_width + n;
+    out += "reverb_damp=";
+    out += re_damp + n;
+    out += "reverb_wet=";
+    out += re_wet + n;
+    out += "reverb_dry=";
+    out += re_dry + n;
+
+    return out;
+}
+string MainWindow::getMain() {
+    string out;
+    string n = "\n";
+
+    int a = ui->colmwide->value();
+    int b = ui->colmmidimg->value();
+    int c = ui->colmdepth->value();
+    int d = ui->vclvl->value();
+    int e = ui->vcmode->value();
+
+    char colmwide[sizeof(a)];
+    sprintf(colmwide, "%d", a);
+    char colmmidimg[sizeof(b)];
+    sprintf(colmmidimg, "%d", b);
+    char colmdepth[sizeof(c)];
+    sprintf(colmdepth, "%d", c);
+    char vclvl[sizeof(d)];
+    sprintf(vclvl, "%d", d);
+    char vcmode[sizeof(e)];
+    sprintf(vcmode, "%d", e);
+
+    //TUBE SIMULATOR
+    out += "tube_enable=";
+    if(ui->tubesim->checkState() == Qt::Unchecked)out += "false" + n;
+    else out += "true" + n;
+
+    //COLORFUL
+    out += "colm_enable=";
+    if(ui->colm->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "colm_widening=";
+    out += colmwide + n;
+    out += "colm_depth=";
+    out += colmdepth + n;
+    out += "colm_midimage=";
+    out += colmdepth + n;
+
+    //CLARITY
+    out += "vc_enable=";
+    if(ui->clarity->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "vc_mode=";
+    out += vcmode + n;
+    out += "vc_level=";
+    out += vclvl + n;
+
+    return out;
+}
+string MainWindow::getMaster() {
+    string out;
+    string n = "\n";
+
+    int a = ui->gain->value();
+    int b = ui->maxgain->value();
+    int c = ui->maxvol->value();
+    int d = ui->limiter->value();
+    int e = ui->outputpan->value();
+    int f = ui->outvolume->value();
+
+    char gain[sizeof(a)];
+    sprintf(gain, "%d", a);
+    char maxgain[sizeof(b)];
+    sprintf(maxgain, "%d", b);
+    char maxvol[sizeof(c)];
+    sprintf(maxvol, "%d", c);
+
+    char limiter[sizeof(d)];
+    sprintf(limiter, "%d", d);
+    char outputpan[sizeof(e)];
+    sprintf(outputpan, "%d", e);
+    char out_volume[sizeof(f)];
+    sprintf(out_volume, "%d", f);
+
+
+    //GAIN CONTROL
+    out += "agc_enable=";
+    if(ui->agc->isChecked())out += "true" + n;
+    else out += "false" + n;
+    out += "agc_ratio=";
+    out += gain + n;
+    out += "agc_maxgain=";
+    out += maxgain + n;
+    out += "agc_volume=";
+    out += maxvol + n;
+
+    //MASTER
+    out += "lim_threshold=";
+    out += limiter + n;
+    out += "out_pan=";
+    out += outputpan + n;
+    out += "out_volume=";
+    out += out_volume + n;
+
+    return out;
+}
+
+//---EQ
 void MainWindow::setEQ(const int* data){
     ui->eq1->setValue(data[0]);
     ui->eq2->setValue(data[1]);
@@ -1028,7 +957,6 @@ void MainWindow::setEQ(const int* data){
     ui->eq8->setValue(data[7]);
     ui->eq9->setValue(data[8]);
     ui->eq10->setValue(data[9]);
-
     OnUpdate();
 }
 void MainWindow::updatepreset(){
@@ -1091,7 +1019,45 @@ void MainWindow::updatepreset(){
     }
     else ResetEQ();
 }
+void MainWindow::ResetEQ(){
+    ui->eq1->setValue(0);
+    ui->eq2->setValue(0);
+    ui->eq3->setValue(0);
+    ui->eq3->setValue(0);
+    ui->eq4->setValue(0);
+    ui->eq5->setValue(0);
+    ui->eq6->setValue(0);
+    ui->eq7->setValue(0);
+    ui->eq8->setValue(0);
+    ui->eq9->setValue(0);
+    ui->eq10->setValue(0);
+}
+void MainWindow::CopyEQ(){
+    string s = to_string(ui->eq1->value()) + "," + to_string(ui->eq2->value()) + "," + to_string(ui->eq3->value()) + "," + to_string(ui->eq4->value()) + "," + to_string(ui->eq5->value()) + ",";
+    s += to_string(ui->eq6->value()) + "," + to_string(ui->eq7->value()) + "," + to_string(ui->eq8->value()) + "," + to_string(ui->eq9->value()) + "," + to_string(ui->eq10->value());
+    QClipboard* a = app->clipboard();
+    a->setText(QString::fromStdString(s));
+}
+void MainWindow::PasteEQ(){
+    QClipboard* a = app->clipboard();
+    std::string str = a->text().toUtf8().constData();
+    std::vector<int> vect;
+    std::stringstream ss(str);
+    int i;
+    while (ss >> i)
+    {
+        vect.push_back(i);
+        if (ss.peek() == ',')
+            ss.ignore();
+    }
+    for (i=0; i< vect.size(); i++)
+        std::cout << vect.at(i)<<std::endl;
+    int data[100];
+    std::copy(vect.begin(), vect.end(), data);
+    setEQ(data);
+}
 
+//---Updates Label
 void MainWindow::update(int d){
     QObject* obj = sender();
     QString pre = "";
@@ -1146,9 +1112,42 @@ void MainWindow::updateeq(int f){
     ui->info->setText(s);
 }
 
-void MainWindow::OnUpdate(){
-    if(autofx && !lockapply)ConfirmConf();
+
+//---Getter/Setter
+bool MainWindow::getAutoFx(){
+    return autofx;
 }
+void MainWindow::setAutoFx(bool afx){
+    autofx = afx;
+    SaveAppConfig();
+}
+bool MainWindow::getMuteOnRestart(){
+    return muteOnRestart;
+}
+void MainWindow::setMuteOnRestart(bool on){
+    muteOnRestart = on;
+    SaveAppConfig();
+}
+void MainWindow::setIRS(const string& irs,bool apply){
+    ui->convpath->setText(QString::fromStdString((irs)));
+    if(apply)ConfirmConf();
+}
+void MainWindow::setGFix(bool f){
+    glava_fix = f;
+}
+bool MainWindow::getGFix(){
+    return glava_fix;
+}
+void MainWindow::setPath(string npath){
+    path = std::move(npath);
+    reloadConfig();
+    SaveAppConfig();
+}
+string MainWindow::getPath(){
+    return path;
+}
+
+//---Connect UI-Signals
 void MainWindow::ConnectActions(){
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));
     connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(OnUpdate()));
@@ -1160,7 +1159,6 @@ void MainWindow::ConnectActions(){
 
     connect(ui->cpreset, SIGNAL(clicked()), this, SLOT(OpenPreset()));
     connect(ui->set, SIGNAL(clicked()), this, SLOT(OpenSettings()));
-
 
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
@@ -1200,6 +1198,7 @@ void MainWindow::ConnectActions(){
     connect(ui->a_maxatk, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect(ui->a_maxrel, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect(ui->a_kneewidth, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+
     connect(ui->eq1, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect(ui->eq2, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect(ui->eq3, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
@@ -1210,7 +1209,6 @@ void MainWindow::ConnectActions(){
     connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(update(int)));
-
     connect(ui->eqpreset, SIGNAL(currentIndexChanged(int)),this,SLOT(updatepreset()));
 
     connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));

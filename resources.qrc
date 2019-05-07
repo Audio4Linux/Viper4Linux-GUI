@@ -10,5 +10,6 @@
         <file>bookmark.svg</file>
         <file>list.svg</file>
         <file>queue.svg</file>
+        <file>viper.png</file>
     </qresource>
 </RCC>
