@@ -282,35 +282,35 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
 
 //---Viper Config Loader
 void MainWindow::reloadConfig(){
-lockapply=true;
-cout << "Reloading..." << endl;
-std::ifstream cFile(path);
-if (cFile.is_open())
-{
-    std::string line;
-    while(getline(cFile, line)){
-        line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
-                   line.end());
+    lockapply=true;
+    cout << "Reloading..." << endl;
+    std::ifstream cFile(path);
+    if (cFile.is_open())
+    {
+        std::string line;
+        while(getline(cFile, line)){
+            line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
+                       line.end());
 
-        if(line[0] == '#' || line.empty() || line.empty()) continue;
-        auto delimiterPos = line.find('=');
-        auto name = line.substr(0, delimiterPos);
-        auto value = line.substr(delimiterPos + 1);
-        loadConfig(name,value);
+            if(line[0] == '#' || line.empty() || line.empty()) continue;
+            auto delimiterPos = line.find('=');
+            auto name = line.substr(0, delimiterPos);
+            auto value = line.substr(delimiterPos + 1);
+            loadConfig(name,value);
+        }
+        cFile.close();
     }
-    cFile.close();
-}
-else {
-    std::cerr << "Couldn't open config file for reading.\n";
-    QMessageBox msgBox;
-    msgBox.setText("Couldn't open config file for reading.");
-    msgBox.setInformativeText("Change the path to the audio.conf file in the bottom left corner.");
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    msgBox.setIcon(QMessageBox::Icon::Critical);
-    msgBox.exec();
-}
-lockapply=false;
+    else {
+        std::cerr << "Couldn't open config file for reading.\n";
+        QMessageBox msgBox;
+        msgBox.setText("Viper Configuration File not found at \n" + QString::fromStdString(path) + "");
+        msgBox.setInformativeText("You can change the path in the settings.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Icon::Critical);
+        msgBox.exec();
+    }
+    lockapply=false;
 }
 void MainWindow::loadConfig(const string& key,string value){
     // cout << key << " -> " << value << endl;
