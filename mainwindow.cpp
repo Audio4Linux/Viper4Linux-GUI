@@ -1057,7 +1057,7 @@ void MainWindow::PasteEQ(){
     setEQ(data);
 }
 
-//---Updates Label
+//---Updates Unit-Label
 void MainWindow::update(int d){
     QObject* obj = sender();
     QString pre = "";
@@ -1079,19 +1079,43 @@ void MainWindow::update(int d){
         updateeq(d);
     }
     else{
-        if(obj==ui->vbfreq)post = "Hz";
-        else if(obj==ui->difflvl)post = "ms";
-        else if(obj==ui->vhplvl)pre = "Level ";
+        //Bass
+        if(obj==ui->vbfreq)post = "Hz";       
+        //Diff-Surround
+        else if(obj==ui->difflvl)post = "%";
+        //Clarity
+        else if(obj==ui->vhplvl)pre = "Level ";       
+        //Reverb
+        else if(obj==ui->roomsize)post = "%";
         else if(obj==ui->roomdamp)post = "%";
         else if(obj==ui->wet)post = "%";
         else if(obj==ui->dry)post = "%";
+        else if(obj==ui->roomwidth)post = "%";
+        //Volume
         else if(obj==ui->limiter)post = "%";
-        else if(obj==ui->outvolume)post = "%";
+        else if(obj==ui->outvolume)post = "%";       
+        //Cure+
         else if(obj==ui->vcurelvl)pre = "Level ";
-        else if(obj==ui->axmode)pre = "Mode ";
+        //Spectrum Expend
         else if(obj==ui->barkcon)pre = "Level ";
         else if(obj==ui->barkfreq)post = "Hz";
-        else if(obj==ui->convcc)post = "%";
+        //Convolver
+        else if(obj==ui->convcc)post = "%";        
+        //AnalogX
+        else if(obj==ui->axmode)pre = "Mode ";
+        //Compressor
+        else if(obj==ui->compgain)post = "%";
+        else if(obj==ui->compwidth)post = "%";
+        else if(obj==ui->comp_ratio)post = "%";
+        else if(obj==ui->comp_thres)post = "%";
+        else if(obj==ui->compattack)post = "%";
+        else if(obj==ui->comprelease)post = "%";
+        else if(obj==ui->a_adapt)post = "%";
+        else if(obj==ui->a_crest)post = "%";
+        else if(obj==ui->a_maxrel)post = "%";
+        else if(obj==ui->a_maxrel)post = "%";
+        else if(obj==ui->a_kneewidth)post = "%";
+
         ui->info->setText(pre + QString::number(d) + post);
     }
     OnUpdate();
