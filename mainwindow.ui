@@ -28,7 +28,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -42,7 +42,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>231</width>
+        <width>241</width>
         <height>111</height>
        </rect>
       </property>
@@ -96,7 +96,7 @@
         <string>Bass Freq</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_15">
+      <widget class="QLabel" name="bassmode_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -167,9 +167,9 @@
      <widget class="QGroupBox" name="clarity">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>260</x>
         <y>10</y>
-        <width>231</width>
+        <width>241</width>
         <height>91</height>
        </rect>
       </property>
@@ -210,7 +210,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_18">
+      <widget class="QLabel" name="vclvl_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -223,7 +223,7 @@
         <string>Clarity Level</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_19">
+      <widget class="QLabel" name="vcmode_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -253,9 +253,9 @@
      <widget class="QGroupBox" name="vcure">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>260</x>
         <y>110</y>
-        <width>231</width>
+        <width>241</width>
         <height>61</height>
        </rect>
       </property>
@@ -296,7 +296,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_16">
+      <widget class="QLabel" name="vcurelvl_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -374,7 +374,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="vhplvl_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -434,7 +434,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="difflvl_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -494,7 +494,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="roomsize_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -507,7 +507,7 @@
         <string>Room Size</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="roomwidth_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -548,7 +548,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="roomdamp_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -561,7 +561,7 @@
         <string>Room Damp</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_12">
+      <widget class="QLabel" name="dry_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -574,7 +574,7 @@
         <string>Dry Signal</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_13">
+      <widget class="QLabel" name="wet_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1053,7 +1053,7 @@
        </property>
       </item>
      </widget>
-     <widget class="Line" name="line">
+     <widget class="Line" name="line_0db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1072,7 +1072,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_2">
+     <widget class="Line" name="line_n3db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1091,7 +1091,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_3">
+     <widget class="Line" name="line_n6db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1110,7 +1110,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_4">
+     <widget class="Line" name="line_n9db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1129,7 +1129,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_5">
+     <widget class="Line" name="line_n12db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1148,7 +1148,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_6">
+     <widget class="Line" name="line_p12db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1167,7 +1167,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_7">
+     <widget class="Line" name="line_0db_2">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1186,7 +1186,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_8">
+     <widget class="Line" name="line_p3db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1205,7 +1205,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_9">
+     <widget class="Line" name="line_p9db">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1224,7 +1224,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_27">
+     <widget class="QLabel" name="eq_p12db">
       <property name="geometry">
        <rect>
         <x>298</x>
@@ -1240,7 +1240,7 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_28">
+     <widget class="QLabel" name="eq_n12db">
       <property name="geometry">
        <rect>
         <x>298</x>
@@ -1256,7 +1256,7 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_29">
+     <widget class="QLabel" name="eq_0db">
       <property name="geometry">
        <rect>
         <x>310</x>
@@ -1272,7 +1272,7 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_30">
+     <widget class="QLabel" name="eq_n6db">
       <property name="geometry">
        <rect>
         <x>310</x>
@@ -1288,7 +1288,7 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_31">
+     <widget class="QLabel" name="eq_p6db">
       <property name="geometry">
        <rect>
         <x>310</x>
@@ -1360,15 +1360,15 @@
        </property>
       </widget>
      </widget>
-     <zorder>line_7</zorder>
-     <zorder>line_8</zorder>
-     <zorder>line_3</zorder>
-     <zorder>line_5</zorder>
-     <zorder>line</zorder>
-     <zorder>line_9</zorder>
-     <zorder>line_2</zorder>
-     <zorder>line_6</zorder>
-     <zorder>line_4</zorder>
+     <zorder>line_0db_2</zorder>
+     <zorder>line_p3db</zorder>
+     <zorder>line_n6db</zorder>
+     <zorder>line_n12db</zorder>
+     <zorder>line_0db</zorder>
+     <zorder>line_p9db</zorder>
+     <zorder>line_n3db</zorder>
+     <zorder>line_p12db</zorder>
+     <zorder>line_n9db</zorder>
      <zorder>eq1</zorder>
      <zorder>eq2</zorder>
      <zorder>eq3</zorder>
@@ -1381,11 +1381,11 @@
      <zorder>eq10</zorder>
      <zorder>enable_eq</zorder>
      <zorder>eqpreset</zorder>
-     <zorder>label_27</zorder>
-     <zorder>label_28</zorder>
-     <zorder>label_29</zorder>
-     <zorder>label_30</zorder>
-     <zorder>label_31</zorder>
+     <zorder>eq_p12db</zorder>
+     <zorder>eq_n12db</zorder>
+     <zorder>eq_0db</zorder>
+     <zorder>eq_n6db</zorder>
+     <zorder>eq_p6db</zorder>
      <zorder>eqconfigbox</zorder>
     </widget>
     <widget class="QWidget" name="comp">
@@ -1424,7 +1424,7 @@
        <enum>QSlider::NoTicks</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="comp_thres_label">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1437,7 +1437,7 @@
        <string>Threshold</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="comp_ratio_label">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1667,7 +1667,7 @@
         <enum>QSlider::NoTicks</enum>
        </property>
       </widget>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="a_kneewidth_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1680,7 +1680,7 @@
         <string>Knee Width Multi</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="a_maxatk_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1737,7 +1737,7 @@
         <enum>QSlider::NoTicks</enum>
        </property>
       </widget>
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="a_maxrel_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1750,7 +1750,7 @@
         <string>Max Release</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="a_adapt_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1785,7 +1785,7 @@
         <enum>QSlider::NoTicks</enum>
        </property>
       </widget>
-      <widget class="QLabel" name="label_14">
+      <widget class="QLabel" name="a_crest_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2177,7 +2177,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_20">
+      <widget class="QLabel" name="colmwidening_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2190,7 +2190,7 @@
         <string>Widening</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_21">
+      <widget class="QLabel" name="colmmidimg_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2231,7 +2231,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_22">
+      <widget class="QLabel" name="colmdepth_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2291,7 +2291,7 @@
       <property name="checked">
        <bool>false</bool>
       </property>
-      <widget class="QLabel" name="label_17">
+      <widget class="QLabel" name="barkfreq_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2332,7 +2332,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_25">
+      <widget class="QLabel" name="barkcon_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2392,7 +2392,7 @@
       <property name="checked">
        <bool>false</bool>
       </property>
-      <widget class="QLabel" name="label_23">
+      <widget class="QLabel" name="convpath_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2418,7 +2418,7 @@
         <string>/home/response.ir</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_26">
+      <widget class="QLabel" name="convcc_label">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -2476,7 +2476,7 @@
       <property name="checked">
        <bool>false</bool>
       </property>
-      <widget class="QLabel" name="label_24">
+      <widget class="QLabel" name="axmode_label">
        <property name="geometry">
         <rect>
          <x>10</x>
