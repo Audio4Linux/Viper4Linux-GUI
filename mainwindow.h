@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     Ui::MainWindow *ui;
     string getPath();
+    string getStylesheet();
     void LoadPresetFile(QString);
     void SavePresetFile(QString);
     void enableSetBtn(bool on);
@@ -28,6 +29,7 @@ public:
     void setGFix(bool);
     void setMuteOnRestart(bool on);
     void setPath(string npath);
+    void setStylesheet(string);
     void setIRS(const string& irs,bool apply=true);
     void loadAppConfig(bool once = false);
     void UpdatePeakSource(string source);
@@ -55,7 +57,7 @@ private:
     void updateeq(int);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void SaveAppConfig(bool, const string&,bool,bool);
+    void SaveAppConfig(bool, const string&,bool,bool,const string&);
     string getMain();
     string getBass();
     string getSurround();

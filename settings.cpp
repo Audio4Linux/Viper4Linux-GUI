@@ -13,6 +13,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QMessageBox>
+#include <QDebug>
 
 using namespace std;
 static settings* obj;
@@ -22,12 +23,15 @@ settings::settings(QWidget *parent) :
     ui->setupUi(this);
     obj = this;
 
+    connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
+
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
     strcpy(result,homedir);
     strcat(result,"/.config/viper4linux/audio.conf");
     string path = mainwin->getPath();
+    string style_sheet = mainwin->getStylesheet();
     if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
     ui->autofx->setChecked(mainwin->getAutoFx());
@@ -36,6 +40,16 @@ settings::settings(QWidget *parent) :
     connect(ui->save, SIGNAL(clicked()), this, SLOT(submit()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
     connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
+
+
+    ui->styleSelect->addItem("Default","default");
+    ui->styleSelect->addItem("Dark Orange","dark_orange");
+    ui->styleSelect->addItem("Dark Blue","dark_blue");
+    QVariant qvS(QString::fromStdString(style_sheet));
+    int index = ui->styleSelect->findData(qvS);
+    if ( index != -1 ) {
+       ui->styleSelect->setCurrentIndex(index);
+    }
 }
 settings::~settings(){
     delete ui;
@@ -47,6 +61,9 @@ void settings::submit(){
     mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
 
     this->close();
+}
+void settings::changeStyle(const QString& style){
+    mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
 }
 void settings::github(){
     QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI"));

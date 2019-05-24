@@ -34,6 +34,7 @@ using namespace std;
 
 static string path;
 static string appcpath;
+static string style_sheet;
 static bool autofx;
 static bool muteOnRestart;
 static bool glava_fix;
@@ -64,6 +65,24 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
     ui->toolButton->setMenu(menu);
+
+    QString stylename="";
+
+    if(style_sheet=="dark_orange")stylename=":darkorange/darkorange.qss";
+    else if (style_sheet=="dark_blue")stylename=":darkblue/darkblue/darkblue.qss";
+
+    QFile f(stylename);
+    if (!f.exists())
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+        qDebug() << stylename;
+    }
 
     ConnectActions();
 }
@@ -219,6 +238,10 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         glava_fix = value=="true";
         break;
     }
+    case stylesheet: {
+        style_sheet = value;
+        break;
+    }
     case mutedRestart: {
         muteOnRestart = value=="true";
         break;
@@ -253,7 +276,7 @@ void MainWindow::loadAppConfig(bool once){
 }
 
 //---UI Config Generator
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix){
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -267,6 +290,8 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     stringstream converter3;
     converter3 << boolalpha << g_fix;
     appconfig += "glavafix=" + converter3.str() + "\n";
+
+    appconfig += "stylesheet=" + ssheet + "\n";
 
     ofstream myfile(appcpath);
     if (myfile.is_open())
@@ -1169,6 +1194,34 @@ void MainWindow::setPath(string npath){
 }
 string MainWindow::getPath(){
     return path;
+}
+void MainWindow::setStylesheet(string s){
+    style_sheet = std::move(s);
+
+    QString stylename="";
+    if(style_sheet=="dark_orange")stylename=":darkorange/darkorange.qss";
+    else if (style_sheet=="dark_blue")stylename=":darkblue/darkblue/darkblue.qss";
+    else if (style_sheet=="default"){
+        stylename="";
+        qApp->setStyleSheet("");
+    }
+    qDebug() << stylename;
+    QFile f(stylename);
+    if (!f.exists() )
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+    }
+    reloadConfig();
+    SaveAppConfig();
+}
+string MainWindow::getStylesheet(){
+    return style_sheet;
 }
 
 //---Connect UI-Signals

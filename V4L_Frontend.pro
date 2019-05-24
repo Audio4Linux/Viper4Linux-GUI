@@ -53,4 +53,5 @@ else: unix:!android: target.path = /usr/bin/
 DISTFILES +=
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    styles/styles.qrc
