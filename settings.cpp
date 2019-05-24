@@ -43,8 +43,12 @@ settings::settings(QWidget *parent) :
 
 
     ui->styleSelect->addItem("Default","default");
-    ui->styleSelect->addItem("Dark Orange","dark_orange");
-    ui->styleSelect->addItem("Dark Blue","dark_blue");
+    ui->styleSelect->addItem("Breeze Light","breeze_light");
+    ui->styleSelect->addItem("Breeze Dark","breeze_dark");
+    ui->styleSelect->addItem("Gray Orange","dark_orange");
+    ui->styleSelect->addItem("Dark Green","dark_green");
+    ui->styleSelect->addItem("Blue","blue");
+
     QVariant qvS(QString::fromStdString(style_sheet));
     int index = ui->styleSelect->findData(qvS);
     if ( index != -1 ) {

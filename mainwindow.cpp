@@ -69,7 +69,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QString stylename="";
 
     if(style_sheet=="dark_orange")stylename=":darkorange/darkorange.qss";
-    else if (style_sheet=="dark_blue")stylename=":darkblue/darkblue/darkblue.qss";
+    else if (style_sheet=="blue")stylename=":darkblue/darkblue/darkblue.qss";
+    else if (style_sheet=="dark_green")stylename=":/darkgreen/darkgreen/QTDark.qss";
+    else if (style_sheet=="breeze_light")stylename=":/lightbreeze/lightbreeze/lightbreeze.qss";
+    else if (style_sheet=="breeze_dark")stylename=":/darkbreeze/darkbreeze/darkbreeze.qss";
 
     QFile f(stylename);
     if (!f.exists())
@@ -1200,12 +1203,15 @@ void MainWindow::setStylesheet(string s){
 
     QString stylename="";
     if(style_sheet=="dark_orange")stylename=":darkorange/darkorange.qss";
-    else if (style_sheet=="dark_blue")stylename=":darkblue/darkblue/darkblue.qss";
+    else if (style_sheet=="blue")stylename=":darkblue/darkblue/darkblue.qss";
+    else if (style_sheet=="dark_green")stylename=":darkgreen/darkgreen/QTDark.qss";
+    else if (style_sheet=="breeze_light")stylename=":lightbreeze/lightbreeze/lightbreeze.qss";
+    else if (style_sheet=="breeze_dark")stylename=":darkbreeze/darkbreeze/darkbreeze.qss";
     else if (style_sheet=="default"){
         stylename="";
         qApp->setStyleSheet("");
     }
-    qDebug() << stylename;
+
     QFile f(stylename);
     if (!f.exists() )
     {

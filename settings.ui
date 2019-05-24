@@ -58,9 +58,9 @@
    <widget class="QLineEdit" name="path">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>100</x>
       <y>27</y>
-      <width>161</width>
+      <width>151</width>
       <height>25</height>
      </rect>
     </property>
@@ -107,7 +107,7 @@
    <widget class="QPushButton" name="glavafix_help">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>218</x>
       <y>114</y>
       <width>41</width>
       <height>25</height>
