@@ -1,7 +1,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <pulse/pulseaudio.h>
 #include <QDialog>
 #include "ui_settings.h"
 class settings : public QDialog
