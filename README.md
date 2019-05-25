@@ -29,9 +29,11 @@ yay -S viper4linux-gui-git
   * Change V4L Config on the fly 
   * Auto-Apply (Save and reload V4L after performing changes)
   * Convolver Selection
+  * UI-Theming/Stylesheets
 
 #### Screenshots
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab1.png?raw=true)
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3_dark.png?raw=true)
 #### Credits
   * [Material Icons](https://material.io/tools/icons/)
+  * [QSS Stylesheets (modified)](https://github.com/GTRONICK/QSS)
