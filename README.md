@@ -31,7 +31,7 @@ yay -S viper4linux-gui-git
   * Convolver Selection
 
 #### Screenshots
-![Screenshot1](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab1.png?raw=true)
-![Screenshot2](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3.png?raw=true)
+![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab1.png?raw=true)
+![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3_dark.png?raw=true)
 #### Credits
   * [Material Icons](https://material.io/tools/icons/)
