@@ -66,6 +66,7 @@ private:
     string getComp();
     string getMisc();
     void ConnectActions();
+    void SetStyle();
 };
 
 #endif // MAINWINDOW_H

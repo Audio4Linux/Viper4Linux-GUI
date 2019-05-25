@@ -6,7 +6,6 @@ QToolTip
      border-radius: 3px;
      opacity: 100;
 }
-
 QWidget
 {
     color: #b1b1b1;

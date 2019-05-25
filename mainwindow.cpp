@@ -66,33 +66,57 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
     ui->toolButton->setMenu(menu);
 
-    QString stylename="";
-
-    if(style_sheet=="dark_orange")stylename=":darkorange/darkorange.qss";
-    else if (style_sheet=="blue")stylename=":darkblue/darkblue/darkblue.qss";
-    else if (style_sheet=="dark_green")stylename=":/darkgreen/darkgreen/QTDark.qss";
-    else if (style_sheet=="breeze_light")stylename=":/lightbreeze/lightbreeze/lightbreeze.qss";
-    else if (style_sheet=="breeze_dark")stylename=":/darkbreeze/darkbreeze/darkbreeze.qss";
-
-    QFile f(stylename);
-    if (!f.exists())
-    {
-        printf("Unable to set stylesheet, file not found\n");
-    }
-    else
-    {
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-        qApp->setStyleSheet(ts.readAll());
-        qDebug() << stylename;
-    }
-
+    SetStyle();
     ConnectActions();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+//---Style
+void MainWindow::SetStyle(){
+    QString stylepath = "";
+    if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
+    else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
+    else if (style_sheet=="breeze_light")stylepath = ":/lightbreeze/lightbreeze/lightbreeze.qss";
+    else if (style_sheet=="breeze_dark")stylepath = ":/darkbreeze/darkbreeze/darkbreeze.qss";
+    else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
+    else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
+    else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
+    else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
+    else stylepath = ":/default.qss";
+
+    QFile f(stylepath);
+    if (!f.exists())printf("Unable to set stylesheet, file not found\n");
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+        if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark"){
+            QPixmap pix(":/main/settings-white.svg");
+            QIcon icon(pix);
+            QPixmap pix2(":/main/queue-white.svg");
+            QIcon icon2(pix2);
+            QPixmap pix3(":/main/menu-white.svg");
+            QIcon icon3(pix3);
+            ui->set->setIcon(icon);
+            ui->cpreset->setIcon(icon2);
+            ui->toolButton->setIcon(icon3);
+        }else{
+            QPixmap pix(":/main/settings.svg");
+            QIcon icon(pix);
+            QPixmap pix2(":/main/queue.svg");
+            QIcon icon2(pix2);
+            QPixmap pix3(":/main/menu.svg");
+            QIcon icon3(pix3);
+            ui->set->setIcon(icon);
+            ui->cpreset->setIcon(icon2);
+            ui->toolButton->setIcon(icon3);
+        }
+    }
 }
 
 //---Dialogs
@@ -1200,29 +1224,7 @@ string MainWindow::getPath(){
 }
 void MainWindow::setStylesheet(string s){
     style_sheet = std::move(s);
-
-    QString stylename="";
-    if(style_sheet=="dark_orange")stylename=":darkorange/darkorange.qss";
-    else if (style_sheet=="blue")stylename=":darkblue/darkblue/darkblue.qss";
-    else if (style_sheet=="dark_green")stylename=":darkgreen/darkgreen/QTDark.qss";
-    else if (style_sheet=="breeze_light")stylename=":lightbreeze/lightbreeze/lightbreeze.qss";
-    else if (style_sheet=="breeze_dark")stylename=":darkbreeze/darkbreeze/darkbreeze.qss";
-    else if (style_sheet=="default"){
-        stylename="";
-        qApp->setStyleSheet("");
-    }
-
-    QFile f(stylename);
-    if (!f.exists() )
-    {
-        printf("Unable to set stylesheet, file not found\n");
-    }
-    else
-    {
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-        qApp->setStyleSheet(ts.readAll());
-    }
+    SetStyle();
     reloadConfig();
     SaveAppConfig();
 }

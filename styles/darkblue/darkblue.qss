@@ -249,6 +249,7 @@ QGroupBox::indicator {
   margin-left: 2px;
   width: 16px;
   height: 16px;
+  image: url(":/darkblue/darkblue/rc/checkbox_unchecked_disabled.png");
 }
 
 QGroupBox::indicator:unchecked:hover, QGroupBox::indicator:unchecked:focus, QGroupBox::indicator:unchecked:pressed {
@@ -256,11 +257,15 @@ QGroupBox::indicator:unchecked:hover, QGroupBox::indicator:unchecked:focus, QGro
   image: url(":/darkblue/darkblue/rc/checkbox_unchecked_focus.png");
 }
 
+QGroupBox::indicator:unchecked {
+  border: none;
+  image: url(":/darkblue/darkblue/rc/checkbox_unchecked_disabled.png");
+}
 QGroupBox::indicator:unchecked:disabled {
   image: url(":/darkblue/darkblue/rc/checkbox_unchecked_disabled.png");
 }
 
-QGroupBox::indicator:checked:hover, QGroupBox::indicator:checked:focus, QGroupBox::indicator:checked:pressed {
+QGroupBox::indicator:checked:hover, QGroupBox::indicator:checked:focus, QGroupBox::indicator:checked {
   border: none;
   image: url(":/darkblue/darkblue/rc/checkbox_checked_focus.png");
 }
@@ -1895,7 +1900,6 @@ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
 --------------------------------------------------------------------------- */
 .QFrame {
   border-radius: 4px;
-  border: 1px solid #32414B;
 }
 
 .QFrame[frameShape="0"] {

@@ -1,15 +1,11 @@
 <RCC>
     <qresource prefix="/main">
-        <file>refresh.svg</file>
         <file>settings.svg</file>
-        <file>download.svg</file>
-        <file>eq.svg</file>
-        <file>up.svg</file>
-        <file>down.svg</file>
         <file>menu.svg</file>
-        <file>bookmark.svg</file>
-        <file>list.svg</file>
         <file>queue.svg</file>
         <file>viper.png</file>
+        <file>menu-white.svg</file>
+        <file>queue-white.svg</file>
+        <file>settings-white.svg</file>
     </qresource>
 </RCC>

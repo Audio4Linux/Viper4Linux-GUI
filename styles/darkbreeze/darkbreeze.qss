@@ -86,6 +86,7 @@ QCheckBox:disabled
 QGroupBox::indicator
 {
     margin-left: 0.2ex;
+    border-image: url(:/darkbreeze/darkbreeze/rc/checkbox_unchecked_disabled.svg);
 }
 
 QCheckBox::indicator:unchecked,
@@ -105,7 +106,8 @@ QGroupBox::indicator:unchecked:pressed
     border-image: url(:/darkbreeze/darkbreeze/rc/checkbox_unchecked.svg);
 }
 
-QCheckBox::indicator:checked
+QCheckBox::indicator:checked,
+QGroupBox::indicator:checked
 {
 border: none;
     border-image: url(:/darkbreeze/darkbreeze/rc/checkbox_checked.svg);

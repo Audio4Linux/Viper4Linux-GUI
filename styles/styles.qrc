@@ -61,9 +61,6 @@
         <file>darkblue/rc/Vmovetoolbar.png</file>
         <file>darkblue/rc/Vsepartoolbar.png</file>
     </qresource>
-    <qresource prefix="/darkgreen">
-        <file>darkgreen/QTDark.qss</file>
-    </qresource>
     <qresource prefix="/lightbreeze">
         <file>lightbreeze/rc/branch_closed-on.svg</file>
         <file>lightbreeze/rc/branch_closed.svg</file>
@@ -154,5 +151,20 @@
         <file>darkbreeze/rc/vmovetoolbar.svg</file>
         <file>darkbreeze/rc/vsepartoolbars.svg</file>
         <file>darkbreeze/darkbreeze.qss</file>
+    </qresource>
+    <qresource prefix="/amoled">
+        <file>amoled/amoled.qss</file>
+    </qresource>
+    <qresource prefix="/aqua">
+        <file>aqua/aqua.qss</file>
+    </qresource>
+    <qresource prefix="/materialdark">
+        <file>materialdark/materialdark.qss</file>
+    </qresource>
+    <qresource prefix="/ubuntu">
+        <file>ubuntu/ubuntu.qss</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>default.qss</file>
     </qresource>
 </RCC>
