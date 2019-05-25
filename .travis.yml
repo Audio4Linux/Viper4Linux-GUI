@@ -2,7 +2,9 @@ language: cpp
 dist: xenial
 compiler: g++
 sudo: required
-
+env:
+  - secure: "NMEKVXaMl6LhpJ6lW7jPGt9IxukC2mWCKE+ltEeE96+TZqHYQYiXBIbod8mNDi1IbKWsOMngQhmLdwojbYoVQsw4aGWbcBfWWkwURRnWvWybFkufQWHtOQ/Fh9tNai0fPkIqIRt8gdPyNIjTAkmaD6NEHtWiqWQYpv/FbS0rLIunSgecmNNLwDMxSEyZyUhWT3o1Dp4bjJvIITJOwPlZ4bB+Y9RrXerLGsMnN9jj5s21dwVsUwsWZoYEB0KPGXPTV2XXAvZtFDhU7leZwa4IpuBoKy4MYvRGSWAPYncBsFqLjCOvWacDtPyUs04oGFt4dybEGKc9AIERwdq9/G0ROBQcQk5HeMC9yzhW/BTQGDZ89/KYVhrYQv+8OCq6JvPePCYBO4jDhz1ODAdtnJQlon2B2Dz/sNPZX6FaG7Xc1s7++oun8ExxNuwI5jpFsBn4Vhko5x0QI8678OnUCodnaH2r+wlSj18iH5vLlNDBkuEiIHWjeFeJQMK0KBFWUiDlMy5NqBxeRABvk/3yinzBcJlbT4FE8NPUugnVtKJqlxMhHrkNEqIOO2wE1hMDp4i0+poFhxx4JmiDYvs5bvnTRg/WzxBBzkoHLlmRwXtjh79AelCgZ4704ShpxJwusoxv6/6KjNvdagN9qLAKWDYdSeFG912i24/2eWz1kp/4da8="
+  
 before_install:
   - sudo add-apt-repository ppa:beineri/opt-qt-5.11.0-xenial -y
   - sudo apt-get update
@@ -15,3 +17,6 @@ install:
 script:
   - /opt/qt511/bin/qmake PREFIX=/usr
   - make
+
+after_success:
+  - curl -F file=@V4L_Frontend "https://nightly.thebone.cf/api/upload.php?key=$KEY&project=viper-gui"
