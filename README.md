@@ -1,20 +1,23 @@
 # Viper4Linux-GUI
+[![Build Status](https://travis-ci.org/ThePBone/Viper4Linux-GUI.svg?branch=master)](https://travis-ci.org/ThePBone/Viper4Linux-GUI)
+
 Unofficial UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
   * Telegram: @ThePBone
-  * [Binary Releases](https://github.com/ThePBone/Viper4Linux-GUI/releases)
+  * [Stable Builds](https://github.com/ThePBone/Viper4Linux-GUI/releases)
+  * [Nightly Builds](https://nightly.thebone.cf/viper-gui)
 ## Installation
 
 ### Manually
 #### Install Dependencies
 
 ```
-sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a
+sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a libgl1-mesa-dev
 ```
 
 #### Start Executable
 ```
-chmod +x V4L_GUI
-./V4L_GUI
+chmod +x viper-gui
+./viper-gui
 ```
 ### Arch
 On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) provided by yochananmarqos
