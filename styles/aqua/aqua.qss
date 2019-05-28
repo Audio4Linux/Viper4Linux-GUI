@@ -8,9 +8,20 @@ Available at: https://github.com/GTRONICK/QSS/blob/master/Aqua.qss
 QMainWindow {
 	background-color:#ececec;
 }
+QDialog{
+background-color:#ececec;
+}
 QFrame[frameShape="4"],
 QFrame[frameShape="5"]{
     color: #AAAAAA;
+}
+QSpinBox{
+    background-color: rgb(255,255,255);
+    color: #000000
+}
+QSpinBox::disabled{
+background-color: rgb(255,255,255);
+color: #AAAAAA
 }
 QGroupBox {
 border-radius:4px;
@@ -27,6 +38,30 @@ border-width:1px;
 border-color: transparent;
         color: #808086;
         padding: 2px;
+}
+QListWidget{
+background-color: #EEEEEE;
+}
+QListWidget::item{
+color: 111111;
+}
+QComboBox{
+    background-color: rgb(255,255,255);
+    color: #000000
+}
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+    background-color: rgb(255,255,255);
+    color: #000000
+}
+QLineEdit{
+    background-color: rgb(255,255,255);
+    color: #000000
+}
+QLineEdit::disabled{
+    background-color: rgb(255,255,255);
+    color: #AAAAAA
 }
 QGroupBox::indicator:hover {
         border-radius:4px;
@@ -208,18 +243,19 @@ QMenuBar::item:selected {
   	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(0, 113, 255, 255), stop:1 rgba(91, 171, 252, 255));
 	color: #FFFFFF;
 }
-QMenu::item:selected {
-	border-style: solid;
-	border-top-color: transparent;
-	border-right-color: transparent;
-	border-left-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(0, 113, 255, 255), stop:1 rgba(91, 171, 252, 255));
-	border-bottom-color: transparent;
-	border-left-width: 2px;
-	color: #000000;
-	padding-left:15px;
-	padding-top:4px;
-	padding-bottom:4px;
-	padding-right:7px;
+
+/*QMenu::item:selected {
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(0, 113, 255, 255), stop:1 rgba(91, 171, 252, 255));
+        border-bottom-color: transparent;
+        border-left-width: 2px;
+        color: #000000;
+        padding-left:15px;
+        padding-top:4px;
+        padding-bottom:4px;
+        padding-right:7px;
 }
 QMenu::item {
 	border-style: solid;
@@ -233,7 +269,7 @@ QMenu::item {
 	padding-top:4px;
 	padding-bottom:4px;
 	padding-right:7px;
-}
+}*/
 QTabWidget {
 	color:rgb(0,0,0);
 	background-color:#000000;

@@ -18,8 +18,19 @@ QFrame[frameShape="4"],
 QFrame[frameShape="5"]{
     color: #AAAAAA;
 }
+QFrame[frameShape="0"],
+QFrame[frameShape="1"],
+QFrame[frameShape="2"],
+QFrame[frameShape="3"],
+QFrame[frameShape="6"],
+QFrame[frameShape="7"],
+QFrame[frameShape="8"],
+QFrame[frameShape="9"]{
+    color: #333333;
+}
 QGroupBox {
         padding:2px;
+        color: #333333;
 }
 
 QGroupBox::indicator:checked {
@@ -276,8 +287,12 @@ QMenu {
 	color:rgb(223,219,210);
 	background-color:rgb(65,64,59);
 }
+QListWidget{
+        background-color: #EEEEEE;
+}
 QCheckBox {
 	padding:2px;
+                color: #333333;
 }
 QCheckBox:hover {
 	border-radius:4px;

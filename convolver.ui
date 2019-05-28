@@ -48,7 +48,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>275</width>
+     <width>231</width>
      <height>25</height>
     </rect>
    </property>
@@ -56,18 +56,14 @@
   <widget class="QPushButton" name="reload">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>250</x>
      <y>10</y>
-     <width>31</width>
+     <width>71</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/main/refresh.svg</normaloff>:/main/refresh.svg</iconset>
+    <string>Reload</string>
    </property>
   </widget>
  </widget>
