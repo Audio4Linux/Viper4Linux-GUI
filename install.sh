@@ -8,6 +8,12 @@ if (( $EUID != 0 )); then
     exit
 fi
 
+if pgrep viper-gui >/dev/null 2>&1
+  then
+    printf "${RED}File /usr/bin/viper-gui is in use\n${NC}Please close all Viper4Linux-UI windows and try again.\n"
+    exit 1
+fi
+
 dir=$(mktemp -d)
 cd $dir
 printf "Working Directory: $dir\n"
