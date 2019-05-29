@@ -6,7 +6,17 @@ Unofficial UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
   * [Stable Builds](https://github.com/ThePBone/Viper4Linux-GUI/releases)
   * [Nightly Builds](https://nightly.thebone.cf/viper-gui)
 ## Installation
-
+### Debian/Ubuntu
+To simplify the installation on Debian, I have added an automatic install script.
+You can also use it to update to a new stable release (if available).
+```
+curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/install.sh | sudo bash
+```
+### Arch
+On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) provided by yochananmarqos
+```
+yay -S viper4linux-gui-git  
+```
 ### Manually
 #### Install Dependencies
 
@@ -19,11 +29,7 @@ sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a libgl1-mesa-dev
 chmod +x viper-gui
 ./viper-gui
 ```
-### Arch
-On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) provided by yochananmarqos
-```
-yay -S viper4linux-gui-git  
-```
+
 ## Usage
 #### Features
   * Change V4L Config on the fly 
