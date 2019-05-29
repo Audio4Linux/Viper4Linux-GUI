@@ -1203,9 +1203,9 @@
      <widget class="QLabel" name="eq_p12db">
       <property name="geometry">
        <rect>
-        <x>298</x>
+        <x>301</x>
         <y>17</y>
-        <width>51</width>
+        <width>48</width>
         <height>20</height>
        </rect>
       </property>
@@ -1219,9 +1219,9 @@
      <widget class="QLabel" name="eq_n12db">
       <property name="geometry">
        <rect>
-        <x>298</x>
+        <x>301</x>
         <y>161</y>
-        <width>51</width>
+        <width>49</width>
         <height>20</height>
        </rect>
       </property>

@@ -167,4 +167,7 @@
     <qresource prefix="/">
         <file>default.qss</file>
     </qresource>
+    <qresource prefix="/vsdark">
+        <file>vsdark/vsdark.qss</file>
+    </qresource>
 </RCC>
