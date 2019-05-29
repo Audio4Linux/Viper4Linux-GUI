@@ -85,7 +85,15 @@ QCheckBox:disabled
 
 QGroupBox::indicator
 {
+    width:18px;
+    height:18px;
     margin-left: 0.2ex;
+    border-image: url(:/darkbreeze/darkbreeze/rc/checkbox_unchecked_disabled.svg);
+}
+QCheckBox::indicator
+{
+    width:18px;
+    height:18px;
     border-image: url(:/darkbreeze/darkbreeze/rc/checkbox_unchecked_disabled.svg);
 }
 

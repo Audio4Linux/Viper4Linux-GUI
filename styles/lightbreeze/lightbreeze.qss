@@ -84,13 +84,22 @@ QGroupBox::indicator
 {
     margin-left: 0.2ex;
     margin-left: 0.2ex;
-     border-image: url(:/lightbreeze/lightbreeze/rc/checkbox_unchecked_disabled.svg);
+    width:18px;
+    height:18px;
+    border-image: url(:/lightbreeze/lightbreeze/rc/checkbox_unchecked_disabled.svg);
 }
 
 QCheckBox::indicator:unchecked,
 QCheckBox::indicator:unchecked:focus
 {
     border-image: url(:/lightbreeze/lightbreeze/rc/checkbox_unchecked_disabled.svg);
+}
+QCheckBox::indicator
+{
+    border-image: url(:/lightbreeze/lightbreeze/rc/checkbox_unchecked_disabled.svg);
+    width:18px;
+    height:18px;
+
 }
 
 QCheckBox::indicator:unchecked:hover,
@@ -134,10 +143,6 @@ QCheckBox::indicator:indeterminate:hover
     border-image: url(:/lightbreeze/lightbreeze/rc/checkbox_indeterminate-hover.svg);
 }
 
-QCheckBox::indicator:indeterminate:focus,
-QCheckBox::indicator:indeterminate:pressed
-{
-}
 
 QCheckBox::indicator:indeterminate:disabled
 {
