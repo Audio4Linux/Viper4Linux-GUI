@@ -999,6 +999,7 @@ string MainWindow::getMaster() {
 
 //---EQ
 void MainWindow::setEQ(const int* data){
+    lockapply=true;
     ui->eq1->setValue(data[0]);
     ui->eq2->setValue(data[1]);
     ui->eq3->setValue(data[2]);
@@ -1009,6 +1010,7 @@ void MainWindow::setEQ(const int* data){
     ui->eq8->setValue(data[7]);
     ui->eq9->setValue(data[8]);
     ui->eq10->setValue(data[9]);
+    lockapply=false;
     OnUpdate();
 }
 void MainWindow::updatepreset(){
