@@ -31,6 +31,7 @@
 #include <QFileDialog>
 #include "converter.h"
 #include <cctype>
+#include <cmath>
 using namespace std;
 
 static string path;
@@ -1124,49 +1125,68 @@ void MainWindow::update(int d){
     QString post = "";
 
     if(obj==ui->vbmode){
+        //Bass
         if(d==0) ui->info->setText("Natural Bass");
         else if(d==1) ui->info->setText("Pure Bass+");
         else if(d==2) ui->info->setText("Subwoofer");
         else ui->info->setText("Mode "+QString::number( d ));
     }
     else if(obj==ui->vcmode){
+        //Clarity
         if(d==0) ui->info->setText("Natural");
         else if(d==1) ui->info->setText("OZone+");
         else if(d==2) ui->info->setText("XHiFi");
         else ui->info->setText("Mode "+QString::number( d ));
     }
+    else if(obj==ui->axmode){
+        //AnalogX
+        if(d==0) ui->info->setText("Slight");
+        else if(d==1) ui->info->setText("Moderate");
+        else if(d==2) ui->info->setText("Extreme");
+        else ui->info->setText("Mode "+QString::number( d ));
+    }
+    else if(obj==ui->vcurelvl){
+        //Cure+
+        if(d==0) ui->info->setText("Slight");
+        else if(d==1) ui->info->setText("Moderate");
+        else if(d==2) ui->info->setText("Extreme");
+        else ui->info->setText("Mode "+QString::number( d ));
+    }
     else if(obj==ui->eq1||obj==ui->eq2||obj==ui->eq3||obj==ui->eq4||obj==ui->eq5||obj==ui->eq6||obj==ui->eq7||obj==ui->eq8||obj==ui->eq9||obj==ui->eq10){
         updateeq(d);
     }
+    //Diff-Surround
+    else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
+    //Bass
+    else if(obj==ui->vbgain)ui->info->setText(QString::number(roundf(100 * translate(d,0,600,0,20)) / 100)+"dB (" + QString::number(d) + ")");
+    //Clarity
+    else if(obj==ui->vclvl)ui->info->setText(QString::number(roundf(100 * translate(d,0,450,0,30)) / 100)+"dB (" + QString::number(d) + ")");
+    //Volume
+    else if(obj==ui->outvolume)ui->info->setText(QString::number(roundf(100 * translate(d,0,100,-40,6)) / 100)+"dB (" + QString::number(d) + "%)");
+    //Compressor
+    else if(obj==ui->comp_ratio)ui->info->setText(QString::number((int)translate(d,1,100,1,10))+"x (" + QString::number(d) + "%)");
+    //Headphone Engine
+    else if(obj==ui->vhplvl)ui->info->setText("Level " + QString::number(d+1));
+    //Reverb
+    else if(obj==ui->roomsize)ui->info->setText(QString::number((int)translate(d,1,100,25,1200))+"m\u00B2 (" + QString::number(d) + "%)");
+    else if(obj==ui->roomwidth)ui->info->setText(QString::number((int)translate(d,1,100,5,36))+"m (" + QString::number(d) + "%)");
     else{
-        //Bass
-        if(obj==ui->vbfreq)post = "Hz";       
-        //Diff-Surround
-        else if(obj==ui->difflvl)post = "%";
-        //Clarity
-        else if(obj==ui->vhplvl)pre = "Level ";       
         //Reverb
-        else if(obj==ui->roomsize)post = "%";
-        else if(obj==ui->roomdamp)post = "%";
+        if(obj==ui->roomdamp)post = "%";
         else if(obj==ui->wet)post = "%";
         else if(obj==ui->dry)post = "%";
-        else if(obj==ui->roomwidth)post = "%";
+        //Bass
+        else if(obj==ui->vbfreq)post = "Hz";
         //Volume
         else if(obj==ui->limiter)post = "%";
-        else if(obj==ui->outvolume)post = "%";       
-        //Cure+
-        else if(obj==ui->vcurelvl)pre = "Level ";
         //Spectrum Expend
         else if(obj==ui->barkcon)pre = "Level ";
         else if(obj==ui->barkfreq)post = "Hz";
         //Convolver
         else if(obj==ui->convcc)post = "%";        
-        //AnalogX
-        else if(obj==ui->axmode)pre = "Mode ";
         //Compressor
         else if(obj==ui->compgain)post = "%";
         else if(obj==ui->compwidth)post = "%";
-        else if(obj==ui->comp_ratio)post = "%";
         else if(obj==ui->comp_thres)post = "%";
         else if(obj==ui->compattack)post = "%";
         else if(obj==ui->comprelease)post = "%";
@@ -1195,7 +1215,12 @@ void MainWindow::updateeq(int f){
     }
     ui->info->setText(s);
 }
-
+float MainWindow::translate(int value,int leftMin,int leftMax,int rightMin,int rightMax){
+    int leftSpan = leftMax - leftMin;
+    int rightSpan = rightMax - rightMin;
+    float valueScaled = float(value - leftMin) / float(leftSpan);
+    return rightMin + (valueScaled * rightSpan);
+}
 
 //---Getter/Setter
 bool MainWindow::getAutoFx(){

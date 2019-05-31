@@ -68,6 +68,7 @@ private:
     void ConnectActions();
     void SetStyle();
     bool is_only_ascii_whitespace(const string&);
+    float translate(int value,int leftMin,int leftMax,int rightMin,int rightMax);
 };
 
 #endif // MAINWINDOW_H
