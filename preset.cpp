@@ -9,6 +9,12 @@
 #include <QCloseEvent>
 #include <QString>
 #include <QMessageBox>
+#include <QInputDialog>
+#include <QFileDialog>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include "converter.h"
 Preset::Preset(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Preset)
@@ -18,6 +24,7 @@ Preset::Preset(QWidget *parent) :
     connect(ui->add,SIGNAL(clicked()),SLOT(add()));
     connect(ui->load,SIGNAL(clicked()),SLOT(load()));
     connect(ui->remove,SIGNAL(clicked()),SLOT(remove()));
+    connect(ui->importBtn,SIGNAL(clicked()),SLOT(import()));
 }
 
 Preset::~Preset()
@@ -60,6 +67,58 @@ void Preset::add(){
 
     UpdateList();
 }
+
+void Preset::import(){
+    QString filename = QFileDialog::getOpenFileName(this,"Import Viper4Android config file (xml)","","*.xml");
+    if(filename=="")return;
+
+    string response = converter::read(filename.toUtf8().constData());
+    string::size_type loc = response.find( "Syntax error", 0 );
+    if( loc == 0 ) {
+        QMessageBox::StandardButton msg;
+        msg = QMessageBox::warning(this, "Syntax Error", QString::fromStdString(response),QMessageBox::Ok);
+        return;
+    }
+
+    char* resp = strtok(&response[0u], "|");
+    string newconfig = "";
+    string notices = "";
+    int count_resp = 0;
+    while (resp != nullptr) {
+        if (count_resp == 0)newconfig=resp;
+        else if (count_resp == 1)notices=resp;
+        else break;
+        resp = strtok (nullptr, ";");
+        count_resp++;
+    }
+
+    QString msginfotext = "Successfully converted!\n";
+    if(notices!=""){
+        msginfotext += "\nNotices:\n";
+        msginfotext += QString::fromStdString(notices);
+    }
+    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QString absolute=d.absolutePath();
+    QString path = pathAppend(absolute,"presets");
+
+    bool ok;
+    QString text = QInputDialog::getText(0, "Import",
+                                         msginfotext + "\nPreset Name:", QLineEdit::Normal,
+                                         "", &ok);
+    if (ok && !text.isEmpty()) {
+
+        ofstream cfile(QDir::cleanPath(path + QDir::separator() + text + ".conf").toUtf8().constData());
+        if (cfile.is_open())
+        {
+            cfile << newconfig;
+            cfile.close();
+        }
+        else cerr << "Unable to open file";
+    }
+
+    UpdateList();
+}
+
 void Preset::remove(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;

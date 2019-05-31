@@ -82,6 +82,19 @@
     </rect>
    </property>
   </widget>
+  <widget class="QPushButton" name="importBtn">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>310</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Import Android</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="resources.qrc"/>

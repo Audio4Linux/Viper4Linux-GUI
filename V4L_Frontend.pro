@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    converter.cpp \
         main.cpp \
         mainwindow.cpp \
     settings.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
     preset.cpp
 
 HEADERS += \
+    converter.h \
         mainwindow.h \
     configlist.h \
     settings.h \

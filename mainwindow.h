@@ -67,6 +67,7 @@ private:
     string getMisc();
     void ConnectActions();
     void SetStyle();
+    bool is_only_ascii_whitespace(const string&);
 };
 
 #endif // MAINWINDOW_H

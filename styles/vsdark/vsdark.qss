@@ -194,7 +194,7 @@ QTreeView::item:selected
   background:#007acc;
 }
 
-QTreeView::item:selected!active {
+QTreeView::item:selected:!active {
   background: #3f3f46;
 }
 

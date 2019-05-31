@@ -29,7 +29,8 @@
 #include <QAction>
 #include <QFile>
 #include <QFileDialog>
-
+#include "converter.h"
+#include <cctype>
 using namespace std;
 
 static string path;
@@ -367,6 +368,10 @@ void MainWindow::reloadConfig(){
 }
 void MainWindow::loadConfig(const string& key,string value){
     // cout << key << " -> " << value << endl;
+    if(value==""||is_only_ascii_whitespace(value)){
+        cerr << "[WARNING] Key " + key + " is empty" << endl;
+        return;
+    }
     switch (resolveConfig(key)) {
     case fx_enable: {
         if(value=="true") ui->disableFX->setChecked(false);
@@ -1322,4 +1327,14 @@ void MainWindow::ConnectActions(){
     connect( ui->vse , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->conv , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->ax , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+}
+
+//---Helper
+bool MainWindow::is_only_ascii_whitespace( const std::string& str )
+{
+    auto it = str.begin();
+    do {
+        if (it == str.end()) return true;
+    } while (*it >= 0 && *it <= 0x7f && std::isspace(*(it++)));
+    return false;
 }

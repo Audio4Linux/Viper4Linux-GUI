@@ -19,6 +19,7 @@ private slots:
     void add();
     void remove();
     void load();
+    void import();
 private:
     Ui::Preset *ui;
     QString pathAppend(const QString& path1, const QString& path2);
