@@ -1157,14 +1157,10 @@ void MainWindow::update(int d){
     }
     //Diff-Surround
     else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
-    //Bass
-    else if(obj==ui->vbgain)ui->info->setText(QString::number(roundf(100 * translate(d,0,600,0,20)) / 100)+"dB (" + QString::number(d) + ")");
-    //Clarity
-    else if(obj==ui->vclvl)ui->info->setText(QString::number(roundf(100 * translate(d,0,450,0,30)) / 100)+"dB (" + QString::number(d) + ")");
     //Volume
     else if(obj==ui->outvolume)ui->info->setText(QString::number(roundf(100 * translate(d,0,100,-40,6)) / 100)+"dB (" + QString::number(d) + "%)");
-    //Compressor
-    else if(obj==ui->comp_ratio)ui->info->setText(QString::number((int)translate(d,1,100,1,10))+"x (" + QString::number(d) + "%)");
+    //AGC
+    else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,10))+"x (" + QString::number(d) + ")");
     //Headphone Engine
     else if(obj==ui->vhplvl)ui->info->setText("Level " + QString::number(d+1));
     //Reverb
@@ -1185,6 +1181,7 @@ void MainWindow::update(int d){
         //Convolver
         else if(obj==ui->convcc)post = "%";        
         //Compressor
+        else if(obj==ui->comp_ratio)post = "%";
         else if(obj==ui->compgain)post = "%";
         else if(obj==ui->compwidth)post = "%";
         else if(obj==ui->comp_thres)post = "%";
@@ -1215,9 +1212,9 @@ void MainWindow::updateeq(int f){
     }
     ui->info->setText(s);
 }
-float MainWindow::translate(int value,int leftMin,int leftMax,int rightMin,int rightMax){
-    int leftSpan = leftMax - leftMin;
-    int rightSpan = rightMax - rightMin;
+float MainWindow::translate(int value,int leftMin,int leftMax,float rightMin,float rightMax){
+    float leftSpan = leftMax - leftMin;
+    float rightSpan = rightMax - rightMin;
     float valueScaled = float(value - leftMin) / float(leftSpan);
     return rightMin + (valueScaled * rightSpan);
 }

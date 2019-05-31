@@ -237,7 +237,10 @@ string converter::read(string path){
     out += "fetcomp_kneewidth=";
     out += conf->fetcompressor_knee.toUtf8().constData() + n;
     out += "fetcomp_ratio=";
-    out += conf->fetcompressor_ratio.toUtf8().constData() + n;
+    QString fc_r(conf->fetcompressor_ratio);
+    int fc_ri = fc_r.toInt();
+    out += to_string((int)(fc_ri / 10)) + n;
+
     out += "fetcomp_attack=";
     out += conf->fetcompressor_attack.toUtf8().constData() + n;
     out += "fetcomp_release=";
@@ -304,7 +307,9 @@ string converter::read(string path){
     if(conf->diffsurr_enable)out += "true" + n;
     else out += "false" + n;
     out += "ds_level=";
-    out += conf->diffsurr_delay.toUtf8().constData() + n;
+    QString ds(conf->diffsurr_delay);
+    int dsl = ds.toInt();
+    out += to_string((int)(dsl / 20)) + n;
 
     //REVERB
     out += "reverb_enable=";
@@ -366,12 +371,15 @@ string converter::read(string path){
 
     //MASTER
     out += "lim_threshold=";
-    out += conf->limiter.toUtf8().constData() + n;
+    QString lim(conf->limiter);
+    int liml = lim.toInt();
+    out += to_string((int)(liml / 10)) + n;
     out += "out_pan=";
     out += conf->channelpan.toUtf8().constData() + n;
     out += "out_volume=";
-    out += conf->outvol.toUtf8().constData() + n;
-
+    QString vol(conf->outvol);
+    int voll = vol.toInt();
+    out += to_string((int)(voll / 2)) + n;
 
 
     string info = "";
