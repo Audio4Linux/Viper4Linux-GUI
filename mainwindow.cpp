@@ -1157,24 +1157,22 @@ void MainWindow::update(int d){
     }
     //Diff-Surround
     else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
-    //Volume
-    else if(obj==ui->outvolume)ui->info->setText(QString::number(roundf(100 * translate(d,0,100,-40,6)) / 100)+"dB (" + QString::number(d) + "%)");
     //AGC
     else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,10))+"x (" + QString::number(d) + ")");
     //Headphone Engine
     else if(obj==ui->vhplvl)ui->info->setText("Level " + QString::number(d+1));
-    //Reverb
-    else if(obj==ui->roomsize)ui->info->setText(QString::number((int)translate(d,1,100,25,1200))+"m\u00B2 (" + QString::number(d) + "%)");
-    else if(obj==ui->roomwidth)ui->info->setText(QString::number((int)translate(d,1,100,5,36))+"m (" + QString::number(d) + "%)");
     else{
         //Reverb
         if(obj==ui->roomdamp)post = "%";
+        else if(obj==ui->roomsize)post = "%";
+        else if(obj==ui->roomwidth)post = "%";
         else if(obj==ui->wet)post = "%";
         else if(obj==ui->dry)post = "%";
         //Bass
         else if(obj==ui->vbfreq)post = "Hz";
         //Volume
         else if(obj==ui->limiter)post = "%";
+        else if(obj==ui->outvolume)post = "%";
         //Spectrum Expend
         else if(obj==ui->barkcon)pre = "Level ";
         else if(obj==ui->barkfreq)post = "Hz";

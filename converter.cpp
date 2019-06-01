@@ -237,9 +237,7 @@ string converter::read(string path){
     out += "fetcomp_kneewidth=";
     out += conf->fetcompressor_knee.toUtf8().constData() + n;
     out += "fetcomp_ratio=";
-    QString fc_r(conf->fetcompressor_ratio);
-    int fc_ri = fc_r.toInt();
-    out += to_string((int)(fc_ri / 10)) + n;
+    out += conf->fetcompressor_ratio.toUtf8().constData() + n;
 
     out += "fetcomp_attack=";
     out += conf->fetcompressor_attack.toUtf8().constData() + n;
@@ -293,7 +291,9 @@ string converter::read(string path){
     out += "vb_freq=";
     out += conf->fidelity_bass_freq.toUtf8().constData() + n;
     out += "vb_gain=";
-    out += conf->fidelity_bass_gain.toUtf8().constData() + n;
+    QString vbgain(conf->fidelity_bass_gain);
+    double vbgaind = vbgain.toDouble();
+    out += to_string((int)(vbgaind * 1.33)) + n;
 
     //HEADSET ENGINE
     out += "vhe_enable=";
@@ -336,7 +336,8 @@ string converter::read(string path){
     if(conf->colorfulmusic_enable)out += "true" + n;
     else out += "false" + n;
     out += "colm_midimage=";
-    out += conf->colorfulmusic_midimage.toUtf8().constData() + n;
+    QString colm_mi(conf->colorfulmusic_midimage);
+    out += to_string((int)(colm_mi.toInt() * 4)) + n;
 
     char* colm_wd = strtok(conf->colorfulmusic_coeffs.toLocal8Bit().data(), ";");
     int count_colm = 0;
@@ -356,6 +357,8 @@ string converter::read(string path){
     out += "vc_mode=";
     out += conf->fidelity_clarity_mode.toUtf8().constData() + n;
     out += "vc_level=";
+    QString vcl(conf->fidelity_clarity_gain);
+    out += to_string((int)(vcl.toInt() * 1.77)) + n;
     out += conf->fidelity_clarity_gain.toUtf8().constData() + n;
 
     //GAIN CONTROL
@@ -363,17 +366,18 @@ string converter::read(string path){
     if(conf->playbackgain_enable)out += "true" + n;
     else out += "false" + n;
     out += "agc_ratio=";
-    out += conf->playbackgain_ratio.toUtf8().constData() + n;
+    QString agcgain(conf->playbackgain_ratio);
+    out += to_string((int)(agcgain.toInt() * 2.5)) + n;
     out += "agc_maxgain=";
-    out += conf->playbackgain_maxscaler.toUtf8().constData() + n;
+    QString agc_mg(conf->playbackgain_maxscaler);
+    out += to_string((int)(agc_mg.toInt() * 0.8)) + n;
     out += "agc_volume=";
-    out += conf->playbackgain_volume.toUtf8().constData() + n;
+    QString agc_vl(conf->playbackgain_volume);
+    out += to_string((int)(agc_vl.toInt() * 1.4)) + n;
 
     //MASTER
     out += "lim_threshold=";
-    QString lim(conf->limiter);
-    int liml = lim.toInt();
-    out += to_string((int)(liml / 10)) + n;
+    out += conf->limiter.toUtf8().constData() + n;
     out += "out_pan=";
     out += conf->channelpan.toUtf8().constData() + n;
     out += "out_volume=";
