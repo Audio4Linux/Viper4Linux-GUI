@@ -21,7 +21,7 @@ yay -S viper4linux-gui-git
 #### Install Dependencies
 
 ```
-sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a libgl1-mesa-dev
+sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a libqt5xml5 libgl1-mesa-dev
 ```
 
 #### Start Executable
@@ -36,6 +36,7 @@ chmod +x viper-gui
   * Auto-Apply (Save and reload V4L after performing changes)
   * Convolver Selection
   * UI-Theming/Stylesheets
+  * Import Android Configs
 
 #### Screenshots
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab1.png?raw=true)
