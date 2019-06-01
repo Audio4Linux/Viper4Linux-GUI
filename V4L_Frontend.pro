@@ -26,6 +26,7 @@ CONFIG += c++11
 
 SOURCES += \
     converter.cpp \
+    importandroid.cpp \
         main.cpp \
         mainwindow.cpp \
     settings.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 
 HEADERS += \
     converter.h \
+    importandroid.h \
         mainwindow.h \
     configlist.h \
     settings.h \
@@ -42,6 +44,7 @@ HEADERS += \
     preset.h
 
 FORMS += \
+    importandroid.ui \
         mainwindow.ui \
     settings.ui \
     convolver.ui \

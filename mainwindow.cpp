@@ -140,9 +140,10 @@ void MainWindow::OpenSettings(){
 void MainWindow::OpenPreset(){
     if(presetdlg_enabled==true){
         enablePresetBtn(false);
-        auto preset = new Preset(this);
-        preset->setFixedSize(preset->geometry().width(),preset->geometry().height());
-        preset->show();
+        auto _preset = new Preset(this);
+        preset = _preset;
+        _preset->setFixedSize(_preset->geometry().width(),_preset->geometry().height());
+        _preset->show();
     }
 }
 void MainWindow::enableSetBtn(bool on){

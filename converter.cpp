@@ -75,9 +75,8 @@ public:
 converter::converter()
 {
 }
-
 //Returns an error description or the converted config
-string converter::read(string path){
+string converter::read(string path,mode cmode){
     android_config *conf = new android_config();
     int errorLine, errorColumn;
     QString errorMsg;
@@ -94,6 +93,7 @@ string converter::read(string path){
         return error.toUtf8().constData();
     }
 
+
     QString prefix = "viper4android.headphonefx";
     QDomElement root = document.documentElement();
     QDomNodeList key = root.elementsByTagName("boolean");
@@ -104,33 +104,33 @@ string converter::read(string path){
         if(keynode.isElement())
         {
             QDomElement att = keynode.toElement();
-
-            if (att.attribute("name") == prefix + ".analogx.enable")conf->analogx_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".colorfulmusic.enable")conf->colorfulmusic_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".cure.enable")conf->cure_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".diffsurr.enable")conf->diffsurr_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".enable")conf->enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fetcompressor.autoattack")conf->fetcompressor_autoattack = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fetcompressor.autogain")conf->fetcompressor_autogain= att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fetcompressor.autoknee")conf->fetcompressor_autoknee = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fetcompressor.autorelease")conf->fetcompressor_autorelease = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fetcompressor.enable")conf->fetcompressor_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fetcompressor.noclipenable")conf->fetcompressor_noclipenable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fidelity.bass.enable")conf->fidelity_bass_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fidelity.clarity.enable")conf->fidelity_clarity_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".fireq.enable")conf->fireq_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".playbackgain.enable")conf->playbackgain_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".reverb.enable")conf->reverb_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".tube.enable")conf->tube_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".vhs.enable")conf->vhs_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".vse.enable")conf->vse_enable = att.attribute("value") == "true";
-            else if (att.attribute("name") == prefix + ".convolver.enable"){
+            QString key = att.attribute("name");
+            if (key == "65584" || key == prefix + ".analogx.enable")conf->analogx_enable = att.attribute("value") == "true";
+            else if (key == "65553" || key == prefix + ".colorfulmusic.enable")conf->colorfulmusic_enable = att.attribute("value") == "true";
+            else if (key == "65580" || key == prefix + ".cure.enable")conf->cure_enable = att.attribute("value") == "true";
+            else if (key == "65557" || key == prefix + ".diffsurr.enable")conf->diffsurr_enable = att.attribute("value") == "true";
+            else if (key == prefix + ".enable")conf->enable = att.attribute("value") == "true";
+            else if (key == "65618" || key == prefix + ".fetcompressor.autoattack")conf->fetcompressor_autoattack = att.attribute("value") == "true";
+            else if (key == "65616" || key == prefix + ".fetcompressor.autogain")conf->fetcompressor_autogain= att.attribute("value") == "true";
+            else if (key == "65614" || key == prefix + ".fetcompressor.autoknee")conf->fetcompressor_autoknee = att.attribute("value") == "true";
+            else if (key == "65620" || key == prefix + ".fetcompressor.autorelease")conf->fetcompressor_autorelease = att.attribute("value") == "true";
+            else if (key == "65610" || key == prefix + ".fetcompressor.enable")conf->fetcompressor_enable = att.attribute("value") == "true";
+            else if (key == "65626" || key == prefix + ".fetcompressor.noclipenable")conf->fetcompressor_noclipenable = att.attribute("value") == "true";
+            else if (key == "65574" || key == prefix + ".fidelity.bass.enable")conf->fidelity_bass_enable = att.attribute("value") == "true";
+            else if (key == "65578" || key == prefix + ".fidelity.clarity.enable")conf->fidelity_clarity_enable = att.attribute("value") == "true";
+            else if (key == "65551" || key == prefix + ".fireq.enable")conf->fireq_enable = att.attribute("value") == "true";
+            else if (key == "65565" || key == prefix + ".playbackgain.enable")conf->playbackgain_enable = att.attribute("value") == "true";
+            else if (key == "65559" || key == prefix + ".reverb.enable")conf->reverb_enable = att.attribute("value") == "true";
+            else if (key == "65583" || key == prefix + ".tube.enable")conf->tube_enable = att.attribute("value") == "true";
+            else if (key == "65544" || key == prefix + ".vhs.enable")conf->vhs_enable = att.attribute("value") == "true";
+            else if (key == "65548" || key == prefix + ".vse.enable")conf->vse_enable = att.attribute("value") == "true";
+            else if (key == "65538" || key == prefix + ".convolver.enable"){
                 conf->convolver_enable = att.attribute("value") == "true";
                 conf->found_irs = true;
             }
-            else if (att.attribute("name") == prefix + ".dynamicsystem.enable")conf->found_dynsys = true;
-            else if (att.attribute("name") == prefix + ".viperddc.enable")conf->found_ddc = true;
-            else if (att.attribute("name") == "viper4android.speakerfx.spkopt.enable")conf->found_spkopt = true;
+            else if ((key == "65569" || key == prefix + ".dynamicsystem.enable")&&att.attribute("value") == "true")conf->found_dynsys = true;
+            else if ((key == "65646" || key == prefix + ".viperddc.enable")&&att.attribute("value") == "true")conf->found_ddc = true;
+            else if (key == "viper4android.speakerfx.spkopt.enable")conf->found_spkopt = true;
         }
     }
 
@@ -141,46 +141,104 @@ string converter::read(string path){
         if(keynode.isElement())
         {
             QDomElement att = keynode.toElement();
-            if (att.attribute("name") == prefix + ".analogx.mode")conf->analogx_mode = att.text();
-            else if (att.attribute("name") == prefix + ".channelpan")conf->channelpan = att.text();
-            else if (att.attribute("name") == prefix + ".colorfulmusic.coeffs")conf->colorfulmusic_coeffs = att.text();
-            else if (att.attribute("name") == prefix + ".colorfulmusic.midimage")conf->colorfulmusic_midimage = att.text();
-            else if (att.attribute("name") == prefix + ".convolver.crosschannel")conf->convolver_crosschannel = att.text();
-            else if (att.attribute("name") == prefix + ".cure.crossfeed")conf->cure_crossfeed = att.text();
-            else if (att.attribute("name") == prefix + ".diffsurr.delay")conf->diffsurr_delay = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.adapt")conf->fetcompressor_adapt = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.attack")conf->fetcompressor_attack = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.crest")conf->fetcompressor_crest = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.gain")conf->fetcompressor_gain = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.knee")conf->fetcompressor_knee = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.kneemulti")conf->fetcompressor_kneemulti = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.maxattack")conf->fetcompressor_maxattack = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.maxrelease")conf->fetcompressor_maxrelease = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.ratio")conf->fetcompressor_ratio = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.release")conf->fetcompressor_release = att.text();
-            else if (att.attribute("name") == prefix + ".fetcompressor.threshold")conf->fetcompressor_threshold = att.text();
-            else if (att.attribute("name") == prefix + ".fidelity.bass.freq")conf->fidelity_bass_freq = att.text();
-            else if (att.attribute("name") == prefix + ".fidelity.bass.gain")conf->fidelity_bass_gain = att.text();
-            else if (att.attribute("name") == prefix + ".fidelity.bass.mode")conf->fidelity_bass_mode = att.text();
-            else if (att.attribute("name") == prefix + ".fidelity.clarity.gain")conf->fidelity_clarity_gain = att.text();
-            else if (att.attribute("name") == prefix + ".fidelity.clarity.mode")conf->fidelity_clarity_mode = att.text();
-            else if (att.attribute("name") == prefix + ".fireq.custom")conf->fireq_custom = att.text();
-            else if (att.attribute("name") == prefix + ".limiter")conf->limiter = att.text();
-            else if (att.attribute("name") == prefix + ".outvol")conf->outvol = att.text();
-            else if (att.attribute("name") == prefix + ".playbackgain.maxscaler")conf->playbackgain_maxscaler = att.text();
-            else if (att.attribute("name") == prefix + ".playbackgain.ratio")conf->playbackgain_ratio = att.text();
-            else if (att.attribute("name") == prefix + ".playbackgain.volume")conf->playbackgain_volume = att.text();
-            else if (att.attribute("name") == prefix + ".reverb.damp")conf->reverb_damp = att.text();
-            else if (att.attribute("name") == prefix + ".reverb.dry")conf->reverb_dry = att.text();
-            else if (att.attribute("name") == prefix + ".reverb.roomsize")conf->reverb_roomsize = att.text();
-            else if (att.attribute("name") == prefix + ".reverb.roomwidth")conf->reverb_roomwidth = att.text();
-            else if (att.attribute("name") == prefix + ".reverb.wet")conf->reverb_wet = att.text();
-            else if (att.attribute("name") == prefix + ".vhs.qual")conf->vhs_qual = att.text();
-            else if (att.attribute("name") == prefix + ".vse.value")conf->vse_value = att.text();
+            QString key = att.attribute("name");
 
+            if(cmode==officialV4A){
+                if (key == prefix + ".analogx.mode")conf->analogx_mode = att.text();
+                else if (key == prefix + ".channelpan")conf->channelpan = att.text();
+                else if (key == prefix + ".colorfulmusic.coeffs")conf->colorfulmusic_coeffs = att.text();
+                else if (key == prefix + ".colorfulmusic.midimage")conf->colorfulmusic_midimage = att.text();
+                else if (key == prefix + ".convolver.crosschannel")conf->convolver_crosschannel = att.text();
+                else if (key == prefix + ".cure.crossfeed")conf->cure_crossfeed = att.text();
+                else if (key == prefix + ".diffsurr.delay")conf->diffsurr_delay = att.text();
+                else if (key == prefix + ".fetcompressor.adapt")conf->fetcompressor_adapt = att.text();
+                else if (key == prefix + ".fetcompressor.attack")conf->fetcompressor_attack = att.text();
+                else if (key == prefix + ".fetcompressor.crest")conf->fetcompressor_crest = att.text();
+                else if (key == prefix + ".fetcompressor.gain")conf->fetcompressor_gain = att.text();
+                else if (key == prefix + ".fetcompressor.knee")conf->fetcompressor_knee = att.text();
+                else if (key == prefix + ".fetcompressor.kneemulti")conf->fetcompressor_kneemulti = att.text();
+                else if (key == prefix + ".fetcompressor.maxattack")conf->fetcompressor_maxattack = att.text();
+                else if (key == prefix + ".fetcompressor.maxrelease")conf->fetcompressor_maxrelease = att.text();
+                else if (key == prefix + ".fetcompressor.ratio")conf->fetcompressor_ratio = att.text();
+                else if (key == prefix + ".fetcompressor.release")conf->fetcompressor_release = att.text();
+                else if (key == prefix + ".fetcompressor.threshold")conf->fetcompressor_threshold = att.text();
+                else if (key == prefix + ".fidelity.bass.freq")conf->fidelity_bass_freq = att.text();
+                else if (key == prefix + ".fidelity.bass.gain")conf->fidelity_bass_gain = att.text();
+                else if (key == prefix + ".fidelity.bass.mode")conf->fidelity_bass_mode = att.text();
+                else if (key == prefix + ".fidelity.clarity.gain")conf->fidelity_clarity_gain = att.text();
+                else if (key == prefix + ".fidelity.clarity.mode")conf->fidelity_clarity_mode = att.text();
+                else if (key == prefix + ".fireq.custom")conf->fireq_custom = att.text();
+                else if (key == prefix + ".limiter")conf->limiter = att.text();
+                else if (key == prefix + ".outvol")conf->outvol = att.text();
+                else if (key == prefix + ".playbackgain.maxscaler")conf->playbackgain_maxscaler = att.text();
+                else if (key == prefix + ".playbackgain.ratio")conf->playbackgain_ratio = att.text();
+                else if (key == prefix + ".playbackgain.volume")conf->playbackgain_volume = att.text();
+                else if (key == prefix + ".reverb.damp")conf->reverb_damp = att.text();
+                else if (key == prefix + ".reverb.dry")conf->reverb_dry = att.text();
+                else if (key == prefix + ".reverb.roomsize")conf->reverb_roomsize = att.text();
+                else if (key == prefix + ".reverb.roomwidth")conf->reverb_roomwidth = att.text();
+                else if (key == prefix + ".reverb.wet")conf->reverb_wet = att.text();
+                else if (key == prefix + ".vhs.qual")conf->vhs_qual = att.text();
+                else if (key == prefix + ".vse.value")conf->vse_value = att.text();
+            }
+            else if(cmode==teamDeWittV4A){
+                QString value = att.attribute("value");
+                if (key == "65575")conf->fidelity_bass_mode = att.text();
+                else if (key == "65579")conf->fidelity_clarity_mode = att.text();
+                else if (key == "65552")conf->fireq_custom = att.text();
+            }
         }
 
     }
+
+    if(cmode==teamDeWittV4A){
+        QDomNodeList key_int = root.elementsByTagName("int");
+        for(int i = 0; i < key_int.count(); i++)
+        {
+            QDomNode keynode = key_int.at(i);
+            if(keynode.isElement())
+            {
+                QDomElement att = keynode.toElement();
+                QString key = att.attribute("name");
+
+                QString value = att.attribute("value");
+                if (key == "65585")conf->analogx_mode = value;
+                else if (key == "65587")conf->channelpan = value;
+                else if (key == "65554;65556")conf->colorfulmusic_coeffs = value; //For some reason not a semicolon-seperated list (-> depth missing)
+                else if (key == "65555")conf->colorfulmusic_midimage = value;
+                else if (key == "65543")conf->convolver_crosschannel = value;
+                else if (key == "65582")conf->cure_crossfeed = value;
+                else if (key == "65558")conf->diffsurr_delay = value;
+                else if (key == "65625")conf->fetcompressor_adapt = value;
+                else if (key == "65617")conf->fetcompressor_attack = value;
+                else if (key == "65624")conf->fetcompressor_crest = value;
+                else if (key == "65615")conf->fetcompressor_gain = value;
+                else if (key == "65613")conf->fetcompressor_knee = value;
+                else if (key == "65621")conf->fetcompressor_kneemulti = value;
+                else if (key == "65622")conf->fetcompressor_maxattack = value;
+                else if (key == "65623")conf->fetcompressor_maxrelease = value;
+                else if (key == "65612")conf->fetcompressor_ratio = value;
+                else if (key == "65619")conf->fetcompressor_release = value;
+                else if (key == "65611")conf->fetcompressor_threshold = value;
+                else if (key == "65576")conf->fidelity_bass_freq = value;
+                else if (key == "65577")conf->fidelity_bass_gain = value;
+                else if (key == "65580")conf->fidelity_clarity_gain = value;
+                else if (key == "65588")conf->limiter = value;
+                else if (key == "65586")conf->outvol = value;
+                else if (key == "65567")conf->playbackgain_maxscaler = value;
+                else if (key == "65568")conf->playbackgain_ratio = value;
+                else if (key == "65566")conf->playbackgain_volume = value;
+                else if (key == "65562")conf->reverb_damp = value;
+                else if (key == "65564")conf->reverb_dry = value;
+                else if (key == "65560")conf->reverb_roomsize = value;
+                else if (key == "65561")conf->reverb_roomwidth = value;
+                else if (key == "65563")conf->reverb_wet = value;
+                else if (key == "65545")conf->vhs_qual = value;
+                else if (key == "65549;65550")conf->vse_value = value;
+            }
+        }
+    }
+
     string out = "";
     string n = "\n";
 
