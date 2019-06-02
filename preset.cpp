@@ -65,7 +65,7 @@ void Preset::add(){
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
     mainwin->SavePresetFile(path + "/" + ui->presetName->text() + ".conf");
-
+    ui->presetName->text() = "";
     UpdateList();
 }
 

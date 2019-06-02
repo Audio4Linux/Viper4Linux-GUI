@@ -71,6 +71,14 @@ enum Config {
     conv_enable,
     conv_cc_level,
     conv_ir_path,
+    dynsys_xcoeff1,
+    dynsys_xcoeff2,
+    dynsys_ycoeff1,
+    dynsys_ycoeff2,
+    dynsys_sidegain1,
+    dynsys_sidegain2,
+    dynsys_enable,
+    dynsys_bassgain,
     unknown
 };
 enum AppConfig {
@@ -150,6 +158,14 @@ Config resolveConfig(std::string input) {
     if( input == "conv_enable" ) return conv_enable;
     if( input == "conv_cc_level" ) return conv_cc_level;
     if( input == "conv_ir_path" ) return conv_ir_path;
+    if( input == "dynsys_enable" ) return dynsys_enable;
+    if( input == "dynsys_bassgain" ) return dynsys_bassgain;
+    if( input == "dynsys_xcoeff1" ) return dynsys_xcoeff1;
+    if( input == "dynsys_xcoeff2" ) return dynsys_xcoeff2;
+    if( input == "dynsys_ycoeff1" ) return dynsys_ycoeff1;
+    if( input == "dynsys_ycoeff2" ) return dynsys_ycoeff2;
+    if( input == "dynsys_sidegain1" ) return dynsys_sidegain1;
+    if( input == "dynsys_sidegain2" ) return dynsys_sidegain2;
    return unknown;
 }
 AppConfig resolveAppConfig(std::string input) {
@@ -160,7 +176,7 @@ AppConfig resolveAppConfig(std::string input) {
     if( input == "stylesheet" ) return stylesheet;
    return unknownApp;
 }
-std::string default_config = "fx_enable=true\nconv_enable=false\nconv_ir_path=\nconv_cc_level=0\nvhe_enable=false\nvhe_level=0\nvse_enable=false\nvse_ref_bark=7600\nvse_bark_cons=10\neq_enable=false\neq_band1=0\neq_band2=0\neq_band3=0\neq_band4=0\neq_band5=0\neq_band6=0\neq_band7=0\neq_band8=0\neq_band9=0\neq_band10=0\ncolm_enable=false\ncolm_widening=100\ncolm_depth=0\nds_enable=false\nds_level=0\nreverb_enable=false\nreverb_roomsize=30\nreverb_width=40\nreverb_damp=10\nreverb_wet=20\nreverb_dry=80\nagc_enable=false\nagc_ratio=100\nagc_volume=100\nagc_maxgain=100\nvb_enable=false\nvb_mode=0\nvb_freq=76\nvb_gain=0\nvc_enable=false\nvc_mode=0\nvc_level=0\ncure_enable=false\ncure_level=0\ntube_enable=false\nax_enable=false\nax_mode=0\nfetcomp_enable=false\nfetcomp_threshold=0\nfetcomp_ratio=0\nfetcomp_kneewidth=0\nfetcomp_autoknee=true\nfetcomp_gain=0\nfetcomp_autogain=true\nfetcomp_attack=51\nfetcomp_autoattack=true\nfetcomp_release=38\nfetcomp_autorelease=true\nfetcomp_meta_kneemulti=50\nfetcomp_meta_maxattack=88\nfetcomp_meta_maxrelease=88\nfetcomp_meta_crest=61\nfetcomp_meta_adapt=66\nfetcomp_noclip=true\nout_volume=100\nout_pan=0\nlim_threshold=100";
+std::string default_config = "fx_enable=true\nconv_enable=false\nconv_ir_path=\nconv_cc_level=0\nvhe_enable=false\nvhe_level=0\nvse_enable=false\nvse_ref_bark=7600\nvse_bark_cons=10\neq_enable=false\neq_band1=0\neq_band2=0\neq_band3=0\neq_band4=0\neq_band5=0\neq_band6=0\neq_band7=0\neq_band8=0\neq_band9=0\neq_band10=0\ncolm_enable=false\ncolm_widening=100\ncolm_depth=0\nds_enable=false\nds_level=0\nreverb_enable=false\nreverb_roomsize=30\nreverb_width=40\nreverb_damp=10\nreverb_wet=20\nreverb_dry=80\nagc_enable=false\nagc_ratio=100\nagc_volume=100\nagc_maxgain=100\nvb_enable=false\nvb_mode=0\nvb_freq=76\nvb_gain=0\nvc_enable=false\nvc_mode=0\nvc_level=0\ncure_enable=false\ncure_level=0\ntube_enable=false\nax_enable=false\nax_mode=0\nfetcomp_enable=false\nfetcomp_threshold=0\nfetcomp_ratio=0\nfetcomp_kneewidth=0\nfetcomp_autoknee=true\nfetcomp_gain=0\nfetcomp_autogain=true\nfetcomp_attack=51\nfetcomp_autoattack=true\nfetcomp_release=38\nfetcomp_autorelease=true\nfetcomp_meta_kneemulti=50\nfetcomp_meta_maxattack=88\nfetcomp_meta_maxrelease=88\nfetcomp_meta_crest=61\nfetcomp_meta_adapt=66\nfetcomp_noclip=true\nout_volume=100\nout_pan=0\nlim_threshold=100\ndynsys_bassgain=0\ndynsys_xcoeff1=0\ndynsys_xcoeff2=0\ndynsys_ycoeff1=0\ndynsys_ycoeff2=0\ndynsys_sidegain1=0\ndynsys_sidegain2=0\ndynsys_enabled=false";
 std::string default_appconfig = "path=\"\"\nautoapply=false\nglavafix=false\nmuteOnRestart=true";
 
 #endif // CONFIGLIST_H

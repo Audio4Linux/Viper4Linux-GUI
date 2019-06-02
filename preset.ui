@@ -30,7 +30,7 @@
     <string>Adds current config as a preset</string>
    </property>
    <property name="text">
-    <string>Add</string>
+    <string>Save</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="presetName">

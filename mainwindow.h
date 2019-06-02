@@ -50,11 +50,14 @@ private slots:
     void ResetEQ();
     void OpenSettings();
     void updatepreset();
+    void updatedynpreset();
     void update(int);
     void LoadExternalFile();
     void SaveExternalFile();
 private:
     void updateeq(int);
+
+    void setDynsys(const int* data);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
     void SaveAppConfig(bool, const string&,bool,bool,const string&);
@@ -65,6 +68,7 @@ private:
     string getEQ();
     string getComp();
     string getMisc();
+    string getDynsys();
     void ConnectActions();
     void SetStyle();
     bool is_only_ascii_whitespace(const string&);

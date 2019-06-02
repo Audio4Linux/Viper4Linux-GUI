@@ -172,6 +172,7 @@ void MainWindow::ConfirmConf(){
     config += getEQ();
     config += getComp();
     config += getMisc();
+    config += getDynsys();
 
     ofstream myfile(path);
     if (myfile.is_open())
@@ -670,6 +671,39 @@ void MainWindow::loadConfig(const string& key,string value){
         ui->convpath->setText(ir);
         break;
     }
+    case dynsys_enable: {
+        if(value=="true") ui->dynsys->setChecked(true);
+        else ui->dynsys->setChecked(false);
+        break;
+    }
+    case dynsys_xcoeff1: {
+        ui->dyn_xcoeff1->setValue(std::stoi(value));
+        break;
+    }
+    case dynsys_xcoeff2: {
+        ui->dyn_xcoeff2->setValue(std::stoi(value));
+        break;
+    }
+    case dynsys_ycoeff1: {
+        ui->dyn_ycoeff1->setValue(std::stoi(value));
+        break;
+    }
+    case dynsys_ycoeff2: {
+        ui->dyn_ycoeff2->setValue(std::stoi(value));
+        break;
+    }
+    case dynsys_bassgain: {
+        ui->dyn_bassgain->setValue(std::stoi(value));
+        break;
+    }
+    case dynsys_sidegain1: {
+        ui->dyn_sidegain1->setValue(std::stoi(value));
+        break;
+    }
+    case dynsys_sidegain2: {
+        ui->dyn_sidegain2->setValue(std::stoi(value));
+        break;
+    }
     case unknown: {
         cout << "Config-List Enum: Unknown" << endl;
         break;
@@ -1004,6 +1038,31 @@ string MainWindow::getMaster() {
 
     return out;
 }
+string MainWindow::getDynsys() {
+    string out;
+    string n = "\n";
+
+    //DYNAMIC SYSTEM
+    out += "dynsys_enable=";
+    if(ui->dynsys->isChecked())out += "true" + n;
+    else out += "false" + n;
+
+    out += "dynsys_bassgain=";
+    out += to_string(ui->dyn_bassgain->value()) + n;
+    out += "dynsys_xcoeff1=";
+    out += to_string(ui->dyn_xcoeff1->value()) + n;
+    out += "dynsys_xcoeff2=";
+    out += to_string(ui->dyn_xcoeff2->value()) + n;
+    out += "dynsys_ycoeff1=";
+    out += to_string(ui->dyn_ycoeff1->value()) + n;
+    out += "dynsys_ycoeff2=";
+    out += to_string(ui->dyn_ycoeff2->value()) + n;
+    out += "dynsys_sidegain1=";
+    out += to_string(ui->dyn_sidegain1->value()) + n;
+    out += "dynsys_sidegain2=";
+    out += to_string(ui->dyn_sidegain2->value()) + n;
+    return out;
+}
 
 //---EQ
 void MainWindow::setEQ(const int* data){
@@ -1119,8 +1178,81 @@ void MainWindow::PasteEQ(){
     setEQ(data);
 }
 
+//---Dynsys
+void MainWindow::updatedynpreset(){
+    QString selection = ui->dynsys_preset->currentText();
+    if(selection == "Extreme Headphone (v2)"){
+        setDynsys(std::initializer_list<int>({140,6200,40,60,10,80}).begin());
+    }
+    else if(selection == "High-end Headphone (v2)"){
+        setDynsys(std::initializer_list<int>({180,5800,55,80,10,70}).begin());
+    }
+    else if(selection == "Common Headphone (v2)"){
+        setDynsys(std::initializer_list<int>({300,5600,60,105,10,50}).begin());
+    }
+    else if(selection == "Low-end Headphone (v2)"){
+        setDynsys(std::initializer_list<int>({600,5400,60,105,10,20}).begin());
+    }
+    else if(selection == "Common Earphone (v2)"){
+        setDynsys(std::initializer_list<int>({100,5600,40,80,50,50}).begin());
+    }
+    else if(selection == "Extreme Headphone (v1)"){
+        setDynsys(std::initializer_list<int>({1200,6200,40,80,0,20}).begin());
+    }
+    else if(selection == "High-end Headphone (v1)"){
+        setDynsys(std::initializer_list<int>({1000,6200,40,80,0,10}).begin());
+    }
+    else if(selection == "Common Headphone (v1)"){
+        setDynsys(std::initializer_list<int>({800,6200,40,80,10,0}).begin());
+    }
+    else if(selection == "Common Earphone (v1)"){
+        setDynsys(std::initializer_list<int>({400,6200,40,80,10,0}).begin());
+    }
+    else if(selection == "Apple Earphone"){
+        setDynsys(std::initializer_list<int>({1200,6200,50,90,15,10}).begin());
+    }
+    else if(selection == "Monster Earphone"){
+        setDynsys(std::initializer_list<int>({1000,6200,50,90,30,10}).begin());
+    }
+    else if(selection == "Moto Earphone"){
+        setDynsys(std::initializer_list<int>({1100,6200,60,100,20,0}).begin());
+    }
+    else if(selection == "Philips Earphone"){
+        setDynsys(std::initializer_list<int>({1200,6200,50,100,10,50}).begin());
+    }
+    else if(selection == "SHP2000"){
+        setDynsys(std::initializer_list<int>({1200,6200,60,100,0,30}).begin());
+    }
+    else if(selection == "SHP9000"){
+        setDynsys(std::initializer_list<int>({1200,6200,40,80,0,30}).begin());
+    }
+    else if(selection == "Unknown Type I"){
+        setDynsys(std::initializer_list<int>({1000,6200,60,100,0,0}).begin());
+    }
+    else if(selection == "Unknown Type II"){
+        setDynsys(std::initializer_list<int>({1000,6200,60,120,0,0}).begin());
+    }
+    else if(selection == "Unknown Type III"){
+        setDynsys(std::initializer_list<int>({1000,6200,80,140,0,0}).begin());
+    }
+    else if(selection == "Unknown Type IV"){
+        setDynsys(std::initializer_list<int>({800,6200,80,140,0,0}).begin());
+    }
+}
+void MainWindow::setDynsys(const int* data){
+    lockapply=true;
+    ui->dyn_xcoeff1->setValue(data[0]);
+    ui->dyn_xcoeff2->setValue(data[1]);
+    ui->dyn_ycoeff1->setValue(data[2]);
+    ui->dyn_ycoeff2->setValue(data[3]);
+    ui->dyn_sidegain1->setValue(data[4]);
+    ui->dyn_sidegain2->setValue(data[5]);
+    lockapply=false;
+    OnUpdate();
+}
 //---Updates Unit-Label
 void MainWindow::update(int d){
+    if(lockapply)return;//Skip if lockapply-flag is set (when setting presets, ...)
     QObject* obj = sender();
     QString pre = "";
     QString post = "";
@@ -1153,6 +1285,8 @@ void MainWindow::update(int d){
         else if(d==2) ui->info->setText("Extreme");
         else ui->info->setText("Mode "+QString::number( d ));
     }
+    //Dynsys
+    else if(obj==ui->dyn_bassgain) ui->info->setText(QString::number( (d-100)/20 ) + "%");
     else if(obj==ui->eq1||obj==ui->eq2||obj==ui->eq3||obj==ui->eq4||obj==ui->eq5||obj==ui->eq6||obj==ui->eq7||obj==ui->eq8||obj==ui->eq9||obj==ui->eq10){
         updateeq(d);
     }
@@ -1348,6 +1482,16 @@ void MainWindow::ConnectActions(){
     connect( ui->vse , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->conv , SIGNAL(clicked()),this, SLOT(OnUpdate()));
     connect( ui->ax , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+
+    connect(ui->dynsys_preset, SIGNAL(currentIndexChanged(int)),this,SLOT(updatedynpreset()));
+    connect( ui->dynsys , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    connect( ui->dyn_xcoeff1 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->dyn_xcoeff2 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->dyn_ycoeff1 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->dyn_ycoeff2 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->dyn_bassgain , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->dyn_sidegain1 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+    connect( ui->dyn_sidegain2 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
 }
 
 //---Helper
