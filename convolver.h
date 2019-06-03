@@ -19,6 +19,7 @@ private slots:
     void reload();
     void closeWindow();
     void updateIR();
+    void selectFolder();
 private:
     Ui::Convolver *ui;
 };

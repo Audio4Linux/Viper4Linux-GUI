@@ -7,6 +7,8 @@
 #include <sys/types.h>
 #include <QString>
 #include <QCloseEvent>
+#include <QFileDialog>
+#include <QDebug>
 
 using namespace std;
 Convolver::Convolver(QWidget *parent) :
@@ -31,6 +33,7 @@ Convolver::Convolver(QWidget *parent) :
     connect(ui->reload, SIGNAL(clicked()), this, SLOT(reload()));
     connect(ui->close, SIGNAL(clicked()), this, SLOT(closeWindow()));
     connect(ui->files, SIGNAL(itemSelectionChanged()), this, SLOT(updateIR()));
+    connect(ui->fileSelect, SIGNAL(clicked()), this, SLOT(selectFolder()));
 }
 
 Convolver::~Convolver()
@@ -57,4 +60,17 @@ void Convolver::reject()
 {
     mainwin->enableConvBtn(true);
     QDialog::reject();
+}
+void Convolver::selectFolder(){
+
+    QFileDialog *fd = new QFileDialog;
+    fd->setFileMode(QFileDialog::Directory);
+    fd->setOption(QFileDialog::ShowDirsOnly);
+    fd->setViewMode(QFileDialog::Detail);
+    QString result = fd->getExistingDirectory();
+    if (result!="")
+    {
+        ui->path->setText(result);
+        reload();
+    }
 }

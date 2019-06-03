@@ -28,7 +28,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -2759,7 +2759,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>/home/response.ir</string>
+        <string/>
        </property>
       </widget>
       <widget class="QLabel" name="convcc_label">
