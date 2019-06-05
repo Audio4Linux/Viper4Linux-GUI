@@ -349,9 +349,7 @@ string converter::read(string path,mode cmode){
     out += "vb_freq=";
     out += conf->fidelity_bass_freq.toUtf8().constData() + n;
     out += "vb_gain=";
-    QString vbgain(conf->fidelity_bass_gain);
-    double vbgaind = vbgain.toDouble();
-    out += to_string((int)(vbgaind * 1.33)) + n;
+    out += conf->fidelity_bass_gain.toUtf8().constData() + n;
 
     //HEADSET ENGINE
     out += "vhe_enable=";
@@ -415,8 +413,6 @@ string converter::read(string path,mode cmode){
     out += "vc_mode=";
     out += conf->fidelity_clarity_mode.toUtf8().constData() + n;
     out += "vc_level=";
-    QString vcl(conf->fidelity_clarity_gain);
-    out += to_string((int)(vcl.toInt() * 1.77)) + n;
     out += conf->fidelity_clarity_gain.toUtf8().constData() + n;
 
     //GAIN CONTROL
@@ -439,10 +435,7 @@ string converter::read(string path,mode cmode){
     out += "out_pan=";
     out += conf->channelpan.toUtf8().constData() + n;
     out += "out_volume=";
-    QString vol(conf->outvol);
-    int voll = vol.toInt();
-    out += to_string((int)(voll / 2)) + n;
-
+    out += conf->outvol.toUtf8().constData() + n;
 
     string info = "";
     if(conf->found_ddc) info += "Viper DDC not supported\n";
