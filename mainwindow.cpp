@@ -1256,7 +1256,6 @@ void MainWindow::update(int d){
     QObject* obj = sender();
     QString pre = "";
     QString post = "";
-
     if(obj==ui->vbmode){
         //Bass
         if(d==0) ui->info->setText("Natural Bass");
@@ -1270,6 +1269,14 @@ void MainWindow::update(int d){
         else if(d==1) ui->info->setText("OZone+");
         else if(d==2) ui->info->setText("XHiFi");
         else ui->info->setText("Mode "+QString::number( d ));
+    }
+    else if(obj==ui->gain){
+        //AGC
+        if(d < 50) ui->info->setText("Very Slight (" + QString::number( d ) + ")");
+        else if(d < 100) ui->info->setText("Slight (" + QString::number( d )+")");
+        else if(d < 300) ui->info->setText("Moderate (" + QString::number( d )+")");
+        else if(d >= 300) ui->info->setText("Extreme (" + QString::number( d )+")");
+        else ui->info->setText(QString::number( d ));
     }
     else if(obj==ui->axmode){
         //AnalogX
@@ -1294,20 +1301,30 @@ void MainWindow::update(int d){
     else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
     //AGC
     else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,10))+"x (" + QString::number(d) + ")");
+    //Bass
+    else if(obj==ui->vbgain)ui->info->setText(QString::number(roundf(translate(d,0,600,0,17)*100)/100)+"dB (" + QString::number(d) + ")");
+    //Clarity
+    else if(obj==ui->vclvl)ui->info->setText(QString::number(roundf(translate(d,0,450,0,14.8)*100)/100)+"dB (" + QString::number(d) + ")");
+    //Volume
+    else if(obj==ui->outvolume)ui->info->setText(QString::number(roundf(translate(d,0,100,-40,0)*100)/100)+"dB (" + QString::number(d) + ")");
     //Headphone Engine
     else if(obj==ui->vhplvl)ui->info->setText("Level " + QString::number(d+1));
+    //Reverb
+    else if(obj==ui->roomsize){
+        ui->info->setText(QString::number((int)translate(d,0,100,25,1200))+"m\u00B2 (" + QString::number(d) + ")");
+    }
+    else if(obj==ui->roomwidth){
+        ui->info->setText(QString::number((int)translate(d,0,100,5,36))+"m (" + QString::number(d) + ")");
+    }
     else{
         //Reverb
         if(obj==ui->roomdamp)post = "%";
-        else if(obj==ui->roomsize)post = "%";
-        else if(obj==ui->roomwidth)post = "%";
         else if(obj==ui->wet)post = "%";
         else if(obj==ui->dry)post = "%";
         //Bass
         else if(obj==ui->vbfreq)post = "Hz";
         //Volume
         else if(obj==ui->limiter)post = "%";
-        else if(obj==ui->outvolume)post = "%";
         //Spectrum Expend
         else if(obj==ui->barkcon)pre = "Level ";
         else if(obj==ui->barkfreq)post = "Hz";

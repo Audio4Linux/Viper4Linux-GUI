@@ -28,7 +28,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -65,10 +65,10 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>50</number>
+        <number>20</number>
        </property>
        <property name="maximum">
-        <number>160</number>
+        <number>200</number>
        </property>
        <property name="value">
         <number>76</number>
@@ -2825,25 +2825,40 @@
         <rect>
          <x>10</x>
          <y>32</y>
-         <width>51</width>
+         <width>71</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Mode</string>
+        <string>Strength</string>
        </property>
       </widget>
-      <widget class="QSpinBox" name="axmode">
+      <widget class="QSlider" name="axmode">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>27</y>
-         <width>51</width>
-         <height>26</height>
+         <x>100</x>
+         <y>30</y>
+         <width>131</width>
+         <height>20</height>
         </rect>
+       </property>
+       <property name="minimum">
+        <number>0</number>
        </property>
        <property name="maximum">
         <number>2</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="tracking">
+        <bool>true</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>
