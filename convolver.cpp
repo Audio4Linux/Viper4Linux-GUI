@@ -9,7 +9,8 @@
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QDebug>
-
+#include <QFileInfo>
+static bool lockupdate = false;
 using namespace std;
 Convolver::Convolver(QWidget *parent) :
     QDialog(parent),
@@ -45,16 +46,19 @@ void Convolver::closeWindow(){
     this->close();
 }
 void Convolver::reload(){
+    lockupdate=true;
     QDir path(ui->path->text());
     QStringList nameFilter("*.ir");
     nameFilter.append("*.irs");
     QStringList files = path.entryList(nameFilter);
     ui->files->clear();
     ui->files->addItems(files);
+    lockupdate=false;
 }
 void Convolver::updateIR(){
+    if(lockupdate)return; //Clearing Seletion by code != User Interaction
     QString path = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
-    mainwin->setIRS(path.toUtf8().constData());
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData());
 }
 void Convolver::reject()
 {
