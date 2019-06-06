@@ -15,6 +15,7 @@ public:
     bool convolver_enable = false;
     bool cure_enable = false;
     bool diffsurr_enable = false;
+    bool dynsys_enable = false;
     bool enable = true;
     bool fetcompressor_autoattack = true;
     bool fetcompressor_autoknee = true;
@@ -37,6 +38,8 @@ public:
     QString convolver_crosschannel = "0";
     QString cure_crossfeed = "0";
     QString diffsurr_delay = "500";
+    QString dynsys_bassgain = "0";
+    QString dynsys_coeffs = "100;5600;40;40;50;50";
     QString fetcompressor_adapt = "50";
     QString fetcompressor_attack = "20";
     QString fetcompressor_crest = "20";
@@ -68,7 +71,6 @@ public:
     QString vse_value = "56";
 
     bool found_ddc = false;
-    bool found_dynsys = false;
     bool found_irs = false;
     bool found_spkopt = false;
 };
@@ -128,7 +130,7 @@ string converter::read(string path,mode cmode){
                 conf->convolver_enable = att.attribute("value") == "true";
                 conf->found_irs = true;
             }
-            else if ((key == "65569" || key == prefix + ".dynamicsystem.enable")&&att.attribute("value") == "true")conf->found_dynsys = true;
+            else if (key == "65569" || key == prefix + ".dynamicsystem.enable")conf->dynsys_enable = att.attribute("value") == "true";
             else if ((key == "65646" || key == prefix + ".viperddc.enable")&&att.attribute("value") == "true")conf->found_ddc = true;
             else if (key == "viper4android.speakerfx.spkopt.enable")conf->found_spkopt = true;
         }
@@ -151,6 +153,8 @@ string converter::read(string path,mode cmode){
                 else if (key == prefix + ".convolver.crosschannel")conf->convolver_crosschannel = att.text();
                 else if (key == prefix + ".cure.crossfeed")conf->cure_crossfeed = att.text();
                 else if (key == prefix + ".diffsurr.delay")conf->diffsurr_delay = att.text();
+                else if (key == prefix + ".dynamicsystem.bass")conf->dynsys_bassgain = att.text();
+                else if (key == prefix + ".dynamicsystem.coeffs")conf->dynsys_coeffs = att.text();
                 else if (key == prefix + ".fetcompressor.adapt")conf->fetcompressor_adapt = att.text();
                 else if (key == prefix + ".fetcompressor.attack")conf->fetcompressor_attack = att.text();
                 else if (key == prefix + ".fetcompressor.crest")conf->fetcompressor_crest = att.text();
@@ -186,6 +190,7 @@ string converter::read(string path,mode cmode){
                 if (key == "65575")conf->fidelity_bass_mode = att.text();
                 else if (key == "65579")conf->fidelity_clarity_mode = att.text();
                 else if (key == "65552")conf->fireq_custom = att.text();
+                else if (key == "65570;65571;65572")conf->dynsys_coeffs = att.text();
             }
         }
 
@@ -207,7 +212,8 @@ string converter::read(string path,mode cmode){
                 else if (key == "65554;65556")conf->colorfulmusic_coeffs = value; //For some reason not a semicolon-seperated list (-> depth missing)
                 else if (key == "65555")conf->colorfulmusic_midimage = value;
                 else if (key == "65543")conf->convolver_crosschannel = value;
-                else if (key == "65582")conf->cure_crossfeed = value;
+                else if (key == "65582")conf->cure_crossfeed = value;           
+                else if (key == "65573")conf->dynsys_bassgain = value;
                 else if (key == "65558")conf->diffsurr_delay = value;
                 else if (key == "65625")conf->fetcompressor_adapt = value;
                 else if (key == "65617")conf->fetcompressor_attack = value;
@@ -437,9 +443,32 @@ string converter::read(string path,mode cmode){
     out += "out_volume=";
     out += conf->outvol.toUtf8().constData() + n;
 
+    //DYNAMICSYSTEM
+    out += "dynsys_enable=";
+    if(conf->dynsys_enable)out += "true" + n;
+    else out += "false" + n;
+
+    int count_dyn = 0;
+    QStringList list_dyn = conf->dynsys_coeffs.split(QRegExp(";"));
+    for ( const auto& i : list_dyn  )
+    {
+        qDebug() << i;//Dynsys Coeffs are split by a semicolon on android
+        if (count_dyn == 0)out += "dynsys_xcoeff1=";
+        else if (count_dyn == 1)out += "dynsys_xcoeff2=";
+        else if (count_dyn == 2)out += "dynsys_ycoeff1=";
+        else if (count_dyn == 3)out += "dynsys_ycoeff2=";
+        else if (count_dyn == 4)out += "dynsys_sidegain1=";
+        else if (count_dyn == 5)out += "dynsys_sidegain2=";
+        out += i.toUtf8().constData() + n;
+        count_dyn++;
+    }
+
+    out += "dynsys_bassgain=";
+    QString dyn_bg(conf->dynsys_bassgain);
+    out += to_string((int)((dyn_bg.toInt() * 20) + 100)) + n;
+
     string info = "";
     if(conf->found_ddc) info += "Viper DDC not supported\n";
-    if(conf->found_dynsys) info += "Dynamic System not supported\n";
     if(conf->found_spkopt) info += "Speaker Optimization not supported\n";
     if(conf->found_irs) info += "IRS must be manually reselected\n";
     string resp = out + "|" + info;
