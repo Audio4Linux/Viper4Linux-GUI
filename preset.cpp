@@ -135,6 +135,7 @@ void Preset::showContextMenu(const QPoint &pos)
     QAction* action_rename = menu.addAction("Rename");
     QAction* action_del = menu.addAction("Delete");
     QListWidgetItem* pointedItem = ui->files->itemAt(pos);
+    if(!pointedItem)return;
     QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     QString fullpath = QDir(path).filePath(pointedItem->text() + ".conf");
