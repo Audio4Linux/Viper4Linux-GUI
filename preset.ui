@@ -20,9 +20,9 @@
   <widget class="QPushButton" name="add">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>230</x>
      <y>10</y>
-     <width>81</width>
+     <width>91</width>
      <height>25</height>
     </rect>
    </property>
@@ -38,7 +38,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>221</width>
+     <width>211</width>
      <height>25</height>
     </rect>
    </property>
@@ -80,6 +80,9 @@
      <width>311</width>
      <height>261</height>
     </rect>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="importBtn">

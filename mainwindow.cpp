@@ -349,10 +349,14 @@ void MainWindow::reloadConfig(){
             line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
                        line.end());
 
-            if(line[0] == '#' || line.empty() || line.empty()) continue;
-            auto delimiterPos = line.find('=');
-            auto name = line.substr(0, delimiterPos);
-            auto value = line.substr(delimiterPos + 1);
+            if(QString::fromStdString(line).trimmed()[0] == '#' || line.empty()) continue; //Skip commented lines
+
+            auto delimiterInlineComment = line.find('#'); //Look for config properties mixed up with comments
+            auto extractedProperty = line.substr(0, delimiterInlineComment);
+
+            auto delimiterPos = extractedProperty.find('=');
+            auto name = extractedProperty.substr(0, delimiterPos);
+            auto value = extractedProperty.substr(delimiterPos + 1);
             loadConfig(name,value);
         }
         cFile.close();
@@ -370,7 +374,7 @@ void MainWindow::reloadConfig(){
     lockapply=false;
 }
 void MainWindow::loadConfig(const string& key,string value){
-    // cout << key << " -> " << value << endl;
+    //cout << key << " -> " << value << endl;
     if(value==""||is_only_ascii_whitespace(value)){
         cerr << "[WARNING] Key " + key + " is empty" << endl;
         return;

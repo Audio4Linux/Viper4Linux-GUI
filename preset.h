@@ -21,6 +21,8 @@ private slots:
     void remove();
     void load();
     void import();
+    void nameChanged(QString);
+    void showContextMenu(const QPoint &pos);
 private:
     Ui::Preset *ui;
     QString pathAppend(const QString& path1, const QString& path2);

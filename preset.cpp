@@ -7,10 +7,11 @@
 #include <sys/types.h>
 #include <QString>
 #include <QCloseEvent>
-#include <QString>
+#include <QDebug>
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QMenu>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -26,6 +27,8 @@ Preset::Preset(QWidget *parent) :
     connect(ui->load,SIGNAL(clicked()),SLOT(load()));
     connect(ui->remove,SIGNAL(clicked()),SLOT(remove()));
     connect(ui->importBtn,SIGNAL(clicked()),SLOT(import()));
+    connect(ui->presetName,SIGNAL(textChanged(QString)),this,SLOT(nameChanged(QString)));
+    connect(ui->files, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 Preset::~Preset()
@@ -49,6 +52,12 @@ void Preset::UpdateList(){
 
     QStringList nameFilter("*.conf");
     QStringList files = dir.entryList(nameFilter);
+    if(files.count()<1)return;
+
+    for(int i = 0; i < files.count(); i++){ //Strip extensions
+        QFileInfo fi(files[i]);
+        files[i] = fi.completeBaseName();
+    }
     ui->files->addItems(files);
 }
 QString Preset::pathAppend(const QString& path1, const QString& path2)
@@ -71,8 +80,8 @@ void Preset::add(){
 
 void Preset::import(){
     auto ia = new importandroid(this);
-   ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
-   ia->show();
+    ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
+    ia->show();
 }
 
 void Preset::remove(){
@@ -82,9 +91,8 @@ void Preset::remove(){
         return;
     }
     QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
-    QString absolute=d.absolutePath();
-    QString path = pathAppend(absolute,"presets");
-    QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text());
+    QString path = pathAppend(d.absolutePath(),"presets");
+    QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
         QMessageBox::StandardButton msg;
@@ -95,7 +103,6 @@ void Preset::remove(){
     file.remove();
     cout << "Removed " << fullpath.toUtf8().constData() << endl;
     UpdateList();
-
 }
 void Preset::load(){
     if(ui->files->selectedItems().length() == 0){
@@ -104,9 +111,8 @@ void Preset::load(){
         return;
     }
     QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
-    QString absolute=d.absolutePath();
-    QString path = pathAppend(absolute,"presets");
-    QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text());
+    QString path = pathAppend(d.absolutePath(),"presets");
+    QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     if(!QFile::exists(fullpath)){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
@@ -114,4 +120,51 @@ void Preset::load(){
         return;
     }
     mainwin->LoadPresetFile(fullpath);
+}
+void Preset::nameChanged(QString name){
+    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QString path = pathAppend(d.absolutePath(),"presets");
+    if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText("Overwrite");
+    else ui->add->setText("Save");
+}
+
+void Preset::showContextMenu(const QPoint &pos)
+{
+    QPoint globalPos = ui->files->mapToGlobal(pos);
+    QMenu menu;
+    QAction* action_rename = menu.addAction("Rename");
+    QAction* action_del = menu.addAction("Delete");
+    QListWidgetItem* pointedItem = ui->files->itemAt(pos);
+    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QString path = pathAppend(d.absolutePath(),"presets");
+    QString fullpath = QDir(path).filePath(pointedItem->text() + ".conf");
+
+
+    QAction* selectedAction;
+    if(pointedItem){
+        selectedAction = menu.exec(globalPos);
+        if(selectedAction) {
+            if(selectedAction == action_rename) {
+                bool ok;
+                QString text = QInputDialog::getText(this, "Rename",
+                                                     "New Name", QLineEdit::Normal,
+                                                     pointedItem->text(), &ok);
+                if (ok && !text.isEmpty())QFile::rename(fullpath,QDir(path).filePath(text + ".conf"));
+                UpdateList();
+            }
+            if(selectedAction == action_del) {
+                if(!QFile::exists(fullpath)){
+                    QMessageBox::StandardButton msg;
+                    msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+                    UpdateList();
+                    return;
+                }
+                QFile file (fullpath);
+                file.remove();
+                cout << "Removed " << fullpath.toUtf8().constData() << endl;
+                UpdateList();
+            }
+        }
+    }
+    menu.exec(globalPos);
 }
