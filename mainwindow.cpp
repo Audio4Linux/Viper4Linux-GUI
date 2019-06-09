@@ -67,7 +67,17 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
     ui->toolButton->setMenu(menu);
-
+    QMenu *menuC = new QMenu();
+    menuC->addAction("Slight", this,[this](){ ui->colmpreset->setText("Slight"); updatecolmpreset();});
+    menuC->addAction("Level 1", this,[this](){ ui->colmpreset->setText("Level 1"); updatecolmpreset();});
+    menuC->addAction("Level 2", this,[this](){ ui->colmpreset->setText("Level 2"); updatecolmpreset();});
+    menuC->addAction("Level 3", this,[this](){ ui->colmpreset->setText("Level 3"); updatecolmpreset();});
+    menuC->addAction("Level 4", this,[this](){ ui->colmpreset->setText("Level 4"); updatecolmpreset();});
+    menuC->addAction("Level 5", this,[this](){ ui->colmpreset->setText("Level 5"); updatecolmpreset();});
+    menuC->addAction("Level 6", this,[this](){ ui->colmpreset->setText("Level 6"); updatecolmpreset();});
+    menuC->addAction("Level 7", this,[this](){ ui->colmpreset->setText("Level 7"); updatecolmpreset();});
+    menuC->addAction("Extreme", this,[this](){ ui->colmpreset->setText("Extreme"); updatecolmpreset();});
+    ui->colmpreset->setMenu(menuC);
     SetStyle();
     ConnectActions();
 }
@@ -1254,6 +1264,46 @@ void MainWindow::setDynsys(const int* data){
     lockapply=false;
     OnUpdate();
 }
+
+//---Colorful
+void MainWindow::updatecolmpreset(){
+    QString selection = ui->colmpreset->text();
+    if(selection == "Slight"){
+        setColm(std::initializer_list<int>({120,200}).begin());
+    }
+    else if(selection == "Level 1"){
+        setColm(std::initializer_list<int>({130,275}).begin());
+    }
+    else if(selection == "Level 2"){
+        setColm(std::initializer_list<int>({140,350}).begin());
+    }
+    else if(selection == "Level 3"){
+        setColm(std::initializer_list<int>({150,425}).begin());
+    }
+    else if(selection == "Level 4"){
+        setColm(std::initializer_list<int>({160,500}).begin());
+    }
+    else if(selection == "Level 5"){
+        setColm(std::initializer_list<int>({170,575}).begin());
+    }
+    else if(selection == "Level 6"){
+        setColm(std::initializer_list<int>({180,650}).begin());
+    }
+    else if(selection == "Level 7"){
+        setColm(std::initializer_list<int>({190,725}).begin());
+    }
+    else if(selection == "Extreme"){
+        setColm(std::initializer_list<int>({200,800}).begin());
+    }
+}
+void MainWindow::setColm(const int* data){
+    lockapply=true;
+    ui->colmwide->setValue(data[0]);
+    ui->colmdepth->setValue(data[1]);
+    lockapply=false;
+    OnUpdate();
+}
+
 //---Updates Unit-Label
 void MainWindow::update(int d){
     if(lockapply)return;//Skip if lockapply-flag is set (when setting presets, ...)

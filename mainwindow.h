@@ -40,6 +40,7 @@ public slots:
     void Reset();
     void Restart();
     void reloadConfig();
+    void updatecolmpreset();
 private slots:
     void OpenPreset();
     void CopyEQ();
@@ -54,9 +55,10 @@ private slots:
     void update(int);
     void LoadExternalFile();
     void SaveExternalFile();
+
 private:
     void updateeq(int);
-
+    void setColm(const int* data);
     void setDynsys(const int* data);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);

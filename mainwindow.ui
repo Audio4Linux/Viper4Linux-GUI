@@ -2481,7 +2481,7 @@
         <x>10</x>
         <y>10</y>
         <width>241</width>
-        <height>101</height>
+        <height>117</height>
        </rect>
       </property>
       <property name="title">
@@ -2497,7 +2497,7 @@
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>30</y>
+         <y>50</y>
          <width>131</width>
          <height>20</height>
         </rect>
@@ -2525,7 +2525,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>50</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -2538,7 +2538,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>30</y>
          <width>91</width>
          <height>16</height>
         </rect>
@@ -2551,7 +2551,7 @@
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>50</y>
+         <y>30</y>
          <width>131</width>
          <height>20</height>
         </rect>
@@ -2614,6 +2614,35 @@
        </property>
        <property name="invertedControls">
         <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="colmdepth_label_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Presets</string>
+       </property>
+      </widget>
+      <widget class="QToolButton" name="colmpreset">
+       <property name="geometry">
+        <rect>
+         <x>97</x>
+         <y>92</y>
+         <width>131</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
        </property>
       </widget>
      </widget>
@@ -2806,9 +2835,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>120</y>
+        <y>130</y>
         <width>241</width>
-        <height>61</height>
+        <height>51</height>
        </rect>
       </property>
       <property name="title">
@@ -2824,7 +2853,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>32</y>
+         <y>25</y>
          <width>71</width>
          <height>16</height>
         </rect>
@@ -2837,7 +2866,7 @@
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>30</y>
+         <y>24</y>
          <width>131</width>
          <height>20</height>
         </rect>
