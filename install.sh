@@ -45,6 +45,9 @@ if [ ! -f "viper-gui.png" ]; then
     printf "${RED}Downloaded icon not found${NC}\n"
 fi
 
+printf "Installing Dependencies using apt-get\n"
+sudo apt-get --assume-yes install libqt5widgets5 libqt5gui5 libqt5core5a libqt5xml5 libgl1-mesa-dev
+
 printf "Installing viper-gui to /usr/bin...\n"
 cp viper-gui /usr/bin/
 chmod 755 /usr/bin/viper-gui
