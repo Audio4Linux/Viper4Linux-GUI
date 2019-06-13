@@ -83,22 +83,33 @@ QPushButton{
 	background-color: #1e1d23;
 }
 QPushButton::default{
-	border-style: inset;
-	border-top-color: transparent;
-	border-right-color: transparent;
-	border-left-color: transparent;
-	border-bottom-color: #04b97f;
-	border-width: 1px;
-	color: #a9b7c6;
-	padding: 2px;
-	background-color: #1e1d23;
+        border-style: inset;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: #04b97f;
+        border-width: 1px;
+        color: #a9b7c6;
+        padding: 2px;
+        background-color: #1e1d23;
+}
+QToolButton::default{
+        border-style: inset;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: #04b97f;
+        border-width: 1px;
+        color: #a9b7c6;
+        padding: 2px;
+        background-color: #1e1d23;
 }
 QToolButton {
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #04b97f;
+        border-bottom-color: transparent;
 	border-bottom-width: 1px;
 	border-style: solid;
 	color: #a9b7c6;
@@ -116,6 +127,18 @@ QToolButton:hover{
 	color: #FFFFFF;
 	padding-bottom: 1px;
 	background-color: #1e1d23;
+}
+QToolButton:pressed{
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: #37efba;
+        border-bottom-width: 2px;
+        border-style: solid;
+        color: #37efba;
+        padding-bottom: 1px;
+        background-color: #1e1d23;
 }
 QPushButton:hover{
 	border-style: solid;
@@ -162,6 +185,15 @@ QLineEdit {
 	background:#1e1d23;
 	selection-background-color:#007b50;
 	selection-color: #FFFFFF;
+}
+QListWidget {
+        color: #a9b7c6;
+        border-color: #505050;
+        background-color: #1e1d23;
+        selection-background-color:#0a7b5b;
+        selection-color: #FFFFFF;
+        border-width: 1px; border-radius: 4px;
+        border-style: solid;
 }
 QLabel {
 	color: #a9b7c6;
