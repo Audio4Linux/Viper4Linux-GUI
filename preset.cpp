@@ -25,7 +25,7 @@
 #include <QVector>
 #include <QTimer>
 #include <QDesktopServices>
-
+#include <uploadwizard.h>
 Preset::Preset(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Preset)
@@ -36,6 +36,7 @@ Preset::Preset(QWidget *parent) :
     UpdateList();
     connect(ui->add,SIGNAL(clicked()),SLOT(add()));
     connect(ui->load,SIGNAL(clicked()),SLOT(load()));
+    connect(ui->upload,SIGNAL(clicked()),SLOT(upload()));
     connect(ui->githubRepo,SIGNAL(clicked()),SLOT(visitGithub()));
     connect(ui->remove,SIGNAL(clicked()),SLOT(remove()));
     connect(ui->download,SIGNAL(clicked()),SLOT(download()));
@@ -53,6 +54,10 @@ Preset::Preset(QWidget *parent) :
 Preset::~Preset()
 {
     delete ui;
+}
+void Preset::upload(){
+    UploadWizard* upl = new UploadWizard();
+    upl->exec();
 }
 void Preset::indexDownloaded(QNetworkReply* reply){
     if (reply->error()) {
@@ -272,7 +277,7 @@ void Preset::performIRSDownload(QNetworkReply* reply){
             file->close();
         }
         delete file;
-        ui->status->setText("Download finished, IRS file included");
+        ui->status->setText("Download finished");
      }
     reply->deleteLater();
     UpdateList();
@@ -310,7 +315,7 @@ void Preset::performDownload(QNetworkReply* reply){
         QString fileName=fileInfo.baseName();
         QStringList irsMatches = irs.filter(fileName); //Query for IRS
         if(irsMatches.count()==0){
-            ui->status->setText("Download finished, no IRS file included");
+            ui->status->setText("Download finished");
         }else{
             QString match = irsMatches.first();
             QNetworkAccessManager* dlmanagerIRS = new QNetworkAccessManager(this);

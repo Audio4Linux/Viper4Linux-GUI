@@ -20,6 +20,7 @@ private slots:
     void add();
     void remove();
     void load();
+    void upload();
     void import();
     void download();
     void nameChanged(QString);

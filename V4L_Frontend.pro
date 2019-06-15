@@ -31,7 +31,8 @@ SOURCES += \
         mainwindow.cpp \
     settings.cpp \
     convolver.cpp \
-    preset.cpp
+    preset.cpp \
+    uploadwizard.cpp
 
 HEADERS += \
     converter.h \
@@ -41,14 +42,16 @@ HEADERS += \
     settings.h \
     convolver.h \
     main.h \
-    preset.h
+    preset.h \
+    uploadwizard.h
 
 FORMS += \
     importandroid.ui \
         mainwindow.ui \
     settings.ui \
     convolver.ui \
-    preset.ui
+    preset.ui \
+    uploadwizard.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
