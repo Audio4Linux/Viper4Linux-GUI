@@ -16,12 +16,10 @@
 #include <QDebug>
 
 using namespace std;
-static settings* obj;
 settings::settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settings){
     ui->setupUi(this);
-    obj = this;
 
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
 
@@ -67,7 +65,6 @@ void settings::submit(){
     mainwin->setPath(ui->path->text().toUtf8().constData());
     mainwin->setAutoFx(ui->autofx->isChecked());
     mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
-
     this->close();
 }
 void settings::changeStyle(const QString& style){

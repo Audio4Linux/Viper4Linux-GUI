@@ -59,8 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
     path = result;
     appcpath = result2;
 
-    loadAppConfig();
     reloadConfig();
+    loadAppConfig();
 
     QMenu *menu = new QMenu();
     menu->addAction("Reload Viper", this,SLOT(Restart()));
@@ -297,10 +297,7 @@ void MainWindow::loadAppConfig(bool once){
     {
         std::string line;
         while(getline(cFile, line)){
-            line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
-                       line.end());
-
-            if(line[0] == '#' || line.empty() || line.empty()) continue;
+             if(line[0] == '#' || line.empty() || line.empty()) continue;
             auto delimiterPos = line.find('=');
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
@@ -356,14 +353,9 @@ void MainWindow::reloadConfig(){
     {
         std::string line;
         while(getline(cFile, line)){
-            line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
-                       line.end());
-
             if(QString::fromStdString(line).trimmed()[0] == '#' || line.empty()) continue; //Skip commented lines
-
             auto delimiterInlineComment = line.find('#'); //Look for config properties mixed up with comments
             auto extractedProperty = line.substr(0, delimiterInlineComment);
-
             auto delimiterPos = extractedProperty.find('=');
             auto name = extractedProperty.substr(0, delimiterPos);
             auto value = extractedProperty.substr(delimiterPos + 1);
@@ -682,6 +674,7 @@ void MainWindow::loadConfig(const string& key,string value){
         if(value.size() <= 2) break;
         value = value.substr(1, value.size() - 2);
         QString ir = QString::fromStdString(value);
+        qDebug() << "READ:" << ir;
         ui->convpath->setText(ir);
         break;
     }
@@ -737,6 +730,7 @@ string MainWindow::getMisc(){
     QString conbark = QString::number(ui->barkcon->value());
     QString convcc = QString::number(ui->comprelease->value());
     QString convir = ui->convpath->text();
+    qDebug() << "WRITE:" << convir;
 
     out += "cure_enable=";
     if(ui->vcure->isChecked())out += "true" + n;
@@ -1440,6 +1434,7 @@ void MainWindow::setMuteOnRestart(bool on){
 }
 void MainWindow::setIRS(const string& irs,bool apply){
     ui->convpath->setText(QString::fromStdString((irs)));
+    qDebug() << "SET:" << QString::fromStdString((irs));
     if(apply)ConfirmConf();
 }
 void MainWindow::setGFix(bool f){
@@ -1450,7 +1445,6 @@ bool MainWindow::getGFix(){
 }
 void MainWindow::setPath(string npath){
     path = std::move(npath);
-    reloadConfig();
     SaveAppConfig();
 }
 string MainWindow::getPath(){
@@ -1459,7 +1453,6 @@ string MainWindow::getPath(){
 void MainWindow::setStylesheet(string s){
     style_sheet = std::move(s);
     SetStyle();
-    reloadConfig();
     SaveAppConfig();
 }
 string MainWindow::getStylesheet(){

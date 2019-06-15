@@ -106,9 +106,6 @@ void UploadWizard::PageChanged(int id){
             {
                 std::string line;
                 while(getline(cFile, line)){
-                    line.erase(std::remove_if(line.begin(), line.end(), ::isspace),
-                               line.end());
-
                     if(line[0] == '#' || line.empty() || line.empty()) continue;
                     auto delimiterPos = line.find('=');
                     auto name = line.substr(0, delimiterPos);
@@ -132,7 +129,7 @@ void UploadWizard::PageChanged(int id){
                             QString irs_path = "";
                             if(!skipIrs){
                                 irs_path= QString::fromStdString(value);
-
+                                qDebug() << irs_path;
                                 if(QFile::exists(irs_path.split("\"")[1])){
                                     changes += "Yes";
                                     irsPath=irs_path.split("\"")[1];
