@@ -10,7 +10,7 @@ fi
 
 if pgrep viper-gui >/dev/null 2>&1
   then
-    printf "${RED}File /usr/bin/viper-gui is in use\n${NC}Please close all Viper4Linux-UI windows and try again.\n"
+    printf "${RED}viper-gui is in use\n${NC}Please close all Viper4Linux-UI windows and try again.\n"
     exit 1
 fi
 
@@ -48,9 +48,10 @@ fi
 printf "Installing Dependencies using apt-get\n"
 sudo apt-get --assume-yes install libqt5widgets5 libqt5gui5 libqt5core5a libqt5xml5 libgl1-mesa-dev
 
-printf "Installing viper-gui to /usr/bin...\n"
-cp viper-gui /usr/bin/
-chmod 755 /usr/bin/viper-gui
+printf "Installing viper-gui to /usr/local/bin...\n"
+rm /usr/bin/viper-gui 2> /dev/null #remove gui from oldpath if still existing there
+cp viper-gui /usr/local/bin/
+chmod 755 /usr/local/bin/viper-gui
 
 printf "Installing Desktop Entry and Icon\n"
 cp viper-gui.png /usr/share/pixmaps/viper-gui.png
