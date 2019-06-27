@@ -1,7 +1,7 @@
 # Viper4Linux-GUI
 [![Build Status](https://travis-ci.org/ThePBone/Viper4Linux-GUI.svg?branch=master)](https://travis-ci.org/ThePBone/Viper4Linux-GUI)
 
-Unofficial UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
+Official UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
   * Telegram: @ThePBone
   * [Stable Builds](https://github.com/ThePBone/Viper4Linux-GUI/releases)
   * [Nightly Builds](https://nightly.thebone.cf/viper-gui)
@@ -21,7 +21,7 @@ yay -S viper4linux-gui-git
 #### Install Dependencies
 
 ```
-sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a libqt5xml5 libgl1-mesa-dev
+sudo apt install libqt5widgets5 libqt5gui5 libqt5core5a libqt5xml5 libgl1-mesa-dev git
 ```
 
 #### Start Executable
@@ -43,4 +43,7 @@ chmod +x viper-gui
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3_dark.png?raw=true)
 #### Credits
   * [Material Icons](https://material.io/tools/icons/)
-  * [QSS Stylesheets (modified)](https://github.com/GTRONICK/QSS)
+  * [QSS Stylesheets - GTRONICK (modified by ThePBone)](https://github.com/GTRONICK/QSS)
+  * [Viper4Linux - L3vi47h4N](https://github.com/L3vi47h4N/Viper4Linux)
+
+Thanks @L3vi47h4N for declaring the GUI as official :)
