@@ -4,7 +4,7 @@
 Official UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
   * Telegram: @ThePBone
   * [Stable Builds](https://github.com/ThePBone/Viper4Linux-GUI/releases)
-  * [Nightly Builds](https://nightly.thebone.cf/viper-gui)
+  * [Nightly Builds](https://nightly.thebone.cf/viper-gui/?C=M;O=D)
 ## Installation
 ### Debian/Ubuntu
 To simplify the installation on Debian, I have added an automatic install script.
