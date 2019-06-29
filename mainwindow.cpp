@@ -108,7 +108,7 @@ void MainWindow::SetStyle(){
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&f);
         qApp->setStyleSheet(ts.readAll());
-        if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark"){
+        if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark" || style_sheet=="vsdark"){
             QPixmap pix(":/main/settings-white.svg");
             QIcon icon(pix);
             QPixmap pix2(":/main/queue-white.svg");
