@@ -110,21 +110,21 @@ void MainWindow::SetStyle(){
         QTextStream ts(&f);
         qApp->setStyleSheet(ts.readAll());
         if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark" || style_sheet=="vsdark"){
-            QPixmap pix(":/main/settings-white.svg");
+            QPixmap pix(":/icons/settings-white.svg");
             QIcon icon(pix);
-            QPixmap pix2(":/main/queue-white.svg");
+            QPixmap pix2(":/icons/queue-white.svg");
             QIcon icon2(pix2);
-            QPixmap pix3(":/main/menu-white.svg");
+            QPixmap pix3(":/icons/menu-white.svg");
             QIcon icon3(pix3);
             ui->set->setIcon(icon);
             ui->cpreset->setIcon(icon2);
             ui->toolButton->setIcon(icon3);
         }else{
-            QPixmap pix(":/main/settings.svg");
+            QPixmap pix(":/icons/settings.svg");
             QIcon icon(pix);
-            QPixmap pix2(":/main/queue.svg");
+            QPixmap pix2(":/icons/queue.svg");
             QIcon icon2(pix2);
-            QPixmap pix3(":/main/menu.svg");
+            QPixmap pix3(":/icons/menu.svg");
             QIcon icon3(pix3);
             ui->set->setIcon(icon);
             ui->cpreset->setIcon(icon2);

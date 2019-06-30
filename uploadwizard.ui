@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Wizard</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/viper.png</normaloff>:/icons/viper.png</iconset>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -502,6 +506,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

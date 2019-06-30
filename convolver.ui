@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/main/viper.png</normaloff>:/main/viper.png</iconset>
+    <normaloff>:/icons/viper.png</normaloff>:/icons/viper.png</iconset>
   </property>
   <widget class="QListWidget" name="files">
    <property name="geometry">

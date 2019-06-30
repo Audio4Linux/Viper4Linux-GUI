@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Viper4Linux Frontend</string>
+   <string>Viper4Linux GUI</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/main/viper.png</normaloff>:/main/viper.png</iconset>
+    <normaloff>:/icons/viper.png</normaloff>:/icons/viper.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="dynsystab">
@@ -2976,7 +2976,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/main/queue.svg</normaloff>:/main/queue.svg</iconset>
+      <normaloff>:/icons/queue.svg</normaloff>:/icons/queue.svg</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -3005,7 +3005,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/main/settings.svg</normaloff>:/main/settings.svg</iconset>
+      <normaloff>:/icons/settings.svg</normaloff>:/icons/settings.svg</iconset>
     </property>
    </widget>
    <widget class="QToolButton" name="toolButton">
@@ -3022,7 +3022,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/main/menu.svg</normaloff>:/main/menu.svg</iconset>
+      <normaloff>:/icons/menu.svg</normaloff>:/icons/menu.svg</iconset>
     </property>
     <property name="popupMode">
      <enum>QToolButton::InstantPopup</enum>
