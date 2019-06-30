@@ -6,13 +6,26 @@ Official UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
   * [Stable Builds](https://github.com/ThePBone/Viper4Linux-GUI/releases)
   * [Nightly Builds](https://nightly.thebone.cf/viper-gui/?C=M;O=D)
 ## Installation
+### Ubuntu PPA
+#### Add PPA Repo
+```
+curl -s --compressed "https://thepbone.github.io/Viper4Linux-GUI-PPA/KEY.gpg" | sudo apt-key add -
+sudo curl -s --compressed -o /etc/apt/sources.list.d/vipergui.list "https://thepbone.github.io/Viper4Linux-GUI-PPA/vipergui.list"
+sudo apt update
+```
+#### Installation
+```
+sudo apt install viper4linux-gui
+```
+
 ### Debian/Ubuntu
 To simplify the installation on Debian, I have added an automatic install script.
 You can also use it to update to a new stable release (if available).
+If you prefer using apt, read the PPA section above.
 ```
 curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/install.sh | sudo bash
 ```
-Starting with version 1.10 I will provide Deb-Packages [here](https://github.com/ThePBone/Viper4Linux-GUI/releases). I might set up a PPA later.
+Starting with version 1.10 I will provide Deb-Packages [here](https://github.com/ThePBone/Viper4Linux-GUI/releases).
 ### Arch
 On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
 ```
