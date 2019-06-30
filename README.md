@@ -14,9 +14,13 @@ curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/instal
 ```
 Starting with version 1.10 I will provide Deb-Packages [here](https://github.com/ThePBone/Viper4Linux-GUI/releases). I might set up a PPA later.
 ### Arch
-On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) provided by yochananmarqos
+On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
 ```
 yay -S viper4linux-gui-git  
+```
+Or [this one](https://aur.archlinux.org/packages/viper4linux-gui) to get the latest stable release:
+```
+yay -S viper4linux-gui 
 ```
 ### Manually
 #### Install Dependencies
