@@ -50,6 +50,7 @@ settings::settings(QWidget *parent) :
     ui->styleSelect->addItem("Material Dark","materialdark");
     ui->styleSelect->addItem("Ubuntu","ubuntu");
     ui->styleSelect->addItem("Visual Studio Dark","vsdark");
+    ui->styleSelect->addItem("Visual Studio Light","vslight");
 
     QVariant qvS(QString::fromStdString(style_sheet));
     int index = ui->styleSelect->findData(qvS);

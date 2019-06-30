@@ -99,6 +99,7 @@ void MainWindow::SetStyle(){
     else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
     else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
     else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
+    else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
     else stylepath = ":/default.qss";
 
     QFile f(stylepath);
