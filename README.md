@@ -17,6 +17,7 @@ sudo apt update
 ```
 sudo apt install viper4linux-gui
 ```
+[View PPA on GitHub](https://github.com/ThePBone/Viper4Linux-GUI-PPA)
 
 ### Debian/Ubuntu
 To simplify the installation on Debian, I have added an automatic install script.
