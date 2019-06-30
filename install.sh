@@ -59,7 +59,7 @@ cat <<EOT >> /usr/share/applications/viper-gui.desktop
 [Desktop Entry]
 Name=Viper4Linux
 GenericName=Equalizer
-Comment=Unofficial UI for Viper4Linux
+Comment=Official UI for Viper4Linux
 Keywords=equalizer
 Categories=AudioVideo;Audio;
 Exec=viper-gui
