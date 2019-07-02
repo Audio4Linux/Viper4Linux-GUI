@@ -21,7 +21,8 @@ private slots:
     void remove();
     void load();
     void upload();
-    void import();
+    void importAndroid();
+    void importLinux();
     void download();
     void nameChanged(QString);
     void showContextMenu(const QPoint &pos);

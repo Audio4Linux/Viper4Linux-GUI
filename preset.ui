@@ -36,17 +36,20 @@
     <attribute name="title">
      <string>Local</string>
     </attribute>
-    <widget class="QPushButton" name="importBtn">
+    <widget class="QToolButton" name="importBtn">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>310</y>
-       <width>111</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Import Android</string>
+      <string>Import</string>
+     </property>
+     <property name="popupMode">
+      <enum>QToolButton::InstantPopup</enum>
      </property>
     </widget>
     <widget class="QPushButton" name="add">

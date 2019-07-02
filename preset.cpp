@@ -1,4 +1,4 @@
-#include "preset.h"
+﻿#include "preset.h"
 #include "ui_preset.h"
 #include "main.h"
 #include <QDir>
@@ -40,11 +40,15 @@ Preset::Preset(QWidget *parent) :
     connect(ui->githubRepo,SIGNAL(clicked()),SLOT(visitGithub()));
     connect(ui->remove,SIGNAL(clicked()),SLOT(remove()));
     connect(ui->download,SIGNAL(clicked()),SLOT(download()));
-    connect(ui->importBtn,SIGNAL(clicked()),SLOT(import()));
     connect(ui->presetName,SIGNAL(textChanged(QString)),this,SLOT(nameChanged(QString)));
     connect(ui->files, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
+
+    QMenu *menu = new QMenu();
+    menu->addAction("Android Profile", this,SLOT(importAndroid()));
+    menu->addAction("Linux Configuration", this,SLOT(importLinux()));
+    ui->importBtn->setMenu(menu);
 
     QUrl url("https://api.github.com/repos/L3vi47h4N/Viper4Linux-Configs/contents/");
     request.setUrl(url);
@@ -161,10 +165,26 @@ void Preset::add(){
     ui->presetName->text() = "";
     UpdateList();
 }
-void Preset::import(){
+void Preset::importAndroid(){
     auto ia = new importandroid(this);
     ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
     ia->show();
+}
+void Preset::importLinux(){
+    QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
+    if(filename=="")return;
+
+    QFileInfo fileInfo(filename);
+    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QString absolute=d.absolutePath();
+    QString path = pathAppend(absolute,"presets");
+
+    const QString src = filename;
+    const QString dest = path + "/" + fileInfo.fileName();
+    if (QFile::exists(dest))QFile::remove(dest);
+
+    QFile::copy(src,dest);
+    cout << "Importing from " << filename.toUtf8().constData() << endl;
 }
 void Preset::remove(){
     if(ui->files->selectedItems().length() == 0){
