@@ -21,6 +21,7 @@ private slots:
     void remove();
     void load();
     void upload();
+    void reloadRepo();
     void importAndroid();
     void importLinux();
     void download();

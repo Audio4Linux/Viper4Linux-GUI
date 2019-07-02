@@ -155,21 +155,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>310</y>
-       <width>131</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
        <y>10</y>
-       <width>301</width>
+       <width>231</width>
        <height>17</height>
       </rect>
      </property>
@@ -206,6 +193,22 @@
      </property>
      <property name="text">
       <string>Upload</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="camelcase">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>310</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CamelCase</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>

@@ -42,6 +42,7 @@ Preset::Preset(QWidget *parent) :
     connect(ui->download,SIGNAL(clicked()),SLOT(download()));
     connect(ui->presetName,SIGNAL(textChanged(QString)),this,SLOT(nameChanged(QString)));
     connect(ui->files, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+    connect( ui->camelcase , SIGNAL(clicked()),this, SLOT(reloadRepo()));
 
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
 
@@ -58,6 +59,12 @@ Preset::Preset(QWidget *parent) :
 Preset::~Preset()
 {
     delete ui;
+}
+void Preset::reloadRepo(){
+    ui->repoindex->clear();
+    QUrl url("https://api.github.com/repos/L3vi47h4N/Viper4Linux-Configs/contents/");
+    request.setUrl(url);
+    manager->get(request);
 }
 void Preset::upload(){
     UploadWizard* upl = new UploadWizard();
@@ -110,7 +117,8 @@ QString Preset::optimizeName(QString s){
     QString author = query[0];
     if(author=="000")author = "L3vi47h4N";
     QString description = query[1].replace("_"," ");
-    return toCamelCase(description) + " by " + author;
+    if(ui->camelcase->checkState()==Qt::CheckState::Checked)return toCamelCase(description) + " by " + author;
+    else return description + " by " + author;
 }
 void Preset::visitGithub(){
     QDesktopServices::openUrl(QUrl("https://github.com/L3vi47h4N/Viper4Linux-Configs"));
