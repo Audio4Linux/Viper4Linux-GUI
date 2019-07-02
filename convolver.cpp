@@ -56,7 +56,7 @@ void Convolver::reload(){
     lockupdate=false;
 }
 void Convolver::updateIR(){
-    if(lockupdate)return; //Clearing Seletion by code != User Interaction
+    if(lockupdate || ui->files->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
     if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData());
 }

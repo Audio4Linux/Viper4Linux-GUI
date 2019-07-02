@@ -42,8 +42,8 @@ Preset::Preset(QWidget *parent) :
     connect(ui->download,SIGNAL(clicked()),SLOT(download()));
     connect(ui->presetName,SIGNAL(textChanged(QString)),this,SLOT(nameChanged(QString)));
     connect(ui->files, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-    connect( ui->camelcase , SIGNAL(clicked()),this, SLOT(reloadRepo()));
-
+    connect(ui->camelcase , SIGNAL(clicked()),this, SLOT(reloadRepo()));
+    connect(ui->files, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)), this, SLOT(repoIndexChanged()));
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
 
     QMenu *menu = new QMenu();
@@ -54,11 +54,14 @@ Preset::Preset(QWidget *parent) :
     QUrl url("https://api.github.com/repos/L3vi47h4N/Viper4Linux-Configs/contents/");
     request.setUrl(url);
     manager->get(request);
-
 }
 Preset::~Preset()
 {
     delete ui;
+}
+void Preset::repoIndexChanged(){
+    if(ui->files->currentItem() == nullptr)return;
+    ui->presetName->setText(ui->files->currentItem()->text());
 }
 void Preset::reloadRepo(){
     ui->repoindex->clear();
