@@ -32,11 +32,13 @@
 #include "converter.h"
 #include <cctype>
 #include <cmath>
+#include <QStyleFactory>
 using namespace std;
 
 static string path;
 static string appcpath;
 static string style_sheet;
+static string qstyle;
 static bool autofx;
 static bool muteOnRestart;
 static bool glava_fix;
@@ -89,48 +91,52 @@ MainWindow::~MainWindow()
 
 //---Style
 void MainWindow::SetStyle(){
-    QString stylepath = "";
-    if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
-    else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
-    else if (style_sheet=="breeze_light")stylepath = ":/lightbreeze/lightbreeze/lightbreeze.qss";
-    else if (style_sheet=="breeze_dark")stylepath = ":/darkbreeze/darkbreeze/darkbreeze.qss";
-    else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
-    else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
-    else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
-    else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
-    else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
-    else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
-    else stylepath = ":/default.qss";
+    if(qstyle!="Windows"){
+        QString stylepath = "";
+        if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
+        else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
+        else if (style_sheet=="breeze_light")stylepath = ":/lightbreeze/lightbreeze/lightbreeze.qss";
+        else if (style_sheet=="breeze_dark")stylepath = ":/darkbreeze/darkbreeze/darkbreeze.qss";
+        else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
+        else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
+        else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
+        else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
+        else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
+        else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
+        else stylepath = ":/default.qss";
 
-    QFile f(stylepath);
-    if (!f.exists())printf("Unable to set stylesheet, file not found\n");
-    else
-    {
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-        qApp->setStyleSheet(ts.readAll());
-        if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark" || style_sheet=="vsdark"){
-            QPixmap pix(":/icons/settings-white.svg");
-            QIcon icon(pix);
-            QPixmap pix2(":/icons/queue-white.svg");
-            QIcon icon2(pix2);
-            QPixmap pix3(":/icons/menu-white.svg");
-            QIcon icon3(pix3);
-            ui->set->setIcon(icon);
-            ui->cpreset->setIcon(icon2);
-            ui->toolButton->setIcon(icon3);
-        }else{
-            QPixmap pix(":/icons/settings.svg");
-            QIcon icon(pix);
-            QPixmap pix2(":/icons/queue.svg");
-            QIcon icon2(pix2);
-            QPixmap pix3(":/icons/menu.svg");
-            QIcon icon3(pix3);
-            ui->set->setIcon(icon);
-            ui->cpreset->setIcon(icon2);
-            ui->toolButton->setIcon(icon3);
+        QFile f(stylepath);
+        if (!f.exists())printf("Unable to set stylesheet, file not found\n");
+        else
+        {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+            if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark" || style_sheet=="vsdark"){
+                QPixmap pix(":/icons/settings-white.svg");
+                QIcon icon(pix);
+                QPixmap pix2(":/icons/queue-white.svg");
+                QIcon icon2(pix2);
+                QPixmap pix3(":/icons/menu-white.svg");
+                QIcon icon3(pix3);
+                ui->set->setIcon(icon);
+                ui->cpreset->setIcon(icon2);
+                ui->toolButton->setIcon(icon3);
+            }else{
+                QPixmap pix(":/icons/settings.svg");
+                QIcon icon(pix);
+                QPixmap pix2(":/icons/queue.svg");
+                QIcon icon2(pix2);
+                QPixmap pix3(":/icons/menu.svg");
+                QIcon icon3(pix3);
+                ui->set->setIcon(icon);
+                ui->cpreset->setIcon(icon2);
+                ui->toolButton->setIcon(icon3);
+            }
         }
     }
+    if(QStyleFactory::keys().contains(QString::fromStdString(qstyle)))app->setStyle(QString::fromStdString(qstyle));
+    else app->setStyle("Fusion");
 }
 
 //---Dialogs
@@ -285,6 +291,10 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         style_sheet = value;
         break;
     }
+    case theme: {
+        qstyle = value;
+        break;
+    }
     case mutedRestart: {
         muteOnRestart = value=="true";
         break;
@@ -316,7 +326,7 @@ void MainWindow::loadAppConfig(bool once){
 }
 
 //---UI Config Generator
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet){
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,const string &_theme = qstyle){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -332,6 +342,7 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     appconfig += "glavafix=" + converter3.str() + "\n";
 
     appconfig += "stylesheet=" + ssheet + "\n";
+    appconfig += "theme=" + _theme + "\n";
 
     ofstream myfile(appcpath);
     if (myfile.is_open())
@@ -1459,7 +1470,14 @@ void MainWindow::setStylesheet(string s){
 string MainWindow::getStylesheet(){
     return style_sheet;
 }
-
+void MainWindow::setQStyle(string s){
+    qstyle = std::move(s);
+    SetStyle();
+    SaveAppConfig();
+}
+string MainWindow::getQStyle(){
+    return qstyle;
+}
 //---Connect UI-Signals
 void MainWindow::ConnectActions(){
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));

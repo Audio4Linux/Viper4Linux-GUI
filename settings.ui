@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>284</width>
-    <height>268</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>230</y>
+     <y>265</y>
      <width>80</width>
      <height>25</height>
     </rect>
@@ -133,7 +133,7 @@
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>230</y>
+     <y>265</y>
      <width>171</width>
      <height>25</height>
     </rect>
@@ -148,7 +148,7 @@
      <x>10</x>
      <y>160</y>
      <width>261</width>
-     <height>61</height>
+     <height>95</height>
     </rect>
    </property>
    <property name="title">
@@ -158,7 +158,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>34</y>
+      <y>64</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -171,10 +171,33 @@
     <property name="geometry">
      <rect>
       <x>98</x>
-      <y>29</y>
+      <y>60</y>
       <width>151</width>
       <height>23</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="qStyleSelect">
+    <property name="geometry">
+     <rect>
+      <x>98</x>
+      <y>30</y>
+      <width>151</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>34</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Theme</string>
     </property>
    </widget>
   </widget>
@@ -185,6 +208,7 @@
   <tabstop>muteonrestart</tabstop>
   <tabstop>glavafix</tabstop>
   <tabstop>glavafix_help</tabstop>
+  <tabstop>qStyleSelect</tabstop>
   <tabstop>styleSelect</tabstop>
   <tabstop>github</tabstop>
   <tabstop>save</tabstop>

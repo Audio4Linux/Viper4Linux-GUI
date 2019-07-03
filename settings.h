@@ -17,6 +17,7 @@ private slots:
         void github();
         void glava_help();
         void changeStyle(const QString&);
+        void changeQStyle(const QString&);
 };
 
 #endif // SETTINGS_H

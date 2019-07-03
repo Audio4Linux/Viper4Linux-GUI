@@ -14,14 +14,17 @@
 #include <QUrl>
 #include <QMessageBox>
 #include <QDebug>
+#include <QStyleFactory>
 
 using namespace std;
+static bool blockqstyle = false;
 settings::settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settings){
     ui->setupUi(this);
 
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
+    connect(ui->qStyleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeQStyle(const QString&)));
 
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
@@ -30,6 +33,7 @@ settings::settings(QWidget *parent) :
     strcat(result,"/.config/viper4linux/audio.conf");
     string path = mainwin->getPath();
     string style_sheet = mainwin->getStylesheet();
+    string theme = mainwin->getQStyle();
     if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
     ui->autofx->setChecked(mainwin->getAutoFx());
@@ -52,11 +56,32 @@ settings::settings(QWidget *parent) :
     ui->styleSelect->addItem("Visual Studio Dark","vsdark");
     ui->styleSelect->addItem("Visual Studio Light","vslight");
 
+    blockqstyle = true;
     QVariant qvS(QString::fromStdString(style_sheet));
     int index = ui->styleSelect->findData(qvS);
     if ( index != -1 ) {
        ui->styleSelect->setCurrentIndex(index);
     }
+
+    ui->qStyleSelect->addItem("Default");
+    for(int i=0;i<QStyleFactory::keys().count();i++){
+        ui->qStyleSelect->addItem(QStyleFactory::keys()[i]);
+    }
+
+    int indexQ = ui->qStyleSelect->findText(QString::fromStdString(theme));
+    if ( indexQ != -1 ) {
+       ui->qStyleSelect->setCurrentIndex(indexQ);
+    }else{
+       int indexQ2 = ui->qStyleSelect->findText("Default");
+       if ( indexQ2 != -1 ) {
+            ui->qStyleSelect->setCurrentIndex(indexQ2);
+       }else{
+           ui->qStyleSelect->setCurrentText("...");
+       }
+    }
+
+    ui->styleSelect->setEnabled(theme!="Windows");
+    blockqstyle = false;
 }
 settings::~settings(){
     delete ui;
@@ -67,6 +92,13 @@ void settings::submit(){
     mainwin->setAutoFx(ui->autofx->isChecked());
     mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
     this->close();
+}
+void settings::changeQStyle(const QString& style){
+    if(!blockqstyle){
+        if(style=="Default")mainwin->setQStyle("");
+        else mainwin->setQStyle(style.toUtf8().constData());
+    }
+    ui->styleSelect->setEnabled(style!="Windows");
 }
 void settings::changeStyle(const QString& style){
     mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
