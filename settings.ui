@@ -179,6 +179,16 @@
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>path</tabstop>
+  <tabstop>autofx</tabstop>
+  <tabstop>muteonrestart</tabstop>
+  <tabstop>glavafix</tabstop>
+  <tabstop>glavafix_help</tabstop>
+  <tabstop>styleSelect</tabstop>
+  <tabstop>github</tabstop>
+  <tabstop>save</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>

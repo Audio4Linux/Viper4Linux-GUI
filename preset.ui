@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>351</width>
+    <width>395</width>
     <height>392</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>331</width>
+     <width>374</width>
      <height>371</height>
     </rect>
    </property>
@@ -30,7 +30,7 @@
     <enum>QTabWidget::South</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="local">
     <attribute name="title">
@@ -55,7 +55,7 @@
     <widget class="QPushButton" name="add">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>270</x>
        <y>10</y>
        <width>91</width>
        <height>25</height>
@@ -73,7 +73,7 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>311</width>
+       <width>351</width>
        <height>261</height>
       </rect>
      </property>
@@ -84,7 +84,7 @@
     <widget class="QPushButton" name="load">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>280</x>
        <y>310</y>
        <width>81</width>
        <height>25</height>
@@ -97,7 +97,7 @@
     <widget class="QPushButton" name="remove">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>190</x>
        <y>310</y>
        <width>81</width>
        <height>25</height>
@@ -112,12 +112,28 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>211</width>
+       <width>251</width>
        <height>25</height>
       </rect>
      </property>
      <property name="placeholderText">
       <string>Preset Name</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="exportBtn">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>310</y>
+       <width>71</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Export</string>
+     </property>
+     <property name="popupMode">
+      <enum>QToolButton::InstantPopup</enum>
      </property>
     </widget>
    </widget>
@@ -130,7 +146,7 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>311</width>
+       <width>351</width>
        <height>261</height>
       </rect>
      </property>
@@ -141,7 +157,7 @@
     <widget class="QPushButton" name="download">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>280</x>
        <y>310</y>
        <width>81</width>
        <height>25</height>
@@ -172,7 +188,7 @@
     <widget class="QPushButton" name="githubRepo">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>290</x>
        <y>7</y>
        <width>71</width>
        <height>25</height>
@@ -185,7 +201,7 @@
     <widget class="QPushButton" name="upload">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>190</x>
        <y>310</y>
        <width>81</width>
        <height>25</height>
@@ -214,6 +230,21 @@
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>presetName</tabstop>
+  <tabstop>add</tabstop>
+  <tabstop>files</tabstop>
+  <tabstop>importBtn</tabstop>
+  <tabstop>exportBtn</tabstop>
+  <tabstop>remove</tabstop>
+  <tabstop>load</tabstop>
+  <tabstop>githubRepo</tabstop>
+  <tabstop>repoindex</tabstop>
+  <tabstop>camelcase</tabstop>
+  <tabstop>upload</tabstop>
+  <tabstop>download</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>

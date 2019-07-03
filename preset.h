@@ -25,6 +25,7 @@ private slots:
     void repoIndexChanged();
     void importAndroid();
     void importLinux();
+    void exportLinux();
     void download();
     void nameChanged(QString);
     void showContextMenu(const QPoint &pos);

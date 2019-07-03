@@ -51,6 +51,11 @@ Preset::Preset(QWidget *parent) :
     menu->addAction("Linux Configuration", this,SLOT(importLinux()));
     ui->importBtn->setMenu(menu);
 
+    QMenu *menuEx = new QMenu();
+    //menuEx->addAction("Android Profile", this,SLOT(importAndroid()));
+    menuEx->addAction("Linux Configuration", this,SLOT(exportLinux()));
+    ui->exportBtn->setMenu(menuEx);
+
     QUrl url("https://api.github.com/repos/L3vi47h4N/Viper4Linux-Configs/contents/");
     request.setUrl(url);
     manager->get(request);
@@ -196,6 +201,39 @@ void Preset::importLinux(){
 
     QFile::copy(src,dest);
     cout << "Importing from " << filename.toUtf8().constData() << endl;
+}
+void Preset::exportLinux(){
+    if(ui->files->selectedItems().length() == 0){
+        QMessageBox::StandardButton msg;
+        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
+        return;
+    }
+
+    QString filename = QFileDialog::getSaveFileName(this,"Save audio.conf","","*.conf");
+    if(filename=="")return;
+    QFileInfo fi(filename);
+    QString ext = fi.suffix();
+    if(ext!="conf")filename.append(".conf");
+
+    QFileInfo fileInfo(filename);
+    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QString absolute=d.absolutePath();
+    QString path = pathAppend(absolute,"presets");
+    QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
+    QFile file (fullpath);
+    if(!QFile::exists(fullpath)){
+        QMessageBox::StandardButton msg;
+        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        UpdateList();
+        return;
+    }
+
+    const QString src = fullpath;
+    const QString dest = filename;
+    if (QFile::exists(dest))QFile::remove(dest);
+
+    QFile::copy(src,dest);
+    cout << "Exporting to " << filename.toUtf8().constData() << endl;
 }
 void Preset::remove(){
     if(ui->files->selectedItems().length() == 0){

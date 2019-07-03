@@ -80,6 +80,13 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>path</tabstop>
+  <tabstop>fileSelect</tabstop>
+  <tabstop>reload</tabstop>
+  <tabstop>files</tabstop>
+  <tabstop>close</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>
