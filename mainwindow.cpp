@@ -240,6 +240,10 @@ void MainWindow::Restart(){
     if(glava_fix) system("setsid glava -d &");
     if(muteOnRestart) system("pactl set-sink-mute 0 0");
 }
+void MainWindow::DisableFX(){
+    //Apply instantly
+    if(!lockapply)ConfirmConf();
+}
 
 //---Save/Load Presets
 void MainWindow::LoadPresetFile(QString filename){
@@ -1499,7 +1503,7 @@ string MainWindow::getQStyle(){
 //---Connect UI-Signals
 void MainWindow::ConnectActions(){
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));
-    connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(OnUpdate()));
+    connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(DisableFX()));
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(OpenConv()));

@@ -44,6 +44,7 @@ public slots:
     void reloadConfig();
     void updatecolmpreset();
 private slots:
+    void DisableFX();
     void OpenPreset();
     void CopyEQ();
     void PasteEQ();
