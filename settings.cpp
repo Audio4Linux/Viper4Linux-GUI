@@ -101,7 +101,8 @@ void settings::changeQStyle(const QString& style){
     ui->styleSelect->setEnabled(style!="Windows");
 }
 void settings::changeStyle(const QString& style){
-    mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
+    //Disable stylesheets with windows theme
+    if(mainwin->getQStyle()!="Windows")mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
 }
 void settings::github(){
     QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI"));

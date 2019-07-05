@@ -134,6 +134,24 @@ void MainWindow::SetStyle(){
                 ui->toolButton->setIcon(icon3);
             }
         }
+    }else{
+        QFile f(":/default.qss");
+        if (!f.exists())printf("Unable to set stylesheet, file not found\n");
+        else
+        {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+            QPixmap pix(":/icons/settings.svg");
+            QIcon icon(pix);
+            QPixmap pix2(":/icons/queue.svg");
+            QIcon icon2(pix2);
+            QPixmap pix3(":/icons/menusvg");
+            QIcon icon3(pix3);
+            ui->set->setIcon(icon);
+            ui->cpreset->setIcon(icon2);
+            ui->toolButton->setIcon(icon3);
+    }
     }
     if(QStyleFactory::keys().contains(QString::fromStdString(qstyle)))app->setStyle(QString::fromStdString(qstyle));
     else app->setStyle("Fusion");

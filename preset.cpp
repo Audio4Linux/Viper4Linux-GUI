@@ -98,6 +98,7 @@ void Preset::indexDownloaded(QNetworkReply* reply){
     }
     QJsonArray array = document.array();
     irs.clear();
+    ui->repoindex->clear();
     foreach (const QJsonValue & v, array)
     {
         QJsonObject obj = v.toObject();

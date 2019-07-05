@@ -52,7 +52,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Mute when restarting Viper</string>
+     <string>Mute while restarting Viper</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="path">
@@ -75,7 +75,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>V4L Config</string>
+     <string>Config Path</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="autofx">
