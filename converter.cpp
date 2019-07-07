@@ -1,4 +1,5 @@
 #include "converter.h"
+#include "configlist.h"
 #include <iostream>
 #include <sstream>
 #include <cmath>
@@ -6,80 +7,13 @@
 #include <QFile>
 #include <QDebug>
 #include <QMessageBox>
+#include <fstream>
+#include "main.h"
 using namespace std;
-//Messy code but it works :#
-class android_config{
-public:
-    bool analogx_enable = false;
-    bool colorfulmusic_enable = false;
-    bool convolver_enable = false;
-    bool cure_enable = false;
-    bool diffsurr_enable = false;
-    bool dynsys_enable = false;
-    bool enable = true;
-    bool fetcompressor_autoattack = true;
-    bool fetcompressor_autoknee = true;
-    bool fetcompressor_autorelease = true;
-    bool fetcompressor_autogain = true;
-    bool fetcompressor_enable = false;
-    bool fetcompressor_noclipenable = true;
-    bool fidelity_bass_enable = false;
-    bool fireq_enable = false;
-    bool fidelity_clarity_enable = false;
-    bool playbackgain_enable = false;
-    bool reverb_enable = false;
-    bool tube_enable = false;
-    bool vhs_enable = false;
-    bool vse_enable = false;
-    QString analogx_mode = "0";
-    QString channelpan = "0";
-    QString colorfulmusic_coeffs = "120;200";
-    QString colorfulmusic_midimage = "150";
-    QString convolver_crosschannel = "0";
-    QString cure_crossfeed = "0";
-    QString diffsurr_delay = "500";
-    QString dynsys_bassgain = "0";
-    QString dynsys_coeffs = "100;5600;40;40;50;50";
-    QString fetcompressor_adapt = "50";
-    QString fetcompressor_attack = "20";
-    QString fetcompressor_crest = "20";
-    QString fetcompressor_gain = "0";
-    QString fetcompressor_knee = "0";
-    QString fetcompressor_kneemulti = "0";
-    QString fetcompressor_maxattack = "80";
-    QString fetcompressor_maxrelease = "100";
-    QString fetcompressor_ratio = "100";
-    QString fetcompressor_release = "50";
-    QString fetcompressor_threshold = "100";
-    QString fidelity_bass_freq = "40";
-    QString fidelity_bass_gain = "50";
-    QString fidelity_bass_mode = "0";
-    QString fidelity_clarity_gain = "50";
-    QString fidelity_clarity_mode = "0";
-    QString fireq_custom = "0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;";
-    QString limiter = "100";
-    QString outvol = "100";
-    QString playbackgain_maxscaler = "400";
-    QString playbackgain_ratio = "50";
-    QString playbackgain_volume = "80";
-    QString reverb_damp = "0";
-    QString reverb_dry = "50";
-    QString reverb_roomsize = "0";
-    QString reverb_roomwidth = "0";
-    QString reverb_wet = "0";
-    QString vhs_qual = "0";
-    QString vse_value = "56";
-
-    bool found_ddc = false;
-    bool found_irs = false;
-    bool found_spkopt = false;
-};
-converter::converter()
-{
-}
-//Returns an error description or the converted config
-string converter::read(string path,mode cmode){
-    android_config *conf = new android_config();
+//Messy code but it works :S
+//Returns an error description or the converted linux config
+string converter::toLinux(string path,configtype cmode){
+    configmodel *conf = new configmodel();
     int errorLine, errorColumn;
     QString errorMsg;
     QFile modelFile(QString::fromStdString(path));
@@ -474,8 +408,463 @@ string converter::read(string path,mode cmode){
     string resp = out + "|" + info;
     return resp;
 }
+//Returns an error description or the converted android config
+string converter::toAndroid(string path,configtype cmode){
+    configmodel *conf = new configmodel();
+
+    std::ifstream cFile(path);
+    if (cFile.is_open())
+    {
+        std::string line;
+        while(getline(cFile, line)){
+            if(QString::fromStdString(line).trimmed()[0] == '#' || line.empty()) continue; //Skip commented lines
+            auto delimiterInlineComment = line.find('#'); //Look for config properties mixed up with comments
+            auto extractedProperty = line.substr(0, delimiterInlineComment);
+            auto delimiterPos = extractedProperty.find('=');
+            auto name = extractedProperty.substr(0, delimiterPos);
+            auto value = extractedProperty.substr(delimiterPos + 1);
+            decodeLinuxKey(name,value,conf);
+        }
+        cFile.close();
+    }
+    else {
+        std::cerr << "Couldn't open config file for reading.\n";
+        QMessageBox msgBox;
+        msgBox.setText("Viper Configuration File not found at \n" + QString::fromStdString(path) + "");
+        msgBox.setInformativeText("You can change the path in the settings.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Icon::Critical);
+        msgBox.exec();
+    }
+    QString prefix = "viper4android.headphonefx";
+    QDomDocument doc;
+    QDomElement map = doc.createElement("map");
+
+    //Bools...
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".enable","true"));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".analogx.enable",boolToQString(conf->analogx_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".colorfulmusic.enable",boolToQString(conf->colorfulmusic_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".cure.enable",boolToQString(conf->cure_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".diffsurr.enable",boolToQString(conf->diffsurr_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".dynamicsystem.enable",boolToQString(conf->dynsys_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.enable",boolToQString(conf->fetcompressor_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autoattack",boolToQString(conf->fetcompressor_autoattack)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autogain",boolToQString(conf->fetcompressor_autogain)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autoknee",boolToQString(conf->fetcompressor_autoknee)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autorelease",boolToQString(conf->fetcompressor_autorelease)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.noclipenable",boolToQString(conf->fetcompressor_noclipenable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fidelity.bass.enable",boolToQString(conf->fidelity_bass_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fidelity.clarity.enable",boolToQString(conf->fidelity_clarity_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fireq.enable",boolToQString(conf->fireq_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".playbackgain.enable",boolToQString(conf->playbackgain_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".reverb.enable",boolToQString(conf->reverb_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".tube.enable",boolToQString(conf->tube_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".vhs.enable",boolToQString(conf->vhs_enable)));
+    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".vse.enable",boolToQString(conf->vse_enable)));
+
+    //Strings...
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".analogx.mode",conf->analogx_mode));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".channelpan",conf->channelpan));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".colorfulmusic.midimage",QString::number(conf->colorfulmusic_midimage.toInt()/4)));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".colorfulmusic.coeffs",conf->temp_colm_widening + ";" + conf->temp_colm_depth));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".convolver.crosschannel",conf->convolver_crosschannel));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".cure.crossfeed",conf->cure_crossfeed));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".diffsurr.delay",QString::number(conf->diffsurr_delay.toInt()*20)));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".dynamicsystem.bass",QString::number((conf->dynsys_bassgain.toInt()-100)/20)));
+
+    QString dynsyscoeffs;
+    for(int dynindex=0;dynindex<6;dynindex++){
+        dynsyscoeffs.append(conf->temp_dynsys_coeffs[dynindex]);
+        if(dynindex<5)dynsyscoeffs.append(";");
+    }
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".dynamicsystem.coeffs",dynsyscoeffs));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.adapt",conf->fetcompressor_adapt));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.attack",conf->fetcompressor_attack));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.crest",conf->fetcompressor_crest));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.gain",conf->fetcompressor_gain));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.knee",conf->fetcompressor_knee));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.kneemulti",conf->fetcompressor_kneemulti));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.maxattack",conf->fetcompressor_maxattack));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.maxrelease",conf->fetcompressor_maxrelease));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.ratio",conf->fetcompressor_ratio));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.release",conf->fetcompressor_release));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.threshold",conf->fetcompressor_threshold));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.freq",conf->fidelity_bass_freq));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.gain",conf->fidelity_bass_gain));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.mode",conf->fidelity_bass_mode));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.clarity.gain",conf->fidelity_clarity_gain));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.clarity.mode",conf->fidelity_clarity_mode));
+
+    QString eqbands;
+    for(int eqindex=0;eqindex<10;eqindex++){
+        eqbands.append(QString::number(conf->temp_eqbands[eqindex].toDouble() / 100));
+        if(eqindex<9)eqbands.append(";");
+    }
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fireq.custom",eqbands));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".limiter",conf->limiter));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".outvol",conf->outvol));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.volume",conf->playbackgain_volume));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.ratio",conf->playbackgain_ratio));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.maxscaler",conf->playbackgain_maxscaler));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.damp",conf->reverb_damp));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.dry",conf->reverb_dry));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.roomsize",conf->reverb_roomsize));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.roomwidth",conf->reverb_roomwidth));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.wet",conf->reverb_wet));
+
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".vhs.qual",conf->vhs_qual));
+    map.appendChild(generateXmlEntry(&doc,"string",prefix+".vse.value",QString::number(translate(conf->vse_value.toInt(),0.01f,0.1f,0.1f,1)/1000)));
+    qDebug() << conf->vse_value;
+
+    doc.appendChild(map);
+    return doc.toString().toUtf8().constData();
+}
+QDomElement converter::generateXmlEntry(QDomDocument* doc,QString type,QString name,QString value){
+    QDomElement obj = doc->createElement(type);
+    obj.setAttribute("name", name);
+    if(type == "boolean")obj.setAttribute("value", value);
+    else obj.appendChild( doc->createTextNode(value));
+    return obj;
+}
+QString converter::boolToQString(bool b){
+    if(b) return "true";
+    else return "false";
+}
+void converter::decodeLinuxKey(const string& key,string value,configmodel* conf){
+    //cout << key << " -> " << value << endl;
+    if(value==""||is_only_ascii_whitespace(value)){
+        cerr << "[WARNING] Key " + key + " is empty" << endl;
+        return;
+    }
+    switch (resolveConfig(key)) {
+    case tube_enable: {
+        conf->tube_enable = value=="true";
+        break;
+    }
+    case colm_enable: {
+        conf->colorfulmusic_enable = value=="true";
+        break;
+    }
+    case colm_widening: {
+        conf->temp_colm_widening = QString::fromStdString(value);
+        break;
+    }
+    case colm_depth: {
+        conf->temp_colm_depth = QString::fromStdString(value);
+        break;
+    }
+    case colm_midimage: {
+        qDebug() << QString::fromStdString(value);
+        conf->colorfulmusic_midimage = QString::fromStdString(value);
+        break;
+    }
+    case vc_enable: {
+        conf->fidelity_clarity_enable = value=="true";
+    }
+    case vc_mode: {
+        conf->fidelity_clarity_mode = QString::fromStdString(value);
+        break;
+    }
+    case vc_level: {
+        conf->fidelity_clarity_gain = QString::fromStdString(value);
+        break;
+    }
+    case vb_enable: {
+        conf->fidelity_bass_enable = value=="true";
+        break;
+    }
+    case vb_mode: {
+        conf->fidelity_bass_mode = QString::fromStdString(value);
+        break;
+    }
+    case vb_freq: {
+        conf->fidelity_bass_freq = QString::fromStdString(value);
+        break;
+    }
+    case vb_gain: {
+        conf->fidelity_bass_gain = QString::fromStdString(value);
+        break;
+    }
+    case vhe_enable: {
+        conf->vhs_enable = value=="true";
+        break;
+    }
+    case vhe_level: {
+        conf->vhs_qual = QString::fromStdString(value);
+        break;
+    }
+    case ds_enable: {
+        conf->diffsurr_enable = value=="true";
+        break;
+    }
+    case ds_level: {
+        conf->diffsurr_delay = QString::fromStdString(value);
+        break;
+    }
+    case reverb_enable: {
+        conf->reverb_enable = value=="true";
+        break;
+    }
+    case reverb_roomsize: {
+        conf->reverb_roomsize = QString::fromStdString(value);
+        break;
+    }
+    case reverb_width: {
+        conf->reverb_roomwidth = QString::fromStdString(value);
+        break;
+    }
+    case reverb_damp: {
+        conf->reverb_damp = QString::fromStdString(value);
+        break;
+    }
+    case reverb_wet: {
+        conf->reverb_wet = QString::fromStdString(value);
+        break;
+    }
+    case reverb_dry: {
+        conf->reverb_dry = QString::fromStdString(value);
+        break;
+    }
+    case agc_enable: {
+        conf->playbackgain_enable = value=="true";
+        break;
+    }
+    case agc_ratio: {
+        conf->playbackgain_ratio = QString::fromStdString(value);
+        break;
+    }
+    case agc_maxgain: {
+        conf->playbackgain_maxscaler = QString::fromStdString(value);
+        break;
+    }
+    case agc_volume: {
+        conf->playbackgain_volume = QString::fromStdString(value);
+        break;
+    }
+    case lim_threshold: {
+        conf->limiter = QString::fromStdString(value);
+        break;
+    }
+    case out_pan: {
+        conf->channelpan = QString::fromStdString(value);
+        break;
+    }
+    case out_volume: {
+        conf->outvol = QString::fromStdString(value);
+        break;
+    }
+    case eq_enable: {
+        conf->fireq_enable = value=="true";
+        break;
+    }
+    case eq_band1: {
+        conf->temp_eqbands[0] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band2: {
+        conf->temp_eqbands[1] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band3: {
+        conf->temp_eqbands[2] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band4: {
+        conf->temp_eqbands[3] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band5: {
+        conf->temp_eqbands[4] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band6: {
+        conf->temp_eqbands[5] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band7: {
+        conf->temp_eqbands[6] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band8: {
+        conf->temp_eqbands[7] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band9: {
+        conf->temp_eqbands[8] = QString::fromStdString(value);
+        break;
+    }
+    case eq_band10: {
+        conf->temp_eqbands[9] = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_enable: {
+        conf->fetcompressor_enable = value=="true";
+        break;
+    }
+    case fetcomp_autogain: {
+        conf->fetcompressor_autogain = value=="true";
+        break;
+    }
+    case fetcomp_autoknee: {
+        conf->fetcompressor_autoknee = value=="true";
+        break;
+    }
+    case fetcomp_autoattack: {
+        conf->fetcompressor_autoattack = value=="true";
+        break;
+    }
+    case fetcomp_autorelease: {
+        conf->fetcompressor_autorelease = value=="true";
+        break;
+    }
+    case fetcomp_noclip: {
+        conf->fetcompressor_noclipenable = value=="true";
+        break;
+    }
+    case fetcomp_threshold: {
+        conf->fetcompressor_threshold = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_gain: {
+        conf->fetcompressor_gain = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_kneewidth: {
+        conf->fetcompressor_knee = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_ratio: {
+        conf->fetcompressor_ratio = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_attack: {
+        conf->fetcompressor_attack = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_release: {
+        conf->fetcompressor_release = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_meta_adapt: {
+        conf->fetcompressor_adapt = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_meta_crest: {
+        conf->fetcompressor_crest = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_meta_maxattack: {
+        conf->fetcompressor_maxattack = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_meta_maxrelease: {
+        conf->fetcompressor_maxrelease = QString::fromStdString(value);
+        break;
+    }
+    case fetcomp_meta_kneemulti: {
+        conf->fetcompressor_kneemulti = QString::fromStdString(value);
+        break;
+    }
+    case cure_enable: {
+        conf->cure_enable = value=="true";
+        break;
+    }
+    case cure_level: {
+         conf->cure_crossfeed = QString::fromStdString(value);
+        break;
+    }
+    case ax_enable: {
+        conf->analogx_enable = value=="true";
+        break;
+    }
+    case ax_mode: {
+         conf->analogx_mode = QString::fromStdString(value);
+        break;
+    }
+    case vse_enable: {
+        conf->vse_enable = value=="true";
+        break;
+    }
+    case vse_ref_bark: {
+        //Fixed to 7600 in Viper4Android
+        break;
+    }
+    case vse_bark_cons: {
+         conf->vse_value = QString::fromStdString(value);
+        break;
+    }
+    case conv_enable: {
+        conf->found_irs = value=="true";
+        break;
+    }
+    case conv_cc_level: {
+        conf->convolver_crosschannel = QString::fromStdString(value);
+        break;
+    }
+    case conv_ir_path: {
+        //IRS have to be set manually
+        break;
+    }
+    case dynsys_enable: {
+        conf->dynsys_enable = value=="true";
+        break;
+    }
+    case dynsys_xcoeff1: {
+        conf->temp_dynsys_coeffs[0] = QString::fromStdString(value);
+        break;
+    }
+    case dynsys_xcoeff2: {
+        conf->temp_dynsys_coeffs[1] = QString::fromStdString(value);
+        break;
+    }
+    case dynsys_ycoeff1: {
+        conf->temp_dynsys_coeffs[2] = QString::fromStdString(value);
+        break;
+    }
+    case dynsys_ycoeff2: {
+        conf->temp_dynsys_coeffs[3] = QString::fromStdString(value);
+        break;
+    }
+    case dynsys_bassgain: {
+        conf->dynsys_bassgain = QString::fromStdString(value);
+        break;
+    }
+    case dynsys_sidegain1: {
+        conf->temp_dynsys_coeffs[4] = QString::fromStdString(value);
+        break;
+    }
+    case dynsys_sidegain2: {
+        conf->temp_dynsys_coeffs[5] = QString::fromStdString(value);
+        break;
+    }
+    case unknown: {
+        cout << "Config-List Enum: Unknown" << endl;
+        break;
+    }
+    }
+}
+bool converter::is_only_ascii_whitespace(const std::string& str){
+    auto it = str.begin();
+    do {
+        if (it == str.end()) return true;
+    } while (*it >= 0 && *it <= 0x7f && std::isspace(*(it++)));
+    return false;
+}
 string converter::intToString(int i){
     stringstream ss;
     ss << i;
     return ss.str();
+}
+float converter::translate(int value,float leftMin,float leftMax,float rightMin,float rightMax){
+    float leftSpan = leftMax - leftMin;
+    float rightSpan = rightMax - rightMin;
+    float valueScaled = float(value - leftMin) / float(leftSpan);
+    return rightMin + (valueScaled * rightSpan);
 }

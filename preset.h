@@ -24,6 +24,7 @@ private slots:
     void reloadRepo();
     void repoIndexChanged();
     void importAndroid();
+    void exportAndroid();
     void importLinux();
     void exportLinux();
     void download();

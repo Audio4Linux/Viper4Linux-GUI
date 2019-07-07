@@ -37,12 +37,14 @@ public:
     void UpdatePeakSource(string source);
     explicit MainWindow(QWidget *parent = nullptr);
     void setEQ(const int *data);
+    float translate(int value,int leftMin,int leftMax,float rightMin,float rightMax);
     ~MainWindow();
 public slots:
     void Reset();
     void Restart();
     void reloadConfig();
     void updatecolmpreset();
+    void ConfirmConf(bool restart=true);
 private slots:
     void DisableFX();
     void OpenPreset();
@@ -50,7 +52,6 @@ private slots:
     void PasteEQ();
     void OnUpdate();
     void OpenConv();
-    void ConfirmConf();
     void ResetEQ();
     void OpenSettings();
     void updatepreset();
@@ -77,7 +78,6 @@ private:
     void ConnectActions();
     void SetStyle();
     bool is_only_ascii_whitespace(const string&);
-    float translate(int value,int leftMin,int leftMax,float rightMin,float rightMax);
 };
 
 #endif // MAINWINDOW_H

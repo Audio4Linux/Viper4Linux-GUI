@@ -195,7 +195,7 @@ void MainWindow::enableConvBtn(bool on){
 void MainWindow::OnUpdate(){
     if(autofx && !lockapply)ConfirmConf();
 }
-void MainWindow::ConfirmConf(){
+void MainWindow::ConfirmConf(bool restart){
     string config = "fx_enable=";
     if(!ui->disableFX->isChecked())config += "true\n";
     else config += "false\n";
@@ -216,7 +216,7 @@ void MainWindow::ConfirmConf(){
         myfile.close();
     }
     else cerr << "Unable to open file";
-    Restart();
+    if(restart)Restart();
 }
 void MainWindow::Reset(){
     QMessageBox::StandardButton reply;

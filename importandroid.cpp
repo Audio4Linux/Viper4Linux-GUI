@@ -32,11 +32,10 @@ void importandroid::import(){
     if(filename=="")return;
     auto mode = converter::officialV4A;
     if(ui->comboBox->currentIndex()==1)mode = converter::teamDeWittV4A;
-    string response = converter::read(filename.toUtf8().constData(),mode);
+    string response = converter::toLinux(filename.toUtf8().constData(),mode);
     string::size_type loc = response.find( "Syntax error", 0 );
     if( loc == 0 ) {
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Syntax Error", QString::fromStdString(response),QMessageBox::Ok);
+        QMessageBox::warning(this, "Syntax Error", QString::fromStdString(response),QMessageBox::Ok);
         return;
     }
 

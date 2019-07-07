@@ -52,7 +52,7 @@ Preset::Preset(QWidget *parent) :
     ui->importBtn->setMenu(menu);
 
     QMenu *menuEx = new QMenu();
-    //menuEx->addAction("Android Profile", this,SLOT(importAndroid()));
+    menuEx->addAction("Android Profile", this,SLOT(exportAndroid()));
     menuEx->addAction("Linux Configuration", this,SLOT(exportLinux()));
     ui->exportBtn->setMenu(menuEx);
 
@@ -175,6 +175,7 @@ void Preset::add(){
         msg = QMessageBox::warning(this, "Error", "Preset Name is empty",QMessageBox::Ok);
         return;
     }
+    mainwin->ConfirmConf(false);
     QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
@@ -186,6 +187,45 @@ void Preset::importAndroid(){
     auto ia = new importandroid(this);
     ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
     ia->show();
+}
+void Preset::exportAndroid(){
+    if(ui->files->selectedItems().length() == 0){
+        QMessageBox::StandardButton msg;
+        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
+        return;
+    }
+
+    QString filename = QFileDialog::getSaveFileName(this,"Save XML","com.vipercn.viper4android_v2.headset.xml","*.xml");
+    if(filename=="")return;
+    QFileInfo fi(filename);
+    QString ext = fi.suffix();
+    if(ext!="xml")filename.append(".xml");
+
+   // QFileInfo fileInfo(filename);
+    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QString absolute=d.absolutePath();
+    QString path = pathAppend(absolute,"presets");
+    QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
+    QFile file (fullpath);
+    if(!QFile::exists(fullpath)){
+        QMessageBox::StandardButton msg;
+        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        UpdateList();
+        return;
+    }
+
+    const QString src = fullpath;
+    const QString dest = filename;
+    cout << converter::toAndroid(src.toUtf8().constData(),converter::officialV4A) << endl;
+
+    if (QFile::exists(dest))QFile::remove(dest);
+    QFile qFile(dest);
+    if (qFile.open(QIODevice::WriteOnly)) {
+      QTextStream out(&qFile); out << QString::fromStdString(converter::toAndroid(src.toUtf8().constData(),converter::officialV4A));
+      qFile.close();
+    }
+
+    cout << "Exporting to " << filename.toUtf8().constData() << endl;
 }
 void Preset::importLinux(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
