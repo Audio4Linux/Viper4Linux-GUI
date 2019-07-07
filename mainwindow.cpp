@@ -1020,7 +1020,7 @@ string MainWindow::getMain() {
     out += "colm_depth=";
     out += colmdepth + n;
     out += "colm_midimage=";
-    out += colmdepth + n;
+    out += colmmidimg + n;
 
     //CLARITY
     out += "vc_enable=";
