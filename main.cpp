@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     mainwin = &w;
     w.setFixedSize(w.geometry().width(),w.geometry().height());
+    w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
+
     w.show();
     QApplication::setQuitOnLastWindowClosed( true );
 

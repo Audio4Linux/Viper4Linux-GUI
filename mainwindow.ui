@@ -52,6 +52,9 @@
         <height>111</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Bass/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles bass of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Mode:&lt;/span&gt; Natural, Pure bass+ and Sub-woofer.&lt;br/&gt;Natural bass is alike V4A XHiFi’s Lo Contour. Purebass+ gives clean bass. Sub-woofer gives huge bass.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Frequency&lt;/span&gt;: Adjust bass frequency. Recommended at least 60Hz for both modes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Boost&lt;/span&gt;: Volume of ViPER Bass. Recommended at least 6dB for Natural, at least 8dB for Pure bass+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Bass</string>
       </property>
@@ -182,6 +185,9 @@
         <height>91</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Clarity/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles clarity of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Mode:&lt;/span&gt; Natural, OZone+ and XHiFi offers 3 different types of clarity.&lt;br/&gt;Natural has high vocal and treble. Ozone+ offers clean clarity. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Strength:&lt;/span&gt; Volume of ViPER Clarity. Recommended at least 3.5dB for Natural, at least 8dB for Ozone+, at least 2dB for XHiFi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Clarity</string>
       </property>
@@ -268,6 +274,9 @@
         <height>61</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Cure+/Auditory System Protection&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Protects auditory system.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Binaural Level: &lt;/span&gt;Strength of Binaural protection. Recommended Moderate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Viper Cure+</string>
       </property>
@@ -328,6 +337,9 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Tube Simulator (6N1J)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This option defines whether to enable tube simulator effect. Viper's tube simulator uses a simplified mathematical simulation of tube effect.&lt;/p&gt;&lt;p&gt;If turned on, will greatly reduce high-frequency odd harmonic distortions, while increases even-order harmonic distortions of tube simulator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string>Tube Simulator</string>
       </property>
@@ -345,6 +357,9 @@
         <width>491</width>
         <height>171</height>
        </rect>
+      </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Dynamic System&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It handles the dynamic range of the sound. In other words the bass, treble, and limiting.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets:&lt;/span&gt; This value defines the headset type connected to the audio jack. If you cannot get the right device for good bass tone, then select Common earphone. Common earphone is a common choice.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Gain:&lt;/span&gt; This value defines the average dynamic bass, the greater the stronger bass. Recommend 33%.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Dynamic System</string>
@@ -714,6 +729,9 @@
         <height>81</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Headphone Surround+&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Virtual Headphone Surround effect&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Level: &lt;/span&gt;Strength of VHS+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Headphone Engine</string>
       </property>
@@ -774,6 +792,9 @@
         <height>81</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Differential Surround&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Also known as Haas effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Delay Time: &lt;/span&gt;This value defines the delay(gap) between left and right. The greater the wider the sound&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Differential Surround</string>
       </property>
@@ -833,6 +854,9 @@
         <width>241</width>
         <height>171</height>
        </rect>
+      </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reverbation&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It uses mathematical methods to simulate the environmental feeling sensation. Example a song can be felt playing inside the auditorium, living room, bathroom, and so on.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Size: &lt;/span&gt;This value defines the virtual environment area size. The larger the value, the sound is wider and more echoes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Width:&lt;/span&gt; This value defines the width of the room above, in meters. Assumed that the above room size is 100 square meters, here to set a width of 14 meters, then the length of the room will be 7.14 m. Therefore, the room size and width defines the aspect ratio of the virtual environment. The larger the value, the sound coming from both sides will felt more obvious.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Damping Factor: &lt;/span&gt;This value defines the humidity of air in the above virtual environment, the moisture vapor in the air will easily absorb the echoes. So the bigger this value, the less echoes heard.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wet Signal:&lt;/span&gt; This value defines the volume of the simulated environment effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dry Signal: &lt;/span&gt;This value defines the volume of the original sound.&lt;/p&gt;&lt;p&gt;For environments with low air humidity such as living room, auditorium and other indoor environment, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​from 0 to 20, the reverb signal values ​​20 to 50, the proportion of the original signal to take value of about 50.&lt;br/&gt;For environments with high air humidity such as bathroom and other indoor environment that contains a lot of moisture, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​of 50 to 100, the reverb signal values ​​40 to 80, the proportion of the original signal value of about 50.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Reverb</string>
@@ -1051,6 +1075,9 @@
      </widget>
     </widget>
     <widget class="QWidget" name="eq">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;FIR Equalizer&lt;/span&gt;&lt;/p&gt;&lt;p&gt;511-order 10 bands FIR linear equalizer.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Preset:&lt;/span&gt; Here you can select default equalizer presets. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Equalizer Bands:&lt;/span&gt; You can manually adjust the levels of amplification and attenuation of the 10 bands.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <attribute name="title">
       <string>Equalizer</string>
      </attribute>
@@ -1739,6 +1766,9 @@
      <zorder>eqconfigbox</zorder>
     </widget>
     <widget class="QWidget" name="comp">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;FET Compressor (Field Effect Transistor)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Threshold:&lt;/span&gt; The threshold control sets the level at which the compression effect is engaged. Only when a level passes above the threshold will it be compressed. If the threshold level is set at say -10 dB, only signal peaks that extend above that level will be compressed. The rest of the time, no compression will be taking place.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Knee:&lt;/span&gt; The “knee” refers to how the compressor transitions between the non-compressed and compressed states of an audio signal running through it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Attack Time: &lt;/span&gt;This refers to the time it takes for the signal to become fully compressed after exceeding the threshold level. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Release Time: &lt;/span&gt;This is literally the opposite of attack time. More specifically, it is the time it takes for the signal to go from the compressed — or attenuated — state back to the original non-compressed signal. Release times will be considerably longer than attack times.&lt;br/&gt;Normal compressor operation will be to set the release time to be as short as possible without producing a &amp;quot;pumping&amp;quot; effect, which is caused by cyclic activation and deactivation of compression. For example, if the release time is set too short and the compressor is cycling between active and non-active, your dominant signal — usually the bass guitar and bass drum — will also modulate your noise floor, resulting in a distinct &amp;quot;breathing&amp;quot; effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Compression Ratio: &lt;/span&gt;Often misunderstood, compression ratio simply specifies the amount of attenuation to be applied to the signal.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Source: uaudio.de&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <attribute name="title">
       <string>Compressor</string>
      </attribute>
@@ -2201,6 +2231,9 @@
         <height>171</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Playback/Auto Gain Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gain Ratio: &lt;/span&gt;Gain Ratio is the speed of amplification or attenuation, the stronger the faster the speed and the higher the final volume, the weaker the slower the speed, the closer to the original volume. Recommended medium.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Gain: &lt;/span&gt;When the volume of the note is too small, in order to uplevel the sound, there may be very large magnification. The higher the value, the louder the volume. But too large will also amplify the noise within the song. Recommended 4 times.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Output: &lt;/span&gt;This value defines the maximum volume of the PlaybackAGC sound in decibel value, the greater the value the greater the volume, 0 db is the maximum. In order to make the sound softer recommended -1.9 dB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Auto Gain Control</string>
       </property>
@@ -2342,6 +2375,9 @@
         <width>241</width>
         <height>171</height>
        </rect>
+      </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Master Gate/Limiter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Volume:&lt;/span&gt; This value defines the main output volume. Its something like a volume control.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Channel Pan:&lt;/span&gt; Output gain ratio for left and right channel.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Limit Threshold:&lt;/span&gt; This value defines the limits of waveform amplitude by the limiter, 0 dB is the maximum value. The smaller the value, the easier to experience audio frequency compression (the smaller the volume), will lose sound details, but can effectively control the final output volume. Recommend 0 db.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Master Volume</string>
@@ -2489,6 +2525,9 @@
         <width>241</width>
         <height>117</height>
        </rect>
+      </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Field Surround/Colorful Music&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to create sound field surround effects. The sound field can be understood as mono field or stereo field.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets/Strength: &lt;/span&gt;This value defines the strength of the field surround effects. The stronger, the stereo effect will be more obvious, the sound will come from left and right sides.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Mid Image Strength:&lt;/span&gt; This value defines the central vocal intensity. More strongman sound more clear, the weaker the more ethereal sound.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Colorful Music</string>
@@ -2661,6 +2700,9 @@
         <height>71</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Spectrum Extension&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Makes your music sound lossless with enhanced high frequencies. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Spectrum Extend</string>
       </property>
@@ -2762,6 +2804,9 @@
         <height>91</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Convolver&lt;/span&gt;&lt;/p&gt;&lt;p&gt;When an impulse response (IR) sample is loaded, music will show the same characteristics of the loaded sample, for example equalizer, surround, reverberation, tube etc.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Impulse Response: &lt;/span&gt;Select and load IR samples.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cross Channel:&lt;/span&gt; Brings audio in front of you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Convolver</string>
       </property>
@@ -2846,6 +2891,9 @@
         <height>51</height>
        </rect>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;AnalogX&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It simulates the sound signature of pure class A amplifier, giving you richer and warmer sound.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="title">
        <string>Analog X</string>
       </property>
@@ -2908,6 +2956,9 @@
       <height>25</height>
      </rect>
     </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Apply&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Applies current configuration and reloads viper.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="text">
      <string>Apply</string>
     </property>
@@ -2924,6 +2975,9 @@
       <width>61</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reset&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Resets all properties to default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
      <string>Reset</string>
@@ -2954,6 +3008,9 @@
       <width>91</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Master Power&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This option defines whether to enable V4L sound effects, also known as main switch.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
      <string>Disable FX</string>

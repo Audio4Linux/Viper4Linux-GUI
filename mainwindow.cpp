@@ -33,6 +33,7 @@
 #include <cctype>
 #include <cmath>
 #include <QStyleFactory>
+#include <QWhatsThis>
 using namespace std;
 
 static string path;
@@ -68,6 +69,8 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction("Reload Viper", this,SLOT(Restart()));
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
+    menu->addAction("Context Help", this,[this](){QWhatsThis::enterWhatsThisMode();});
+
     ui->toolButton->setMenu(menu);
     QMenu *menuC = new QMenu();
     menuC->addAction("Slight", this,[this](){ ui->colmpreset->setText("Slight"); updatecolmpreset();});
