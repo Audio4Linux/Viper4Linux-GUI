@@ -95,6 +95,7 @@ sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/
 ## Screenshots
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab1.png?raw=true)
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3_dark.png?raw=true)
+![GIF](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/contexthelp.gif?raw=true)
 ## Credits
   * [Material Icons](https://material.io/tools/icons/)
   * [QSS Stylesheets - GTRONICK (modified by ThePBone)](https://github.com/GTRONICK/QSS)
