@@ -186,7 +186,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Clarity/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles clarity of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Mode:&lt;/span&gt; Natural, OZone+ and XHiFi offers 3 different types of clarity.&lt;br/&gt;Natural has high vocal and treble. Ozone+ offers clean clarity. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Strength:&lt;/span&gt; Volume of ViPER Clarity. Recommended at least 3.5dB for Natural, at least 8dB for Ozone+, at least 2dB for XHiFi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Clarity/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles clarity of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Mode:&lt;/span&gt; Natural, OZone+ and XHiFi offers 3 different types of clarity.&lt;br/&gt;Natural has high vocal and treble. OZone+ offers clean clarity. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Strength:&lt;/span&gt; Volume of ViPER Clarity. Recommended at least 3.5dB for Natural, at least 8dB for OZone+, at least 2dB for XHiFi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Clarity</string>
@@ -2826,7 +2826,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>IR Response</string>
+        <string>IR Sample</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="convpath">

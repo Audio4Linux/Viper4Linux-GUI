@@ -361,13 +361,13 @@ string converter::toLinux(string path,configtype cmode){
     else out += "false" + n;
     out += "agc_ratio=";
     QString agcgain(conf->playbackgain_ratio);
-    out += to_string((int)(agcgain.toInt() * 2.5)) + n;
+    out += to_string(agcgain.toInt()) + n;
     out += "agc_maxgain=";
     QString agc_mg(conf->playbackgain_maxscaler);
-    out += to_string((int)(agc_mg.toInt() * 0.8)) + n;
+    out += to_string(agc_mg.toInt()) + n;
     out += "agc_volume=";
     QString agc_vl(conf->playbackgain_volume);
-    out += to_string((int)(agc_vl.toInt() * 1.4)) + n;
+    out += to_string(agc_vl.toInt()) + n;
 
     //MASTER
     out += "lim_threshold=";
@@ -637,7 +637,9 @@ void converter::decodeLinuxKey(const string& key,string value,configmodel* conf)
         break;
     }
     case agc_ratio: {
-        conf->playbackgain_ratio = QString::fromStdString(value);
+        int v = atoi(value.c_str());
+        if(v>300)v=300;
+        conf->playbackgain_ratio = QString::number(v);
         break;
     }
     case agc_maxgain: {
@@ -645,7 +647,9 @@ void converter::decodeLinuxKey(const string& key,string value,configmodel* conf)
         break;
     }
     case agc_volume: {
-        conf->playbackgain_volume = QString::fromStdString(value);
+        int v = atoi(value.c_str());
+        if(v>100)v=100;
+        conf->playbackgain_volume = QString::number(v);
         break;
     }
     case lim_threshold: {

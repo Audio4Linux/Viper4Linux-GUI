@@ -1385,7 +1385,7 @@ void MainWindow::update(int d){
     //Diff-Surround
     else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
     //AGC
-    else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,10))+"x (" + QString::number(d) + ")");
+    else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,8))+"x (" + QString::number(d) + ")");
     //Bass
     else if(obj==ui->vbgain)ui->info->setText(QString::number(roundf(translate(d,0,600,0,17)*100)/100)+"dB (" + QString::number(d) + ")");
     //Clarity
