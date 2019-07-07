@@ -52,7 +52,11 @@ Preset::Preset(QWidget *parent) :
     ui->importBtn->setMenu(menu);
 
     QMenu *menuEx = new QMenu();
-    menuEx->addAction("Android Profile", this,SLOT(exportAndroid()));
+
+    QMenu *exportSubA = menuEx->addMenu(tr("Android Profile"));
+    exportSubA->addAction("Official V4A (<2.5.0.5)",this,[this]{exportAndroid(converter::officialV4A);});
+    exportSubA->addAction("V4A by Team DeWitt (>2.7)",this,[this]{exportAndroid(converter::teamDeWittV4A);});
+
     menuEx->addAction("Linux Configuration", this,SLOT(exportLinux()));
     ui->exportBtn->setMenu(menuEx);
 
@@ -188,14 +192,16 @@ void Preset::importAndroid(){
     ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
     ia->show();
 }
-void Preset::exportAndroid(){
+void Preset::exportAndroid(converter::configtype cmode){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
         return;
     }
-
-    QString filename = QFileDialog::getSaveFileName(this,"Save XML","com.vipercn.viper4android_v2.headset.xml","*.xml");
+    QString newname;
+    if(cmode==converter::officialV4A)newname = "com.vipercn.viper4android_v2.headset.xml";
+    else newname = "headset.xml";
+    QString filename = QFileDialog::getSaveFileName(this,"Save XML",newname,"*.xml");
     if(filename=="")return;
     QFileInfo fi(filename);
     QString ext = fi.suffix();
@@ -216,12 +222,11 @@ void Preset::exportAndroid(){
 
     const QString src = fullpath;
     const QString dest = filename;
-    cout << converter::toAndroid(src.toUtf8().constData(),converter::officialV4A) << endl;
 
     if (QFile::exists(dest))QFile::remove(dest);
     QFile qFile(dest);
     if (qFile.open(QIODevice::WriteOnly)) {
-      QTextStream out(&qFile); out << QString::fromStdString(converter::toAndroid(src.toUtf8().constData(),converter::officialV4A));
+      QTextStream out(&qFile); out << QString::fromStdString(converter::toAndroid(src.toUtf8().constData(),cmode));
       qFile.close();
     }
 

@@ -43,7 +43,7 @@ string converter::toLinux(string path,configtype cmode){
             QString key = att.attribute("name");
             if (key == "65584" || key == prefix + ".analogx.enable")conf->analogx_enable = att.attribute("value") == "true";
             else if (key == "65553" || key == prefix + ".colorfulmusic.enable")conf->colorfulmusic_enable = att.attribute("value") == "true";
-            else if (key == "65580" || key == prefix + ".cure.enable")conf->cure_enable = att.attribute("value") == "true";
+            else if (key == "65581" || key == prefix + ".cure.enable")conf->cure_enable = att.attribute("value") == "true";
             else if (key == "65557" || key == prefix + ".diffsurr.enable")conf->diffsurr_enable = att.attribute("value") == "true";
             else if (key == prefix + ".enable")conf->enable = att.attribute("value") == "true";
             else if (key == "65618" || key == prefix + ".fetcompressor.autoattack")conf->fetcompressor_autoattack = att.attribute("value") == "true";
@@ -441,95 +441,160 @@ string converter::toAndroid(string path,configtype cmode){
     QDomDocument doc;
     QDomElement map = doc.createElement("map");
 
-    //Bools...
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".enable","true"));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".analogx.enable",boolToQString(conf->analogx_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".colorfulmusic.enable",boolToQString(conf->colorfulmusic_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".cure.enable",boolToQString(conf->cure_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".diffsurr.enable",boolToQString(conf->diffsurr_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".dynamicsystem.enable",boolToQString(conf->dynsys_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.enable",boolToQString(conf->fetcompressor_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autoattack",boolToQString(conf->fetcompressor_autoattack)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autogain",boolToQString(conf->fetcompressor_autogain)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autoknee",boolToQString(conf->fetcompressor_autoknee)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autorelease",boolToQString(conf->fetcompressor_autorelease)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.noclipenable",boolToQString(conf->fetcompressor_noclipenable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fidelity.bass.enable",boolToQString(conf->fidelity_bass_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fidelity.clarity.enable",boolToQString(conf->fidelity_clarity_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fireq.enable",boolToQString(conf->fireq_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".playbackgain.enable",boolToQString(conf->playbackgain_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".reverb.enable",boolToQString(conf->reverb_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".tube.enable",boolToQString(conf->tube_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".vhs.enable",boolToQString(conf->vhs_enable)));
-    map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".vse.enable",boolToQString(conf->vse_enable)));
-
-    //Strings...
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".analogx.mode",conf->analogx_mode));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".channelpan",conf->channelpan));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".colorfulmusic.midimage",QString::number(conf->colorfulmusic_midimage.toInt()/4)));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".colorfulmusic.coeffs",conf->temp_colm_widening + ";" + conf->temp_colm_depth));
-
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".convolver.crosschannel",conf->convolver_crosschannel));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".cure.crossfeed",conf->cure_crossfeed));
-
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".diffsurr.delay",QString::number(conf->diffsurr_delay.toInt()*20)));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".dynamicsystem.bass",QString::number((conf->dynsys_bassgain.toInt()-100)/20)));
-
     QString dynsyscoeffs;
     for(int dynindex=0;dynindex<6;dynindex++){
         dynsyscoeffs.append(conf->temp_dynsys_coeffs[dynindex]);
         if(dynindex<5)dynsyscoeffs.append(";");
     }
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".dynamicsystem.coeffs",dynsyscoeffs));
-
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.adapt",conf->fetcompressor_adapt));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.attack",conf->fetcompressor_attack));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.crest",conf->fetcompressor_crest));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.gain",conf->fetcompressor_gain));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.knee",conf->fetcompressor_knee));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.kneemulti",conf->fetcompressor_kneemulti));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.maxattack",conf->fetcompressor_maxattack));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.maxrelease",conf->fetcompressor_maxrelease));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.ratio",conf->fetcompressor_ratio));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.release",conf->fetcompressor_release));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.threshold",conf->fetcompressor_threshold));
-
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.freq",conf->fidelity_bass_freq));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.gain",conf->fidelity_bass_gain));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.mode",conf->fidelity_bass_mode));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.clarity.gain",conf->fidelity_clarity_gain));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.clarity.mode",conf->fidelity_clarity_mode));
-
     QString eqbands;
     for(int eqindex=0;eqindex<10;eqindex++){
         eqbands.append(QString::number(conf->temp_eqbands[eqindex].toDouble() / 100));
         if(eqindex<9)eqbands.append(";");
     }
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".fireq.custom",eqbands));
 
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".limiter",conf->limiter));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".outvol",conf->outvol));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.volume",conf->playbackgain_volume));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.ratio",conf->playbackgain_ratio));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.maxscaler",conf->playbackgain_maxscaler));
+    if(cmode==officialV4A){
+        //Bools...
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".enable","true"));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".analogx.enable",boolToQString(conf->analogx_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".colorfulmusic.enable",boolToQString(conf->colorfulmusic_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".cure.enable",boolToQString(conf->cure_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".diffsurr.enable",boolToQString(conf->diffsurr_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".dynamicsystem.enable",boolToQString(conf->dynsys_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.enable",boolToQString(conf->fetcompressor_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autoattack",boolToQString(conf->fetcompressor_autoattack)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autogain",boolToQString(conf->fetcompressor_autogain)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autoknee",boolToQString(conf->fetcompressor_autoknee)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.autorelease",boolToQString(conf->fetcompressor_autorelease)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fetcompressor.noclipenable",boolToQString(conf->fetcompressor_noclipenable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fidelity.bass.enable",boolToQString(conf->fidelity_bass_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fidelity.clarity.enable",boolToQString(conf->fidelity_clarity_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".fireq.enable",boolToQString(conf->fireq_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".playbackgain.enable",boolToQString(conf->playbackgain_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".reverb.enable",boolToQString(conf->reverb_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".tube.enable",boolToQString(conf->tube_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".vhs.enable",boolToQString(conf->vhs_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".vse.enable",boolToQString(conf->vse_enable)));
 
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.damp",conf->reverb_damp));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.dry",conf->reverb_dry));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.roomsize",conf->reverb_roomsize));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.roomwidth",conf->reverb_roomwidth));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.wet",conf->reverb_wet));
+        //Strings...
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".analogx.mode",conf->analogx_mode));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".channelpan",conf->channelpan));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".colorfulmusic.midimage",QString::number(conf->colorfulmusic_midimage.toInt()/4)));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".colorfulmusic.coeffs",conf->temp_colm_widening + ";" + conf->temp_colm_depth));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".convolver.crosschannel",conf->convolver_crosschannel));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".cure.crossfeed",conf->cure_crossfeed));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".diffsurr.delay",QString::number(conf->diffsurr_delay.toInt()*20)));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".dynamicsystem.bass",QString::number((conf->dynsys_bassgain.toInt()-100)/20)));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".dynamicsystem.coeffs",dynsyscoeffs));
 
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".vhs.qual",conf->vhs_qual));
-    map.appendChild(generateXmlEntry(&doc,"string",prefix+".vse.value",QString::number(translate(conf->vse_value.toInt(),0.01f,0.1f,0.1f,1)/1000)));
-    qDebug() << conf->vse_value;
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.adapt",conf->fetcompressor_adapt));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.attack",conf->fetcompressor_attack));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.crest",conf->fetcompressor_crest));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.gain",conf->fetcompressor_gain));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.knee",conf->fetcompressor_knee));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.kneemulti",conf->fetcompressor_kneemulti));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.maxattack",conf->fetcompressor_maxattack));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.maxrelease",conf->fetcompressor_maxrelease));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.ratio",conf->fetcompressor_ratio));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.release",conf->fetcompressor_release));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fetcompressor.threshold",conf->fetcompressor_threshold));
 
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.freq",conf->fidelity_bass_freq));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.gain",conf->fidelity_bass_gain));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.bass.mode",conf->fidelity_bass_mode));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.clarity.gain",conf->fidelity_clarity_gain));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fidelity.clarity.mode",conf->fidelity_clarity_mode));
+
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".fireq.custom",eqbands));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".limiter",conf->limiter));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".outvol",conf->outvol));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.volume",conf->playbackgain_volume));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.ratio",conf->playbackgain_ratio));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".playbackgain.maxscaler",conf->playbackgain_maxscaler));
+
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.damp",conf->reverb_damp));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.dry",conf->reverb_dry));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.roomsize",conf->reverb_roomsize));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.roomwidth",conf->reverb_roomwidth));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".reverb.wet",conf->reverb_wet));
+
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".vhs.qual",conf->vhs_qual));
+        map.appendChild(generateXmlEntry(&doc,"string",prefix+".vse.value",QString::number(translate(conf->vse_value.toInt(),0.01f,0.1f,0.1f,1)/1000)));
+    }
+    else if(cmode==teamDeWittV4A){
+        //Bools...
+        map.appendChild(generateXmlEntry(&doc,"boolean","65584",boolToQString(conf->analogx_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65553",boolToQString(conf->colorfulmusic_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65581",boolToQString(conf->cure_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65557",boolToQString(conf->diffsurr_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65569",boolToQString(conf->dynsys_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65610",boolToQString(conf->fetcompressor_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65618",boolToQString(conf->fetcompressor_autoattack)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65616",boolToQString(conf->fetcompressor_autogain)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65614",boolToQString(conf->fetcompressor_autoknee)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65620",boolToQString(conf->fetcompressor_autorelease)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65626",boolToQString(conf->fetcompressor_noclipenable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65574",boolToQString(conf->fidelity_bass_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65578",boolToQString(conf->fidelity_clarity_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65551",boolToQString(conf->fireq_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65565",boolToQString(conf->playbackgain_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65559",boolToQString(conf->reverb_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65583",boolToQString(conf->tube_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65544",boolToQString(conf->vhs_enable)));
+        map.appendChild(generateXmlEntry(&doc,"boolean","65548",boolToQString(conf->vse_enable)));
+
+        //Strings...
+        map.appendChild(generateXmlEntry(&doc,"int","65585",conf->analogx_mode));
+        map.appendChild(generateXmlEntry(&doc,"int","65587",conf->channelpan));
+        map.appendChild(generateXmlEntry(&doc,"int","65555",QString::number(conf->colorfulmusic_midimage.toInt()/4)));
+        map.appendChild(generateXmlEntry(&doc,"int","65554;65556",conf->temp_colm_widening + ";" + conf->temp_colm_depth));
+        map.appendChild(generateXmlEntry(&doc,"int","65543",conf->convolver_crosschannel));
+        map.appendChild(generateXmlEntry(&doc,"int","65582",conf->cure_crossfeed));
+        map.appendChild(generateXmlEntry(&doc,"int","65558",QString::number(conf->diffsurr_delay.toInt()*20)));
+        map.appendChild(generateXmlEntry(&doc,"int","65573",QString::number((conf->dynsys_bassgain.toInt()-100)/20)));
+        map.appendChild(generateXmlEntry(&doc,"string","65570;65571;65572",dynsyscoeffs));
+
+        map.appendChild(generateXmlEntry(&doc,"int","65625",conf->fetcompressor_adapt));
+        map.appendChild(generateXmlEntry(&doc,"int","65617",conf->fetcompressor_attack));
+        map.appendChild(generateXmlEntry(&doc,"int","65624",conf->fetcompressor_crest));
+        map.appendChild(generateXmlEntry(&doc,"int","65615",conf->fetcompressor_gain));
+        map.appendChild(generateXmlEntry(&doc,"int","65613",conf->fetcompressor_knee));
+        map.appendChild(generateXmlEntry(&doc,"int","65621",conf->fetcompressor_kneemulti));
+        map.appendChild(generateXmlEntry(&doc,"int","65622",conf->fetcompressor_maxattack));
+        map.appendChild(generateXmlEntry(&doc,"int","65623",conf->fetcompressor_maxrelease));
+        map.appendChild(generateXmlEntry(&doc,"int","65612",conf->fetcompressor_ratio));
+        map.appendChild(generateXmlEntry(&doc,"int","65619",conf->fetcompressor_release));
+        map.appendChild(generateXmlEntry(&doc,"int","65611",conf->fetcompressor_threshold));
+
+        map.appendChild(generateXmlEntry(&doc,"int","65576",conf->fidelity_bass_freq));
+        map.appendChild(generateXmlEntry(&doc,"int","65677",conf->fidelity_bass_gain));
+        map.appendChild(generateXmlEntry(&doc,"string","65575",conf->fidelity_bass_mode));
+        map.appendChild(generateXmlEntry(&doc,"int","66580",conf->fidelity_clarity_gain));
+        map.appendChild(generateXmlEntry(&doc,"string","65579",conf->fidelity_clarity_mode));
+
+        map.appendChild(generateXmlEntry(&doc,"string","65552",eqbands));
+        map.appendChild(generateXmlEntry(&doc,"int","65588",conf->limiter));
+        map.appendChild(generateXmlEntry(&doc,"int","65586",conf->outvol));
+        map.appendChild(generateXmlEntry(&doc,"int","65566",conf->playbackgain_volume));
+        map.appendChild(generateXmlEntry(&doc,"int","65568",conf->playbackgain_ratio));
+        map.appendChild(generateXmlEntry(&doc,"int","65567",conf->playbackgain_maxscaler));
+        map.appendChild(generateXmlEntry(&doc,"int","65562",conf->reverb_damp));
+        map.appendChild(generateXmlEntry(&doc,"int","65564",conf->reverb_dry));
+        map.appendChild(generateXmlEntry(&doc,"int","65560",conf->reverb_roomsize));
+        map.appendChild(generateXmlEntry(&doc,"int","65561",conf->reverb_roomwidth));
+        map.appendChild(generateXmlEntry(&doc,"int","65563",conf->reverb_wet));
+        map.appendChild(generateXmlEntry(&doc,"int","65545",conf->vhs_qual));
+        map.appendChild(generateXmlEntry(&doc,"int","65549;65550",QString::number(translate(conf->vse_value.toInt(),0.01f,0.1f,0.1f,1)/1000)));
+    }
+    else{
+        return "Error: Unknown config type";
+    }
     doc.appendChild(map);
     return doc.toString().toUtf8().constData();
 }
 QDomElement converter::generateXmlEntry(QDomDocument* doc,QString type,QString name,QString value){
     QDomElement obj = doc->createElement(type);
     obj.setAttribute("name", name);
-    if(type == "boolean")obj.setAttribute("value", value);
+    if(type == "boolean"||type=="int")obj.setAttribute("value", value);
     else obj.appendChild( doc->createTextNode(value));
     return obj;
 }

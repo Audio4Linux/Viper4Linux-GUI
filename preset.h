@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QNetworkReply>
+#include "converter.h"
 namespace Ui {
 class Preset;
 }
@@ -24,7 +25,7 @@ private slots:
     void reloadRepo();
     void repoIndexChanged();
     void importAndroid();
-    void exportAndroid();
+    void exportAndroid(converter::configtype cmode);
     void importLinux();
     void exportLinux();
     void download();
