@@ -53,7 +53,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Bass/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles bass of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Mode:&lt;/span&gt; Natural, Pure bass+ and Sub-woofer.&lt;br/&gt;Natural bass is alike V4A XHiFi’s Lo Contour. Purebass+ gives clean bass. Sub-woofer gives huge bass.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Frequency&lt;/span&gt;: Adjust bass frequency. Recommended at least 60Hz for both modes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Boost&lt;/span&gt;: Volume of ViPER Bass. Recommended at least 6dB for Natural, at least 8dB for Pure bass+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Bass/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles bass of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Mode:&lt;/span&gt; Natural, Pure bass+ and Sub-woofer.&lt;br/&gt;Natural bass is like V4A XHiFi’s Lo Contour. Purebass+ gives clean bass. Sub-woofer gives huge bass.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Frequency&lt;/span&gt;: Adjust bass frequency. Recommended at least 60Hz for both modes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Boost&lt;/span&gt;: Volume of ViPER Bass. Recommended at least 6dB for Natural, at least 8dB for Pure bass+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Bass</string>
@@ -186,7 +186,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Clarity/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles clarity of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Mode:&lt;/span&gt; Natural, OZone+ and XHiFi offers 3 different types of clarity.&lt;br/&gt;Natural has high vocal and treble. OZone+ offers clean clarity. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Strength:&lt;/span&gt; Volume of ViPER Clarity. Recommended at least 3.5dB for Natural, at least 8dB for OZone+, at least 2dB for XHiFi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Clarity/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles the clarity of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Mode:&lt;/span&gt; Natural, OZone+ and XHiFi offers three different types of clarity.&lt;br/&gt;Natural has high vocal and treble. OZone+ offers clean clarity. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Strength:&lt;/span&gt; Volume of ViPER Clarity. Recommended at least 3.5dB for Natural, at least 8dB for OZone+, at least 2dB for XHiFi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Clarity</string>
@@ -338,7 +338,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Tube Simulator (6N1J)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This option defines whether to enable tube simulator effect. Viper's tube simulator uses a simplified mathematical simulation of tube effect.&lt;/p&gt;&lt;p&gt;If turned on, will greatly reduce high-frequency odd harmonic distortions, while increases even-order harmonic distortions of tube simulator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Tube Simulator (6N1J)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This option defines whether to enable the tube simulator effect. Viper's tube simulator uses a simplified mathematical simulation of tube effect.&lt;/p&gt;&lt;p&gt;If turned on, it will significantly reduce high-frequency odd harmonic distortions, while increases even-order harmonic distortions of tube simulator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
        <string>Tube Simulator</string>
@@ -359,7 +359,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Dynamic System&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It handles the dynamic range of the sound. In other words the bass, treble, and limiting.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets:&lt;/span&gt; This value defines the headset type connected to the audio jack. If you cannot get the right device for good bass tone, then select Common earphone. Common earphone is a common choice.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Gain:&lt;/span&gt; This value defines the average dynamic bass, the greater the stronger bass. Recommend 33%.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Dynamic System&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It handles the dynamic range of the sound. In other words, the bass, treble, and limiting.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets:&lt;/span&gt; This value defines the headset type connected to the audio jack. If you cannot get the right device for good bass tone, then select Common Earphone. Common Earphone is a common choice.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Gain:&lt;/span&gt; This value defines the average dynamic bass, the greater, the stronger bass. Recommended 33%.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Dynamic System</string>
@@ -793,7 +793,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Differential Surround&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Also known as Haas effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Delay Time: &lt;/span&gt;This value defines the delay(gap) between left and right. The greater the wider the sound&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Differential Surround&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Also known as Haas effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Delay Time: &lt;/span&gt;This value defines the delay(gap) between left and right. The greater, the wider the sound&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Differential Surround</string>
@@ -856,7 +856,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reverbation&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It uses mathematical methods to simulate the environmental feeling sensation. Example a song can be felt playing inside the auditorium, living room, bathroom, and so on.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Size: &lt;/span&gt;This value defines the virtual environment area size. The larger the value, the sound is wider and more echoes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Width:&lt;/span&gt; This value defines the width of the room above, in meters. Assumed that the above room size is 100 square meters, here to set a width of 14 meters, then the length of the room will be 7.14 m. Therefore, the room size and width defines the aspect ratio of the virtual environment. The larger the value, the sound coming from both sides will felt more obvious.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Damping Factor: &lt;/span&gt;This value defines the humidity of air in the above virtual environment, the moisture vapor in the air will easily absorb the echoes. So the bigger this value, the less echoes heard.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wet Signal:&lt;/span&gt; This value defines the volume of the simulated environment effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dry Signal: &lt;/span&gt;This value defines the volume of the original sound.&lt;/p&gt;&lt;p&gt;For environments with low air humidity such as living room, auditorium and other indoor environment, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​from 0 to 20, the reverb signal values ​​20 to 50, the proportion of the original signal to take value of about 50.&lt;br/&gt;For environments with high air humidity such as bathroom and other indoor environment that contains a lot of moisture, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​of 50 to 100, the reverb signal values ​​40 to 80, the proportion of the original signal value of about 50.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reverbation&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It uses mathematical methods to simulate the environmental feeling sensation. For example, a song can be felt playing inside the auditorium, living room, bathroom, and so on.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Size:&lt;/span&gt; This value defines the virtual environment area size. The larger the value, the sound is wider and more echoes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Width: &lt;/span&gt;This value defines the width of the room above, in meters. Assumed that the above room size is 100 square meters, here to set a width of 14 meters, then the length of the room will be 7.14 m. Therefore, the room size and width defines the aspect ratio of the virtual environment. The larger the value, the sound coming from both sides will felt more apparent.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Damping Factor:&lt;/span&gt; This value defines the humidity of air in the above virtual environment; the moisture vapor in the air will easily absorb the echoes. So the bigger this value, the fewer echoes heard.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wet Signal:&lt;/span&gt; This value defines the volume of the simulated environment effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dry Signal: &lt;/span&gt;This value defines the volume of the original sound.&lt;/p&gt;&lt;p&gt;For environments with low air humidity such as living room, auditorium, and other indoor environments, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​from 0 to 20, the reverb signal values ​​20 to 50, the proportion of the original signal to take value of about 50.&lt;br/&gt;For environments with high air humidity such as bathroom and other indoor environments that contains a lot of moisture, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​of 50 to 100, the reverb signal values ​​40 to 80, the proportion of the original signal value of about 50.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Reverb</string>
@@ -2232,7 +2232,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Playback/Auto Gain Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gain Ratio: &lt;/span&gt;Gain Ratio is the speed of amplification or attenuation, the stronger the faster the speed and the higher the final volume, the weaker the slower the speed, the closer to the original volume. Recommended medium.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Gain: &lt;/span&gt;When the volume of the note is too small, in order to uplevel the sound, there may be very large magnification. The higher the value, the louder the volume. But too large will also amplify the noise within the song. Recommended 4 times.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Output: &lt;/span&gt;This value defines the maximum volume of the PlaybackAGC sound in decibel value, the greater the value the greater the volume, 0 db is the maximum. In order to make the sound softer recommended -1.9 dB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Playback/Auto Gain Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gain Ratio: &lt;/span&gt;Gain Ratio is the speed of amplification or attenuation, the stronger, the faster the speed and the higher the final volume, the weaker, the slower the speed, the closer to the original volume. Recommended medium.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Gain: &lt;/span&gt;When the volume of the note is too small, to uplevel the sound, there may be very large magnification. The higher the value, the louder the volume. But too large will also amplify the noise within the song. Recommended 4 times.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Output: &lt;/span&gt;This value defines the maximum volume of the PlaybackAGC sound in decibel value, the greater the value the greater the volume, 0 dB is the maximum. In order to make the sound softer recommended -1.9 dB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Auto Gain Control</string>
@@ -2377,7 +2377,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Master Gate/Limiter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Volume:&lt;/span&gt; This value defines the main output volume. Its something like a volume control.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Channel Pan:&lt;/span&gt; Output gain ratio for left and right channel.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Limit Threshold:&lt;/span&gt; This value defines the limits of waveform amplitude by the limiter, 0 dB is the maximum value. The smaller the value, the easier to experience audio frequency compression (the smaller the volume), will lose sound details, but can effectively control the final output volume. Recommend 0 db.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Master Gate/Limiter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Volume:&lt;/span&gt; This value defines the main output volume. Its something like a volume control.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Channel Pan:&lt;/span&gt; Output gain ratio for left and right channel.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Limit Threshold:&lt;/span&gt; This value defines the limits of waveform amplitude by the limiter, 0 dB is the maximum value. The smaller the value, the easier to experience audio frequency compression (the smaller the volume), will lose sound details, but can effectively control the final output volume. Recommended 0 dB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Master Volume</string>
@@ -2527,7 +2527,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Field Surround/Colorful Music&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to create sound field surround effects. The sound field can be understood as mono field or stereo field.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets/Strength: &lt;/span&gt;This value defines the strength of the field surround effects. The stronger, the stereo effect will be more obvious, the sound will come from left and right sides.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Mid Image Strength:&lt;/span&gt; This value defines the central vocal intensity. More strongman sound more clear, the weaker the more ethereal sound.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Field Surround/Colorful Music&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to create sound field surround effects. The sound field can be understood as a mono field or stereo field.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets/Strength: &lt;/span&gt;This value defines the strength of the field surround effects. The stronger, the stereo effect will be more obvious, the sound will come from left and right sides.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Mid Image Strength:&lt;/span&gt; This value defines the central vocal intensity. More strongman sound more clear, the weaker, the more ethereal sound.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Colorful Music</string>
@@ -2805,7 +2805,7 @@
        </rect>
       </property>
       <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Convolver&lt;/span&gt;&lt;/p&gt;&lt;p&gt;When an impulse response (IR) sample is loaded, music will show the same characteristics of the loaded sample, for example equalizer, surround, reverberation, tube etc.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Impulse Response: &lt;/span&gt;Select and load IR samples.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cross Channel:&lt;/span&gt; Brings audio in front of you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Convolver&lt;/span&gt;&lt;/p&gt;&lt;p&gt;When an impulse response (IR) sample is loaded, music will show the same characteristics of the loaded sample, for example, equalizer, surround, reverberation, tube, etc.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Impulse Response: &lt;/span&gt;Select and load IR samples.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cross Channel:&lt;/span&gt; Brings audio in front of you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="title">
        <string>Convolver</string>
@@ -3034,6 +3034,9 @@
     <property name="toolTip">
      <string>Custom Presets</string>
     </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Custom Presets&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Manage custom presets and download configs by other users&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -3063,6 +3066,9 @@
     <property name="statusTip">
      <string/>
     </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Settings&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Configure this User Interface&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -3079,6 +3085,9 @@
       <width>31</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Other&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Load and save the currently active config, reload viper and enable context help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
      <string>...</string>
