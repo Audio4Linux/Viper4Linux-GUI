@@ -29,6 +29,7 @@ SOURCES += \
     importandroid.cpp \
         main.cpp \
         mainwindow.cpp \
+    palette.cpp \
     settings.cpp \
     convolver.cpp \
     preset.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     importandroid.h \
         mainwindow.h \
     configlist.h \
+    palette.h \
     settings.h \
     convolver.h \
     main.h \
@@ -48,6 +50,7 @@ HEADERS += \
 FORMS += \
     importandroid.ui \
         mainwindow.ui \
+    palette.ui \
     settings.ui \
     convolver.ui \
     preset.ui \

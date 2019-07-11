@@ -17,21 +17,28 @@ public:
     Ui::MainWindow *ui;
     string getPath();
     string getStylesheet();
-    string getQStyle();
+    string getCustompalette();
+    void setWhiteIcons(bool b);
+    bool getWhiteIcons();
+    void setCustompalette(string s);
+    void setColorpalette(string);
+    void switchPalette(const QPalette& palette);
     void LoadPresetFile(QString);
     void SavePresetFile(QString);
     void enableSetBtn(bool on);
     void enableConvBtn(bool on);
     void enablePresetBtn(bool on);
+    string getColorpalette();
     bool getAutoFx();
     void setAutoFx(bool autofx);
+    int getThememode();
+    void setThememode(int mode);
     bool getMuteOnRestart();
     bool getGFix();
     void setGFix(bool);
     void setMuteOnRestart(bool on);
     void setPath(string npath);
     void setStylesheet(string);
-    void setQStyle(string);
     void setIRS(const string& irs,bool apply=true);
     void loadAppConfig(bool once = false);
     void UpdatePeakSource(string source);
@@ -61,12 +68,15 @@ private slots:
     void SaveExternalFile();
 
 private:
+    void loadIcons(bool);
+    void setPalette(QColor base,QColor background,QColor foreground,QColor,QColor);
+    int loadColor(int index,int rgb_index);
     void updateeq(int);
     void setColm(const int* data);
     void setDynsys(const int* data);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void SaveAppConfig(bool, const string&,bool,bool,const string&,const string&);
+    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool);
     string getMain();
     string getBass();
     string getSurround();

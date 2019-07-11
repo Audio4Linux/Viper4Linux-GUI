@@ -15,25 +15,30 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QStyleFactory>
+#include "palette.h"
 
 using namespace std;
-static bool blockqstyle = false;
+static bool lockslot = false;
 settings::settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settings){
     ui->setupUi(this);
 
+    lockslot = true;
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
-    connect(ui->qStyleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeQStyle(const QString&)));
-
+    connect(ui->paletteSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changePalette(const QString&)));
+connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
     strcpy(result,homedir);
     strcat(result,"/.config/viper4linux/audio.conf");
+
     string path = mainwin->getPath();
     string style_sheet = mainwin->getStylesheet();
-    string theme = mainwin->getQStyle();
+    int thememode = mainwin->getThememode();
+    string palette = mainwin->getColorpalette();
+
     if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
     ui->autofx->setChecked(mainwin->getAutoFx());
@@ -42,7 +47,8 @@ settings::settings(QWidget *parent) :
     connect(ui->save, SIGNAL(clicked()), this, SLOT(submit()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
     connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
-
+    connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
+    connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
 
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
@@ -56,32 +62,34 @@ settings::settings(QWidget *parent) :
     ui->styleSelect->addItem("Visual Studio Dark","vsdark");
     ui->styleSelect->addItem("Visual Studio Light","vslight");
 
-    blockqstyle = true;
+    ui->paletteSelect->addItem("Default","default");
+    ui->paletteSelect->addItem("Dark","dark");
+    ui->paletteSelect->addItem("Blue","blue");
+    ui->paletteSelect->addItem("Purple","purple");
+    ui->paletteSelect->addItem("Gray","gray");
+    ui->paletteSelect->addItem("White","white");
+    ui->paletteSelect->addItem("Custom","custom");
+
     QVariant qvS(QString::fromStdString(style_sheet));
     int index = ui->styleSelect->findData(qvS);
     if ( index != -1 ) {
        ui->styleSelect->setCurrentIndex(index);
     }
 
-    ui->qStyleSelect->addItem("Default");
-    for(int i=0;i<QStyleFactory::keys().count();i++){
-        ui->qStyleSelect->addItem(QStyleFactory::keys()[i]);
+    QVariant qvS2(QString::fromStdString(palette));
+    int index2 = ui->paletteSelect->findData(qvS2);
+    if ( index2 != -1 ) {
+       ui->paletteSelect->setCurrentIndex(index2);
     }
 
-    int indexQ = ui->qStyleSelect->findText(QString::fromStdString(theme));
-    if ( indexQ != -1 ) {
-       ui->qStyleSelect->setCurrentIndex(indexQ);
-    }else{
-       int indexQ2 = ui->qStyleSelect->findText("Default");
-       if ( indexQ2 != -1 ) {
-            ui->qStyleSelect->setCurrentIndex(indexQ2);
-       }else{
-           ui->qStyleSelect->setCurrentText("...");
-       }
-    }
+    ui->styleSelect->setEnabled(!thememode);
+    ui->paletteConfig->setEnabled(thememode && palette=="custom");
+    ui->paletteSelect->setEnabled(thememode);
 
-    ui->styleSelect->setEnabled(theme!="Windows");
-    blockqstyle = false;
+    ui->uimode_css->setChecked(!thememode);//If 0 set true, else false
+    ui->uimode_pal->setChecked(thememode);//If 0 set false, else true
+
+    lockslot = false;
 }
 settings::~settings(){
     delete ui;
@@ -93,16 +101,30 @@ void settings::submit(){
     mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
     this->close();
 }
-void settings::changeQStyle(const QString& style){
-    if(!blockqstyle){
-        if(style=="Default")mainwin->setQStyle("");
-        else mainwin->setQStyle(style.toUtf8().constData());
-    }
-    ui->styleSelect->setEnabled(style!="Windows");
+void settings::changeThemeMode(){
+    if(lockslot)return;
+
+    int mode = 0;
+    if(ui->uimode_css->isChecked())mode=0;
+    else if(ui->uimode_pal->isChecked())mode=1;
+
+    ui->styleSelect->setEnabled(!mode);
+    ui->paletteSelect->setEnabled(mode);
+    ui->paletteConfig->setEnabled(mode && mainwin->getColorpalette()=="custom");
+    mainwin->setThememode(mode);
+}
+void settings::changePalette(const QString&){
+    if(lockslot)return;
+    mainwin->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString().toUtf8().constData());
+    ui->paletteConfig->setEnabled(mainwin->getColorpalette()=="custom");
+}
+void settings::openPalConfig(){
+    auto c = new class palette(this);
+    c->setFixedSize(c->geometry().width(),c->geometry().height());
+    c->show();
 }
 void settings::changeStyle(const QString& style){
-    //Disable stylesheets with windows theme
-    if(mainwin->getQStyle()!="Windows")mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
+    mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
 }
 void settings::github(){
     QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI"));

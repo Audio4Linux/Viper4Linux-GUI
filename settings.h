@@ -12,12 +12,14 @@ public:
     Ui::settings *ui;
     ~settings();
 private slots:
+        void openPalConfig();
         void submit();
         void reject();
         void github();
         void glava_help();
         void changeStyle(const QString&);
-        void changeQStyle(const QString&);
+        void changeThemeMode();
+        void changePalette(const QString&);
 };
 
 #endif // SETTINGS_H

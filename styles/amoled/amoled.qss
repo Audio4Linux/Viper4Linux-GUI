@@ -5,6 +5,7 @@ Company: GTRONICK
 Last updated: 22/01/2019, 12:33.
 Available at: https://github.com/GTRONICK/QSS/blob/master/AMOLED.qss
 */
+QPushButton::disabled { color: #999999;}QComboBox::disabled { color: #999999;}
 QMainWindow {
 	background-color:#000000;
 }

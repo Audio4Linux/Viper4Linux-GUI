@@ -5,7 +5,7 @@ QMainWindow {
   color:#2d2d30;
   background-color:#f1f1f1;
 }
-
+QPushButton::disabled { color: #BBBBBB;}QComboBox::disabled { color: #BBBBBB;}
 
 QMenuBar {
 

@@ -89,7 +89,10 @@ enum AppConfig {
     mutedRestart,
     glavafix,
     stylesheet,
-    theme,
+    thememode,
+    colorpalette,
+    custompalette,
+    customwhiteicons,
     unknownApp
 };
 inline Config resolveConfig(std::string input) {
@@ -177,7 +180,10 @@ inline AppConfig resolveAppConfig(std::string input) {
     if( input == "glavafix" ) return glavafix;
     if( input == "muteOnRestart" ) return mutedRestart;
     if( input == "stylesheet" ) return stylesheet;
-    if( input == "theme" ) return theme;
+    if( input == "thememode" ) return thememode;
+    if( input == "colorpalette" ) return colorpalette;
+    if( input == "customwhiteicons" ) return customwhiteicons;
+    if( input == "custompalette" ) return custompalette;
    return unknownApp;
 }
 

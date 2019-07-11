@@ -39,7 +39,10 @@ using namespace std;
 static string path;
 static string appcpath;
 static string style_sheet;
-static string qstyle;
+static string color_palette;
+static string custom_palette;
+static int theme_mode;
+static bool custom_whiteicons;
 static bool autofx;
 static bool muteOnRestart;
 static bool glava_fix;
@@ -94,7 +97,8 @@ MainWindow::~MainWindow()
 
 //---Style
 void MainWindow::SetStyle(){
-    if(qstyle!="Windows"){
+    if(theme_mode==0){
+        app->setPalette(this->style()->standardPalette());
         QString stylepath = "";
         if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
         else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
@@ -138,26 +142,132 @@ void MainWindow::SetStyle(){
             }
         }
     }else{
-        QFile f(":/default.qss");
-        if (!f.exists())printf("Unable to set stylesheet, file not found\n");
-        else
-        {
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream ts(&f);
-            qApp->setStyleSheet(ts.readAll());
-            QPixmap pix(":/icons/settings.svg");
-            QIcon icon(pix);
-            QPixmap pix2(":/icons/queue.svg");
-            QIcon icon2(pix2);
-            QPixmap pix3(":/icons/menusvg");
-            QIcon icon3(pix3);
-            ui->set->setIcon(icon);
-            ui->cpreset->setIcon(icon2);
-            ui->toolButton->setIcon(icon3);
+        loadIcons(false);
+        if(color_palette=="dark"){
+            QColor background = QColor(53,53,53);
+            QColor foreground = Qt::white;
+            QColor base = QColor(25,25,25);
+            QColor selection = QColor(42, 130, 218);
+            setPalette(base,background,foreground,selection,Qt::black);
+        }else if(color_palette=="purple"){
+            loadIcons(true);
+            QColor background = QColor(26, 0, 25);
+            QColor foreground = Qt::white;
+            QColor base = QColor(23, 0, 19);
+            QColor selection = QColor(42, 130, 218);
+            setPalette(base,background,foreground,selection,Qt::black);
+         }else if(color_palette=="gray"){
+            loadIcons(true);
+            QColor background = QColor(49,49,74);
+            QColor foreground = Qt::white;
+            QColor base = QColor(83,83,125);
+            QColor selection = QColor(85,85,127);
+            setPalette(base,background,foreground,selection,Qt::black);
+         }else if(color_palette=="white"){
+            QColor background = Qt::white;
+            QColor foreground = Qt::black;
+            QColor base = Qt::white;
+            QColor selection = QColor(56,161,227);
+            setPalette(base,background,foreground,selection,Qt::black);
+         }
+        else if(color_palette=="blue"){
+            loadIcons(true);
+            QColor background = QColor(0,0,50);
+            QColor foreground = Qt::white;
+            QColor base = QColor(0,0,38);
+            QColor selection = QColor(85,0,255);
+            setPalette(base,background,foreground,selection,Qt::black);
+        }
+        else if(color_palette=="custom"){
+            QColor base = QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2));
+            QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));
+            QColor foreground = QColor(loadColor(2,0),loadColor(2,1),loadColor(2,2));
+            QColor selection = QColor(loadColor(3,0),loadColor(3,1),loadColor(3,2));
+            QColor selectiontext = QColor(255-loadColor(3,0),255-loadColor(3,1),255-loadColor(3,2));
+
+            setPalette(base,background,foreground,selection,selectiontext);
+            loadIcons(getWhiteIcons());
+        }
+        else{
+            app->setPalette(this->style()->standardPalette());
+            QFile f(":/default.qss");
+            if (!f.exists())printf("Unable to set stylesheet, file not found\n");
+            else
+            {
+                f.open(QFile::ReadOnly | QFile::Text);
+                QTextStream ts(&f);
+                qApp->setStyleSheet(ts.readAll());
+            }
+        }
+
     }
+}
+void MainWindow::setPalette(QColor base,QColor background,QColor foreground,QColor selection = QColor(42,130,218),QColor selectiontext = Qt::black){
+    QPalette *palette = new QPalette();
+    palette->setColor(QPalette::Window, background);
+    palette->setColor(QPalette::WindowText, foreground);
+    palette->setColor(QPalette::Base, base);
+    palette->setColor(QPalette::AlternateBase, background);
+    palette->setColor(QPalette::ToolTipBase, background);
+    palette->setColor(QPalette::ToolTipText, foreground);
+    palette->setColor(QPalette::Text, foreground);
+    palette->setColor(QPalette::Button, background);
+    palette->setColor(QPalette::ButtonText, foreground);
+    palette->setColor(QPalette::BrightText, Qt::red);
+    palette->setColor(QPalette::Link, QColor(42, 130, 218));
+    palette->setColor(QPalette::Highlight, selection);
+    palette->setColor(QPalette::HighlightedText, selectiontext);
+    app->setPalette(*palette);
+    app->setStyleSheet("QFrame[frameShape=\"4\"], QFrame[frameShape=\"5\"]{ color: gray; }*::disabled { color: #555555;}QToolButton::disabled { color: #555555;}QComboBox::disabled { color: #555555;}");
+}
+void MainWindow::loadIcons(bool white){
+    if(white){
+        QPixmap pix(":/icons/settings-white.svg");
+        QIcon icon(pix);
+        QPixmap pix2(":/icons/queue-white.svg");
+        QIcon icon2(pix2);
+        QPixmap pix3(":/icons/menu-white.svg");
+        QIcon icon3(pix3);
+        ui->set->setIcon(icon);
+        ui->cpreset->setIcon(icon2);
+        ui->toolButton->setIcon(icon3);
+    }else{
+        QPixmap pix(":/icons/settings.svg");
+        QIcon icon(pix);
+        QPixmap pix2(":/icons/queue.svg");
+        QIcon icon2(pix2);
+        QPixmap pix3(":/icons/menu.svg");
+        QIcon icon3(pix3);
+        ui->set->setIcon(icon);
+        ui->cpreset->setIcon(icon2);
+        ui->toolButton->setIcon(icon3);
     }
-    if(QStyleFactory::keys().contains(QString::fromStdString(qstyle)))app->setStyle(QString::fromStdString(qstyle));
-    else app->setStyle("Fusion");
+}
+int MainWindow::loadColor(int index,int rgb_index){
+    QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
+    if(elements.length()<4||elements[index].split(',').size()<3){
+        if(index==0)return 25;
+        else if(index==1)return 53;
+        else if(index==2)return 255;
+        else if(index==3){
+            if(rgb_index==0)return 42;
+            else if(rgb_index==1)return 130;
+            else if(rgb_index==2)return 218;
+        }
+    }
+    QStringList rgb = elements[index].split(',');
+    return rgb[rgb_index].toInt();
+}
+void MainWindow::switchPalette(const QPalette& palette)
+{
+    app->setPalette(palette);
+
+    QList<QWidget*> widgets = this->findChildren<QWidget*>();
+
+    foreach (QWidget* w, widgets)
+    {
+        w->setPalette(palette);
+    }
 }
 
 //---Dialogs
@@ -312,12 +422,24 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         glava_fix = value=="true";
         break;
     }
+    case customwhiteicons: {
+        custom_whiteicons = value=="true";
+        break;
+    }
     case stylesheet: {
         style_sheet = value;
         break;
     }
-    case theme: {
-        qstyle = value;
+    case thememode: {
+        theme_mode = atoi(value.c_str());
+        break;
+    }
+    case colorpalette: {
+        color_palette = value.c_str();
+        break;
+    }
+    case custompalette: {
+        custom_palette = value.c_str();
         break;
     }
     case mutedRestart: {
@@ -333,7 +455,7 @@ void MainWindow::loadAppConfig(bool once){
     {
         std::string line;
         while(getline(cFile, line)){
-             if(line[0] == '#' || line.empty() || line.empty()) continue;
+            if(line[0] == '#' || line.empty() || line.empty()) continue;
             auto delimiterPos = line.find('=');
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
@@ -351,7 +473,7 @@ void MainWindow::loadAppConfig(bool once){
 }
 
 //---UI Config Generator
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,const string &_theme = qstyle){
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -367,7 +489,13 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     appconfig += "glavafix=" + converter3.str() + "\n";
 
     appconfig += "stylesheet=" + ssheet + "\n";
-    appconfig += "theme=" + _theme + "\n";
+    appconfig += "thememode=" + to_string(tmode) + "\n";
+
+    appconfig += "colorpalette=" + cpalette + "\n";
+    stringstream converter4;
+    converter4 << boolalpha << w_ico;
+    appconfig += "customwhiteicons=" + converter4.str() + "\n";
+    appconfig += "custompalette=" + custompal + "\n";
 
     ofstream myfile(appcpath);
     if (myfile.is_open())
@@ -1414,7 +1542,7 @@ void MainWindow::update(int d){
         else if(obj==ui->barkcon)pre = "Level ";
         else if(obj==ui->barkfreq)post = "Hz";
         //Convolver
-        else if(obj==ui->convcc)post = "%";        
+        else if(obj==ui->convcc)post = "%";
         //Compressor
         else if(obj==ui->comp_ratio)post = "%";
         else if(obj==ui->compgain)post = "%";
@@ -1495,14 +1623,42 @@ void MainWindow::setStylesheet(string s){
 string MainWindow::getStylesheet(){
     return style_sheet;
 }
-void MainWindow::setQStyle(string s){
-    qstyle = std::move(s);
+int MainWindow::getThememode(){
+    return theme_mode;
+}
+void MainWindow::setThememode(int mode){
+    //Modes:
+    //  0 - Default/QSS
+    //  1 - Color Palette
+    theme_mode = mode;
     SetStyle();
     SaveAppConfig();
 }
-string MainWindow::getQStyle(){
-    return qstyle;
+void MainWindow::setColorpalette(string s){
+    color_palette = std::move(s);
+    SetStyle();
+    SaveAppConfig();
 }
+string MainWindow::getColorpalette(){
+    return color_palette;
+}
+void MainWindow::setCustompalette(string s){
+    custom_palette = std::move(s);
+    SetStyle();
+    SaveAppConfig();
+}
+string MainWindow::getCustompalette(){
+    return custom_palette;
+}
+void MainWindow::setWhiteIcons(bool b){
+    custom_whiteicons = b;
+    SetStyle();
+    SaveAppConfig();
+}
+bool MainWindow::getWhiteIcons(){
+    return custom_whiteicons;
+}
+
 //---Connect UI-Signals
 void MainWindow::ConnectActions(){
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ConfirmConf()));

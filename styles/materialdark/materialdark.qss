@@ -6,6 +6,7 @@ Company: GTRONICK
 Last updated: 04/12/2018, 15:00.
 Available at: https://github.com/GTRONICK/QSS/blob/master/MaterialDark.qss
 */
+QComboBox::disabled { color: #999999;}
 QMainWindow {
 	background-color:#1e1d23;
 }
