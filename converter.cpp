@@ -452,6 +452,11 @@ string converter::toAndroid(string path,configtype cmode){
         if(eqindex<9)eqbands.append(";");
     }
 
+    if(conf->temp_colm_widening.toInt()>200)conf->temp_colm_widening="200";
+    if(conf->fidelity_bass_gain.toInt()>600)conf->fidelity_bass_gain="600";
+    if(conf->fidelity_clarity_gain.toInt()>450)conf->fidelity_clarity_gain="450";
+    if(conf->colorfulmusic_coeffs.toInt()>200)conf->fidelity_clarity_gain="200";
+
     if(cmode==officialV4A){
         //Bools...
         map.appendChild(generateXmlEntry(&doc,"boolean",prefix+".enable","true"));
@@ -567,6 +572,7 @@ string converter::toAndroid(string path,configtype cmode){
 
         map.appendChild(generateXmlEntry(&doc,"int","65576",conf->fidelity_bass_freq));
         map.appendChild(generateXmlEntry(&doc,"int","65677",conf->fidelity_bass_gain));
+
         map.appendChild(generateXmlEntry(&doc,"string","65575",conf->fidelity_bass_mode));
         map.appendChild(generateXmlEntry(&doc,"int","66580",conf->fidelity_clarity_gain));
         map.appendChild(generateXmlEntry(&doc,"string","65579",conf->fidelity_clarity_mode));
