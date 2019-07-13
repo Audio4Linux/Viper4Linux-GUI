@@ -28,6 +28,7 @@ CONFIG += c++11
 SOURCES += \
     converter.cpp \
     importandroid.cpp \
+    log.cpp \
         main.cpp \
         mainwindow.cpp \
     palette.cpp \
@@ -39,6 +40,7 @@ SOURCES += \
 HEADERS += \
     converter.h \
     importandroid.h \
+    log.h \
         mainwindow.h \
     configlist.h \
     palette.h \
@@ -50,6 +52,7 @@ HEADERS += \
 
 FORMS += \
     importandroid.ui \
+    log.ui \
         mainwindow.ui \
     palette.ui \
     settings.ui \

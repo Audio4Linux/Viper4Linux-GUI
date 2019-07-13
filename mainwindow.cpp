@@ -34,6 +34,7 @@
 #include <cmath>
 #include <QStyleFactory>
 #include <QWhatsThis>
+#include "log.h"
 using namespace std;
 
 static string path;
@@ -48,12 +49,27 @@ static bool muteOnRestart;
 static bool glava_fix;
 static bool settingsdlg_enabled=true;
 static bool presetdlg_enabled=true;
+static bool logdlg_enabled=true;
 static bool lockapply = false;
+static QProcess* process;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    process = new QProcess(this);
+    connect (process, SIGNAL(readyReadStandardOutput()), this, SLOT(processProcOutput()));
+    connect (process, SIGNAL(readyReadStandardError()), this, SLOT(processProcOutput()));
+
+    //Clear log
+    QFile file ("/tmp/viper4linux/ui.log");
+    if(file.exists())file.remove();
+    QFile f("/tmp/viper4linux/ui.log");
+    QString o = "[" + QTime::currentTime().toString() + "] UI launched...\n";
+    if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
+      f.write(o.toUtf8().constData());
+    }
+
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
@@ -70,9 +86,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QMenu *menu = new QMenu();
     menu->addAction("Reload Viper", this,SLOT(Restart()));
+    menu->addAction("Context Help", this,[this](){QWhatsThis::enterWhatsThisMode();});
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
-    menu->addAction("Context Help", this,[this](){QWhatsThis::enterWhatsThisMode();});
+    menu->addAction("View Log", this,SLOT(OpenLog()));
 
     ui->toolButton->setMenu(menu);
     QMenu *menuC = new QMenu();
@@ -93,6 +110,27 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+//--Processes
+void MainWindow::processProcOutput(){
+    QString out = process->readAllStandardOutput();
+    QString err = process->readAllStandardError();
+    QFile f("/tmp/viper4linux/ui.log");
+    if(out!=""){
+        qDebug() <<out;
+        QString o = "[" + QTime::currentTime().toString() + "] " + out;
+        if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
+          f.write(o.toUtf8().constData());
+        }
+    }
+    if(err!=""){
+        qWarning() << err;
+        QString e = "[" + QTime::currentTime().toString() + "] " + err;
+        if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
+          f.write(e.toUtf8().constData());
+        }
+    }
 }
 
 //---Style
@@ -277,6 +315,12 @@ void MainWindow::OpenConv(){
     c->setFixedSize(c->geometry().width(),c->geometry().height());
     c->show();
 }
+void MainWindow::OpenLog(){
+    enableLogBtn(false);
+    auto c = new class log(this);
+    //c->setFixedSize(c->geometry().width(),c->geometry().height());
+    c->show();
+}
 void MainWindow::OpenSettings(){
     if(settingsdlg_enabled==true){
         enableSetBtn(false);
@@ -302,6 +346,9 @@ void MainWindow::enablePresetBtn(bool on){
 }
 void MainWindow::enableConvBtn(bool on){
     ui->conv_select->setEnabled(on);
+}
+void MainWindow::enableLogBtn(bool on){
+    logdlg_enabled=on;
 }
 
 //---Apply
@@ -333,7 +380,7 @@ void MainWindow::ConfirmConf(bool restart){
 }
 void MainWindow::Reset(){
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Are you sure?", "Reset Configuration",
+    reply = QMessageBox::question(this,"Reset Configuration","Are you sure?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         std::filebuf fb;
@@ -347,11 +394,12 @@ void MainWindow::Reset(){
     }
 }
 void MainWindow::Restart(){
-    if(muteOnRestart) system("pactl set-sink-mute 0 1");
-    if(glava_fix) system("killall -r glava");
-    system("viper restart");
-    if(glava_fix) system("setsid glava -d &");
-    if(muteOnRestart) system("pactl set-sink-mute 0 0");
+    if(muteOnRestart)system("pactl set-sink-mute 0 1");
+    if(glava_fix)system("killall -r glava");
+    process->start("viper", QStringList(initializer_list<QString>({"restart"})));
+    if(glava_fix)system("setsid glava -d &");
+    if(muteOnRestart)system("pactl set-sink-mute 0 0");
+
 }
 void MainWindow::DisableFX(){
     //Apply instantly

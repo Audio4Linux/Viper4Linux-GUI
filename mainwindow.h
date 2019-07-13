@@ -26,6 +26,7 @@ public:
     void LoadPresetFile(QString);
     void SavePresetFile(QString);
     void enableSetBtn(bool on);
+    void enableLogBtn(bool on);
     void enableConvBtn(bool on);
     void enablePresetBtn(bool on);
     string getColorpalette();
@@ -66,7 +67,8 @@ private slots:
     void update(int);
     void LoadExternalFile();
     void SaveExternalFile();
-
+    void OpenLog();
+    void processProcOutput();
 private:
     float CompMathA(float f, float f2, float f3);
     float CompMathB(float f, float f2, float f3);
