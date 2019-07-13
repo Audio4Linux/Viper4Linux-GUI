@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = V4L_Frontend
 TEMPLATE = app
+QMAKE_CXXFLAGS += "-Wno-old-style-cast -Wdouble-promotion"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings

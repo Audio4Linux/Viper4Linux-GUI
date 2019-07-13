@@ -68,6 +68,9 @@ private slots:
     void SaveExternalFile();
 
 private:
+    float CompMathA(float f, float f2, float f3);
+    float CompMathB(float f, float f2, float f3);
+    QString DoCompressorMath(int mode, float f);
     void loadIcons(bool);
     void setPalette(QColor base,QColor background,QColor foreground,QColor,QColor);
     int loadColor(int index,int rgb_index);

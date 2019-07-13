@@ -1514,21 +1514,50 @@ void MainWindow::update(int d){
     else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
     //AGC
     else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,8))+"x (" + QString::number(d) + ")");
+    else if(obj==ui->maxvol)ui->info->setText(QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
     //Bass
-    else if(obj==ui->vbgain)ui->info->setText(QString::number(roundf(translate(d,0,600,0,17)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->vbgain){
+        long double x = d;
+        long double in =1.472577725 * pow(10L,-18L) * pow(x,7L) - 3.011526005 * pow(10L,-15L) * pow(x,6L) + 2.29923043 * pow(10L,-12L) * pow(x,5L) - 9.530124502 * pow(10L,-10L) * pow(x,4L) + 3.960377639 * pow(10L,-7L) * pow(x,3L) - 1.965034894 * pow(10L,-4L) * pow(x,2L) + 7.693150538 * pow(10L,-2L) * x + 1.965508847 * pow(10L,-2L);
+        ui->info->setText(QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
+    }
     //Clarity
     else if(obj==ui->vclvl)ui->info->setText(QString::number(roundf(translate(d,0,450,0,14.8)*100)/100)+"dB (" + QString::number(d) + ")");
     //Volume
-    else if(obj==ui->outvolume)ui->info->setText(QString::number(roundf(translate(d,0,100,-40,0)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->outvolume){
+        long double x = d;
+        //Note:
+        //V4A uses hardcoded arrays to display the output dB values when updating the slider in the app;
+        //Although this makes it easier to implement, it is not really responsive.
+        //Unlike the other sliders, this one increases exponentially rather than linearly, because of that I had to recreate a formula from the values in the v4a app, to calculate an accurate dB value (using polynomial regression; this might not be the most efficient solution).
+        long double in = -7.095691001L* pow(10L,-13L) * pow(x,8L) + 3.130488467L* pow(10L,-10L) * pow(x,7L) - 5.667388779* pow(10L,-8L) * pow(x,6L) + 5.394863197L* pow(10L,-6L) * pow(x,5L) - 2.864305503L* pow(10L,-4L) * pow(x,4L)+ 8.264191247L* pow(10L,-3L) * pow(x,3L) - 1.218006784L* pow(10L,-1L) * pow(x,2L)+ 1.529341362L * x - 40.00317088L;
+        ui->info->setText(QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
+    }
+    else if(obj==ui->limiter)ui->info->setText(QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
     //Headphone Engine
     else if(obj==ui->vhplvl)ui->info->setText("Level " + QString::number(d+1));
     //Reverb
     else if(obj==ui->roomsize){
-        ui->info->setText(QString::number((int)translate(d,0,100,25,1200))+"m\u00B2 (" + QString::number(d) + ")");
+        long double x = d;
+        ui->info->setText(QString::number(roundf(3.958333333* pow(10L,-7L) *pow(x,5L)- 4.106206294* pow(10L,-5L) *pow(x,4L)+ 1.189175408* pow(10L,-3L) *pow(x,3L)+ 4.16448133 * pow(10L,-3L) *pow(x,2L)+ 9.190238943 * pow(10L,-1L) * x+ 25.11013978))+"m\u00B2 (" + QString::number(d) + ")");
     }
     else if(obj==ui->roomwidth){
-        ui->info->setText(QString::number((int)translate(d,0,100,5,36))+"m (" + QString::number(d) + ")");
+        long double x = d;
+        long double in = -1.121794872 * pow(10L,-8L) * pow(x,5L) + 3.270687646 * pow(10L,-6L) * pow(x,4L) - 2.643502331 * pow(10L,-4L) * pow(x,3L) + 7.749854312 * pow(10L,-3L) * pow(x,2L) + 2.916958039 * pow(10L,-2L) * x+ 5.036713287;
+        ui->info->setText(QString::number(roundf(in))+"m (" + QString::number(d) + ")");
     }
+    //Compressor
+    else if(obj==ui->comp_thres)ui->info->setText(DoCompressorMath(0,d));
+    else if(obj==ui->comp_ratio)ui->info->setText(DoCompressorMath(1,d));
+    else if(obj==ui->compwidth)ui->info->setText(DoCompressorMath(2,d));
+    else if(obj==ui->compgain)ui->info->setText(DoCompressorMath(3,d));
+    else if(obj==ui->compattack)ui->info->setText(DoCompressorMath(4,d));
+    else if(obj==ui->comprelease)ui->info->setText(DoCompressorMath(5,d));
+    else if(obj==ui->a_kneewidth)ui->info->setText(DoCompressorMath(6,d));
+    else if(obj==ui->a_maxatk)ui->info->setText(DoCompressorMath(7,d));
+    else if(obj==ui->a_maxrel)ui->info->setText(DoCompressorMath(8,d));
+    else if(obj==ui->a_crest)ui->info->setText(DoCompressorMath(9,d));
+    else if(obj==ui->a_adapt)ui->info->setText(DoCompressorMath(10,d));
     else{
         //Reverb
         if(obj==ui->roomdamp)post = "%";
@@ -1536,29 +1565,65 @@ void MainWindow::update(int d){
         else if(obj==ui->dry)post = "%";
         //Bass
         else if(obj==ui->vbfreq)post = "Hz";
-        //Volume
-        else if(obj==ui->limiter)post = "%";
         //Spectrum Expend
         else if(obj==ui->barkcon)pre = "Level ";
         else if(obj==ui->barkfreq)post = "Hz";
         //Convolver
         else if(obj==ui->convcc)post = "%";
-        //Compressor
-        else if(obj==ui->comp_ratio)post = "%";
-        else if(obj==ui->compgain)post = "%";
-        else if(obj==ui->compwidth)post = "%";
-        else if(obj==ui->comp_thres)post = "%";
-        else if(obj==ui->compattack)post = "%";
-        else if(obj==ui->comprelease)post = "%";
-        else if(obj==ui->a_adapt)post = "%";
-        else if(obj==ui->a_crest)post = "%";
-        else if(obj==ui->a_maxrel)post = "%";
-        else if(obj==ui->a_maxrel)post = "%";
-        else if(obj==ui->a_kneewidth)post = "%";
 
         ui->info->setText(pre + QString::number(d) + post);
     }
     OnUpdate();
+}
+QString MainWindow::DoCompressorMath(int mode, float f){
+    //Mode: 0-Threshold, 1-Ratio, 2-Knee, 3-Gain, 4-Atk, 5-Rel, 6-Kneemulti, 7-MaxAtk, 8-MaxRel, 9-Crest, 10-Adapt
+    float orig = f;
+    long double in;
+    f = f/100;
+    switch (mode) {
+        case 0:
+            in = log10(pow(10.0L, ((double) (-60.0f * f)) / 20.0L)) * 20.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
+        case 1:
+            if(f>0.99f)return "\u221E:1";
+            in = 1.0L / (1.0L - ((double) f));
+            return QString::number(roundf((in)*100)/100,'f',2) + ":1 (" + QString::number(orig) + ")";
+        case 2:
+            in = log10(pow(10.0L, ((double) (60.0f * f)) / 20.0L)) * 20.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
+        case 3:
+            in = log10(pow(10.0L, ((double) (60.0f * f)) / 20.0L)) * 20.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
+        case 4:
+            in = ((double) CompMathA(f, 1.0E-4f, 0.2f)) * 1000.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
+        case 5:
+            in = ((double) CompMathA(f, 0.005f, 2.0f)) * 1000.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
+        case 6:
+            in = ((double) CompMathB(f, 0.0f, 4.0f));
+            return QString::number(roundf((in)*100)/100,'f',2) + "x (" + QString::number(orig) + ")";
+        case 7:
+            in = ((double) CompMathA(f, 1.0E-4f, 0.2f)) * 1000.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
+        case 8:
+            in = ((double) CompMathA(f, 0.005f, 2.0f)) * 1000.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
+
+        case 9:
+            in = log10(pow(10.0L, ((double) (60.0f * f)) / 20.0L)) * 20.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
+        case 10:
+            in = ((double) CompMathA(f, 1.0f, 4.0f)) * 1000.0L;
+            return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
+     }
+    return "E: Mode out of range";
+}
+float MainWindow::CompMathA(float f, float f2, float f3) {
+    return (float) exp(log((double) f2) + (((double) f) * (log((double) f3) - log((double) f2))));
+}
+float MainWindow::CompMathB(float f, float f2, float f3) {
+    return ((f3 - f2) * f) + f2;
 }
 void MainWindow::updateeq(int f){
     QString pre = "";
