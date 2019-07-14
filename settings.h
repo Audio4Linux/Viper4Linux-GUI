@@ -13,13 +13,16 @@ public:
     ~settings();
 private slots:
         void openPalConfig();
-        void submit();
         void reject();
         void github();
         void glava_help();
         void changeStyle(const QString&);
         void changeThemeMode();
         void changePalette(const QString&);
+        void updateAutoFX();
+        void updateMuteRestart();
+        void updatePath();
+        void updateGLava();
 };
 
 #endif // SETTINGS_H

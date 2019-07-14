@@ -20,7 +20,7 @@
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
-  <widget class="QPushButton" name="save">
+  <widget class="QPushButton" name="close">
    <property name="geometry">
     <rect>
      <x>201</x>
@@ -30,7 +30,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QPushButton" name="github">
@@ -143,9 +143,22 @@
       <rect>
        <x>90</x>
        <y>9</y>
-       <width>161</width>
+       <width>111</width>
        <height>25</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="savepath">
+     <property name="geometry">
+      <rect>
+       <x>209</x>
+       <y>9</y>
+       <width>51</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save</string>
      </property>
     </widget>
    </widget>
@@ -274,7 +287,7 @@
   <tabstop>glavafix_help</tabstop>
   <tabstop>styleSelect</tabstop>
   <tabstop>github</tabstop>
-  <tabstop>save</tabstop>
+  <tabstop>close</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>

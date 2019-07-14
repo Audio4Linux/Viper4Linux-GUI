@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction("Context Help", this,[this](){QWhatsThis::enterWhatsThisMode();});
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
-    menu->addAction("View Log", this,SLOT(OpenLog()));
+    menu->addAction("View Logs", this,SLOT(OpenLog()));
 
     ui->toolButton->setMenu(menu);
     QMenu *menuC = new QMenu();

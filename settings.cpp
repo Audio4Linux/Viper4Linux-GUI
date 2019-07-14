@@ -44,11 +44,16 @@ connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
     ui->autofx->setChecked(mainwin->getAutoFx());
     ui->muteonrestart->setChecked(mainwin->getMuteOnRestart());
     ui->glavafix->setChecked(mainwin->getGFix());
-    connect(ui->save, SIGNAL(clicked()), this, SLOT(submit()));
+    connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
     connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
     connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
     connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
+
+    connect(ui->glavafix, SIGNAL(clicked()), this, SLOT(updateGLava()));
+    connect(ui->autofx, SIGNAL(clicked()), this, SLOT(updateAutoFX()));
+    connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
+    connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
 
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
@@ -94,13 +99,20 @@ connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
 settings::~settings(){
     delete ui;
 }
-void settings::submit(){
-    mainwin->setGFix(ui->glavafix->isChecked());
-    mainwin->setPath(ui->path->text().toUtf8().constData());
+
+void settings::updateAutoFX(){
     mainwin->setAutoFx(ui->autofx->isChecked());
-    mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
-    this->close();
 }
+void settings::updateMuteRestart(){
+    mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
+};
+void settings::updatePath(){
+    mainwin->setPath(ui->path->text().toUtf8().constData());
+}
+void settings::updateGLava(){
+    mainwin->setGFix(ui->glavafix->isChecked());
+}
+
 void settings::changeThemeMode(){
     if(lockslot)return;
 
