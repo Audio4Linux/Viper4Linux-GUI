@@ -1080,110 +1080,55 @@ string MainWindow::getEQ() {
 string MainWindow::getBass() {
     string out;
     string n = "\n";
-
-    int c = ui->vbgain->value();
-    int d = ui->vbfreq->value();
-    int e = ui->vbmode->value();
-
-    char vbgain[sizeof(c)];
-    sprintf(vbgain, "%d", c);
-    char vbfreq[sizeof(d)];
-    sprintf(vbfreq, "%d", d);
-    char vbmode[sizeof(e)];
-    sprintf(vbmode, "%d", e);
-
     //BASS
     out += "vb_enable=";
     if(ui->vb->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "vb_mode=";
-    out += vbmode + n;
+    out += to_string(ui->vbmode->value()) + n;
     out += "vb_freq=";
-    out += vbfreq + n;
+    out += to_string(ui->vbfreq->value()) + n;
     out += "vb_gain=";
-    out += vbgain + n;
+    out += to_string(ui->vbgain->value()) + n;
     return out;
 }
 string MainWindow::getSurround() {
     string out;
     string n = "\n";
-
-    int a = ui->difflvl->value();
-    int b = ui->vhplvl->value();
-    int c = ui->roomsize->value();
-    int d = ui->roomwidth->value();
-    int e = ui->roomdamp->value();
-    int f = ui->wet->value();
-    int g = ui->dry->value();
-
-    char difflvl[sizeof(a)];
-    sprintf(difflvl, "%d", a);
-
-    char vhplvl[sizeof(b)];
-    sprintf(vhplvl, "%d", b);
-
-    char re_roomsize[sizeof(c)];
-    sprintf(re_roomsize, "%d", c);
-    char re_width[sizeof(d)];
-    sprintf(re_width, "%d", d);
-    char re_damp[sizeof(e)];
-    sprintf(re_damp, "%d", e);
-    char re_wet[sizeof(f)];
-    sprintf(re_wet, "%d", f);
-    char re_dry[sizeof(g)];
-    sprintf(re_dry, "%d", g);
-
     //HEADSET ENGINE
     out += "vhe_enable=";
     if(ui->vhp->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "vhe_level=";
-    out += vhplvl + n;
+    out += to_string(ui->vhplvl->value()) + n;
 
     //DIFFERENTIAL SOUND
     out += "ds_enable=";
     if(ui->diff->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "ds_level=";
-    out += difflvl + n;
+    out += to_string(ui->difflvl->value()) + n;
 
     //REVERB
     out += "reverb_enable=";
     if(ui->reverb->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "reverb_roomsize=";
-    out += re_roomsize + n;
+    out += to_string(ui->roomsize->value()) + n;
     out += "reverb_width=";
-    out += re_width + n;
+    out += to_string(ui->roomwidth->value()) + n;
     out += "reverb_damp=";
-    out += re_damp + n;
+    out += to_string(ui->roomdamp->value()) + n;
     out += "reverb_wet=";
-    out += re_wet + n;
+    out += to_string(ui->wet->value()) + n;
     out += "reverb_dry=";
-    out += re_dry + n;
+    out += to_string(ui->dry->value()) + n;
 
     return out;
 }
 string MainWindow::getMain() {
     string out;
     string n = "\n";
-
-    int a = ui->colmwide->value();
-    int b = ui->colmmidimg->value();
-    int c = ui->colmdepth->value();
-    int d = ui->vclvl->value();
-    int e = ui->vcmode->value();
-
-    char colmwide[sizeof(a)];
-    sprintf(colmwide, "%d", a);
-    char colmmidimg[sizeof(b)];
-    sprintf(colmmidimg, "%d", b);
-    char colmdepth[sizeof(c)];
-    sprintf(colmdepth, "%d", c);
-    char vclvl[sizeof(d)];
-    sprintf(vclvl, "%d", d);
-    char vcmode[sizeof(e)];
-    sprintf(vcmode, "%d", e);
 
     //TUBE SIMULATOR
     out += "tube_enable=";
@@ -1195,67 +1140,44 @@ string MainWindow::getMain() {
     if(ui->colm->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "colm_widening=";
-    out += colmwide + n;
+    out += to_string(ui->colmwide->value()) + n;
     out += "colm_depth=";
-    out += colmdepth + n;
+    out += to_string(ui->colmdepth->value()) + n;
     out += "colm_midimage=";
-    out += colmmidimg + n;
+    out += to_string(ui->colmmidimg->value()) + n;
 
     //CLARITY
     out += "vc_enable=";
     if(ui->clarity->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "vc_mode=";
-    out += vcmode + n;
+    out += to_string(ui->vcmode->value()) + n;
     out += "vc_level=";
-    out += vclvl + n;
+    out += to_string(ui->vclvl->value()) + n;
 
     return out;
 }
 string MainWindow::getMaster() {
     string out;
     string n = "\n";
-
-    int a = ui->gain->value();
-    int b = ui->maxgain->value();
-    int c = ui->maxvol->value();
-    int d = ui->limiter->value();
-    int e = ui->outputpan->value();
-    int f = ui->outvolume->value();
-
-    char gain[sizeof(a)];
-    sprintf(gain, "%d", a);
-    char maxgain[sizeof(b)];
-    sprintf(maxgain, "%d", b);
-    char maxvol[sizeof(c)];
-    sprintf(maxvol, "%d", c);
-
-    char limiter[sizeof(d)];
-    sprintf(limiter, "%d", d);
-    char outputpan[sizeof(e)];
-    sprintf(outputpan, "%d", e);
-    char out_volume[sizeof(f)];
-    sprintf(out_volume, "%d", f);
-
-
     //GAIN CONTROL
     out += "agc_enable=";
     if(ui->agc->isChecked())out += "true" + n;
     else out += "false" + n;
     out += "agc_ratio=";
-    out += gain + n;
+    out += to_string(ui->gain->value()) + n;
     out += "agc_maxgain=";
-    out += maxgain + n;
+    out += to_string(ui->maxgain->value()) + n;
     out += "agc_volume=";
-    out += maxvol + n;
+    out += to_string(ui->maxvol->value()) + n;
 
     //MASTER
     out += "lim_threshold=";
-    out += limiter + n;
+    out += to_string(ui->limiter->value()) + n;
     out += "out_pan=";
-    out += outputpan + n;
+    out += to_string(ui->outputpan->value()) + n;
     out += "out_volume=";
-    out += out_volume + n;
+    out += to_string(ui->outvolume->value()) + n;
 
     return out;
 }
