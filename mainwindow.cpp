@@ -231,6 +231,52 @@ void MainWindow::SetStyle(){
             QColor selection = QColor(85,0,255);
             setPalette(base,background,foreground,selection,Qt::black);
         }
+        else if(color_palette=="darkblue"){
+            loadIcons(true);
+            QColor background = QColor(19,25,38);
+            QColor foreground = Qt::white;
+            QColor base = QColor(14,19,29);
+            QColor selection = QColor(70,79,89);
+            setPalette(base,background,foreground,selection,Qt::black);
+        }
+        else if(color_palette=="honeycomb"){
+                    QColor background = QColor(212,215,208);
+                    QColor foreground = Qt::black;
+                    QColor base = QColor(185,188,182);
+                    QColor selection = QColor(243,193,41);
+                    setPalette(base,background,foreground,selection,Qt::white);
+        }
+        else if(color_palette=="black"){
+                    loadIcons(true);
+                    QColor background = QColor(16,16,16);
+                    QColor foreground = QColor(222,222,222);
+                    QColor base = Qt::black;
+                    QColor selection = QColor(132,132,132);
+                    setPalette(base,background,foreground,selection,Qt::black);
+        }
+        else if(color_palette=="solarized"){
+                    loadIcons(true);
+                    QColor background = QColor(15,30,49);
+                    QColor foreground = QColor(154,174,180);
+                    QColor base = Qt::black;
+                    QColor selection = QColor(3,50,63);
+                    setPalette(base,background,foreground,selection,Qt::black);
+        }
+        else if(color_palette=="silver"){
+            QColor background = QColor(176,180,196);
+            QColor foreground = QColor(20,20,20);
+            QColor base = QColor(176,180,196);
+            QColor selection = Qt::white;
+            setPalette(base,background,foreground,selection,Qt::black);
+        }
+        else if(color_palette=="darkgreen"){
+                    loadIcons(true);
+                    QColor background = QColor(27,34,36);
+                    QColor foreground = QColor(197,209,217);
+                    QColor base = QColor(30,30,30);
+                    QColor selection = QColor(21,67,58);
+                    setPalette(base,background,foreground,selection,Qt::black);
+        }
         else if(color_palette=="custom"){
             QColor base = QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2));
             QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));

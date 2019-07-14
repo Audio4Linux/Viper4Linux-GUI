@@ -68,10 +68,16 @@ connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
     ui->styleSelect->addItem("Visual Studio Light","vslight");
 
     ui->paletteSelect->addItem("Default","default");
-    ui->paletteSelect->addItem("Dark","dark");
+    ui->paletteSelect->addItem("Black","black");
     ui->paletteSelect->addItem("Blue","blue");
-    ui->paletteSelect->addItem("Purple","purple");
+    ui->paletteSelect->addItem("Dark","dark");
+    ui->paletteSelect->addItem("Dark Blue","darkblue");
+    ui->paletteSelect->addItem("Dark Green","darkgreen");
+    ui->paletteSelect->addItem("Honeycomb","honeycomb");
     ui->paletteSelect->addItem("Gray","gray");
+    ui->paletteSelect->addItem("Purple","purple");
+    ui->paletteSelect->addItem("Silver","silver");
+    ui->paletteSelect->addItem("Solarized","solarized");
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
 
