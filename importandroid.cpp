@@ -36,6 +36,7 @@ void importandroid::import(){
     string::size_type loc = response.find( "Syntax error", 0 );
     if( loc == 0 ) {
         QMessageBox::warning(this, "Syntax Error", QString::fromStdString(response),QMessageBox::Ok);
+        mainwin->writeLog("Converter (a-to-l;mode=" + QString::number(mode) + "): " + QString::fromStdString(response)+ " (importandroid/syntaxcheck)");
         return;
     }
 
@@ -70,7 +71,7 @@ void importandroid::import(){
             cfile << newconfig;
             cfile.close();
         }
-        else cerr << "Unable to open file";
+        mainwin->writeLog("Unable to create new file at '" + QDir::cleanPath(path + QDir::separator() + text + ".conf") + "'; cannot import converted android config (importandroid/importer)");
     }
 
     preset->UpdateList();

@@ -84,7 +84,7 @@ void Preset::upload(){
 }
 void Preset::indexDownloaded(QNetworkReply* reply){
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        mainwin->writeLog("Cannot download repo index: " + reply->errorString() + " (presets/repoindex)");
         return;
     }
     QByteArray answer = reply->readAll();
@@ -92,12 +92,12 @@ void Preset::indexDownloaded(QNetworkReply* reply){
     QJsonDocument document = QJsonDocument::fromJson(answer, &parseError);
     if (parseError.error != QJsonParseError::NoError)
     {
-        qDebug() << "Parse error: " << parseError.errorString();
+        mainwin->writeLog("Cannot parse GitHub API response (presets/repoindex): " + parseError.errorString());
         return;
     }
     if (!document.isArray())
     {
-        qDebug() << "Document does not contain array";
+        mainwin->writeLog("Malformed GitHub API response (presets/repoindex): Document does not contain array");
         return;
     }
     QJsonArray array = document.array();
@@ -229,8 +229,7 @@ void Preset::exportAndroid(converter::configtype cmode){
       QTextStream out(&qFile); out << QString::fromStdString(converter::toAndroid(src.toUtf8().constData(),cmode));
       qFile.close();
     }
-
-    cout << "Exporting to " << filename.toUtf8().constData() << endl;
+    mainwin->writeLog("Exporting to "+filename + " (presets/androidexport)");
 }
 void Preset::importLinux(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
@@ -246,7 +245,7 @@ void Preset::importLinux(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    cout << "Importing from " << filename.toUtf8().constData() << endl;
+    mainwin->writeLog("Importing from "+filename+ " (presets/linuximport)");
 }
 void Preset::exportLinux(){
     if(ui->files->selectedItems().length() == 0){
@@ -279,7 +278,7 @@ void Preset::exportLinux(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    cout << "Exporting to " << filename.toUtf8().constData() << endl;
+    mainwin->writeLog("Exporting to "+filename+ " (presets/linuxexport)");
 }
 void Preset::remove(){
     if(ui->files->selectedItems().length() == 0){
@@ -298,7 +297,7 @@ void Preset::remove(){
         return;
     }
     file.remove();
-    cout << "Removed " << fullpath.toUtf8().constData() << endl;
+    mainwin->writeLog("Removed "+fullpath+ " (presets/remove)");
     UpdateList();
 }
 void Preset::load(){
@@ -358,7 +357,7 @@ void Preset::showContextMenu(const QPoint &pos)
                 }
                 QFile file (fullpath);
                 file.remove();
-                cout << "Removed " << fullpath.toUtf8().constData() << endl;
+                mainwin->writeLog("Removed "+fullpath);
                 UpdateList();
             }
         }

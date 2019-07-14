@@ -64,11 +64,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //Clear log
     QFile file ("/tmp/viper4linux/ui.log");
     if(file.exists())file.remove();
-    QFile f("/tmp/viper4linux/ui.log");
-    QString o = "[" + QTime::currentTime().toString() + "] UI launched...\n";
-    if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
-      f.write(o.toUtf8().constData());
-    }
+    QFile file2 ("/tmp/viper4linux/ui_viper.log");
+    if(file2.exists())file2.remove();
+
+    writeLog("UI launched...");
 
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
@@ -112,25 +111,41 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//--Processes
+//--Process/Logs
 void MainWindow::processProcOutput(){
     QString out = process->readAllStandardOutput();
     QString err = process->readAllStandardError();
-    QFile f("/tmp/viper4linux/ui.log");
+    QString logpath("/tmp/viper4linux/ui_viper.log");
     if(out!=""){
-        qDebug() <<out;
-        QString o = "[" + QTime::currentTime().toString() + "] " + out;
+        //qDebug()<<out;
+        writeLogF(out,logpath);
+    }
+    if(err!=""){
+        //qDebug()<<err;
+        writeLogF(err,logpath);
+    }
+}
+void MainWindow::writeLog(QString log,int mode){
+    //Mode: 0-Log+Stdout 1-Log 2-Stdout
+    QFile f("/tmp/viper4linux/ui.log");
+    QString o = "[" + QTime::currentTime().toString() + "] " + log + "\n";
+    QString o_alt = "[" + QTime::currentTime().toString() + "] " + log;
+
+    if(mode==0||mode==1){
         if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
           f.write(o.toUtf8().constData());
         }
+        f.close();
     }
-    if(err!=""){
-        qWarning() << err;
-        QString e = "[" + QTime::currentTime().toString() + "] " + err;
-        if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
-          f.write(e.toUtf8().constData());
-        }
+    if(mode==0|mode==2) cout << o_alt.toUtf8().constData() << endl;
+}
+void MainWindow::writeLogF(QString log,QString _path){
+    QFile f(_path);
+    QString o = "[" + QTime::currentTime().toString() + "] " + log;
+    if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
+      f.write(o.toUtf8().constData());
     }
+    f.close();
 }
 
 //---Style
@@ -316,10 +331,12 @@ void MainWindow::OpenConv(){
     c->show();
 }
 void MainWindow::OpenLog(){
-    enableLogBtn(false);
-    auto c = new class log(this);
-    //c->setFixedSize(c->geometry().width(),c->geometry().height());
-    c->show();
+    if(logdlg_enabled){
+        enableLogBtn(false);
+        auto c = new class log(this);
+        //c->setFixedSize(c->geometry().width(),c->geometry().height());
+        c->show();
+    }
 }
 void MainWindow::OpenSettings(){
     if(settingsdlg_enabled==true){
@@ -373,9 +390,10 @@ void MainWindow::ConfirmConf(bool restart){
     if (myfile.is_open())
     {
         myfile << config;
+        writeLog("Updating Viper Config... (main/writer)");
         myfile.close();
     }
-    else cerr << "Unable to open file";
+    else writeLog("Unable to write to '" + QString::fromStdString(path) + "'; cannot update viper config (main/confirmconf)");
     if(restart)Restart();
 }
 void MainWindow::Reset(){
@@ -413,7 +431,7 @@ void MainWindow::LoadPresetFile(QString filename){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    cout << "Loading from " << filename.toUtf8().constData() << endl;
+    writeLog("Loading from " + filename+ " (main/loadpreset)");
     reloadConfig();
     ConfirmConf();
 }
@@ -423,7 +441,7 @@ void MainWindow::SavePresetFile(QString filename){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    cout << "Saving to " << filename.toUtf8().constData() << endl;
+    writeLog("Saving to " + filename+ " (main/savepreset)");
 }
 void MainWindow::LoadExternalFile(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
@@ -433,7 +451,7 @@ void MainWindow::LoadExternalFile(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    cout << "Loading from " << filename.toUtf8().constData() << endl;
+    writeLog("Loading from " + filename+ " (main/loadexternal)");
     reloadConfig();
     ConfirmConf();
 }
@@ -449,14 +467,17 @@ void MainWindow::SaveExternalFile(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    cout << "Saving to " << filename.toUtf8().constData() << endl;
+    writeLog("Saving to " + filename+ " (main/saveexternal)");
 }
 
 //---UI Config Loader
 void MainWindow::decodeAppConfig(const string& key,const string& value){
     //cout << "AppConf: " << key << " -> " << value << endl;
     switch (resolveAppConfig(key)) {
-    case unknownApp: {break;}
+    case unknownApp: {
+        writeLog("Unable to resolve key: " + QString::fromStdString(key) + " (main/parser)");
+        break;
+    }
     case autoapply: {
         autofx = value=="true";
         break;
@@ -497,7 +518,7 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
     }
 }
 void MainWindow::loadAppConfig(bool once){
-    cout << "Reloading App Config..." << endl;
+    writeLog("Reloading UI-Config... (main/uiparser)");
     std::ifstream cFile(appcpath);
     if (cFile.is_open())
     {
@@ -512,7 +533,7 @@ void MainWindow::loadAppConfig(bool once){
         cFile.close();
     }
     else {
-        cerr << "Couldn't open app config file for reading.\n";
+        writeLog("Couldn't open UI-Config file for reading (main/uiparser))");
         ofstream outfile(appcpath);
         outfile << default_appconfig << endl;
         outfile.close();
@@ -548,11 +569,12 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     ofstream myfile(appcpath);
     if (myfile.is_open())
     {
+        writeLog("Updating UI-Config... (main/uiwriter)");
         myfile << appconfig;
         myfile.close();
     }
     else{
-        cerr << "Unable to open file. Checking...";
+        writeLog("Unable to write to file at '" + QString::fromStdString(appcpath) + "'; attempting to reloading ui-config... (main/uiwriter)");
         loadAppConfig();
     }
 }
@@ -560,7 +582,7 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
 //---Viper Config Loader
 void MainWindow::reloadConfig(){
     lockapply=true;
-    cout << "Reloading..." << endl;
+    writeLog("Reloading Viper Config... (main/parser)");
     std::ifstream cFile(path);
     if (cFile.is_open())
     {
@@ -577,7 +599,7 @@ void MainWindow::reloadConfig(){
         cFile.close();
     }
     else {
-        std::cerr << "Couldn't open config file for reading.\n";
+        writeLog("Unable to read file at '" + QString::fromStdString(path) + "'; viper config not found (main/parser)");
         QMessageBox msgBox;
         msgBox.setText("Viper Configuration File not found at \n" + QString::fromStdString(path) + "");
         msgBox.setInformativeText("You can change the path in the settings.");
@@ -591,7 +613,7 @@ void MainWindow::reloadConfig(){
 void MainWindow::loadConfig(const string& key,string value){
     //cout << key << " -> " << value << endl;
     if(value==""||is_only_ascii_whitespace(value)){
-        cerr << "[WARNING] Key " + key + " is empty" << endl;
+        mainwin->writeLog("Key " + QString::fromStdString(key) + " is empty (main/parser)");
         return;
     }
     switch (resolveConfig(key)) {
@@ -887,7 +909,6 @@ void MainWindow::loadConfig(const string& key,string value){
         if(value.size() <= 2) break;
         value = value.substr(1, value.size() - 2);
         QString ir = QString::fromStdString(value);
-        qDebug() << "READ:" << ir;
         ui->convpath->setText(ir);
         break;
     }
@@ -925,7 +946,7 @@ void MainWindow::loadConfig(const string& key,string value){
         break;
     }
     case unknown: {
-        cout << "Config-List Enum: Unknown" << endl;
+        writeLog("Unable to resolve key: " + QString::fromStdString(key)+ " (main/uiparser)");
         break;
     }
     }
@@ -943,7 +964,6 @@ string MainWindow::getMisc(){
     QString conbark = QString::number(ui->barkcon->value());
     QString convcc = QString::number(ui->comprelease->value());
     QString convir = ui->convpath->text();
-    qDebug() << "WRITE:" << convir;
 
     out += "cure_enable=";
     if(ui->vcure->isChecked())out += "true" + n;
@@ -1314,8 +1334,6 @@ void MainWindow::PasteEQ(){
         if (ss.peek() == ',')
             ss.ignore();
     }
-    for (i=0; i< vect.size(); i++)
-        std::cout << vect.at(i)<<std::endl;
     int data[100];
     std::copy(vect.begin(), vect.end(), data);
     setEQ(data);
@@ -1634,7 +1652,6 @@ void MainWindow::setMuteOnRestart(bool on){
 }
 void MainWindow::setIRS(const string& irs,bool apply){
     ui->convpath->setText(QString::fromStdString((irs)));
-    qDebug() << "SET:" << QString::fromStdString((irs));
     if(apply)ConfirmConf();
 }
 void MainWindow::setGFix(bool f){

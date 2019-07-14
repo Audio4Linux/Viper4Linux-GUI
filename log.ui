@@ -41,22 +41,27 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0">
+   <item row="1" column="0" colspan="2">
     <widget class="QComboBox" name="select">
      <property name="minimumSize">
       <size>
-       <width>100</width>
+       <width>120</width>
        <height>0</height>
       </size>
      </property>
      <item>
       <property name="text">
-       <string>Viper</string>
+       <string>User Interface</string>
       </property>
      </item>
      <item>
       <property name="text">
        <string>GST Plugin</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Viper</string>
       </property>
      </item>
     </widget>

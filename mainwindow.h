@@ -15,6 +15,8 @@ class MainWindow : public QMainWindow
 
 public:
     Ui::MainWindow *ui;
+    void writeLogF(QString,QString);
+    void writeLog(QString,int mode = 0);
     string getPath();
     string getStylesheet();
     string getCustompalette();

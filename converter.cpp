@@ -25,7 +25,7 @@ string converter::toLinux(string path,configtype cmode){
                 .arg(errorLine)
                 .arg(errorColumn)
                 .arg(errorMsg);
-        qDebug() << error;
+        mainwin->writeLog("Converter (a-to-l;mode=" + QString::number(cmode) + "): " + error + " (converter/syntaxcheck)");
         return error.toUtf8().constData();
     }
 
@@ -386,7 +386,6 @@ string converter::toLinux(string path,configtype cmode){
     QStringList list_dyn = conf->dynsys_coeffs.split(QRegExp(";"));
     for ( const auto& i : list_dyn  )
     {
-        qDebug() << i;//Dynsys Coeffs are split by a semicolon on android
         if (count_dyn == 0)out += "dynsys_xcoeff1=";
         else if (count_dyn == 1)out += "dynsys_xcoeff2=";
         else if (count_dyn == 2)out += "dynsys_ycoeff1=";
@@ -428,7 +427,7 @@ string converter::toAndroid(string path,configtype cmode){
         cFile.close();
     }
     else {
-        std::cerr << "Couldn't open config file for reading.\n";
+        mainwin->writeLog("Couldn't open config file for reading (converter/linux-to-android)");
         QMessageBox msgBox;
         msgBox.setText("Viper Configuration File not found at \n" + QString::fromStdString(path) + "");
         msgBox.setInformativeText("You can change the path in the settings.");
@@ -611,7 +610,7 @@ QString converter::boolToQString(bool b){
 void converter::decodeLinuxKey(const string& key,string value,configmodel* conf){
     //cout << key << " -> " << value << endl;
     if(value==""||is_only_ascii_whitespace(value)){
-        cerr << "[WARNING] Key " + key + " is empty" << endl;
+        mainwin->writeLog("Key " + QString::fromStdString(key) + " is empty (converter/linuxparser)");
         return;
     }
     switch (resolveConfig(key)) {
@@ -632,7 +631,6 @@ void converter::decodeLinuxKey(const string& key,string value,configmodel* conf)
         break;
     }
     case colm_midimage: {
-        qDebug() << QString::fromStdString(value);
         conf->colorfulmusic_midimage = QString::fromStdString(value);
         break;
     }
@@ -920,7 +918,7 @@ void converter::decodeLinuxKey(const string& key,string value,configmodel* conf)
         break;
     }
     case unknown: {
-        cout << "Config-List Enum: Unknown" << endl;
+        mainwin->writeLog("Unable to resolve key (converter): " + QString::fromStdString(key)+ " (converter/linuxparser)");
         break;
     }
     }

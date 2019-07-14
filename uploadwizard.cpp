@@ -129,14 +129,12 @@ void UploadWizard::PageChanged(int id){
                             QString irs_path = "";
                             if(!skipIrs){
                                 irs_path= QString::fromStdString(value);
-                                qDebug() << irs_path;
                                 if(QFile::exists(irs_path.split("\"")[1])){
                                     changes += "Yes";
                                     irsPath=irs_path.split("\"")[1];
                                 }
                                 else{
                                     QString var = irs_path.replace("\"$configpath\"",d.absolutePath()).replace("\"","");
-                                    qDebug()<<var;
                                     if(QFile::exists(var)){
                                         changes += "Yes, using variable";
                                         irsPathVar=var;
@@ -154,7 +152,7 @@ void UploadWizard::PageChanged(int id){
                 cFile.close();
             }
             else {
-                cerr << "Couldn't open app config file for reading.\n";
+                mainwin->writeLog("Unable to read file at '" + fullpath + "' (uploadwizard/configselection)");                ;
                 changes += "Unable to read";
             }
             changes += "\n\nSelected Config:\n";
@@ -178,6 +176,7 @@ void UploadWizard::PageChanged(int id){
         if(CheckFork(forkurl)==false){
             back();
             QMessageBox::warning(this,"Error","The fork has not been found on your profile, you might have to wait a moment until it is accessible. Please try again in a few moments.");
+            mainwin->writeLog("Forked repo not yet found on GitHub, please try again later... (uploadwizard/forkcheck)");
             button(WizardButton::BackButton)->setEnabled(true);
             button(WizardButton::NextButton)->setEnabled(true);
             break;
@@ -185,6 +184,7 @@ void UploadWizard::PageChanged(int id){
         if(DoClone(forkurl)==false){
             back();
             QMessageBox::warning(this,"Error","Unable to clone repo, make sure /tmp/vipergui is writable");
+            mainwin->writeLog("Unable to clone repo, make sure /tmp/vipergui is writable (uploadwizard/clone)");
             button(WizardButton::BackButton)->setEnabled(true);
             button(WizardButton::NextButton)->setEnabled(true);
             break;
@@ -225,6 +225,7 @@ void UploadWizard::PageChanged(int id){
         }
         if(DoPR(forkurl)==false){
             back();
+            mainwin->writeLog("Invalid GitHub API response while sending a pull request (uploadwizard/pullrequest)");
             QMessageBox::warning(this,"Error","Invalid GitHub API response, please send a Pull Request manually");
             button(WizardButton::BackButton)->setEnabled(true);
             button(WizardButton::NextButton)->setEnabled(true);
@@ -247,6 +248,7 @@ bool UploadWizard::DoPR(QString repo){
                                    "&base=master&head=" + user + ":master" +
                                    "&url=repos/L3vi47h4N/Viper4Linux-Configs/pulls") + "]";
     if(out.contains("Error")){
+        mainwin->writeLog("GitHub API returned an error (pull request): " + out);
         QMessageBox::information(this,"Error",out);
     }
     else{
@@ -254,12 +256,12 @@ bool UploadWizard::DoPR(QString repo){
         QJsonDocument document = QJsonDocument::fromJson(out.toLocal8Bit(), &parseError);
         if (parseError.error != QJsonParseError::NoError)
         {
-            qDebug() << "Parse error: " << parseError.errorString();
+            mainwin->writeLog("Cannot parse GitHub API response (uploadwizard/pullrequest): " + parseError.errorString());
             return false;
         }
         if (!document.isArray())
         {
-            qDebug() << "Document does not contain array";
+            mainwin->writeLog("Malformed GitHub API response (uploadwizard/pullrequest): Document does not contain array");
             return false;
         }
         QJsonArray array = document.array();
@@ -270,15 +272,17 @@ bool UploadWizard::DoPR(QString repo){
         }
         if(out.contains("Bad credentials")){
             QMessageBox::warning(this,"Error","Bad credentials\nInvalid/expired OAuth key");
+            mainwin->writeLog("GitHub API (uploadwizard/pullrequest): Bad credentials");
         }
         if(out.contains("\"errors\":[")){
             try {
                 QMessageBox::warning(this,"Error",array[0].toObject().value("errors").toArray()[0].toObject().value("message").toString());
+                mainwin->writeLog("GitHub API returned an error (uploadwizard/pullrequest): " + array[0].toObject().value("errors").toArray()[0].toObject().value("message").toString());
                 button(WizardButton::BackButton)->setEnabled(true);
                 button(WizardButton::NextButton)->setEnabled(true);
                 back();
             } catch (exception ex) {
-                qWarning() << ex.what();
+                mainwin->writeLog("Unable to parse error information from GitHub API (uploadwizard/pullrequest): " + QString::fromStdString(ex.what()));
                return false;
             }
         }
@@ -324,6 +328,7 @@ bool UploadWizard::DoClone(QString repo){
     process->waitForFinished();
     if(QFile::exists(tempdir+"/Viper4Linux-Configs/README.md"))ui->change_log->append("Cloned successfully");
     else{
+        mainwin->writeLog("Not successfully cloned, local repo at '" + tempdir+"/Viper4Linux-Configs/" + "' not found (uploadwizard/clone): ");
         ui->change_log->append("Not successfully cloned, local repo not found");
         return false;
     }
@@ -347,7 +352,7 @@ bool UploadWizard::DoChanges(QString repo){
     const QString dest = tempdir + "/Viper4Linux-Configs/" + base + ".conf";
     if (QFile::exists(dest))QFile::remove(dest);
     QFile::copy(src,dest);
-    qDebug() << "Saving to " << dest;
+    mainwin->writeLog("Saving config to " + dest + " (uploadwizard/dochanges)");
 
     //Save IRS
     if(irsPath!=""){
@@ -388,25 +393,32 @@ bool UploadWizard::DoChanges(QString repo){
 }
 bool UploadWizard::CheckFork(QString repo){
     QString out = getRequest("https://api.github.com/repos/" + repo);
-    if(out.contains("Error")&&!out.contains("Not Found"))QMessageBox::information(this,"Error",out);
-    else if(out.contains("Not Found"))return false;
+    if(out.contains("Error: ")&&!out.contains("Not Found")){
+        mainwin->writeLog("Error while checking the fork: " + out + " (uploadwizard/forkcheck)");
+    }
+    else if(out.contains("Not Found")){
+        return false;
+    }
     return true;
 }
 void UploadWizard::DoFork(){
     ui->forkstatus->setText("Forking Repo...");
     ui->forklog->setText("Forking Viper4Linux-Config Repo... ");
     QString out = "[" + getRequest("https://thebone.cf/viperuploader/router.php?token=" + ui->oauth_key->text() + "&method=post&url=repos/L3vi47h4N/Viper4Linux-Configs/forks") + "]";
-    if(out.contains("Error"))QMessageBox::information(this,"Error",out);
+    if(out.contains("Error: ")){
+        QMessageBox::information(this,"Error",out);
+        mainwin->writeLog("Error while forking: " + out + " (uploadwizard/fork)");
+    }
     else{
         QJsonParseError parseError;
         QJsonDocument document = QJsonDocument::fromJson(out.toLocal8Bit(), &parseError);
         if (parseError.error != QJsonParseError::NoError)
         {
-            qDebug() << "Parse error: " << parseError.errorString();
+            mainwin->writeLog("Cannot parse GitHub API response (uploadwizard/fork): " + parseError.errorString());
         }
         if (!document.isArray())
         {
-            qDebug() << "Document does not contain array";
+            mainwin->writeLog("Malformed GitHub API response (uploadwizard/fork): Document does not contain array");
             return;
         }
         QJsonArray array = document.array();
@@ -418,6 +430,7 @@ void UploadWizard::DoFork(){
             ui->forklog->append(">" + url.toString());
         }
         if(out.contains("Bad credentials")){
+            mainwin->writeLog("GitHub API (uploadwizard/fork): Bad credentials");
             QMessageBox::warning(this,"Error","Bad credentials\nInvalid/expired OAuth key");
             back();
         }
