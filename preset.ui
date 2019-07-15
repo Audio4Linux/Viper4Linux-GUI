@@ -116,8 +116,14 @@
        <height>25</height>
       </rect>
      </property>
+     <property name="dragEnabled">
+      <bool>false</bool>
+     </property>
      <property name="placeholderText">
       <string>Preset Name</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QToolButton" name="exportBtn">

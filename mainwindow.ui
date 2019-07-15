@@ -34,7 +34,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -1789,7 +1789,7 @@
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>40</y>
+        <y>38</y>
         <width>131</width>
         <height>16</height>
        </rect>
@@ -1808,7 +1808,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>40</y>
+        <y>38</y>
         <width>71</width>
         <height>17</height>
        </rect>
@@ -1821,7 +1821,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>58</y>
         <width>71</width>
         <height>17</height>
        </rect>
@@ -1834,7 +1834,7 @@
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>60</y>
+        <y>58</y>
         <width>131</width>
         <height>16</height>
        </rect>
@@ -1852,9 +1852,9 @@
      <widget class="QGroupBox" name="m_width">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>160</x>
         <y>80</y>
-        <width>151</width>
+        <width>141</width>
         <height>51</height>
        </rect>
       </property>
@@ -1871,7 +1871,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>29</y>
          <width>121</width>
          <height>16</height>
         </rect>
@@ -1890,9 +1890,9 @@
      <widget class="QGroupBox" name="m_gain">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>160</x>
         <y>134</y>
-        <width>151</width>
+        <width>141</width>
         <height>51</height>
        </rect>
       </property>
@@ -1909,7 +1909,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>29</y>
          <width>121</width>
          <height>16</height>
         </rect>
@@ -1930,7 +1930,7 @@
        <rect>
         <x>10</x>
         <y>134</y>
-        <width>121</width>
+        <width>141</width>
         <height>51</height>
        </rect>
       </property>
@@ -1947,8 +1947,8 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
-         <width>91</width>
+         <y>29</y>
+         <width>121</width>
          <height>16</height>
         </rect>
        </property>
@@ -1971,7 +1971,7 @@
        <rect>
         <x>10</x>
         <y>80</y>
-        <width>121</width>
+        <width>141</width>
         <height>51</height>
        </rect>
       </property>
@@ -1988,8 +1988,8 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
-         <width>91</width>
+         <y>29</y>
+         <width>121</width>
          <height>16</height>
         </rect>
        </property>
@@ -2716,7 +2716,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>32</y>
+         <y>28</y>
          <width>141</width>
          <height>16</height>
         </rect>
@@ -2728,9 +2728,9 @@
       <widget class="QSlider" name="barkfreq">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>30</y>
-         <width>81</width>
+         <x>140</x>
+         <y>28</y>
+         <width>91</width>
          <height>20</height>
         </rect>
        </property>
@@ -2757,7 +2757,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>48</y>
          <width>141</width>
          <height>16</height>
         </rect>
@@ -2769,9 +2769,9 @@
       <widget class="QSlider" name="barkcon">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>50</y>
-         <width>81</width>
+         <x>140</x>
+         <y>48</y>
+         <width>91</width>
          <height>20</height>
         </rect>
        </property>

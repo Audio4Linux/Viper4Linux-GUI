@@ -436,7 +436,7 @@ void MainWindow::ConfirmConf(bool restart){
     if (myfile.is_open())
     {
         myfile << config;
-        writeLog("Updating Viper Config... (main/writer)");
+        //writeLog("Updating Viper Config... (main/writer)");
         myfile.close();
     }
     else writeLog("Unable to write to '" + QString::fromStdString(path) + "'; cannot update viper config (main/confirmconf)");
@@ -458,10 +458,12 @@ void MainWindow::Reset(){
     }
 }
 void MainWindow::Restart(){
+    if(process->state()!=QProcess::ProcessState::NotRunning)return;
     if(muteOnRestart)system("pactl set-sink-mute 0 1");
+    //process->kill();
     if(glava_fix)system("killall -r glava");
     process->start("viper", QStringList(initializer_list<QString>({"restart"})));
-    if(glava_fix)system("setsid glava -d &");
+    if(glava_fix)system("setsid glava -d >/dev/null 2>&1 &");
     if(muteOnRestart)system("pactl set-sink-mute 0 0");
 
 }
