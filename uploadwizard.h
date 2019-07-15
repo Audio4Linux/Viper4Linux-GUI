@@ -21,13 +21,13 @@ private slots:
     void openOAuthSettings();
     void UpdateList();
     void PageChanged(int);
-    bool DoPR(QString);
-    bool DoClone(QString);
-    bool DoChanges(QString);
-    bool DoPush(QString);
+    bool DoPR(const QString&);
+    bool DoClone(const QString&);
+    bool DoChanges(const QString&);
+    bool DoPush(const QString&);
     void DoFork();
-    bool CheckFork(QString);
-    QString getRequest(QString);
+    bool CheckFork(const QString&);
+    QString getRequest(const QString&);
 private:
     Ui::UploadWizard *ui;
     QString forkurl="";

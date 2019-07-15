@@ -41,8 +41,8 @@ void importandroid::import(){
     }
 
     char* resp = strtok(&response[0u], "|");
-    string newconfig = "";
-    string notices = "";
+    string newconfig;
+    string notices;
     int count_resp = 0;
     while (resp != nullptr) {
         if (count_resp == 0)newconfig=resp;
@@ -53,7 +53,7 @@ void importandroid::import(){
     }
 
     QString msginfotext = "Successfully converted!\n";
-    if(notices!=""){
+    if(!notices.empty()){
         msginfotext += "\nNotices:\n";
         msginfotext += QString::fromStdString(notices);
     }

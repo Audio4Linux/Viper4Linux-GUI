@@ -29,7 +29,7 @@ private slots:
     void importLinux();
     void exportLinux();
     void download();
-    void nameChanged(QString);
+    void nameChanged(const QString&);
     void showContextMenu(const QPoint &pos);
     void indexDownloaded(QNetworkReply*);
     void visitGithub();
@@ -38,7 +38,7 @@ private slots:
 private:
     Ui::Preset *ui;
     QStringList irs;
-    QString optimizeName(QString s);
+    QString optimizeName(const QString& s);
     QNetworkAccessManager *manager;
     QNetworkRequest request;
     QString toCamelCase(const QString& s);

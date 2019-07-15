@@ -112,7 +112,7 @@ void UploadWizard::PageChanged(int id){
                     auto value = line.substr(delimiterPos + 1);
 
                     contents += QString::fromStdString(line) + "\n";
-                    if(value=="")continue;
+                    if(value.empty())continue;
 
                     if(ui->includeIRS->checkState()!=Qt::Checked && !skipIrs){
                         changes += "No";
@@ -173,7 +173,7 @@ void UploadWizard::PageChanged(int id){
     case 4:{
         button(WizardButton::BackButton)->setEnabled(false);
         button(WizardButton::NextButton)->setEnabled(false);
-        if(CheckFork(forkurl)==false){
+        if(!CheckFork(forkurl)){
             back();
             QMessageBox::warning(this,"Error","The fork has not been found on your profile, you might have to wait a moment until it is accessible. Please try again in a few moments.");
             mainwin->writeLog("Forked repo not yet found on GitHub, please try again later... (uploadwizard/forkcheck)");
@@ -181,7 +181,7 @@ void UploadWizard::PageChanged(int id){
             button(WizardButton::NextButton)->setEnabled(true);
             break;
         }
-        if(DoClone(forkurl)==false){
+        if(!DoClone(forkurl)){
             back();
             QMessageBox::warning(this,"Error","Unable to clone repo, make sure /tmp/vipergui is writable");
             mainwin->writeLog("Unable to clone repo, make sure /tmp/vipergui is writable (uploadwizard/clone)");
@@ -189,7 +189,7 @@ void UploadWizard::PageChanged(int id){
             button(WizardButton::NextButton)->setEnabled(true);
             break;
         }
-        if(DoChanges(forkurl)==false){
+        if(!DoChanges(forkurl)){
             back();
             button(WizardButton::BackButton)->setEnabled(true);
             button(WizardButton::NextButton)->setEnabled(true);
@@ -202,7 +202,7 @@ void UploadWizard::PageChanged(int id){
     case 5:{
         button(WizardButton::BackButton)->setEnabled(false);
         button(WizardButton::NextButton)->setEnabled(false);
-        if(DoPush(forkurl)==false){
+        if(!DoPush(forkurl)){
             back();
             button(WizardButton::BackButton)->setEnabled(false);
             button(WizardButton::NextButton)->setEnabled(false);
@@ -223,7 +223,7 @@ void UploadWizard::PageChanged(int id){
             button(WizardButton::NextButton)->setEnabled(true);
             break;
         }
-        if(DoPR(forkurl)==false){
+        if(!DoPR(forkurl)){
             back();
             mainwin->writeLog("Invalid GitHub API response while sending a pull request (uploadwizard/pullrequest)");
             QMessageBox::warning(this,"Error","Invalid GitHub API response, please send a Pull Request manually");
@@ -239,7 +239,7 @@ void UploadWizard::PageChanged(int id){
     }
     }
 }
-bool UploadWizard::DoPR(QString repo){
+bool UploadWizard::DoPR(const QString& repo){
     QString user = repo.split("/")[0];
 
     QString out = "[" + getRequest("https://thebone.cf/viperuploader/router.php?token=" + ui->oauth_key->text() +
@@ -289,7 +289,7 @@ bool UploadWizard::DoPR(QString repo){
     }
     return true;
 }
-bool UploadWizard::DoPush(QString repo){
+bool UploadWizard::DoPush(const QString& repo){
     QProcess *process = new QProcess(this);
     QString tempdir = "/tmp/vipergui";
     ui->push_state->setText("Committing changes...");
@@ -316,7 +316,7 @@ bool UploadWizard::DoPush(QString repo){
     ui->push_state->setText("Finished");
     return true;
 }
-bool UploadWizard::DoClone(QString repo){
+bool UploadWizard::DoClone(const QString& repo){
     QProcess *process = new QProcess(this);
     QString tempdir = "/tmp/vipergui";
     QDir dir(tempdir);
@@ -334,7 +334,7 @@ bool UploadWizard::DoClone(QString repo){
     }
     return true;
 }
-bool UploadWizard::DoChanges(QString repo){
+bool UploadWizard::DoChanges(const QString& repo){
     QProcess *process = new QProcess(this);
     QString tempdir = "/tmp/vipergui";
 
@@ -391,7 +391,7 @@ bool UploadWizard::DoChanges(QString repo){
     ui->change_log->append("Finished");
     return true;
 }
-bool UploadWizard::CheckFork(QString repo){
+bool UploadWizard::CheckFork(const QString& repo){
     QString out = getRequest("https://api.github.com/repos/" + repo);
     if(out.contains("Error: ")&&!out.contains("Not Found")){
         mainwin->writeLog("Error while checking the fork: " + out + " (uploadwizard/forkcheck)");
@@ -437,7 +437,7 @@ void UploadWizard::DoFork(){
         else ui->forkstatus->setText("Finished");
     }
 }
-QString UploadWizard::getRequest(QString url_s){
+QString UploadWizard::getRequest(const QString& url_s){
     QUrl url(url_s);
     QNetworkReply* reply;
     QNetworkRequest networkRequest(url);

@@ -21,7 +21,6 @@
 #include <utility>
 #include <QProcess>
 #include <QDebug>
-#include <math.h>
 #include <QClipboard>
 #include "main.h"
 #include <vector>
@@ -125,7 +124,7 @@ void MainWindow::processProcOutput(){
         writeLogF(err,logpath);
     }
 }
-void MainWindow::writeLog(QString log,int mode){
+void MainWindow::writeLog(const QString& log,int mode){
     //Mode: 0-Log+Stdout 1-Log 2-Stdout
     QFile f("/tmp/viper4linux/ui.log");
     QString o = "[" + QTime::currentTime().toString() + "] " + log + "\n";
@@ -139,7 +138,7 @@ void MainWindow::writeLog(QString log,int mode){
     }
     if(mode==0|mode==2) cout << o_alt.toUtf8().constData() << endl;
 }
-void MainWindow::writeLogF(QString log,QString _path){
+void MainWindow::writeLogF(const QString& log,const QString& _path){
     QFile f(_path);
     QString o = "[" + QTime::currentTime().toString() + "] " + log;
     if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
@@ -151,7 +150,7 @@ void MainWindow::writeLogF(QString log,QString _path){
 //---Style
 void MainWindow::SetStyle(){
     if(theme_mode==0){
-        app->setPalette(this->style()->standardPalette());
+        QApplication::setPalette(this->style()->standardPalette());
         QString stylepath = "";
         if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
         else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
@@ -288,7 +287,7 @@ void MainWindow::SetStyle(){
             loadIcons(getWhiteIcons());
         }
         else{
-            app->setPalette(this->style()->standardPalette());
+            QApplication::setPalette(this->style()->standardPalette());
             QFile f(":/default.qss");
             if (!f.exists())printf("Unable to set stylesheet, file not found\n");
             else
@@ -301,7 +300,7 @@ void MainWindow::SetStyle(){
 
     }
 }
-void MainWindow::setPalette(QColor base,QColor background,QColor foreground,QColor selection = QColor(42,130,218),QColor selectiontext = Qt::black){
+void MainWindow::setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor& selection = QColor(42,130,218),const QColor& selectiontext = Qt::black){
     QPalette *palette = new QPalette();
     palette->setColor(QPalette::Window, background);
     palette->setColor(QPalette::WindowText, foreground);
@@ -317,7 +316,7 @@ void MainWindow::setPalette(QColor base,QColor background,QColor foreground,QCol
     palette->setColor(QPalette::Highlight, selection);
     palette->setColor(QPalette::HighlightedText, selectiontext);
     app->setPalette(*palette);
-    app->setStyleSheet("QFrame[frameShape=\"4\"], QFrame[frameShape=\"5\"]{ color: gray; }*::disabled { color: #555555;}QToolButton::disabled { color: #555555;}QComboBox::disabled { color: #555555;}");
+    app->setStyleSheet(R"(QFrame[frameShape="4"], QFrame[frameShape="5"]{ color: gray; }*::disabled { color: #555555;}QToolButton::disabled { color: #555555;}QComboBox::disabled { color: #555555;})");
 }
 void MainWindow::loadIcons(bool white){
     if(white){
@@ -385,7 +384,7 @@ void MainWindow::OpenLog(){
     }
 }
 void MainWindow::OpenSettings(){
-    if(settingsdlg_enabled==true){
+    if(settingsdlg_enabled){
         enableSetBtn(false);
         auto setting = new settings(this);
         setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
@@ -393,7 +392,7 @@ void MainWindow::OpenSettings(){
     }
 }
 void MainWindow::OpenPreset(){
-    if(presetdlg_enabled==true){
+    if(presetdlg_enabled){
         enablePresetBtn(false);
         auto _preset = new Preset(this);
         preset = _preset;
@@ -473,8 +472,8 @@ void MainWindow::DisableFX(){
 }
 
 //---Save/Load Presets
-void MainWindow::LoadPresetFile(QString filename){
-    const QString src = filename;
+void MainWindow::LoadPresetFile(const QString& filename){
+    const QString& src = filename;
     const QString dest = QString::fromStdString(path);
     if (QFile::exists(dest))QFile::remove(dest);
 
@@ -483,9 +482,9 @@ void MainWindow::LoadPresetFile(QString filename){
     reloadConfig();
     ConfirmConf();
 }
-void MainWindow::SavePresetFile(QString filename){
+void MainWindow::SavePresetFile(const QString& filename){
     const QString src = QString::fromStdString(path);
-    const QString dest = filename;
+    const QString& dest = filename;
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
@@ -494,7 +493,7 @@ void MainWindow::SavePresetFile(QString filename){
 void MainWindow::LoadExternalFile(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
     if(filename=="")return;
-    const QString src = filename;
+    const QString& src = filename;
     const QString dest = QString::fromStdString(path);
     if (QFile::exists(dest))QFile::remove(dest);
 
@@ -552,11 +551,11 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         break;
     }
     case colorpalette: {
-        color_palette = value.c_str();
+        color_palette = value;
         break;
     }
     case custompalette: {
-        custom_palette = value.c_str();
+        custom_palette = value;
         break;
     }
     case mutedRestart: {
@@ -660,7 +659,7 @@ void MainWindow::reloadConfig(){
 }
 void MainWindow::loadConfig(const string& key,string value){
     //cout << key << " -> " << value << endl;
-    if(value==""||is_only_ascii_whitespace(value)){
+    if(value.empty()||is_only_ascii_whitespace(value)){
         mainwin->writeLog("Key " + QString::fromStdString(key) + " is empty (main/parser)");
         return;
     }

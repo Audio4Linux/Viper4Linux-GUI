@@ -1,4 +1,4 @@
-﻿#include "preset.h"
+#include "preset.h"
 #include "ui_preset.h"
 #include "main.h"
 #include <QDir>
@@ -123,7 +123,7 @@ void Preset::indexDownloaded(QNetworkReply* reply){
     }
 
 }
-QString Preset::optimizeName(QString s){
+QString Preset::optimizeName(const QString& s){
     QRegExp rx("(\\-)"); //Split Confname by -
     QStringList query = s.split(rx);
     if(query.count()!=3) return ""; //Filter configs which ignore the naming convention
@@ -220,7 +220,7 @@ void Preset::exportAndroid(converter::configtype cmode){
         return;
     }
 
-    const QString src = fullpath;
+    const QString& src = fullpath;
     const QString dest = filename;
 
     if (QFile::exists(dest))QFile::remove(dest);
@@ -240,7 +240,7 @@ void Preset::importLinux(){
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
 
-    const QString src = filename;
+    const QString& src = filename;
     const QString dest = path + "/" + fileInfo.fileName();
     if (QFile::exists(dest))QFile::remove(dest);
 
@@ -273,7 +273,7 @@ void Preset::exportLinux(){
         return;
     }
 
-    const QString src = fullpath;
+    const QString& src = fullpath;
     const QString dest = filename;
     if (QFile::exists(dest))QFile::remove(dest);
 
@@ -317,7 +317,7 @@ void Preset::load(){
     }
     mainwin->LoadPresetFile(fullpath);
 }
-void Preset::nameChanged(QString name){
+void Preset::nameChanged(const QString& name){
     QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText("Overwrite");

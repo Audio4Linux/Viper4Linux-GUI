@@ -95,7 +95,7 @@ enum AppConfig {
     customwhiteicons,
     unknownApp
 };
-inline Config resolveConfig(std::string input) {
+inline Config resolveConfig(const std::string& input) {
     if( input == "fx_enable" ) return fx_enable;
     if( input == "tube_enable" ) return tube_enable;
     if( input == "colm_enable" ) return colm_enable;
@@ -174,7 +174,7 @@ inline Config resolveConfig(std::string input) {
     if( input == "dynsys_sidegain2" ) return dynsys_sidegain2;
    return unknown;
 }
-inline AppConfig resolveAppConfig(std::string input) {
+inline AppConfig resolveAppConfig(const std::string& input) {
     if( input == "configpath" ) return configpath;
     if( input == "autoapply" ) return autoapply;
     if( input == "glavafix" ) return glavafix;

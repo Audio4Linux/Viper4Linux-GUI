@@ -15,8 +15,8 @@ class MainWindow : public QMainWindow
 
 public:
     Ui::MainWindow *ui;
-    void writeLogF(QString,QString);
-    void writeLog(QString,int mode = 0);
+    void writeLogF(const QString&,const QString&);
+    void writeLog(const QString&,int mode = 0);
     string getPath();
     string getStylesheet();
     string getCustompalette();
@@ -25,8 +25,8 @@ public:
     void setCustompalette(string s);
     void setColorpalette(string);
     void switchPalette(const QPalette& palette);
-    void LoadPresetFile(QString);
-    void SavePresetFile(QString);
+    void LoadPresetFile(const QString&);
+    void SavePresetFile(const QString&);
     void enableSetBtn(bool on);
     void enableLogBtn(bool on);
     void enableConvBtn(bool on);
@@ -76,7 +76,7 @@ private:
     float CompMathB(float f, float f2, float f3);
     QString DoCompressorMath(int mode, float f);
     void loadIcons(bool);
-    void setPalette(QColor base,QColor background,QColor foreground,QColor,QColor);
+    void setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor&,const QColor&);
     int loadColor(int index,int rgb_index);
     void updateeq(int);
     void setColm(const int* data);

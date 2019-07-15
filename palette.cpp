@@ -51,7 +51,7 @@ int palette::loadColor(int index,int rgb_index){
     QStringList rgb = elements[index].split(',');
     return rgb[rgb_index].toInt();
 }
-void palette::saveColor(int index,QColor color){
+void palette::saveColor(int index,const QColor& color){
     QString strcolor = QString::number(color.red()) + "," + QString::number(color.green()) + "," + QString::number(color.blue());
     QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
     while(elements.size()<4)elements.append("");

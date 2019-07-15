@@ -12,7 +12,7 @@
 using namespace std;
 //Messy code but it works :S
 //Returns an error description or the converted linux config
-string converter::toLinux(string path,configtype cmode){
+string converter::toLinux(const string& path,configtype cmode){
     configmodel *conf = new configmodel();
     int errorLine, errorColumn;
     QString errorMsg;
@@ -179,7 +179,7 @@ string converter::toLinux(string path,configtype cmode){
         }
     }
 
-    string out = "";
+    string out;
     string n = "\n";
 
     out += "cure_enable=";
@@ -400,7 +400,7 @@ string converter::toLinux(string path,configtype cmode){
     QString dyn_bg(conf->dynsys_bassgain);
     out += to_string((int)((dyn_bg.toInt() * 20) + 100)) + n;
 
-    string info = "";
+    string info;
     if(conf->found_ddc) info += "Viper DDC not supported\n";
     if(conf->found_spkopt) info += "Speaker Optimization not supported\n";
     if(conf->found_irs) info += "IRS must be manually reselected\n";
@@ -408,7 +408,7 @@ string converter::toLinux(string path,configtype cmode){
     return resp;
 }
 //Returns an error description or the converted android config
-string converter::toAndroid(string path,configtype cmode){
+string converter::toAndroid(const string& path,configtype cmode){
     configmodel *conf = new configmodel();
 
     std::ifstream cFile(path);
@@ -596,7 +596,7 @@ string converter::toAndroid(string path,configtype cmode){
     doc.appendChild(map);
     return doc.toString().toUtf8().constData();
 }
-QDomElement converter::generateXmlEntry(QDomDocument* doc,QString type,QString name,QString value){
+QDomElement converter::generateXmlEntry(QDomDocument* doc,QString type,const QString& name,const QString& value){
     QDomElement obj = doc->createElement(type);
     obj.setAttribute("name", name);
     if(type == "boolean"||type=="int")obj.setAttribute("value", value);
@@ -605,11 +605,11 @@ QDomElement converter::generateXmlEntry(QDomDocument* doc,QString type,QString n
 }
 QString converter::boolToQString(bool b){
     if(b) return "true";
-    else return "false";
+    return "false";
 }
-void converter::decodeLinuxKey(const string& key,string value,configmodel* conf){
+void converter::decodeLinuxKey(const string& key,const string& value,configmodel* conf){
     //cout << key << " -> " << value << endl;
-    if(value==""||is_only_ascii_whitespace(value)){
+    if(value.empty()||is_only_ascii_whitespace(value)){
         mainwin->writeLog("Key " + QString::fromStdString(key) + " is empty (converter/linuxparser)");
         return;
     }

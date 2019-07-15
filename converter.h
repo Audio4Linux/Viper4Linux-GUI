@@ -82,12 +82,12 @@ public:
         officialV4A,
         teamDeWittV4A
     };
-    static std::string toLinux(std::string,configtype);
-    static std::string toAndroid(std::string,configtype);
+    static std::string toLinux(const std::string&,configtype);
+    static std::string toAndroid(const std::string&,configtype);
 private:
     static QString boolToQString(bool b);
-    static QDomElement generateXmlEntry(QDomDocument*,QString type,QString name,QString value);
-    static void decodeLinuxKey(const std::string& key,std::string value,configmodel*);
+    static QDomElement generateXmlEntry(QDomDocument*,QString type,const QString& name,const QString& value);
+    static void decodeLinuxKey(const std::string& key,const std::string& value,configmodel*);
     static bool is_only_ascii_whitespace(const std::string& str);
     static void readLinux(std::string path);
     static std::string intToString(int);

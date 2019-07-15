@@ -26,7 +26,7 @@ private slots:
     void updateFore();
     void updateIcons();
     void updateSelection();
-    void saveColor(int index,QColor color);
+    void saveColor(int index,const QColor& color);
 };
 
 #endif // PALETTE_H
