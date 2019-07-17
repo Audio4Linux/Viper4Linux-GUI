@@ -66,12 +66,13 @@ private slots:
     void OpenSettings();
     void updatepreset();
     void updatedynpreset();
-    void update(int);
+    void update(int,QObject*alt=nullptr);
     void LoadExternalFile();
     void SaveExternalFile();
     void OpenLog();
     void processProcOutput();
 private:
+    void updateWidgetUnit(QObject* sender,QString text);
     float CompMathA(float f, float f2, float f3);
     float CompMathB(float f, float f2, float f3);
     QString DoCompressorMath(int mode, float f);
@@ -95,6 +96,7 @@ private:
     void ConnectActions();
     void SetStyle();
     bool is_only_ascii_whitespace(const string&);
+    bool is_number(const string& s);
 };
 
 #endif // MAINWINDOW_H

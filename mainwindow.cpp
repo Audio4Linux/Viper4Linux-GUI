@@ -34,6 +34,7 @@
 #include <QStyleFactory>
 #include <QWhatsThis>
 #include "log.h"
+#include <QObject>
 using namespace std;
 
 static string path;
@@ -659,10 +660,13 @@ void MainWindow::reloadConfig(){
 }
 void MainWindow::loadConfig(const string& key,string value){
     //cout << key << " -> " << value << endl;
+
     if(value.empty()||is_only_ascii_whitespace(value)){
         mainwin->writeLog("Key " + QString::fromStdString(key) + " is empty (main/parser)");
         return;
     }
+    int i = -1;
+    if(is_number(value))i = stoi(value);
     switch (resolveConfig(key)) {
     case fx_enable: {
         if(value=="true") ui->disableFX->setChecked(false);
@@ -681,14 +685,17 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case colm_widening: {
         ui->colmwide->setValue(std::stoi(value));
+        update(i,ui->colmwide);
         break;
     }
     case colm_depth: {
         ui->colmdepth->setValue(std::stoi(value));
+        update(i,ui->colmdepth);
         break;
     }
     case colm_midimage: {
         ui->colmmidimg->setValue(std::stoi(value));
+        update(i,ui->colmmidimg);
         break;
     }
     case vc_enable: {
@@ -698,10 +705,12 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case vc_mode: {
         ui->vcmode->setValue(std::stoi(value));
+        update(i,ui->vcmode);
         break;
     }
     case vc_level: {
         ui->vclvl->setValue(std::stoi(value));
+        update(i,ui->vclvl);
         break;
     }
     case vb_enable: {
@@ -711,14 +720,17 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case vb_mode: {
         ui->vbmode->setValue(std::stoi(value));
+        update(i,ui->vbmode);
         break;
     }
     case vb_freq: {
         ui->vbfreq->setValue(std::stoi(value));
+        update(i,ui->vbfreq);
         break;
     }
     case vb_gain: {
         ui->vbgain->setValue(std::stoi(value));
+        update(i,ui->vbgain);
         break;
     }
     case vhe_enable: {
@@ -728,6 +740,7 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case vhe_level: {
         ui->vhplvl->setValue(std::stoi(value));
+        update(i,ui->vhplvl);
         break;
     }
     case ds_enable: {
@@ -737,6 +750,7 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case ds_level: {
         ui->difflvl->setValue(std::stoi(value));
+        update(i,ui->difflvl);
         break;
     }
     case reverb_enable: {
@@ -746,22 +760,27 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case reverb_roomsize: {
         ui->roomsize->setValue(std::stoi(value));
+        update(i,ui->roomsize);
         break;
     }
     case reverb_width: {
         ui->roomwidth->setValue(std::stoi(value));
+        update(i,ui->roomwidth);
         break;
     }
     case reverb_damp: {
         ui->roomdamp->setValue(std::stoi(value));
+        update(i,ui->roomdamp);
         break;
     }
     case reverb_wet: {
         ui->wet->setValue(std::stoi(value));
+        update(i,ui->wet);
         break;
     }
     case reverb_dry: {
         ui->dry->setValue(std::stoi(value));
+        update(i,ui->dry);
         break;
     }
     case agc_enable: {
@@ -771,26 +790,32 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case agc_ratio: {
         ui->gain->setValue(std::stoi(value));
+        update(i,ui->gain);
         break;
     }
     case agc_maxgain: {
         ui->maxgain->setValue(std::stoi(value));
+        update(i,ui->maxgain);
         break;
     }
     case agc_volume: {
         ui->maxvol->setValue(std::stoi(value));
+        update(i,ui->maxvol);
         break;
     }
     case lim_threshold: {
         ui->limiter->setValue(std::stoi(value));
+        update(i,ui->limiter);
         break;
     }
     case out_pan: {
         ui->outputpan->setValue(std::stoi(value));
+        update(i,ui->outputpan);
         break;
     }
     case out_volume: {
         ui->outvolume->setValue(std::stoi(value));
+        update(i,ui->outvolume);
         break;
     }
     case eq_enable: {
@@ -870,46 +895,57 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case fetcomp_threshold: {
         ui->comp_thres->setValue(std::stoi(value));
+        update(i,ui->comp_thres);
         break;
     }
     case fetcomp_gain: {
         ui->compgain->setValue(std::stoi(value));
+        update(i,ui->compgain);
         break;
     }
     case fetcomp_kneewidth: {
         ui->compwidth->setValue(std::stoi(value));
+        update(i,ui->compwidth);
         break;
     }
     case fetcomp_ratio: {
         ui->comp_ratio->setValue(std::stoi(value));
+        update(i,ui->comp_ratio);
         break;
     }
     case fetcomp_attack: {
         ui->compattack->setValue(std::stoi(value));
+        update(i,ui->compattack);
         break;
     }
     case fetcomp_release: {
         ui->comprelease->setValue(std::stoi(value));
+        update(i,ui->comprelease);
         break;
     }
     case fetcomp_meta_adapt: {
         ui->a_adapt->setValue(std::stoi(value));
+        update(i,ui->a_adapt);
         break;
     }
     case fetcomp_meta_crest: {
         ui->a_crest->setValue(std::stoi(value));
+        update(i,ui->a_crest);
         break;
     }
     case fetcomp_meta_maxattack: {
         ui->a_maxatk->setValue(std::stoi(value));
+        update(i,ui->a_maxatk);
         break;
     }
     case fetcomp_meta_maxrelease: {
         ui->a_maxrel->setValue(std::stoi(value));
+        update(i,ui->a_maxrel);
         break;
     }
     case fetcomp_meta_kneemulti: {
         ui->a_kneewidth->setValue(std::stoi(value));
+        update(i,ui->a_kneewidth);
         break;
     }
     case cure_enable: {
@@ -919,6 +955,7 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case cure_level: {
         ui->vcurelvl->setValue(std::stoi(value));
+        update(i,ui->vcurelvl);
         break;
     }
     case ax_enable: {
@@ -928,6 +965,7 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case ax_mode: {
         ui->axmode->setValue(std::stoi(value));
+        update(i,ui->axmode);
         break;
     }
     case vse_enable: {
@@ -937,10 +975,12 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case vse_ref_bark: {
         ui->barkfreq->setValue(std::stoi(value));
+        update(i,ui->barkfreq);
         break;
     }
     case vse_bark_cons: {
         ui->barkcon->setValue(std::stoi(value));
+        update(i,ui->barkcon);
         break;
     }
     case conv_enable: {
@@ -950,6 +990,7 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case conv_cc_level: {
         ui->convcc->setValue(std::stoi(value));
+        update(i,ui->convcc);
         break;
     }
     case conv_ir_path: {
@@ -966,30 +1007,37 @@ void MainWindow::loadConfig(const string& key,string value){
     }
     case dynsys_xcoeff1: {
         ui->dyn_xcoeff1->setValue(std::stoi(value));
+        update(i,ui->dyn_xcoeff1);
         break;
     }
     case dynsys_xcoeff2: {
         ui->dyn_xcoeff2->setValue(std::stoi(value));
+        update(i,ui->dyn_xcoeff2);
         break;
     }
     case dynsys_ycoeff1: {
         ui->dyn_ycoeff1->setValue(std::stoi(value));
+        update(i,ui->dyn_ycoeff1);
         break;
     }
     case dynsys_ycoeff2: {
         ui->dyn_ycoeff2->setValue(std::stoi(value));
+        update(i,ui->dyn_ycoeff2);
         break;
     }
     case dynsys_bassgain: {
         ui->dyn_bassgain->setValue(std::stoi(value));
+        update(i,ui->dyn_bassgain);
         break;
     }
     case dynsys_sidegain1: {
         ui->dyn_sidegain1->setValue(std::stoi(value));
+        update(i,ui->dyn_sidegain1);
         break;
     }
     case dynsys_sidegain2: {
         ui->dyn_sidegain2->setValue(std::stoi(value));
+        update(i,ui->dyn_sidegain2);
         break;
     }
     case unknown: {
@@ -1499,65 +1547,69 @@ void MainWindow::setColm(const int* data){
 }
 
 //---Updates Unit-Label
-void MainWindow::update(int d){
-    if(lockapply)return;//Skip if lockapply-flag is set (when setting presets, ...)
-    QObject* obj = sender();
+void MainWindow::update(int d,QObject *alt){
+    if(lockapply&&alt==nullptr)return;//Skip if lockapply-flag is set (when setting presets, ...)
+    QObject* obj;
+
+    if(alt==nullptr)obj = sender();
+    else obj = alt;
+
     QString pre = "";
     QString post = "";
     if(obj==ui->vbmode){
         //Bass
-        if(d==0) ui->info->setText("Natural Bass");
-        else if(d==1) ui->info->setText("Pure Bass+");
-        else if(d==2) ui->info->setText("Subwoofer");
-        else ui->info->setText("Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Natural Bass");
+        else if(d==1) updateWidgetUnit(obj,"Pure Bass+");
+        else if(d==2) updateWidgetUnit(obj,"Subwoofer");
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
     }
     else if(obj==ui->vcmode){
         //Clarity
-        if(d==0) ui->info->setText("Natural");
-        else if(d==1) ui->info->setText("OZone+");
-        else if(d==2) ui->info->setText("XHiFi");
-        else ui->info->setText("Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Natural");
+        else if(d==1) updateWidgetUnit(obj,"OZone+");
+        else if(d==2) updateWidgetUnit(obj,"XHiFi");
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
     }
     else if(obj==ui->gain){
         //AGC
-        if(d < 50) ui->info->setText("Very Slight (" + QString::number( d ) + ")");
-        else if(d < 100) ui->info->setText("Slight (" + QString::number( d )+")");
-        else if(d < 300) ui->info->setText("Moderate (" + QString::number( d )+")");
-        else if(d >= 300) ui->info->setText("Extreme (" + QString::number( d )+")");
-        else ui->info->setText(QString::number( d ));
+        if(d < 50) updateWidgetUnit(obj,"Very Slight (" + QString::number( d ) + ")");
+        else if(d < 100) updateWidgetUnit(obj,"Slight (" + QString::number( d )+")");
+        else if(d < 300) updateWidgetUnit(obj,"Moderate (" + QString::number( d )+")");
+        else if(d >= 300) updateWidgetUnit(obj,"Extreme (" + QString::number( d )+")");
+        else updateWidgetUnit(obj,QString::number( d ));
     }
     else if(obj==ui->axmode){
         //AnalogX
-        if(d==0) ui->info->setText("Slight");
-        else if(d==1) ui->info->setText("Moderate");
-        else if(d==2) ui->info->setText("Extreme");
-        else ui->info->setText("Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Slight");
+        else if(d==1) updateWidgetUnit(obj,"Moderate");
+        else if(d==2) updateWidgetUnit(obj,"Extreme");
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
     }
     else if(obj==ui->vcurelvl){
         //Cure+
-        if(d==0) ui->info->setText("Slight");
-        else if(d==1) ui->info->setText("Moderate");
-        else if(d==2) ui->info->setText("Extreme");
-        else ui->info->setText("Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Slight");
+        else if(d==1) updateWidgetUnit(obj,"Moderate");
+        else if(d==2) updateWidgetUnit(obj,"Extreme");
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
     }
     //Dynsys
-    else if(obj==ui->dyn_bassgain) ui->info->setText(QString::number( (d-100)/20 ) + "%");
+    else if(obj==ui->dyn_bassgain) updateWidgetUnit(obj,QString::number( (d-100)/20 ) + "%");
     else if(obj==ui->eq1||obj==ui->eq2||obj==ui->eq3||obj==ui->eq4||obj==ui->eq5||obj==ui->eq6||obj==ui->eq7||obj==ui->eq8||obj==ui->eq9||obj==ui->eq10){
         updateeq(d);
     }
     //Diff-Surround
-    else if(obj==ui->difflvl)ui->info->setText(QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
+    else if(obj==ui->difflvl)updateWidgetUnit(obj,QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
     //AGC
-    else if(obj==ui->maxgain)ui->info->setText(QString::number((int)translate(d,100,800,1,8))+"x (" + QString::number(d) + ")");
-    else if(obj==ui->maxvol)ui->info->setText(QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->maxgain)updateWidgetUnit(obj,QString::number((int)translate(d,100,800,1,8))+"x (" + QString::number(d) + ")");
+    else if(obj==ui->maxvol)updateWidgetUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
     //Bass
     else if(obj==ui->vbgain){
         long double x = d;
         long double in =1.472577725 * pow(10L,-18L) * pow(x,7L) - 3.011526005 * pow(10L,-15L) * pow(x,6L) + 2.29923043 * pow(10L,-12L) * pow(x,5L) - 9.530124502 * pow(10L,-10L) * pow(x,4L) + 3.960377639 * pow(10L,-7L) * pow(x,3L) - 1.965034894 * pow(10L,-4L) * pow(x,2L) + 7.693150538 * pow(10L,-2L) * x + 1.965508847 * pow(10L,-2L);
-        ui->info->setText(QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
     }
     //Clarity
-    else if(obj==ui->vclvl)ui->info->setText(QString::number(roundf(translate(d,0,450,0,14.8)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->vclvl)updateWidgetUnit(obj,QString::number(roundf(translate(d,0,450,0,14.8)*100)/100)+"dB (" + QString::number(d) + ")");
     //Volume
     else if(obj==ui->outvolume){
         long double x = d;
@@ -1566,33 +1618,33 @@ void MainWindow::update(int d){
         //Although this makes it easier to implement, it is not really responsive.
         //Unlike the other sliders, this one increases exponentially rather than linearly, because of that I had to recreate a formula from the values in the v4a app, to calculate an accurate dB value (using polynomial regression; this might not be the most efficient solution).
         long double in = -7.095691001L* pow(10L,-13L) * pow(x,8L) + 3.130488467L* pow(10L,-10L) * pow(x,7L) - 5.667388779* pow(10L,-8L) * pow(x,6L) + 5.394863197L* pow(10L,-6L) * pow(x,5L) - 2.864305503L* pow(10L,-4L) * pow(x,4L)+ 8.264191247L* pow(10L,-3L) * pow(x,3L) - 1.218006784L* pow(10L,-1L) * pow(x,2L)+ 1.529341362L * x - 40.00317088L;
-        ui->info->setText(QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
     }
-    else if(obj==ui->limiter)ui->info->setText(QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->limiter)updateWidgetUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
     //Headphone Engine
-    else if(obj==ui->vhplvl)ui->info->setText("Level " + QString::number(d+1));
+    else if(obj==ui->vhplvl)updateWidgetUnit(obj,"Level " + QString::number(d+1));
     //Reverb
     else if(obj==ui->roomsize){
         long double x = d;
-        ui->info->setText(QString::number(roundf(3.958333333* pow(10L,-7L) *pow(x,5L)- 4.106206294* pow(10L,-5L) *pow(x,4L)+ 1.189175408* pow(10L,-3L) *pow(x,3L)+ 4.16448133 * pow(10L,-3L) *pow(x,2L)+ 9.190238943 * pow(10L,-1L) * x+ 25.11013978))+"m\u00B2 (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(3.958333333* pow(10L,-7L) *pow(x,5L)- 4.106206294* pow(10L,-5L) *pow(x,4L)+ 1.189175408* pow(10L,-3L) *pow(x,3L)+ 4.16448133 * pow(10L,-3L) *pow(x,2L)+ 9.190238943 * pow(10L,-1L) * x+ 25.11013978))+"m\u00B2 (" + QString::number(d) + ")");
     }
     else if(obj==ui->roomwidth){
         long double x = d;
         long double in = -1.121794872 * pow(10L,-8L) * pow(x,5L) + 3.270687646 * pow(10L,-6L) * pow(x,4L) - 2.643502331 * pow(10L,-4L) * pow(x,3L) + 7.749854312 * pow(10L,-3L) * pow(x,2L) + 2.916958039 * pow(10L,-2L) * x+ 5.036713287;
-        ui->info->setText(QString::number(roundf(in))+"m (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(in))+"m (" + QString::number(d) + ")");
     }
     //Compressor
-    else if(obj==ui->comp_thres)ui->info->setText(DoCompressorMath(0,d));
-    else if(obj==ui->comp_ratio)ui->info->setText(DoCompressorMath(1,d));
-    else if(obj==ui->compwidth)ui->info->setText(DoCompressorMath(2,d));
-    else if(obj==ui->compgain)ui->info->setText(DoCompressorMath(3,d));
-    else if(obj==ui->compattack)ui->info->setText(DoCompressorMath(4,d));
-    else if(obj==ui->comprelease)ui->info->setText(DoCompressorMath(5,d));
-    else if(obj==ui->a_kneewidth)ui->info->setText(DoCompressorMath(6,d));
-    else if(obj==ui->a_maxatk)ui->info->setText(DoCompressorMath(7,d));
-    else if(obj==ui->a_maxrel)ui->info->setText(DoCompressorMath(8,d));
-    else if(obj==ui->a_crest)ui->info->setText(DoCompressorMath(9,d));
-    else if(obj==ui->a_adapt)ui->info->setText(DoCompressorMath(10,d));
+    else if(obj==ui->comp_thres)updateWidgetUnit(obj,DoCompressorMath(0,d));
+    else if(obj==ui->comp_ratio)updateWidgetUnit(obj,DoCompressorMath(1,d));
+    else if(obj==ui->compwidth)updateWidgetUnit(obj,DoCompressorMath(2,d));
+    else if(obj==ui->compgain)updateWidgetUnit(obj,DoCompressorMath(3,d));
+    else if(obj==ui->compattack)updateWidgetUnit(obj,DoCompressorMath(4,d));
+    else if(obj==ui->comprelease)updateWidgetUnit(obj,DoCompressorMath(5,d));
+    else if(obj==ui->a_kneewidth)updateWidgetUnit(obj,DoCompressorMath(6,d));
+    else if(obj==ui->a_maxatk)updateWidgetUnit(obj,DoCompressorMath(7,d));
+    else if(obj==ui->a_maxrel)updateWidgetUnit(obj,DoCompressorMath(8,d));
+    else if(obj==ui->a_crest)updateWidgetUnit(obj,DoCompressorMath(9,d));
+    else if(obj==ui->a_adapt)updateWidgetUnit(obj,DoCompressorMath(10,d));
     else{
         //Reverb
         if(obj==ui->roomdamp)post = "%";
@@ -1605,10 +1657,9 @@ void MainWindow::update(int d){
         else if(obj==ui->barkfreq)post = "Hz";
         //Convolver
         else if(obj==ui->convcc)post = "%";
-
-        ui->info->setText(pre + QString::number(d) + post);
+        updateWidgetUnit(obj,pre + QString::number(d) + post);
     }
-    OnUpdate();
+    if(!lockapply||obj!=nullptr)OnUpdate();
 }
 QString MainWindow::DoCompressorMath(int mode, float f){
     //Mode: 0-Threshold, 1-Ratio, 2-Knee, 3-Gain, 4-Atk, 5-Rel, 6-Kneemulti, 7-MaxAtk, 8-MaxRel, 9-Crest, 10-Adapt
@@ -1655,7 +1706,7 @@ QString MainWindow::DoCompressorMath(int mode, float f){
     return "E: Mode out of range";
 }
 float MainWindow::CompMathA(float f, float f2, float f3) {
-    return (float) exp(log((double) f2) + (((double) f) * (log((double) f3) - log((double) f2))));
+    return (float) exp(std::log((double) f2) + (((double) f) * (std::log((double) f3) - std::log((double) f2))));
 }
 float MainWindow::CompMathB(float f, float f2, float f3) {
     return ((f3 - f2) * f) + f2;
@@ -1680,6 +1731,11 @@ float MainWindow::translate(int value,int leftMin,int leftMax,float rightMin,flo
     float rightSpan = rightMax - rightMin;
     float valueScaled = float(value - leftMin) / float(leftSpan);
     return rightMin + (valueScaled * rightSpan);
+}
+void MainWindow::updateWidgetUnit(QObject* sender,QString text){
+    QWidget *w = qobject_cast<QWidget*>(sender);
+    w->setToolTip(text);
+    ui->info->setText(text);
 }
 
 //---Getter/Setter
@@ -1858,6 +1914,11 @@ void MainWindow::ConnectActions(){
 }
 
 //---Helper
+bool MainWindow::is_number(const string& s)
+{
+    return !s.empty() && std::find_if(s.begin(),
+        s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
+}
 bool MainWindow::is_only_ascii_whitespace( const std::string& str )
 {
     auto it = str.begin();

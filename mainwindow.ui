@@ -34,7 +34,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="bass">
      <property name="toolTipDuration">
@@ -144,7 +144,7 @@
         </rect>
        </property>
        <property name="toolTipDuration">
-        <number>2</number>
+        <number>-1</number>
        </property>
        <property name="minimum">
         <number>0</number>
