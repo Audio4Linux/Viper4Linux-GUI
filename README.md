@@ -8,12 +8,12 @@ Official UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
 
 ## Usage
 #### Features
-  * Change V4L Config on the fly 
-  * Auto-Apply (Save and reload V4L after performing changes)
+  * Change V4L properties on the fly 
+  * Apply automatically (Save and reload V4L after performing changes)
   * Convolver Selection
-  * UI-Theming/Stylesheets
-  * Import Android Configs
-  
+  * UI-Theming/Stylesheets/Color Palettes 
+  * Import/Export Android Configs
+
 ## Installation
 ### Ubuntu PPA
 #### Add PPA Repo
