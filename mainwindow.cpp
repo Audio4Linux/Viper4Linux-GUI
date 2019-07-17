@@ -1983,7 +1983,16 @@ void MainWindow::ConnectActions(){
     connect( ui->dyn_sidegain1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect( ui->dyn_sidegain2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
 
-
+    connect(ui->eq1, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq2, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq3, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq4, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq5, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq6, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq7, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq8, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq9, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->eq10, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
 }
 
 //---Helper
