@@ -27,7 +27,7 @@ settings::settings(QWidget *parent) :
     lockslot = true;
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
     connect(ui->paletteSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changePalette(const QString&)));
-connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
+    connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
     char result[100];
@@ -38,17 +38,22 @@ connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
     string style_sheet = mainwin->getStylesheet();
     int thememode = mainwin->getThememode();
     string palette = mainwin->getColorpalette();
+    int autofxmode = mainwin->getAutoFxMode();
 
     if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
     ui->autofx->setChecked(mainwin->getAutoFx());
     ui->muteonrestart->setChecked(mainwin->getMuteOnRestart());
     ui->glavafix->setChecked(mainwin->getGFix());
+
     connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
     connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
     connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
     connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
+
+    connect(ui->aa_instant, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
+    connect(ui->aa_release, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
 
     connect(ui->glavafix, SIGNAL(clicked()), this, SLOT(updateGLava()));
     connect(ui->autofx, SIGNAL(clicked()), this, SLOT(updateAutoFX()));
@@ -100,6 +105,8 @@ connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
     ui->uimode_css->setChecked(!thememode);//If 0 set true, else false
     ui->uimode_pal->setChecked(thememode);//If 0 set false, else true
 
+    ui->aa_instant->setChecked(!autofxmode);//same here..
+    ui->aa_release->setChecked(autofxmode);
     lockslot = false;
 }
 settings::~settings(){
@@ -118,7 +125,13 @@ void settings::updatePath(){
 void settings::updateGLava(){
     mainwin->setGFix(ui->glavafix->isChecked());
 }
-
+void settings::updateAutoFxMode(){
+    if(lockslot)return;
+    int mode = 0;
+    if(ui->aa_instant->isChecked())mode=0;
+    else if(ui->aa_release->isChecked())mode=1;
+    mainwin->setAutoFxMode(mode);
+}
 void settings::changeThemeMode(){
     if(lockslot)return;
 

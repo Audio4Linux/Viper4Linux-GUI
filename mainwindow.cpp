@@ -42,7 +42,8 @@ static string appcpath;
 static string style_sheet;
 static string color_palette;
 static string custom_palette;
-static int theme_mode;
+static int theme_mode = 0;
+static int autofxmode = 0;
 static bool custom_whiteicons;
 static bool autofx;
 static bool muteOnRestart;
@@ -415,8 +416,16 @@ void MainWindow::enableLogBtn(bool on){
 }
 
 //---Apply
-void MainWindow::OnUpdate(){
-    if(autofx && !lockapply)ConfirmConf();
+void MainWindow::OnUpdate(bool ignoremode){
+    //Will be called when slider has been moved, dynsys/eq preset set or spinbox changed
+    if((autofx&&(ignoremode||autofxmode==0)) && !lockapply){
+        ConfirmConf();
+    }
+}
+void MainWindow::OnRelease(){
+    if((autofx&&(autofxmode==1)) && !lockapply){
+        ConfirmConf();
+    }
 }
 void MainWindow::ConfirmConf(bool restart){
     string config = "fx_enable=";
@@ -530,6 +539,10 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         autofx = value=="true";
         break;
     }
+    case autoapplymode: {
+        autofxmode = atoi(value.c_str());
+        break;
+    }
     case configpath: {
         if(value.size() <= 2) break;
         path = value.substr(1, value.size() - 2);
@@ -590,11 +603,13 @@ void MainWindow::loadAppConfig(bool once){
 }
 
 //---UI Config Generator
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons){
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons,int aamode=autofxmode){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
     appconfig += "autoapply=" + converter1.str() + "\n";
+    appconfig += "autoapplymode=" + to_string(aamode) + "\n";
+
     appconfig += "configpath=\"" + cpath + "\"\n";
 
     stringstream converter2;
@@ -1336,7 +1351,7 @@ void MainWindow::setEQ(const int* data){
     ui->eq9->setValue(data[8]);
     ui->eq10->setValue(data[9]);
     lockapply=false;
-    OnUpdate();
+    OnUpdate(true);
 }
 void MainWindow::updatepreset(){
     if(ui->eqpreset->currentText() == "Pop"){
@@ -1504,7 +1519,7 @@ void MainWindow::setDynsys(const int* data){
     ui->dyn_sidegain1->setValue(data[4]);
     ui->dyn_sidegain2->setValue(data[5]);
     lockapply=false;
-    OnUpdate();
+    OnUpdate(true);
 }
 
 //---Colorful
@@ -1543,7 +1558,7 @@ void MainWindow::setColm(const int* data){
     ui->colmwide->setValue(data[0]);
     ui->colmdepth->setValue(data[1]);
     lockapply=false;
-    OnUpdate();
+    OnUpdate(true);
 }
 
 //---Updates Unit-Label
@@ -1659,7 +1674,7 @@ void MainWindow::update(int d,QObject *alt){
         else if(obj==ui->convcc)post = "%";
         updateWidgetUnit(obj,pre + QString::number(d) + post);
     }
-    if(!lockapply||obj!=nullptr)OnUpdate();
+    if(!lockapply||obj!=nullptr)OnUpdate(false);
 }
 QString MainWindow::DoCompressorMath(int mode, float f){
     //Mode: 0-Threshold, 1-Ratio, 2-Knee, 3-Gain, 4-Atk, 5-Rel, 6-Kneemulti, 7-MaxAtk, 8-MaxRel, 9-Crest, 10-Adapt
@@ -1759,6 +1774,7 @@ void MainWindow::setIRS(const string& irs,bool apply){
 }
 void MainWindow::setGFix(bool f){
     glava_fix = f;
+    SaveAppConfig();
 }
 bool MainWindow::getGFix(){
     return glava_fix;
@@ -1812,6 +1828,13 @@ void MainWindow::setWhiteIcons(bool b){
 }
 bool MainWindow::getWhiteIcons(){
     return custom_whiteicons;
+}
+int MainWindow::getAutoFxMode(){
+    return autofxmode;
+}
+void MainWindow::setAutoFxMode(int mode){
+    autofxmode = mode;
+    SaveAppConfig();
 }
 
 //---Connect UI-Signals
@@ -1911,6 +1934,56 @@ void MainWindow::ConnectActions(){
     connect( ui->dyn_bassgain , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect( ui->dyn_sidegain1 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect( ui->dyn_sidegain2 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
+
+
+    connect( ui->convcc , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->vbfreq , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->vbgain, SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->vbmode , SIGNAL(valueChanged(int)),this,  SLOT(OnRelease()));
+    connect( ui->difflvl , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->vhplvl , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->roomsize , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->roomwidth , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->roomdamp , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->wet , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->dry , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->colmwide , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->colmmidimg , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->colmdepth, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->vclvl, SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->vcmode, SIGNAL(valueChanged(int)),this,  SLOT(OnRelease()));
+    connect( ui->gain , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->maxgain , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->maxvol , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->outputpan , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
+    connect( ui->limiter , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->outvolume , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->vcurelvl, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->axmode, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->barkfreq, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->barkcon, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->comprelease, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->compgain, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->compwidth, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->comp_ratio, SIGNAL(sliderReleased()),this,SLOT(OnRelease()));
+    connect(ui->comp_thres, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->compattack, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->comprelease, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->a_adapt, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->a_crest, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->a_maxatk, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->a_maxrel, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->a_kneewidth, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+
+    connect( ui->dyn_xcoeff1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->dyn_xcoeff2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->dyn_ycoeff1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->dyn_ycoeff2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->dyn_bassgain , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->dyn_sidegain1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect( ui->dyn_sidegain2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+
+
 }
 
 //---Helper

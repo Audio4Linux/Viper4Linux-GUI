@@ -66,7 +66,7 @@
      <property name="geometry">
       <rect>
        <x>218</x>
-       <y>92</y>
+       <y>70</y>
        <width>41</width>
        <height>25</height>
       </rect>
@@ -103,7 +103,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>92</y>
+       <y>70</y>
        <width>201</width>
        <height>23</height>
       </rect>
@@ -112,24 +112,11 @@
       <string>Fix GLava sink switching</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="autofx">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>241</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Auto-Apply FX</string>
-     </property>
-    </widget>
     <widget class="QCheckBox" name="muteonrestart">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>66</y>
+       <y>44</y>
        <width>241</width>
        <height>23</height>
       </rect>
@@ -160,6 +147,54 @@
      <property name="text">
       <string>Save</string>
      </property>
+    </widget>
+    <widget class="QGroupBox" name="autofx">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>97</y>
+       <width>241</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Apply automatically</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <widget class="QRadioButton" name="aa_release">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>30</y>
+        <width>131</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Mouse release</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="aa_instant">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>71</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Instant</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
@@ -281,7 +316,6 @@
  </widget>
  <tabstops>
   <tabstop>path</tabstop>
-  <tabstop>autofx</tabstop>
   <tabstop>muteonrestart</tabstop>
   <tabstop>glavafix</tabstop>
   <tabstop>glavafix_help</tabstop>

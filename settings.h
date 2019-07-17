@@ -23,6 +23,7 @@ private slots:
         void updateMuteRestart();
         void updatePath();
         void updateGLava();
+        void updateAutoFxMode();
 };
 
 #endif // SETTINGS_H

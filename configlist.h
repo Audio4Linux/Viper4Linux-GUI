@@ -86,6 +86,7 @@ enum Config {
 enum AppConfig {
     configpath,
     autoapply,
+    autoapplymode,
     mutedRestart,
     glavafix,
     stylesheet,
@@ -177,6 +178,7 @@ inline Config resolveConfig(const std::string& input) {
 inline AppConfig resolveAppConfig(const std::string& input) {
     if( input == "configpath" ) return configpath;
     if( input == "autoapply" ) return autoapply;
+    if( input == "autoapplymode" ) return autoapplymode;
     if( input == "glavafix" ) return glavafix;
     if( input == "muteOnRestart" ) return mutedRestart;
     if( input == "stylesheet" ) return stylesheet;

@@ -20,6 +20,8 @@ public:
     string getPath();
     string getStylesheet();
     string getCustompalette();
+    void setAutoFxMode(int);
+    int getAutoFxMode();
     void setWhiteIcons(bool b);
     bool getWhiteIcons();
     void setCustompalette(string s);
@@ -60,7 +62,8 @@ private slots:
     void OpenPreset();
     void CopyEQ();
     void PasteEQ();
-    void OnUpdate();
+    void OnUpdate(bool = true);
+    void OnRelease();
     void OpenConv();
     void ResetEQ();
     void OpenSettings();
@@ -84,7 +87,7 @@ private:
     void setDynsys(const int* data);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool);
+    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool,int);
     string getMain();
     string getBass();
     string getSurround();
