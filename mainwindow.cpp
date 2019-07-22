@@ -389,7 +389,7 @@ void MainWindow::OpenSettings(){
     if(settingsdlg_enabled){
         enableSetBtn(false);
         auto setting = new settings(this);
-        setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
+        //setting->setFixedSize(setting->geometry().width(),setting->geometry().height());
         setting->show();
     }
 }
