@@ -374,7 +374,7 @@ void MainWindow::switchPalette(const QPalette& palette)
 void MainWindow::OpenConv(){
     enableConvBtn(false);
     auto c = new Convolver(this);
-    c->setFixedSize(c->geometry().width(),c->geometry().height());
+    //c->setFixedSize(c->geometry().width(),c->geometry().height());
     c->show();
 }
 void MainWindow::OpenLog(){
@@ -398,7 +398,7 @@ void MainWindow::OpenPreset(){
         enablePresetBtn(false);
         auto _preset = new Preset(this);
         preset = _preset;
-        _preset->setFixedSize(_preset->geometry().width(),_preset->geometry().height());
+        //_preset->setFixedSize(_preset->geometry().width(),_preset->geometry().height());
         _preset->show();
     }
 }
