@@ -15,6 +15,10 @@ Official UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
   * Import/Export Android Configs
 
 ## Installation
+  * [Ubuntu PPA](#ubuntu-ppa)
+  * [Debian/Ubuntu](#debianubuntu)
+  * [Arch](#arch)
+  * [Portable/Manually](#portablemanually)
 ### Ubuntu PPA
 #### Add PPA Repo
 ```
