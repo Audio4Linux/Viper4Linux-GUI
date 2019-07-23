@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     app = &a;
     MainWindow w;
     mainwin = &w;
-    w.setFixedSize(w.geometry().width(),w.geometry().height());
+   // w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
 
     w.show();
