@@ -195,7 +195,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="bass">
        <property name="toolTipDuration">
@@ -3228,10 +3228,17 @@
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>tabhost</tabstop>
+  <tabstop>vb</tabstop>
   <tabstop>vbmode</tabstop>
   <tabstop>vbgain</tabstop>
   <tabstop>vbfreq</tabstop>
+  <tabstop>tubesim</tabstop>
+  <tabstop>clarity</tabstop>
+  <tabstop>vcmode</tabstop>
+  <tabstop>vclvl</tabstop>
   <tabstop>vcure</tabstop>
+  <tabstop>vcurelvl</tabstop>
+  <tabstop>dynsys</tabstop>
   <tabstop>dyn_bassgain</tabstop>
   <tabstop>dyn_xcoeff1</tabstop>
   <tabstop>dyn_xcoeff2</tabstop>
@@ -3239,7 +3246,14 @@
   <tabstop>dyn_sidegain2</tabstop>
   <tabstop>dyn_ycoeff1</tabstop>
   <tabstop>dyn_ycoeff2</tabstop>
+  <tabstop>dynsys_preset</tabstop>
+  <tabstop>vhp</tabstop>
+  <tabstop>vhplvl</tabstop>
+  <tabstop>diff</tabstop>
   <tabstop>difflvl</tabstop>
+  <tabstop>reverb</tabstop>
+  <tabstop>roomsize</tabstop>
+  <tabstop>roomwidth</tabstop>
   <tabstop>roomdamp</tabstop>
   <tabstop>wet</tabstop>
   <tabstop>dry</tabstop>
@@ -3255,24 +3269,27 @@
   <tabstop>eq10</tabstop>
   <tabstop>enable_eq</tabstop>
   <tabstop>eqpreset</tabstop>
-  <tabstop>copy_eq</tabstop>
   <tabstop>paste_eq</tabstop>
+  <tabstop>copy_eq</tabstop>
   <tabstop>reset_eq</tabstop>
+  <tabstop>enable_comp</tabstop>
+  <tabstop>noclip</tabstop>
   <tabstop>comp_thres</tabstop>
   <tabstop>comp_ratio</tabstop>
-  <tabstop>m_release</tabstop>
-  <tabstop>comprelease</tabstop>
-  <tabstop>m_width</tabstop>
-  <tabstop>compwidth</tabstop>
   <tabstop>m_attack</tabstop>
   <tabstop>compattack</tabstop>
+  <tabstop>m_release</tabstop>
+  <tabstop>comprelease</tabstop>
   <tabstop>m_gain</tabstop>
   <tabstop>compgain</tabstop>
+  <tabstop>m_width</tabstop>
+  <tabstop>compwidth</tabstop>
   <tabstop>a_kneewidth</tabstop>
   <tabstop>a_maxatk</tabstop>
   <tabstop>a_maxrel</tabstop>
   <tabstop>a_adapt</tabstop>
   <tabstop>a_crest</tabstop>
+  <tabstop>agc</tabstop>
   <tabstop>gain</tabstop>
   <tabstop>maxvol</tabstop>
   <tabstop>maxgain</tabstop>
@@ -3284,10 +3301,14 @@
   <tabstop>colmwide</tabstop>
   <tabstop>colmdepth</tabstop>
   <tabstop>colmpreset</tabstop>
+  <tabstop>ax</tabstop>
   <tabstop>axmode</tabstop>
   <tabstop>vse</tabstop>
   <tabstop>barkfreq</tabstop>
   <tabstop>barkcon</tabstop>
+  <tabstop>conv</tabstop>
+  <tabstop>convpath</tabstop>
+  <tabstop>conv_select</tabstop>
   <tabstop>convcc</tabstop>
   <tabstop>cpreset</tabstop>
   <tabstop>set</tabstop>

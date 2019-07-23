@@ -105,7 +105,11 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>path</tabstop>
+  <tabstop>reload</tabstop>
+  <tabstop>fileSelect</tabstop>
   <tabstop>files</tabstop>
+  <tabstop>close</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>

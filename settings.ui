@@ -448,6 +448,24 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>path</tabstop>
+  <tabstop>savepath</tabstop>
+  <tabstop>muteonrestart</tabstop>
+  <tabstop>glavafix_help</tabstop>
+  <tabstop>glavafix</tabstop>
+  <tabstop>autofx</tabstop>
+  <tabstop>aa_instant</tabstop>
+  <tabstop>aa_release</tabstop>
+  <tabstop>uimode_css</tabstop>
+  <tabstop>uimode_pal</tabstop>
+  <tabstop>styleSelect</tabstop>
+  <tabstop>paletteSelect</tabstop>
+  <tabstop>paletteConfig</tabstop>
+  <tabstop>github</tabstop>
+  <tabstop>close</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>

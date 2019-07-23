@@ -263,8 +263,18 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>presetName</tabstop>
+  <tabstop>add</tabstop>
   <tabstop>files</tabstop>
+  <tabstop>importBtn</tabstop>
+  <tabstop>exportBtn</tabstop>
+  <tabstop>remove</tabstop>
+  <tabstop>load</tabstop>
+  <tabstop>githubRepo</tabstop>
   <tabstop>repoindex</tabstop>
+  <tabstop>camelcase</tabstop>
+  <tabstop>upload</tabstop>
+  <tabstop>download</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>

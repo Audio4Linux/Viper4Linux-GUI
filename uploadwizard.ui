@@ -516,15 +516,22 @@
   </widget>
  </widget>
  <tabstops>
+  <tabstop>oauth_key</tabstop>
+  <tabstop>getkey</tabstop>
   <tabstop>configSelect</tabstop>
   <tabstop>name</tabstop>
   <tabstop>author</tabstop>
+  <tabstop>includeIRS</tabstop>
   <tabstop>changes</tabstop>
   <tabstop>forklog</tabstop>
   <tabstop>change_log</tabstop>
   <tabstop>push_log</tabstop>
+  <tabstop>viewrepo</tabstop>
   <tabstop>pull_title</tabstop>
   <tabstop>pull_desc</tabstop>
+  <tabstop>manageOAuth</tabstop>
+  <tabstop>viewYRepo</tabstop>
+  <tabstop>viewPR</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
