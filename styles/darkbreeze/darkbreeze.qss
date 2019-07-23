@@ -120,7 +120,16 @@ QGroupBox::indicator:checked
 border: none;
     border-image: url(:/darkbreeze/darkbreeze/rc/checkbox_checked.svg);
 }
+QGroupBox {
+  margin-top: 12px;
+  padding-top: 12px;
+}
 
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding-top: 4px;
+}
 QCheckBox::indicator:checked:hover,
 QCheckBox::indicator:checked:focus,
 QCheckBox::indicator:checked:pressed,

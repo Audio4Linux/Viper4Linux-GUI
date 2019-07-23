@@ -79,7 +79,16 @@ QCheckBox:disabled
 {
     color: #BAB9B8;
 }
+QGroupBox {
+  margin-top: 12px;
+  padding-top: 12px;
+}
 
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding-top: 4px;
+}
 QGroupBox::indicator
 {
     margin-left: 0.2ex;

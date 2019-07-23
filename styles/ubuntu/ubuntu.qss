@@ -28,11 +28,21 @@ QFrame[frameShape="8"],
 QFrame[frameShape="9"]{
     color: #333333;
 }
+
 QGroupBox {
-        padding:2px;
-        color: #333333;
+  padding:2px;
+  color: #333333;
+  margin-top: 12px;
+  border: 1px solid rgb(200,200,200);
+  padding-top: 12px;
+  border-radius: 4px;
 }
 
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding-top: 4px;
+}
 QGroupBox::indicator:checked {
         border-radius:4px;
         border-style:solid;

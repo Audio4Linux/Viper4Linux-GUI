@@ -30,6 +30,14 @@ border-width:1px;
 border-color: transparent;
         color: black;
         padding: 2px;
+        margin-top: 12px;
+        padding-top: 12px;
+}
+
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding-top: 4px;
 }
 QGroupBox::indicator:disabled {
 border-radius:4px;

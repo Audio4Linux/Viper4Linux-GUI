@@ -165,7 +165,7 @@ void MainWindow::SetStyle(){
         else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
         else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
         else stylepath = ":/default.qss";
-
+        ui->vb->setContentsMargins(4,4,4,4);
         QFile f(stylepath);
         if (!f.exists())printf("Unable to set stylesheet, file not found\n");
         else

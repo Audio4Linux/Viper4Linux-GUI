@@ -39,7 +39,7 @@ QPushButton{
 	border-width: 1px;
 	border-style: solid;
 	color: #a9b7c6;
-	padding: 2px;
+        padding: 4px;
 	background-color: #000000;
 }
 QPushButton::default{
@@ -73,7 +73,7 @@ QToolButton {
 	border-bottom-width: 1px;
 	border-style: solid;
 	color: #a9b7c6;
-	padding: 2px;
+        padding: 2px;
 	background-color: #000000;
 }
 QToolButton:hover{
@@ -85,7 +85,7 @@ QToolButton:hover{
 	border-bottom-width: 2px;
 	border-style: solid;
 	color: #FFFFFF;
-	padding-bottom: 1px;
+        padding-bottom: 1px;
 	background-color: #000000;
 }
 QToolButton:pressed{
@@ -109,7 +109,7 @@ QPushButton:hover{
 	border-bottom-width: 1px;
 	border-style: solid;
 	color: #FFFFFF;
-	padding-bottom: 2px;
+        padding-bottom: 2px;
 	background-color: #000000;
 }
 QPushButton:pressed{
@@ -121,7 +121,7 @@ QPushButton:pressed{
 	border-bottom-width: 2px;
 	border-style: solid;
 	color: #e67e22;
-	padding-bottom: 1px;
+        padding-bottom: 1px;
 	background-color: #000000;
 }
 QPushButton:disabled{
@@ -133,14 +133,14 @@ QPushButton:disabled{
 	border-bottom-width: 2px;
 	border-style: solid;
 	color: #808086;
-	padding-bottom: 1px;
+        padding-bottom: 1px;
 	background-color: #000000;
 }
 QLineEdit {
 	border-width: 1px; border-radius: 4px;
 	border-color: rgb(58, 58, 58);
 	border-style: inset;
-	padding: 0 8px;
+        padding: 0 8px;
 	color: #a9b7c6;
 	background:#000000;
 	selection-background-color:#007b50;
@@ -383,9 +383,19 @@ QCheckBox:hover {
         border-color: rgb(87, 97, 106);
         background-color:#000000;
 }
+
 QGroupBox {
-        color: #a9b7c6;
-        padding: 2px;
+color: #a9b7c6;
+  margin-top: 12px;
+  border: 1px solid #151515;
+  padding-top: 12px;
+  border-radius: 4px;
+}
+
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding-top: 4px;
 }
 QGroupBox::indicator:disabled {
         color: #808086;

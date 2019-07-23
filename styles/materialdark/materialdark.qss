@@ -20,9 +20,19 @@ QTextEdit {
 	background-color:#1e1d23;
 	color: #a9b7c6;
 }
+
 QGroupBox {
-        color: #a9b7c6;
-        padding: 2px;
+color: #a9b7c6;
+  margin-top: 12px;
+  border: 1px solid rgb(77,77,77);
+  padding-top: 12px;
+  border-radius: 4px;
+}
+
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding-top: 4px;
 }
 QGroupBox::indicator:disabled {
         color: #808086;
