@@ -153,12 +153,24 @@ void Preset::UpdateList(){
 
     QStringList nameFilter("*.conf");
     QStringList files = dir.entryList(nameFilter);
-    if(files.count()<1)return;
+    if(files.count()<1){
+        QFont font;
+        font.setItalic(true);
+        font.setPointSize(11);
+
+        QListWidgetItem* placeholder = new QListWidgetItem;
+        placeholder->setFont(font);
+        placeholder->setText("No presets saved");
+        placeholder->setFlags(placeholder->flags() & ~Qt::ItemIsEnabled);
+        ui->files->addItem(placeholder);
+        return;
+    }
 
     for(int i = 0; i < files.count(); i++){ //Strip extensions
         QFileInfo fi(files[i]);
         files[i] = fi.completeBaseName();
     }
+
     ui->files->addItems(files);
 }
 QString Preset::toCamelCase(const QString& s)

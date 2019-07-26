@@ -38,11 +38,13 @@
 using namespace std;
 
 static string path;
+static string irs_path;
 static string appcpath;
 static string style_sheet;
 static string color_palette;
 static string custom_palette;
 static int theme_mode = 0;
+static int conv_deftab = 0;
 static int autofxmode = 0;
 static bool custom_whiteicons;
 static bool autofx;
@@ -548,6 +550,11 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         path = value.substr(1, value.size() - 2);
         break;
     }
+    case irspath: {
+        if(value.size() <= 2) break;
+        irs_path = value.substr(1, value.size() - 2);
+        break;
+    }
     case glavafix: {
         glava_fix = value=="true";
         break;
@@ -562,6 +569,11 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
     }
     case thememode: {
         theme_mode = atoi(value.c_str());
+        break;
+    }
+    case convolver_defaulttab: {
+        if(value.empty()) conv_deftab = 0;
+        else conv_deftab = atoi(value.c_str());
         break;
     }
     case colorpalette: {
@@ -603,7 +615,7 @@ void MainWindow::loadAppConfig(bool once){
 }
 
 //---UI Config Generator
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons,int aamode=autofxmode){
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons,int aamode=autofxmode,const string& ipath = irs_path,int c_deftab = conv_deftab){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -611,6 +623,9 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     appconfig += "autoapplymode=" + to_string(aamode) + "\n";
 
     appconfig += "configpath=\"" + cpath + "\"\n";
+    appconfig += "irspath=\"" + ipath + "\"\n";
+
+    appconfig += "convolver_defaulttab=" + to_string(c_deftab) + "\n";
 
     stringstream converter2;
     converter2 << boolalpha << muteRestart;
@@ -1835,6 +1850,32 @@ int MainWindow::getAutoFxMode(){
 void MainWindow::setAutoFxMode(int mode){
     autofxmode = mode;
     SaveAppConfig();
+}
+void MainWindow::setIrsPath(string npath){
+    irs_path = std::move(npath);
+    SaveAppConfig();
+}
+int MainWindow::getConv_DefTab(){
+    return conv_deftab;
+}
+void MainWindow::setConv_DefTab(int mode){
+    //Modes:
+    //  0 - Fav
+    //  1 - Filesys
+    conv_deftab = mode;
+    SaveAppConfig();
+}
+
+string MainWindow::getIrsPath(){
+    if(irs_path.empty()){
+        struct passwd *pw = getpwuid(getuid());
+        const char *homedir = pw->pw_dir;
+        char result[100];
+        strcpy(result,homedir);
+        strcat(result,"/IRS");
+        return result;
+    }
+    return irs_path;
 }
 
 //---Connect UI-Signals

@@ -35,13 +35,18 @@ settings::settings(QWidget *parent) :
     strcat(result,"/.config/viper4linux/audio.conf");
 
     string path = mainwin->getPath();
+    string irspath = mainwin->getIrsPath();
     string style_sheet = mainwin->getStylesheet();
     int thememode = mainwin->getThememode();
     string palette = mainwin->getColorpalette();
     int autofxmode = mainwin->getAutoFxMode();
+    int conv_deftab = mainwin->getConv_DefTab();
 
     if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
+
+    ui->irspath->setText(QString::fromStdString(irspath));
+
     ui->autofx->setChecked(mainwin->getAutoFx());
     ui->muteonrestart->setChecked(mainwin->getMuteOnRestart());
     ui->glavafix->setChecked(mainwin->getGFix());
@@ -55,10 +60,14 @@ settings::settings(QWidget *parent) :
     connect(ui->aa_instant, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
     connect(ui->aa_release, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
 
+    connect(ui->deftab_filesys, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
+    connect(ui->deftab_favorite, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
+
     connect(ui->glavafix, SIGNAL(clicked()), this, SLOT(updateGLava()));
     connect(ui->autofx, SIGNAL(clicked()), this, SLOT(updateAutoFX()));
     connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
     connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
+    connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
 
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
@@ -107,6 +116,9 @@ settings::settings(QWidget *parent) :
 
     ui->aa_instant->setChecked(!autofxmode);//same here..
     ui->aa_release->setChecked(autofxmode);
+
+    ui->deftab_favorite->setChecked(!conv_deftab);
+    ui->deftab_filesys->setChecked(conv_deftab);
     lockslot = false;
 }
 settings::~settings(){
@@ -122,6 +134,9 @@ void settings::updateMuteRestart(){
 void settings::updatePath(){
     mainwin->setPath(ui->path->text().toUtf8().constData());
 }
+void settings::updateIrsPath(){
+    mainwin->setIrsPath(ui->irspath->text().toUtf8().constData());
+}
 void settings::updateGLava(){
     mainwin->setGFix(ui->glavafix->isChecked());
 }
@@ -131,6 +146,13 @@ void settings::updateAutoFxMode(){
     if(ui->aa_instant->isChecked())mode=0;
     else if(ui->aa_release->isChecked())mode=1;
     mainwin->setAutoFxMode(mode);
+}
+void settings::updateCDefTab(){
+    if(lockslot)return;
+    int mode = 0;
+    if(ui->deftab_favorite->isChecked())mode=0;
+    else if(ui->deftab_filesys->isChecked())mode=1;
+    mainwin->setConv_DefTab(mode);
 }
 void settings::changeThemeMode(){
     if(lockslot)return;

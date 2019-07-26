@@ -17,8 +17,13 @@ public:
 private slots:
     void reject();
     void reload();
+    void reloadFav();
+    void addFav();
+    void renameFav();
+    void removeFav();
     void closeWindow();
     void updateIR();
+    void updateIR_Fav();
     void selectFolder();
 private:
     Ui::Convolver *ui;

@@ -17,6 +17,10 @@ public:
     Ui::MainWindow *ui;
     void writeLogF(const QString&,const QString&);
     void writeLog(const QString&,int mode = 0);
+    void setConv_DefTab(int mode);
+    int getConv_DefTab();
+    void setIrsPath(string npath);
+    string getIrsPath();
     string getPath();
     string getStylesheet();
     string getCustompalette();
@@ -87,7 +91,7 @@ private:
     void setDynsys(const int* data);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool,int);
+    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool,int,const string&,int);
     string getMain();
     string getBass();
     string getSurround();
