@@ -19,6 +19,8 @@ palette::palette(QWidget *parent) :
                      this, SLOT(updateFore()));
     QObject::connect(ui->sel, SIGNAL(clicked()),
                      this, SLOT(updateSelection()));
+    QObject::connect(ui->disabled, SIGNAL(clicked()),
+                     this, SLOT(updateDisabled()));
 
     connect(ui->close,SIGNAL(clicked()),this,SLOT(closeWin()));
     connect(ui->whiteicons,SIGNAL(clicked()),this,SLOT(updateIcons()));
@@ -34,11 +36,11 @@ void palette::closeWin(){
     this->close();
 }
 void palette::Reset(){
-    mainwin->setCustompalette("25,25,25;53,53,53;255,255,255;42,130,218");
+    mainwin->setCustompalette("25,25,25;53,53,53;255,255,255;42,130,218;85,85,85");
 }
 int palette::loadColor(int index,int rgb_index){
     QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
-    if(elements.length()<4||elements[index].split(',').size()<3){
+    if(elements.length()<5||elements[index].split(',').size()<3){
         if(index==0)return 25;
         else if(index==1)return 53;
         else if(index==2)return 255;
@@ -47,6 +49,7 @@ int palette::loadColor(int index,int rgb_index){
             else if(rgb_index==1)return 130;
             else if(rgb_index==2)return 218;
         }
+        else if(index==4) return 85;
     }
     QStringList rgb = elements[index].split(',');
     return rgb[rgb_index].toInt();
@@ -54,7 +57,7 @@ int palette::loadColor(int index,int rgb_index){
 void palette::saveColor(int index,const QColor& color){
     QString strcolor = QString::number(color.red()) + "," + QString::number(color.green()) + "," + QString::number(color.blue());
     QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
-    while(elements.size()<4)elements.append("");
+    while(elements.size()<5)elements.append("");
     elements.replace(index,strcolor);
     mainwin->setCustompalette(elements.join(";").toUtf8().constData());
 }
@@ -109,3 +112,14 @@ void palette::updateSelection(){
     }
 }
 
+void palette::updateDisabled(){
+    QColorDialog *sel = new QColorDialog();
+    sel->setOptions(QColorDialog::DontUseNativeDialog);
+    sel->setCurrentColor(QColor(loadColor(4,0),loadColor(4,1),loadColor(4,2)));
+
+    if (sel->exec() == QColorDialog::Accepted)
+    {
+        QColor color = sel->currentColor();
+        saveColor(4,color);
+    }
+}

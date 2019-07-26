@@ -84,7 +84,7 @@ private:
     float CompMathB(float f, float f2, float f3);
     QString DoCompressorMath(int mode, float f);
     void loadIcons(bool);
-    void setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor&,const QColor&);
+    void setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor&,const QColor&,const QColor& = QColor(85,85,85));
     int loadColor(int index,int rgb_index);
     void updateeq(int);
     void setColm(const int* data);

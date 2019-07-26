@@ -218,7 +218,7 @@ void MainWindow::SetStyle(){
             QColor foreground = Qt::white;
             QColor base = QColor(83,83,125);
             QColor selection = QColor(85,85,127);
-            setPalette(base,background,foreground,selection,Qt::black);
+            setPalette(base,background,foreground,selection,Qt::black,QColor(144,144,179));
          }else if(color_palette=="white"){
             QColor background = Qt::white;
             QColor foreground = Qt::black;
@@ -285,9 +285,10 @@ void MainWindow::SetStyle(){
             QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));
             QColor foreground = QColor(loadColor(2,0),loadColor(2,1),loadColor(2,2));
             QColor selection = QColor(loadColor(3,0),loadColor(3,1),loadColor(3,2));
+            QColor disabled = QColor(loadColor(4,0),loadColor(4,1),loadColor(4,2));
             QColor selectiontext = QColor(255-loadColor(3,0),255-loadColor(3,1),255-loadColor(3,2));
 
-            setPalette(base,background,foreground,selection,selectiontext);
+            setPalette(base,background,foreground,selection,selectiontext,disabled);
             loadIcons(getWhiteIcons());
         }
         else{
@@ -304,7 +305,7 @@ void MainWindow::SetStyle(){
 
     }
 }
-void MainWindow::setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor& selection = QColor(42,130,218),const QColor& selectiontext = Qt::black){
+void MainWindow::setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor& selection = QColor(42,130,218),const QColor& selectiontext = Qt::black,const QColor& disabled){
     QPalette *palette = new QPalette();
     palette->setColor(QPalette::Window, background);
     palette->setColor(QPalette::WindowText, foreground);
@@ -320,7 +321,8 @@ void MainWindow::setPalette(const QColor& base,const QColor& background,const QC
     palette->setColor(QPalette::Highlight, selection);
     palette->setColor(QPalette::HighlightedText, selectiontext);
     app->setPalette(*palette);
-    app->setStyleSheet(R"(QFrame[frameShape="4"], QFrame[frameShape="5"]{ color: gray; }*::disabled { color: #555555;}QToolButton::disabled { color: #555555;}QComboBox::disabled { color: #555555;})");
+    QString rgbdisabled = disabled.name();
+    app->setStyleSheet("QFrame[frameShape=\"4\"], QFrame[frameShape=\"5\"]{ color: gray; }*::disabled { color: " + rgbdisabled +";}QToolButton::disabled { color: " + rgbdisabled +";}QComboBox::disabled { color: " + rgbdisabled +";}");
 }
 void MainWindow::loadIcons(bool white){
     if(white){
@@ -347,7 +349,7 @@ void MainWindow::loadIcons(bool white){
 }
 int MainWindow::loadColor(int index,int rgb_index){
     QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
-    if(elements.length()<4||elements[index].split(',').size()<3){
+    if(elements.length()<5||elements[index].split(',').size()<3){
         if(index==0)return 25;
         else if(index==1)return 53;
         else if(index==2)return 255;
@@ -356,6 +358,7 @@ int MainWindow::loadColor(int index,int rgb_index){
             else if(rgb_index==1)return 130;
             else if(rgb_index==2)return 218;
         }
+        else if(index==4) return 85;
     }
     QStringList rgb = elements[index].split(',');
     return rgb[rgb_index].toInt();
