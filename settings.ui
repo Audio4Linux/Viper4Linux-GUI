@@ -83,9 +83,9 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QCheckBox" name="muteonrestart">
+          <widget class="QCheckBox" name="glavafix">
            <property name="text">
-            <string>Mute while restarting Viper</string>
+            <string>Fix GLava sink switching</string>
            </property>
           </widget>
          </item>
@@ -135,9 +135,9 @@
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="glavafix">
+        <widget class="QCheckBox" name="muteonrestart">
          <property name="text">
-          <string>Fix GLava sink switching</string>
+          <string>Mute while restarting Viper</string>
          </property>
         </widget>
        </item>
@@ -532,9 +532,7 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>path</tabstop>
   <tabstop>savepath</tabstop>
-  <tabstop>muteonrestart</tabstop>
   <tabstop>glavafix_help</tabstop>
-  <tabstop>glavafix</tabstop>
   <tabstop>autofx</tabstop>
   <tabstop>aa_instant</tabstop>
   <tabstop>aa_release</tabstop>
