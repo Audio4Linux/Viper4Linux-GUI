@@ -79,7 +79,7 @@ private slots:
     void OpenLog();
     void processProcOutput();
 private:
-    void updateWidgetUnit(QObject* sender,QString text);
+    void updateWidgetUnit(QObject* sender,QString text,bool);
     float CompMathA(float f, float f2, float f3);
     float CompMathB(float f, float f2, float f3);
     QString DoCompressorMath(int mode, float f);

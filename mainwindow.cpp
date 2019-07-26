@@ -83,8 +83,10 @@ MainWindow::MainWindow(QWidget *parent) :
     path = result;
     appcpath = result2;
 
+
     reloadConfig();
     loadAppConfig();
+
 
     QMenu *menu = new QMenu();
     menu->addAction("Reload Viper", this,SLOT(Restart()));
@@ -1591,58 +1593,58 @@ void MainWindow::update(int d,QObject *alt){
     QString post = "";
     if(obj==ui->vbmode){
         //Bass
-        if(d==0) updateWidgetUnit(obj,"Natural Bass");
-        else if(d==1) updateWidgetUnit(obj,"Pure Bass+");
-        else if(d==2) updateWidgetUnit(obj,"Subwoofer");
-        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Natural Bass",alt==nullptr);
+        else if(d==1) updateWidgetUnit(obj,"Pure Bass+",alt==nullptr);
+        else if(d==2) updateWidgetUnit(obj,"Subwoofer",alt==nullptr);
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
     }
     else if(obj==ui->vcmode){
         //Clarity
-        if(d==0) updateWidgetUnit(obj,"Natural");
-        else if(d==1) updateWidgetUnit(obj,"OZone+");
-        else if(d==2) updateWidgetUnit(obj,"XHiFi");
-        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Natural",alt==nullptr);
+        else if(d==1) updateWidgetUnit(obj,"OZone+",alt==nullptr);
+        else if(d==2) updateWidgetUnit(obj,"XHiFi",alt==nullptr);
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
     }
     else if(obj==ui->gain){
         //AGC
-        if(d < 50) updateWidgetUnit(obj,"Very Slight (" + QString::number( d ) + ")");
-        else if(d < 100) updateWidgetUnit(obj,"Slight (" + QString::number( d )+")");
-        else if(d < 300) updateWidgetUnit(obj,"Moderate (" + QString::number( d )+")");
-        else if(d >= 300) updateWidgetUnit(obj,"Extreme (" + QString::number( d )+")");
-        else updateWidgetUnit(obj,QString::number( d ));
+        if(d < 50) updateWidgetUnit(obj,"Very Slight (" + QString::number( d ) + ")",alt==nullptr);
+        else if(d < 100) updateWidgetUnit(obj,"Slight (" + QString::number( d )+")",alt==nullptr);
+        else if(d < 300) updateWidgetUnit(obj,"Moderate (" + QString::number( d )+")",alt==nullptr);
+        else if(d >= 300) updateWidgetUnit(obj,"Extreme (" + QString::number( d )+")",alt==nullptr);
+        else updateWidgetUnit(obj,QString::number( d ),alt==nullptr);
     }
     else if(obj==ui->axmode){
         //AnalogX
-        if(d==0) updateWidgetUnit(obj,"Slight");
-        else if(d==1) updateWidgetUnit(obj,"Moderate");
-        else if(d==2) updateWidgetUnit(obj,"Extreme");
-        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Slight",alt==nullptr);
+        else if(d==1) updateWidgetUnit(obj,"Moderate",alt==nullptr);
+        else if(d==2) updateWidgetUnit(obj,"Extreme",alt==nullptr);
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
     }
     else if(obj==ui->vcurelvl){
         //Cure+
-        if(d==0) updateWidgetUnit(obj,"Slight");
-        else if(d==1) updateWidgetUnit(obj,"Moderate");
-        else if(d==2) updateWidgetUnit(obj,"Extreme");
-        else updateWidgetUnit(obj,"Mode "+QString::number( d ));
+        if(d==0) updateWidgetUnit(obj,"Slight",alt==nullptr);
+        else if(d==1) updateWidgetUnit(obj,"Moderate",alt==nullptr);
+        else if(d==2) updateWidgetUnit(obj,"Extreme",alt==nullptr);
+        else updateWidgetUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
     }
     //Dynsys
-    else if(obj==ui->dyn_bassgain) updateWidgetUnit(obj,QString::number( (d-100)/20 ) + "%");
+    else if(obj==ui->dyn_bassgain) updateWidgetUnit(obj,QString::number( (d-100)/20 ) + "%",alt==nullptr);
     else if(obj==ui->eq1||obj==ui->eq2||obj==ui->eq3||obj==ui->eq4||obj==ui->eq5||obj==ui->eq6||obj==ui->eq7||obj==ui->eq8||obj==ui->eq9||obj==ui->eq10){
         updateeq(d);
     }
     //Diff-Surround
-    else if(obj==ui->difflvl)updateWidgetUnit(obj,QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)");
+    else if(obj==ui->difflvl)updateWidgetUnit(obj,QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)",alt==nullptr);
     //AGC
-    else if(obj==ui->maxgain)updateWidgetUnit(obj,QString::number((int)translate(d,100,800,1,8))+"x (" + QString::number(d) + ")");
-    else if(obj==ui->maxvol)updateWidgetUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->maxgain)updateWidgetUnit(obj,QString::number((int)translate(d,100,800,1,8))+"x (" + QString::number(d) + ")",alt==nullptr);
+    else if(obj==ui->maxvol)updateWidgetUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")",alt==nullptr);
     //Bass
     else if(obj==ui->vbgain){
         long double x = d;
         long double in =1.472577725 * pow(10L,-18L) * pow(x,7L) - 3.011526005 * pow(10L,-15L) * pow(x,6L) + 2.29923043 * pow(10L,-12L) * pow(x,5L) - 9.530124502 * pow(10L,-10L) * pow(x,4L) + 3.960377639 * pow(10L,-7L) * pow(x,3L) - 1.965034894 * pow(10L,-4L) * pow(x,2L) + 7.693150538 * pow(10L,-2L) * x + 1.965508847 * pow(10L,-2L);
-        updateWidgetUnit(obj,QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")",alt==nullptr);
     }
     //Clarity
-    else if(obj==ui->vclvl)updateWidgetUnit(obj,QString::number(roundf(translate(d,0,450,0,14.8)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->vclvl)updateWidgetUnit(obj,QString::number(roundf(translate(d,0,450,0,14.8)*100)/100)+"dB (" + QString::number(d) + ")",alt==nullptr);
     //Volume
     else if(obj==ui->outvolume){
         long double x = d;
@@ -1651,33 +1653,33 @@ void MainWindow::update(int d,QObject *alt){
         //Although this makes it easier to implement, it is not really responsive.
         //Unlike the other sliders, this one increases exponentially rather than linearly, because of that I had to recreate a formula from the values in the v4a app, to calculate an accurate dB value (using polynomial regression; this might not be the most efficient solution).
         long double in = -7.095691001L* pow(10L,-13L) * pow(x,8L) + 3.130488467L* pow(10L,-10L) * pow(x,7L) - 5.667388779* pow(10L,-8L) * pow(x,6L) + 5.394863197L* pow(10L,-6L) * pow(x,5L) - 2.864305503L* pow(10L,-4L) * pow(x,4L)+ 8.264191247L* pow(10L,-3L) * pow(x,3L) - 1.218006784L* pow(10L,-1L) * pow(x,2L)+ 1.529341362L * x - 40.00317088L;
-        updateWidgetUnit(obj,QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(in*100)/100)+"dB (" + QString::number(d) + ")",alt==nullptr);
     }
-    else if(obj==ui->limiter)updateWidgetUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")");
+    else if(obj==ui->limiter)updateWidgetUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")",alt==nullptr);
     //Headphone Engine
-    else if(obj==ui->vhplvl)updateWidgetUnit(obj,"Level " + QString::number(d+1));
+    else if(obj==ui->vhplvl)updateWidgetUnit(obj,"Level " + QString::number(d+1),alt==nullptr);
     //Reverb
     else if(obj==ui->roomsize){
         long double x = d;
-        updateWidgetUnit(obj,QString::number(roundf(3.958333333* pow(10L,-7L) *pow(x,5L)- 4.106206294* pow(10L,-5L) *pow(x,4L)+ 1.189175408* pow(10L,-3L) *pow(x,3L)+ 4.16448133 * pow(10L,-3L) *pow(x,2L)+ 9.190238943 * pow(10L,-1L) * x+ 25.11013978))+"m\u00B2 (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(3.958333333* pow(10L,-7L) *pow(x,5L)- 4.106206294* pow(10L,-5L) *pow(x,4L)+ 1.189175408* pow(10L,-3L) *pow(x,3L)+ 4.16448133 * pow(10L,-3L) *pow(x,2L)+ 9.190238943 * pow(10L,-1L) * x+ 25.11013978))+"m\u00B2 (" + QString::number(d) + ")",alt==nullptr);
     }
     else if(obj==ui->roomwidth){
         long double x = d;
         long double in = -1.121794872 * pow(10L,-8L) * pow(x,5L) + 3.270687646 * pow(10L,-6L) * pow(x,4L) - 2.643502331 * pow(10L,-4L) * pow(x,3L) + 7.749854312 * pow(10L,-3L) * pow(x,2L) + 2.916958039 * pow(10L,-2L) * x+ 5.036713287;
-        updateWidgetUnit(obj,QString::number(roundf(in))+"m (" + QString::number(d) + ")");
+        updateWidgetUnit(obj,QString::number(roundf(in))+"m (" + QString::number(d) + ")",alt==nullptr);
     }
     //Compressor
-    else if(obj==ui->comp_thres)updateWidgetUnit(obj,DoCompressorMath(0,d));
-    else if(obj==ui->comp_ratio)updateWidgetUnit(obj,DoCompressorMath(1,d));
-    else if(obj==ui->compwidth)updateWidgetUnit(obj,DoCompressorMath(2,d));
-    else if(obj==ui->compgain)updateWidgetUnit(obj,DoCompressorMath(3,d));
-    else if(obj==ui->compattack)updateWidgetUnit(obj,DoCompressorMath(4,d));
-    else if(obj==ui->comprelease)updateWidgetUnit(obj,DoCompressorMath(5,d));
-    else if(obj==ui->a_kneewidth)updateWidgetUnit(obj,DoCompressorMath(6,d));
-    else if(obj==ui->a_maxatk)updateWidgetUnit(obj,DoCompressorMath(7,d));
-    else if(obj==ui->a_maxrel)updateWidgetUnit(obj,DoCompressorMath(8,d));
-    else if(obj==ui->a_crest)updateWidgetUnit(obj,DoCompressorMath(9,d));
-    else if(obj==ui->a_adapt)updateWidgetUnit(obj,DoCompressorMath(10,d));
+    else if(obj==ui->comp_thres)updateWidgetUnit(obj,DoCompressorMath(0,d),alt==nullptr);
+    else if(obj==ui->comp_ratio)updateWidgetUnit(obj,DoCompressorMath(1,d),alt==nullptr);
+    else if(obj==ui->compwidth)updateWidgetUnit(obj,DoCompressorMath(2,d),alt==nullptr);
+    else if(obj==ui->compgain)updateWidgetUnit(obj,DoCompressorMath(3,d),alt==nullptr);
+    else if(obj==ui->compattack)updateWidgetUnit(obj,DoCompressorMath(4,d),alt==nullptr);
+    else if(obj==ui->comprelease)updateWidgetUnit(obj,DoCompressorMath(5,d),alt==nullptr);
+    else if(obj==ui->a_kneewidth)updateWidgetUnit(obj,DoCompressorMath(6,d),alt==nullptr);
+    else if(obj==ui->a_maxatk)updateWidgetUnit(obj,DoCompressorMath(7,d),alt==nullptr);
+    else if(obj==ui->a_maxrel)updateWidgetUnit(obj,DoCompressorMath(8,d),alt==nullptr);
+    else if(obj==ui->a_crest)updateWidgetUnit(obj,DoCompressorMath(9,d),alt==nullptr);
+    else if(obj==ui->a_adapt)updateWidgetUnit(obj,DoCompressorMath(10,d),alt==nullptr);
     else{
         //Reverb
         if(obj==ui->roomdamp)post = "%";
@@ -1690,7 +1692,7 @@ void MainWindow::update(int d,QObject *alt){
         else if(obj==ui->barkfreq)post = "Hz";
         //Convolver
         else if(obj==ui->convcc)post = "%";
-        updateWidgetUnit(obj,pre + QString::number(d) + post);
+        updateWidgetUnit(obj,pre + QString::number(d) + post,alt==nullptr);
     }
     if(!lockapply||obj!=nullptr)OnUpdate(false);
 }
@@ -1765,10 +1767,10 @@ float MainWindow::translate(int value,int leftMin,int leftMax,float rightMin,flo
     float valueScaled = float(value - leftMin) / float(leftSpan);
     return rightMin + (valueScaled * rightSpan);
 }
-void MainWindow::updateWidgetUnit(QObject* sender,QString text){
+void MainWindow::updateWidgetUnit(QObject* sender,QString text,bool viasignal){
     QWidget *w = qobject_cast<QWidget*>(sender);
     w->setToolTip(text);
-    ui->info->setText(text);
+    if(viasignal)ui->info->setText(text);
 }
 
 //---Getter/Setter
