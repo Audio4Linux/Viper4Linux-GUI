@@ -3248,10 +3248,22 @@
                </item>
                <item row="0" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
                  <item>
                   <widget class="QLineEdit" name="convpath">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -3379,7 +3391,6 @@
   <tabstop>barkfreq</tabstop>
   <tabstop>barkcon</tabstop>
   <tabstop>conv</tabstop>
-  <tabstop>convpath</tabstop>
   <tabstop>conv_select</tabstop>
   <tabstop>convcc</tabstop>
   <tabstop>cpreset</tabstop>

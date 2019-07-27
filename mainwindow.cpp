@@ -54,6 +54,7 @@ static bool settingsdlg_enabled=true;
 static bool presetdlg_enabled=true;
 static bool logdlg_enabled=true;
 static bool lockapply = false;
+static string activeirs = "";
 static QProcess* process;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -1032,7 +1033,10 @@ void MainWindow::loadConfig(const string& key,string value){
         if(value.size() <= 2) break;
         value = value.substr(1, value.size() - 2);
         QString ir = QString::fromStdString(value);
-        ui->convpath->setText(ir);
+        activeirs = value;
+        QFileInfo irsInfo(ir);
+        ui->convpath->setText(irsInfo.baseName());
+        ui->convpath->setCursorPosition(0);
         break;
     }
     case dynsys_enable: {
@@ -1093,7 +1097,7 @@ string MainWindow::getMisc(){
     QString refbark = QString::number(ui->barkfreq->value());
     QString conbark = QString::number(ui->barkcon->value());
     QString convcc = QString::number(ui->comprelease->value());
-    QString convir = ui->convpath->text();
+    QString convir = QString::fromStdString(activeirs);
 
     out += "cure_enable=";
     if(ui->vcure->isChecked())out += "true" + n;
@@ -1789,7 +1793,10 @@ void MainWindow::setMuteOnRestart(bool on){
     SaveAppConfig();
 }
 void MainWindow::setIRS(const string& irs,bool apply){
-    ui->convpath->setText(QString::fromStdString((irs)));
+    activeirs = irs;
+    QFileInfo irsInfo(QString::fromStdString(irs));
+    ui->convpath->setText(irsInfo.baseName());
+    ui->convpath->setCursorPosition(0);
     if(apply)ConfirmConf();
 }
 void MainWindow::setGFix(bool f){
