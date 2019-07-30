@@ -1,7 +1,7 @@
 # Viper4Linux-GUI
 [![Build Status](https://travis-ci.org/ThePBone/Viper4Linux-GUI.svg?branch=master)](https://travis-ci.org/ThePBone/Viper4Linux-GUI)
 
-Official UI for Viper4Linux (https://github.com/L3vi47h4N/Viper4Linux)
+Official UI for Viper4Linux (https://github.com/noahbliss/Viper4Linux)
   * Telegram: @ThePBone
   * [Stable Builds](https://github.com/ThePBone/Viper4Linux-GUI/releases)
   * [Nightly Builds](https://nightly.thebone.cf/viper-gui/?C=M;O=D)
@@ -103,6 +103,6 @@ sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/
 ## Credits
   * [Material Icons](https://material.io/tools/icons/)
   * [QSS Stylesheets - GTRONICK (modified by ThePBone)](https://github.com/GTRONICK/QSS)
-  * [Viper4Linux - L3vi47h4N](https://github.com/L3vi47h4N/Viper4Linux)
+  * [Viper4Linux - noahbliss](https://github.com/noahbliss/Viper4Linux)
 
-Thanks @L3vi47h4N for declaring the GUI as official :)
+Thanks @noahbliss for declaring the GUI as official :)
