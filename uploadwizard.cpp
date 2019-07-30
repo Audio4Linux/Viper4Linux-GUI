@@ -40,7 +40,7 @@ void UploadWizard::openOAuthSettings(){
     QDesktopServices::openUrl(QUrl("https://github.com/settings/connections/applications/56ea3102eb3b299f115d"));
 }
 void UploadWizard::openPRs(){
-    QDesktopServices::openUrl(QUrl("https://github.com/L3vi47h4N/Viper4Linux-Configs/pulls"));
+    QDesktopServices::openUrl(QUrl("https://github.com/noahbliss/Viper4Linux-Configs/pulls"));
 }
 void UploadWizard::openRepo(){
     QDesktopServices::openUrl(QUrl("https://github.com/" + forkurl));
@@ -246,7 +246,7 @@ bool UploadWizard::DoPR(const QString& repo){
                                    "&method=post&title=" + QUrl::toPercentEncoding(ui->pull_title->text()) +
                                    "&body=" + QUrl::toPercentEncoding(ui->pull_desc->toPlainText()) +
                                    "&base=master&head=" + user + ":master" +
-                                   "&url=repos/L3vi47h4N/Viper4Linux-Configs/pulls") + "]";
+                                   "&url=repos/noahbliss/Viper4Linux-Configs/pulls") + "]";
     if(out.contains("Error")){
         mainwin->writeLog("GitHub API returned an error (pull request): " + out);
         QMessageBox::information(this,"Error",out);
@@ -404,7 +404,7 @@ bool UploadWizard::CheckFork(const QString& repo){
 void UploadWizard::DoFork(){
     ui->forkstatus->setText("Forking Repo...");
     ui->forklog->setText("Forking Viper4Linux-Config Repo... ");
-    QString out = "[" + getRequest("https://thebone.cf/viperuploader/router.php?token=" + ui->oauth_key->text() + "&method=post&url=repos/L3vi47h4N/Viper4Linux-Configs/forks") + "]";
+    QString out = "[" + getRequest("https://thebone.cf/viperuploader/router.php?token=" + ui->oauth_key->text() + "&method=post&url=repos/noahbliss/Viper4Linux-Configs/forks") + "]";
     if(out.contains("Error: ")){
         QMessageBox::information(this,"Error",out);
         mainwin->writeLog("Error while forking: " + out + " (uploadwizard/fork)");

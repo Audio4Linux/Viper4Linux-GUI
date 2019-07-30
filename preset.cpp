@@ -60,7 +60,7 @@ Preset::Preset(QWidget *parent) :
     menuEx->addAction("Linux Configuration", this,SLOT(exportLinux()));
     ui->exportBtn->setMenu(menuEx);
 
-    QUrl url("https://api.github.com/repos/L3vi47h4N/Viper4Linux-Configs/contents/");
+    QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
     request.setUrl(url);
     manager->get(request);
 }
@@ -74,7 +74,7 @@ void Preset::repoIndexChanged(){
 }
 void Preset::reloadRepo(){
     ui->repoindex->clear();
-    QUrl url("https://api.github.com/repos/L3vi47h4N/Viper4Linux-Configs/contents/");
+    QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
     request.setUrl(url);
     manager->get(request);
 }
@@ -128,13 +128,13 @@ QString Preset::optimizeName(const QString& s){
     QStringList query = s.split(rx);
     if(query.count()!=3) return ""; //Filter configs which ignore the naming convention
     QString author = query[0];
-    if(author=="000")author = "L3vi47h4N";
+    if(author=="000")author = "noahbliss";
     QString description = query[1].replace("_"," ");
     if(ui->camelcase->checkState()==Qt::CheckState::Checked)return toCamelCase(description) + " by " + author;
     else return description + " by " + author;
 }
 void Preset::visitGithub(){
-    QDesktopServices::openUrl(QUrl("https://github.com/L3vi47h4N/Viper4Linux-Configs"));
+    QDesktopServices::openUrl(QUrl("https://github.com/noahbliss/Viper4Linux-Configs"));
 }
 void Preset::reject()
 {
