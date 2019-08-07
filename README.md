@@ -40,12 +40,12 @@ To simplify the installation on Debian, I have added an automatic install script
 You can also use it to update to a new stable release (if available).
 If you prefer using apt, read the PPA section above.
 ```
-curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/install.sh | sudo bash
+curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/scripts/install-debian.sh | sudo bash
 ```
 #### Uninstallation
 You can use this uninstall script if you want to remove the GUI (assuming you have installed it with the above automatic script) 
 ```
-curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/uninstall-debian.sh | sudo bash
+curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/scripts/uninstall-debian.sh | sudo bash
 ```
 ### Arch
 On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
