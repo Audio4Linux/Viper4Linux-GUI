@@ -1,5 +1,5 @@
 # Viper4Linux-GUI
-[![Build Status](https://travis-ci.org/ThePBone/Viper4Linux-GUI.svg?branch=master)](https://travis-ci.org/ThePBone/Viper4Linux-GUI)
+[![Build Status](https://travis-ci.org/ThePBone/Viper4Linux-GUI.svg?branch=master)](https://travis-ci.org/ThePBone/Viper4Linux-GUI) ![GitHub](https://img.shields.io/github/license/ThePBone/Viper4Linux-GUI) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ThePBone/Viper4Linux-GUI) ![GitHub release](https://img.shields.io/github/release/ThePBone/Viper4Linux-GUI)
 
 Official UI for Viper4Linux (https://github.com/noahbliss/Viper4Linux)
   * Telegram: @ThePBone
@@ -47,15 +47,18 @@ You can use this uninstall script if you want to remove the GUI (assuming you ha
 ```
 curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/scripts/uninstall-debian.sh | sudo bash
 ```
-### Arch
+### Arch 
+
 On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
 ```
 yay -S viper4linux-gui-git  
 ```
+
 Or [this one](https://aur.archlinux.org/packages/viper4linux-gui) to get the latest stable release:
 ```
 yay -S viper4linux-gui 
 ```
+![AUR version](https://img.shields.io/aur/version/viper4linux-gui?label=aur%20%28stable%29) ![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
 ### Portable/Manually
 #### Install Dependencies
 You will need to change this line, depending on which package manager your distribution uses.
