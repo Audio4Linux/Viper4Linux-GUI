@@ -3,7 +3,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-if (( $EUID != 0 )); then
+if ( $EUID != 0 ); then
     echo "Please run as root"
     exit
 fi
@@ -23,7 +23,7 @@ printf "Getting latest release tag... "
 
 if [[ $latestrelease == "" ]]
 then
-    printf ${RED}"Invalid Response"${NC}"\n"  
+    printf "${RED}Invalid Response${NC}\n"  
     printf "Please check your network connection.\n"
     exit 1
 fi

@@ -100,13 +100,14 @@ void UploadWizard::PageChanged(int id){
         if(!QFile::exists(fullpath))changes =+ "File does not exist";
         else{
 
-            bool skipIrs = false;
+            
             std::ifstream cFile(fullpath.toUtf8().constData());
             if (cFile.is_open())
-            {
+            {	
+		bool skipIrs = false;
                 std::string line;
                 while(getline(cFile, line)){
-                    if(line[0] == '#' || line.empty() || line.empty()) continue;
+                    if(line[0] == '#' || line.empty()) continue;
                     auto delimiterPos = line.find('=');
                     auto name = line.substr(0, delimiterPos);
                     auto value = line.substr(delimiterPos + 1);
@@ -281,7 +282,7 @@ bool UploadWizard::DoPR(const QString& repo){
                 button(WizardButton::BackButton)->setEnabled(true);
                 button(WizardButton::NextButton)->setEnabled(true);
                 back();
-            } catch (exception ex) {
+            } catch (const exception& ex) {
                 mainwin->writeLog("Unable to parse error information from GitHub API (uploadwizard/pullrequest): " + QString::fromStdString(ex.what()));
                return false;
             }
@@ -335,7 +336,6 @@ bool UploadWizard::DoClone(const QString& repo){
     return true;
 }
 bool UploadWizard::DoChanges(const QString& repo){
-    QProcess *process = new QProcess(this);
     QString tempdir = "/tmp/vipergui";
 
     ui->change_log->append("Saving Conf...");

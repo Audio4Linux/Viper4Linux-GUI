@@ -143,7 +143,7 @@ void MainWindow::writeLog(const QString& log,int mode){
         }
         f.close();
     }
-    if(mode==0|mode==2) cout << o_alt.toUtf8().constData() << endl;
+    if(mode==0||mode==2) cout << o_alt.toUtf8().constData() << endl;
 }
 void MainWindow::writeLogF(const QString& log,const QString& _path){
     QFile f(_path);
@@ -603,7 +603,7 @@ void MainWindow::loadAppConfig(bool once){
     {
         std::string line;
         while(getline(cFile, line)){
-            if(line[0] == '#' || line.empty() || line.empty()) continue;
+            if(line[0] == '#' || line.empty()) continue;
             auto delimiterPos = line.find('=');
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
@@ -1614,8 +1614,7 @@ void MainWindow::update(int d,QObject *alt){
         if(d < 50) updateWidgetUnit(obj,"Very Slight (" + QString::number( d ) + ")",alt==nullptr);
         else if(d < 100) updateWidgetUnit(obj,"Slight (" + QString::number( d )+")",alt==nullptr);
         else if(d < 300) updateWidgetUnit(obj,"Moderate (" + QString::number( d )+")",alt==nullptr);
-        else if(d >= 300) updateWidgetUnit(obj,"Extreme (" + QString::number( d )+")",alt==nullptr);
-        else updateWidgetUnit(obj,QString::number( d ),alt==nullptr);
+        else updateWidgetUnit(obj,"Extreme (" + QString::number( d )+")",alt==nullptr);
     }
     else if(obj==ui->axmode){
         //AnalogX
@@ -1753,10 +1752,11 @@ float MainWindow::CompMathB(float f, float f2, float f3) {
 void MainWindow::updateeq(int f){
     QString pre = "";
     if(f < 0 ) pre = "-";
-    char buffer[9];
+    
     QString s;
     if(to_string(abs(f)%100).length()==1)
-    {
+    {	
+	char buffer[5];
         snprintf(buffer, sizeof(buffer), "%02d", abs(f)%100);
         s = pre + QString::number(abs(f)/100) + "."  + QString::fromUtf8(buffer) + "dB";
     }

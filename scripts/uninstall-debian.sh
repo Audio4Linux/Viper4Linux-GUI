@@ -3,7 +3,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-if (( $EUID != 0 )); then
+if ( $EUID != 0 ); then
     printf "${RED}Please run as root${NC}\n"
     exit
 fi
