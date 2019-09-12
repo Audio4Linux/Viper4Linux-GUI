@@ -37,6 +37,7 @@
 #include <QObject>
 using namespace std;
 
+static string theme_str;
 static string path;
 static string irs_path;
 static string appcpath;
@@ -156,6 +157,8 @@ void MainWindow::writeLogF(const QString& log,const QString& _path){
 
 //---Style
 void MainWindow::SetStyle(){
+    QApplication::setStyle(QString::fromStdString(mainwin->getTheme()));
+
     if(theme_mode==0){
         QApplication::setPalette(this->style()->standardPalette());
         QString stylepath = "";
@@ -594,6 +597,10 @@ void MainWindow::decodeAppConfig(const string& key,const string& value){
         muteOnRestart = value=="true";
         break;
     }
+    case theme: {
+        theme_str = value;
+        break;
+    }
     }
 }
 void MainWindow::loadAppConfig(bool once){
@@ -621,7 +628,7 @@ void MainWindow::loadAppConfig(bool once){
 }
 
 //---UI Config Generator
-void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons,int aamode=autofxmode,const string& ipath = irs_path,int c_deftab = conv_deftab){
+void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bool muteRestart = muteOnRestart,bool g_fix = glava_fix, const string &ssheet = style_sheet,int tmode = theme_mode,const string &cpalette = color_palette,const string &custompal = custom_palette,bool w_ico = custom_whiteicons,int aamode=autofxmode,const string& ipath = irs_path,int c_deftab = conv_deftab,string thm = theme_str){
     string appconfig;
     stringstream converter1;
     converter1 << boolalpha << afx;
@@ -649,6 +656,7 @@ void MainWindow::SaveAppConfig(bool afx = autofx, const string& cpath = path, bo
     converter4 << boolalpha << w_ico;
     appconfig += "customwhiteicons=" + converter4.str() + "\n";
     appconfig += "custompalette=" + custompal + "\n";
+    appconfig += "theme=" + thm + "\n";
 
     ofstream myfile(appcpath);
     if (myfile.is_open())
@@ -1876,6 +1884,14 @@ void MainWindow::setConv_DefTab(int mode){
     //  1 - Filesys
     conv_deftab = mode;
     SaveAppConfig();
+}
+void MainWindow::setTheme(string thm){
+    theme_str = std::move(thm);
+    SetStyle();
+    SaveAppConfig();
+}
+string MainWindow::getTheme(){
+    return theme_str;
 }
 
 string MainWindow::getIrsPath(){

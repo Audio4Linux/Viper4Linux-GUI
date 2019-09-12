@@ -24,6 +24,8 @@ public:
     string getPath();
     string getStylesheet();
     string getCustompalette();
+    string getTheme();
+    void setTheme(string);
     void setAutoFxMode(int);
     int getAutoFxMode();
     void setWhiteIcons(bool b);
@@ -91,7 +93,7 @@ private:
     void setDynsys(const int* data);
     void loadConfig(const string& key, string value);
     void decodeAppConfig(const string& key, const string& value);
-    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool,int,const string&,int);
+    void SaveAppConfig(bool,const string&,bool,bool,const string&,int,const string&,const string&,bool,int,const string&,int,string);
     string getMain();
     string getBass();
     string getSurround();

@@ -41,6 +41,7 @@ settings::settings(QWidget *parent) :
     string palette = mainwin->getColorpalette();
     int autofxmode = mainwin->getAutoFxMode();
     int conv_deftab = mainwin->getConv_DefTab();
+    string theme = mainwin->getTheme();
 
     if(path.empty()) ui->path->setText(QString::fromUtf8(result));
     else ui->path->setText(QString::fromStdString(path));
@@ -56,6 +57,7 @@ settings::settings(QWidget *parent) :
     connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
     connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
     connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
+    connect(ui->themeSelect, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateTheme()));
 
     connect(ui->aa_instant, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
     connect(ui->aa_release, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
@@ -95,6 +97,19 @@ settings::settings(QWidget *parent) :
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
 
+    for ( const auto& i : QStyleFactory::keys() )
+        ui->themeSelect->addItem(i);
+
+    QString qvT(QString::fromStdString(theme));
+    int indexT = ui->themeSelect->findText(qvT);
+    if ( indexT != -1 ) {
+       ui->themeSelect->setCurrentIndex(indexT);
+    }else{
+        int index_fallback = ui->themeSelect->findText("Fusion");
+        if ( index_fallback != -1 )
+           ui->themeSelect->setCurrentIndex(index_fallback);
+    }
+
     QVariant qvS(QString::fromStdString(style_sheet));
     int index = ui->styleSelect->findData(qvS);
     if ( index != -1 ) {
@@ -124,7 +139,10 @@ settings::settings(QWidget *parent) :
 settings::~settings(){
     delete ui;
 }
-
+void settings::updateTheme(){
+    if(lockslot)return;
+    mainwin->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
+}
 void settings::updateAutoFX(){
     mainwin->setAutoFx(ui->autofx->isChecked());
 }
