@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>301</height>
+    <width>625</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>539</width>
-    <height>301</height>
+    <width>625</width>
+    <height>342</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1000</width>
-    <height>301</height>
+    <height>350</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -195,7 +195,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="bass">
        <property name="toolTipDuration">
@@ -231,12 +231,12 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
                <item>
-                <layout class="QFormLayout" name="formLayout_3">
-                 <property name="sizeConstraint">
-                  <enum>QLayout::SetDefaultConstraint</enum>
-                 </property>
+                <layout class="QFormLayout" name="formLayout_13">
                  <property name="horizontalSpacing">
                   <number>18</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
                  </property>
                  <item row="0" column="0">
                   <widget class="QLabel" name="bassmode_label">
@@ -245,81 +245,104 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="bassgain_label">
-                   <property name="text">
-                    <string>Bass Gain</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="bassfreq_label">
-                   <property name="text">
-                    <string>Bass Freq</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="1">
-                  <widget class="QSpinBox" name="vbmode">
-                   <property name="maximumSize">
-                    <size>
-                     <width>41</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="frame">
-                    <bool>true</bool>
-                   </property>
-                   <property name="maximum">
-                    <number>2</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QSlider" name="vbgain">
-                   <property name="toolTipDuration">
-                    <number>-1</number>
-                   </property>
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>800</number>
-                   </property>
-                   <property name="value">
-                    <number>0</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="invertedControls">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QSlider" name="vbfreq">
-                   <property name="minimum">
-                    <number>20</number>
-                   </property>
-                   <property name="maximum">
-                    <number>200</number>
-                   </property>
-                   <property name="value">
-                    <number>76</number>
-                   </property>
-                   <property name="tracking">
-                    <bool>true</bool>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="invertedControls">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <item>
+                    <spacer name="horizontalSpacer_3">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="vbmode">
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="frame">
+                      <bool>true</bool>
+                     </property>
+                     <property name="maximum">
+                      <number>2</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="bassgain_label">
+                 <property name="text">
+                  <string>Bass Gain</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="vbgain">
+                 <property name="toolTipDuration">
+                  <number>-1</number>
+                 </property>
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>800</number>
+                 </property>
+                 <property name="value">
+                  <number>0</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="invertedControls">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="bassfreq_label">
+                 <property name="text">
+                  <string>Bass Freq</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="vbfreq">
+                 <property name="minimum">
+                  <number>20</number>
+                 </property>
+                 <property name="maximum">
+                  <number>200</number>
+                 </property>
+                 <property name="value">
+                  <number>76</number>
+                 </property>
+                 <property name="tracking">
+                  <bool>true</bool>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="invertedControls">
+                  <bool>false</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -370,9 +393,12 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
-                <layout class="QFormLayout" name="formLayout_4">
+                <layout class="QFormLayout" name="formLayout_3">
                  <property name="horizontalSpacing">
                   <number>18</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
                  </property>
                  <item row="0" column="0">
                   <widget class="QLabel" name="vcmode_label">
@@ -381,49 +407,72 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="vclvl_label">
-                   <property name="text">
-                    <string>Clarity Level</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="1">
-                  <widget class="QSpinBox" name="vcmode">
-                   <property name="maximumSize">
-                    <size>
-                     <width>41</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="maximum">
-                    <number>2</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QSlider" name="vclvl">
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>800</number>
-                   </property>
-                   <property name="value">
-                    <number>76</number>
-                   </property>
-                   <property name="tracking">
-                    <bool>true</bool>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="invertedControls">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
+                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <item>
+                    <spacer name="horizontalSpacer_4">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="vcmode">
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="maximum">
+                      <number>2</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="vclvl_label">
+                 <property name="text">
+                  <string>Clarity Level</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="vclvl">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>800</number>
+                 </property>
+                 <property name="value">
+                  <number>76</number>
+                 </property>
+                 <property name="tracking">
+                  <bool>true</bool>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="invertedControls">
+                  <bool>false</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -444,40 +493,33 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">
                <item>
-                <layout class="QFormLayout" name="formLayout_5">
-                 <property name="horizontalSpacing">
-                  <number>18</number>
+                <widget class="QLabel" name="vcurelvl_label">
+                 <property name="text">
+                  <string>Level</string>
                  </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="vcurelvl_label">
-                   <property name="text">
-                    <string>Level</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QSlider" name="vcurelvl">
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>2</number>
-                   </property>
-                   <property name="value">
-                    <number>0</number>
-                   </property>
-                   <property name="tracking">
-                    <bool>true</bool>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="invertedControls">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="vcurelvl">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>2</number>
+                 </property>
+                 <property name="value">
+                  <number>0</number>
+                 </property>
+                 <property name="tracking">
+                  <bool>true</bool>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="invertedControls">
+                  <bool>false</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -522,49 +564,15 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <layout class="QFormLayout" name="formLayout">
-             <property name="fieldGrowthPolicy">
-              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-             </property>
-             <property name="horizontalSpacing">
-              <number>18</number>
-             </property>
-             <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_34">
+             <item>
               <widget class="QLabel" name="label_32">
                <property name="text">
                 <string>Bass Gain</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_33">
-               <property name="text">
-                <string>X Coeff 1</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_34">
-               <property name="text">
-                <string>X Coeff 2</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_37">
-               <property name="text">
-                <string>Side Gain 1</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_38">
-               <property name="text">
-                <string>Side Gain 2</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
+             <item>
               <widget class="QSlider" name="dyn_bassgain">
                <property name="minimum">
                 <number>100</number>
@@ -577,7 +585,14 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item>
+              <widget class="QLabel" name="label_33">
+               <property name="text">
+                <string>X Coeff 1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QSlider" name="dyn_xcoeff1">
                <property name="maximum">
                 <number>2000</number>
@@ -587,7 +602,14 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item>
+              <widget class="QLabel" name="label_34">
+               <property name="text">
+                <string>X Coeff 2</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QSlider" name="dyn_xcoeff2">
                <property name="minimum">
                 <number>5000</number>
@@ -600,7 +622,14 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
+             <item>
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Side Gain 1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QSlider" name="dyn_sidegain1">
                <property name="maximum">
                 <number>100</number>
@@ -610,7 +639,14 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
+             <item>
+              <widget class="QLabel" name="label_38">
+               <property name="text">
+                <string>Side Gain 2</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QSlider" name="dyn_sidegain2">
                <property name="maximum">
                 <number>100</number>
@@ -631,25 +667,152 @@
               <number>0</number>
              </property>
              <item>
-              <layout class="QFormLayout" name="formLayout_2">
+              <layout class="QVBoxLayout" name="verticalLayout_35">
                <property name="sizeConstraint">
                 <enum>QLayout::SetDefaultConstraint</enum>
                </property>
-               <item row="1" column="0">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_39">
+                   <property name="text">
+                    <string>Presets</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="dynsys_preset">
+                   <item>
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Extreme Headphone (v2)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>High-end Headphone (v2)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Common Headphone (v2)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Low-end Headphone (v2)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Common Earphone (v2)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Extreme Headphone (v1)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>High-end Headphone (v1)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Common Headphone (v1)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Common Earphone (v1)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Apple Earphone</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Monster Earphone</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Moto Earphone</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Philips Earphone</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SHP2000</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SHP9000</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Unknown Type I</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Unknown Type II</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Unknown Type III</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Unknown Type IV</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>4</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
                 <widget class="QLabel" name="label_36">
                  <property name="text">
                   <string>Y Coeff 1</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_35">
-                 <property name="text">
-                  <string>Y Coeff 2</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
+               <item>
                 <widget class="QSlider" name="dyn_ycoeff1">
                  <property name="minimum">
                   <number>0</number>
@@ -665,7 +828,14 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
+               <item>
+                <widget class="QLabel" name="label_35">
+                 <property name="text">
+                  <string>Y Coeff 2</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QSlider" name="dyn_ycoeff2">
                  <property name="minimum">
                   <number>0</number>
@@ -679,140 +849,6 @@
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_39">
-                 <property name="text">
-                  <string>Presets</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="dynsys_preset">
-                 <item>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Extreme Headphone (v2)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>High-end Headphone (v2)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Common Headphone (v2)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Low-end Headphone (v2)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Common Earphone (v2)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Extreme Headphone (v1)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>High-end Headphone (v1)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Common Headphone (v1)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Common Earphone (v1)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Apple Earphone</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Monster Earphone</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Moto Earphone</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Philips Earphone</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>SHP2000</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>SHP9000</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Unknown Type I</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Unknown Type II</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Unknown Type III</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Unknown Type IV</string>
-                  </property>
-                 </item>
                 </widget>
                </item>
               </layout>
@@ -1108,21 +1144,14 @@
                  </property>
                 </widget>
                </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QFormLayout" name="formLayout_8">
-               <property name="verticalSpacing">
-                <number>3</number>
-               </property>
-               <item row="0" column="0">
+               <item>
                 <widget class="QLabel" name="roomdamp_label">
                  <property name="text">
                   <string>Room Damp</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item>
                 <widget class="QSlider" name="roomdamp">
                  <property name="minimumSize">
                   <size>
@@ -1150,75 +1179,82 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="wet_label">
-                 <property name="text">
-                  <string>Wet Signal</string>
+               <item>
+                <layout class="QFormLayout" name="formLayout_8">
+                 <property name="topMargin">
+                  <number>0</number>
                  </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QSlider" name="wet">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>12</height>
-                  </size>
-                 </property>
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>20</number>
-                 </property>
-                 <property name="tracking">
-                  <bool>true</bool>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="invertedControls">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="dry_label">
-                 <property name="text">
-                  <string>Dry Signal</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QSlider" name="dry">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>12</height>
-                  </size>
-                 </property>
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>80</number>
-                 </property>
-                 <property name="tracking">
-                  <bool>true</bool>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="invertedControls">
-                  <bool>false</bool>
-                 </property>
-                </widget>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="wet_label">
+                   <property name="text">
+                    <string>Wet Signal</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="dry_label">
+                   <property name="text">
+                    <string>Dry Signal</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSlider" name="wet">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>12</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>20</number>
+                   </property>
+                   <property name="tracking">
+                    <bool>true</bool>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="invertedControls">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSlider" name="dry">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>12</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>80</number>
+                   </property>
+                   <property name="tracking">
+                    <bool>true</bool>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="invertedControls">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -1289,7 +1325,7 @@
              <x>129</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1314,7 +1350,7 @@
              <x>39</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1337,7 +1373,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>83</y>
+             <y>110</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1369,7 +1405,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>46</y>
+             <y>59</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1387,7 +1423,7 @@
              <x>69</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1410,7 +1446,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>63</y>
+             <y>85</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1428,7 +1464,7 @@
              <x>9</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1454,7 +1490,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>29</y>
+             <y>35</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1470,7 +1506,7 @@
            <property name="geometry">
             <rect>
              <x>307</x>
-             <y>48</y>
+             <y>60</y>
              <width>41</width>
              <height>20</height>
             </rect>
@@ -1486,7 +1522,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>120</y>
+             <y>160</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1504,7 +1540,7 @@
              <x>279</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1518,6 +1554,9 @@
            </property>
            <property name="pageStep">
             <number>50</number>
+           </property>
+           <property name="value">
+            <number>0</number>
            </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -1529,7 +1568,7 @@
              <x>189</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1544,6 +1583,9 @@
            <property name="pageStep">
             <number>50</number>
            </property>
+           <property name="value">
+            <number>0</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -1552,7 +1594,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>103</y>
+             <y>135</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1568,7 +1610,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>155</y>
+             <y>209</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1584,7 +1626,7 @@
            <property name="geometry">
             <rect>
              <x>9</x>
-             <y>137</y>
+             <y>185</y>
              <width>291</width>
              <height>20</height>
             </rect>
@@ -1600,7 +1642,7 @@
            <property name="geometry">
             <rect>
              <x>309</x>
-             <y>83</y>
+             <y>110</y>
              <width>39</width>
              <height>17</height>
             </rect>
@@ -1616,7 +1658,7 @@
            <property name="geometry">
             <rect>
              <x>309</x>
-             <y>121</y>
+             <y>160</y>
              <width>39</width>
              <height>17</height>
             </rect>
@@ -1634,7 +1676,7 @@
              <x>219</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1649,6 +1691,9 @@
            <property name="pageStep">
             <number>50</number>
            </property>
+           <property name="value">
+            <number>0</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -1657,7 +1702,7 @@
            <property name="geometry">
             <rect>
              <x>300</x>
-             <y>154</y>
+             <y>210</y>
              <width>49</width>
              <height>20</height>
             </rect>
@@ -1675,7 +1720,7 @@
              <x>99</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1700,7 +1745,7 @@
              <x>159</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1714,6 +1759,9 @@
            </property>
            <property name="pageStep">
             <number>50</number>
+           </property>
+           <property name="value">
+            <number>0</number>
            </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -1725,7 +1773,7 @@
              <x>249</x>
              <y>13</y>
              <width>16</width>
-             <height>160</height>
+             <height>215</height>
             </rect>
            </property>
            <property name="minimum">
@@ -1739,6 +1787,9 @@
            </property>
            <property name="pageStep">
             <number>50</number>
+           </property>
+           <property name="value">
+            <number>0</number>
            </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -1769,6 +1820,22 @@
           <zorder>eq6</zorder>
           <zorder>eq9</zorder>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1952,22 +2019,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="comp">
@@ -2007,20 +2058,13 @@
           <item>
            <layout class="QFormLayout" name="formLayout_11">
             <property name="horizontalSpacing">
-             <number>30</number>
+             <number>35</number>
             </property>
             <property name="rightMargin">
-             <number>75</number>
+             <number>8</number>
             </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="comp_thres_label">
-              <property name="text">
-               <string>Threshold</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QSlider" name="comp_thres">
+            <item row="1" column="1">
+             <widget class="QSlider" name="comp_ratio">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2045,8 +2089,14 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QSlider" name="comp_ratio">
+            <item row="0" column="1">
+             <widget class="QSlider" name="comp_thres">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2064,60 +2114,18 @@
               </property>
              </widget>
             </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="comp_thres_label">
+              <property name="text">
+               <string>Threshold</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="1">
-             <widget class="QGroupBox" name="m_release">
-              <property name="title">
-               <string>Manual Release</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_27">
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="topMargin">
-                <number>6</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <property name="bottomMargin">
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QSlider" name="comprelease">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>14</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>38</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::NoTicks</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_18">
+            <item>
              <widget class="QGroupBox" name="m_attack">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2178,22 +2186,10 @@
               </layout>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QGroupBox" name="m_gain">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>144</width>
-                <height>0</height>
-               </size>
-              </property>
+            <item>
+             <widget class="QGroupBox" name="m_release">
               <property name="title">
-               <string>Manual Gain</string>
+               <string>Manual Release</string>
               </property>
               <property name="flat">
                <bool>false</bool>
@@ -2201,7 +2197,7 @@
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_29">
+              <layout class="QVBoxLayout" name="verticalLayout_27">
                <property name="leftMargin">
                 <number>6</number>
                </property>
@@ -2215,7 +2211,7 @@
                 <number>6</number>
                </property>
                <item>
-                <widget class="QSlider" name="compgain">
+                <widget class="QSlider" name="comprelease">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2225,51 +2221,8 @@
                  <property name="maximum">
                   <number>100</number>
                  </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::NoTicks</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QGroupBox" name="m_width">
-              <property name="title">
-               <string>Manual Knee Width</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_28">
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="topMargin">
-                <number>6</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <property name="bottomMargin">
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QSlider" name="compwidth">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>14</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
+                 <property name="value">
+                  <number>38</number>
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -2283,6 +2236,110 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="m_gain">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>144</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Manual Gain</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_29">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QSlider" name="compgain">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>14</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="m_width">
+            <property name="title">
+             <string>Manual Knee Width</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_28">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QSlider" name="compwidth">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>14</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer_13">
@@ -2305,27 +2362,11 @@
            <number>7</number>
           </property>
           <item>
-           <spacer name="verticalSpacer_15">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>10</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QGroupBox" name="groupBox_5">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>175</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="title">
@@ -2368,140 +2409,123 @@
               </widget>
              </item>
              <item>
-              <layout class="QFormLayout" name="formLayout_12">
-               <item row="0" column="0">
-                <widget class="QLabel" name="a_maxatk_label">
-                 <property name="text">
-                  <string>Max Attack</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="a_maxrel_label">
-                 <property name="text">
-                  <string>Max Release</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="a_adapt_label">
-                 <property name="text">
-                  <string>Adapt</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="a_crest_label">
-                 <property name="text">
-                  <string>Crest</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QSlider" name="a_maxatk">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>14</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>88</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::NoTicks</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QSlider" name="a_maxrel">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>14</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>88</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::NoTicks</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QSlider" name="a_adapt">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>14</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>66</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::NoTicks</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QSlider" name="a_crest">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>14</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>61</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::NoTicks</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <widget class="QLabel" name="a_maxatk_label">
+               <property name="text">
+                <string>Max Attack</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="a_maxatk">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>14</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>88</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="a_maxrel_label">
+               <property name="text">
+                <string>Max Release</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="a_maxrel">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>14</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>88</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="a_adapt_label">
+               <property name="text">
+                <string>Adapt</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="a_adapt">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>14</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>66</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="a_crest_label">
+               <property name="text">
+                <string>Crest</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="a_crest">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>14</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>61</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_14">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -2800,7 +2824,7 @@
             <property name="checked">
              <bool>false</bool>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <layout class="QVBoxLayout" name="verticalLayout_33">
              <item>
               <layout class="QFormLayout" name="formLayout_10">
                <property name="labelAlignment">
@@ -2810,7 +2834,7 @@
                 <number>18</number>
                </property>
                <property name="bottomMargin">
-                <number>3</number>
+                <number>0</number>
                </property>
                <item row="0" column="0">
                 <widget class="QLabel" name="colmmidimg_label">
@@ -2917,7 +2941,20 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
+              </layout>
+             </item>
+             <item>
+              <layout class="QFormLayout" name="formLayout_5">
+               <property name="horizontalSpacing">
+                <number>38</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
                 <widget class="QLabel" name="colmdepth_label_2">
                  <property name="minimumSize">
                   <size>
@@ -2930,7 +2967,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
+               <item row="0" column="1">
                 <widget class="QToolButton" name="colmpreset">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -2941,7 +2978,7 @@
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>18</height>
+                   <height>22</height>
                   </size>
                  </property>
                  <property name="maximumSize">
@@ -3106,92 +3143,85 @@
             <property name="checked">
              <bool>false</bool>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>6</number>
              </property>
+             <property name="topMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
              <item>
-              <layout class="QFormLayout" name="formLayout_9">
-               <property name="labelAlignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              <widget class="QLabel" name="barkfreq_label">
+               <property name="text">
+                <string>Ref. Bark Frequency</string>
                </property>
-               <property name="horizontalSpacing">
-                <number>18</number>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="barkfreq">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>16</height>
+                </size>
                </property>
-               <property name="verticalSpacing">
-                <number>4</number>
+               <property name="minimum">
+                <number>800</number>
                </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="barkfreq_label">
-                 <property name="text">
-                  <string>Ref. Bark Frequency</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="barkcon_label">
-                 <property name="text">
-                  <string>Bark Recontruct Lvl</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QSlider" name="barkfreq">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                 <property name="minimum">
-                  <number>800</number>
-                 </property>
-                 <property name="maximum">
-                  <number>20000</number>
-                 </property>
-                 <property name="value">
-                  <number>7600</number>
-                 </property>
-                 <property name="tracking">
-                  <bool>true</bool>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="invertedControls">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QSlider" name="barkcon">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                 <property name="minimum">
-                  <number>10</number>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>10</number>
-                 </property>
-                 <property name="tracking">
-                  <bool>true</bool>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="invertedControls">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+               <property name="maximum">
+                <number>20000</number>
+               </property>
+               <property name="value">
+                <number>7600</number>
+               </property>
+               <property name="tracking">
+                <bool>true</bool>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="invertedControls">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="barkcon_label">
+               <property name="text">
+                <string>Bark Recontruct Lvl</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="barkcon">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="minimum">
+                <number>10</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+               <property name="tracking">
+                <bool>true</bool>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="invertedControls">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -3216,27 +3246,78 @@
             <property name="checked">
              <bool>false</bool>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
              <item>
-              <layout class="QFormLayout" name="formLayout_7">
-               <property name="horizontalSpacing">
-                <number>13</number>
+              <widget class="QLabel" name="convpath_label">
+               <property name="text">
+                <string>Impulse Response</string>
                </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="convpath_label">
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="convpath">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
                  <property name="text">
-                  <string>IR Sample</string>
+                  <string/>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
+               <item>
+                <widget class="QPushButton" name="conv_select">
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QFormLayout" name="formLayout_4">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
                 <widget class="QLabel" name="convcc_label">
                  <property name="text">
                   <string>Cross-Channel</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
+               <item row="0" column="1">
                 <widget class="QSlider" name="convcc">
                  <property name="minimumSize">
                   <size>
@@ -3249,59 +3330,10 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
-                <layout class="QHBoxLayout" name="horizontalLayout_13">
-                 <property name="spacing">
-                  <number>2</number>
-                 </property>
-                 <item>
-                  <widget class="QLineEdit" name="convpath">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="readOnly">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="conv_select">
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>...</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
               </layout>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_12">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -3316,15 +3348,9 @@
  <tabstops>
   <tabstop>tabhost</tabstop>
   <tabstop>vb</tabstop>
-  <tabstop>vbmode</tabstop>
-  <tabstop>vbgain</tabstop>
-  <tabstop>vbfreq</tabstop>
   <tabstop>tubesim</tabstop>
   <tabstop>clarity</tabstop>
-  <tabstop>vcmode</tabstop>
-  <tabstop>vclvl</tabstop>
   <tabstop>vcure</tabstop>
-  <tabstop>vcurelvl</tabstop>
   <tabstop>dynsys</tabstop>
   <tabstop>dyn_bassgain</tabstop>
   <tabstop>dyn_xcoeff1</tabstop>
@@ -3333,7 +3359,6 @@
   <tabstop>dyn_sidegain2</tabstop>
   <tabstop>dyn_ycoeff1</tabstop>
   <tabstop>dyn_ycoeff2</tabstop>
-  <tabstop>dynsys_preset</tabstop>
   <tabstop>vhp</tabstop>
   <tabstop>vhplvl</tabstop>
   <tabstop>diff</tabstop>
@@ -3341,9 +3366,6 @@
   <tabstop>reverb</tabstop>
   <tabstop>roomsize</tabstop>
   <tabstop>roomwidth</tabstop>
-  <tabstop>roomdamp</tabstop>
-  <tabstop>wet</tabstop>
-  <tabstop>dry</tabstop>
   <tabstop>eq1</tabstop>
   <tabstop>eq2</tabstop>
   <tabstop>eq3</tabstop>
@@ -3367,15 +3389,9 @@
   <tabstop>compattack</tabstop>
   <tabstop>m_release</tabstop>
   <tabstop>comprelease</tabstop>
-  <tabstop>m_gain</tabstop>
   <tabstop>compgain</tabstop>
-  <tabstop>m_width</tabstop>
   <tabstop>compwidth</tabstop>
   <tabstop>a_kneewidth</tabstop>
-  <tabstop>a_maxatk</tabstop>
-  <tabstop>a_maxrel</tabstop>
-  <tabstop>a_adapt</tabstop>
-  <tabstop>a_crest</tabstop>
   <tabstop>agc</tabstop>
   <tabstop>gain</tabstop>
   <tabstop>maxvol</tabstop>
@@ -3387,15 +3403,11 @@
   <tabstop>colmmidimg</tabstop>
   <tabstop>colmwide</tabstop>
   <tabstop>colmdepth</tabstop>
-  <tabstop>colmpreset</tabstop>
   <tabstop>ax</tabstop>
   <tabstop>axmode</tabstop>
   <tabstop>vse</tabstop>
-  <tabstop>barkfreq</tabstop>
-  <tabstop>barkcon</tabstop>
   <tabstop>conv</tabstop>
   <tabstop>conv_select</tabstop>
-  <tabstop>convcc</tabstop>
   <tabstop>cpreset</tabstop>
   <tabstop>set</tabstop>
   <tabstop>toolButton</tabstop>
