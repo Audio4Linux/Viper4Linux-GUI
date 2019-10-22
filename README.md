@@ -16,23 +16,41 @@ Official UI for Viper4Linux [https://github.com/noahbliss/Viper4Linux](https://g
 
 ## Installation
 * [Ubuntu PPA](#ubuntu-ppa)
-* [Debian/Ubuntu](#debianubuntu)
 * [Arch](#arch)
+* [Debian](#debian)
+* [Debian/Ubuntu](#debianubuntu)
 * [Portable/Manually](#portablemanually)
 ### Ubuntu PPA
-#### Add PPA Repo
+Add PPA Repo
 ```bash
 curl -s --compressed "https://thepbone.github.io/Viper4Linux-GUI-PPA/KEY.gpg" | sudo apt-key add -
 sudo curl -s --compressed -o /etc/apt/sources.list.d/vipergui.list "https://thepbone.github.io/Viper4Linux-GUI-PPA/vipergui.list"
 sudo apt update
 ```
-#### Install from PPA
+Install from PPA
 ```bash
 sudo apt install viper4linux-gui
 ```
 [View PPA on GitHub](https://github.com/ThePBone/Viper4Linux-GUI-PPA)
 
-Starting with version 1.10 I will provide DEB-Packages [here](https://github.com/ThePBone/Viper4Linux-GUI/releases).
+### Arch
+
+On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
+```bash
+yay -S viper4linux-gui-git  
+```
+
+Or [this one](https://aur.archlinux.org/packages/viper4linux-gui) to get the latest stable release:
+```bash
+yay -S viper4linux-gui
+```
+![AUR version](https://img.shields.io/aur/version/viper4linux-gui?label=aur%20%28stable%29) ![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
+
+### Debian
+You can find DEB packages [here](https://github.com/ThePBone/Viper4Linux-GUI/releases).
+```bash
+sudo dpkg -i <..deb-filename..>
+```
 
 ### Debian/Ubuntu
 #### Installation (script)
@@ -47,18 +65,7 @@ You can use this uninstall script if you want to remove the GUI (assuming you ha
 ```bash
 curl -s https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/scripts/uninstall-debian.sh | sudo bash
 ```
-### Arch
 
-On Arch you also can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
-```bash
-yay -S viper4linux-gui-git  
-```
-
-Or [this one](https://aur.archlinux.org/packages/viper4linux-gui) to get the latest stable release:
-```bash
-yay -S viper4linux-gui
-```
-![AUR version](https://img.shields.io/aur/version/viper4linux-gui?label=aur%20%28stable%29) ![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
 ### Portable/Manually
 #### Install Dependencies
 You will need to change this line, depending on which package manager your distribution uses.
