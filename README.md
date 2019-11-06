@@ -54,9 +54,20 @@ sudo dpkg -i <..deb-filename..>
 ```
 
 ### OpenSUSE
+We have a [package for OpenSUSE](https://build.opensuse.org/project/show/home:bosconovic:viper4linux) (Leap 15.1 and Tumbleweed) provided by [@fcuzzocrea](https://github.com/fcuzzocrea)!
 
-We have a [package for OpenSUSE](https://build.opensuse.org/project/show/home:bosconovic:viper4linux) provided by @fcuzzocrea!
+First you need to add the repos according to your version (in this example Tumbleweed is used) :
 
+    sudo zypper ar https://download.opensuse.org/repositories/home:/bosconovic:/viper4linux/openSUSE_Tumbleweed/ viper  
+
+Once you have added the repo, refresh the package list :
+
+    sudo zypper refresh
+
+Now you're ready to install viper4linux-gui (https://github.com/ThePBone/Viper4Linux-GUI) :
+
+    sudo zypper in viper4linux-gui
+    
 ### Debian/Ubuntu
 #### Installation (script)
 To simplify the installation on Debian, I have added an automatic install script.
@@ -119,5 +130,8 @@ sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/
 * [Material Icons](https://material.io/tools/icons/)
 * [QSS Stylesheets - GTRONICK (modified by ThePBone)](https://github.com/GTRONICK/QSS)
 * [Viper4Linux - noahbliss](https://github.com/noahbliss/Viper4Linux)
+### Packages
+* [fcuzzocrea - opensuse packages](https://github.com/fcuzzocrea)
+* [yochananmarqos - AUR packages](https://github.com/yochananmarqos)
 
 Thanks @noahbliss for declaring the GUI as official :)
