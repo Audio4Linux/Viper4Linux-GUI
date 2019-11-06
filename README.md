@@ -18,6 +18,7 @@ Official UI for Viper4Linux [https://github.com/noahbliss/Viper4Linux](https://g
 * [Ubuntu PPA](#ubuntu-ppa)
 * [Arch](#arch)
 * [Debian](#debian)
+* [OpenSUSE](#opensuse)
 * [Debian/Ubuntu](#debianubuntu)
 * [Portable/Manually](#portablemanually)
 ### Ubuntu PPA
@@ -51,6 +52,10 @@ You can find DEB packages [here](https://github.com/ThePBone/Viper4Linux-GUI/rel
 ```bash
 sudo dpkg -i <..deb-filename..>
 ```
+
+### OpenSUSE
+
+We have a [package for OpenSUSE](https://build.opensuse.org/project/show/home:bosconovic:viper4linux) provided by @fcuzzocrea!
 
 ### Debian/Ubuntu
 #### Installation (script)
