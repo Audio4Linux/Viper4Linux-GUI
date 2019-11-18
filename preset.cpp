@@ -25,7 +25,7 @@
 #include <QVector>
 #include <QTimer>
 #include <QDesktopServices>
-#include <uploadwizard.h>
+
 Preset::Preset(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Preset)
@@ -36,7 +36,6 @@ Preset::Preset(QWidget *parent) :
     UpdateList();
     connect(ui->add,SIGNAL(clicked()),SLOT(add()));
     connect(ui->load,SIGNAL(clicked()),SLOT(load()));
-    connect(ui->upload,SIGNAL(clicked()),SLOT(upload()));
     connect(ui->githubRepo,SIGNAL(clicked()),SLOT(visitGithub()));
     connect(ui->remove,SIGNAL(clicked()),SLOT(remove()));
     connect(ui->download,SIGNAL(clicked()),SLOT(download()));
@@ -78,10 +77,7 @@ void Preset::reloadRepo(){
     request.setUrl(url);
     manager->get(request);
 }
-void Preset::upload(){
-    UploadWizard* upl = new UploadWizard();
-    upl->exec();
-}
+
 void Preset::indexDownloaded(QNetworkReply* reply){
     if (reply->error()) {
         mainwin->writeLog("Cannot download repo index: " + reply->errorString() + " (presets/repoindex)");

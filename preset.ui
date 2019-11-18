@@ -240,13 +240,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="upload">
-           <property name="text">
-            <string>Upload</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="download">
            <property name="text">
             <string>Download</string>
@@ -273,7 +266,6 @@
   <tabstop>githubRepo</tabstop>
   <tabstop>repoindex</tabstop>
   <tabstop>camelcase</tabstop>
-  <tabstop>upload</tabstop>
   <tabstop>download</tabstop>
  </tabstops>
  <resources>

@@ -21,7 +21,6 @@ private slots:
     void add();
     void remove();
     void load();
-    void upload();
     void reloadRepo();
     void repoIndexChanged();
     void importAndroid();
