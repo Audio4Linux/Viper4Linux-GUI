@@ -26,6 +26,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    config/container.cpp \
+    config/io.cpp \
     converter.cpp \
     importandroid.cpp \
     log.cpp \
@@ -37,6 +39,8 @@ SOURCES += \
     preset.cpp
 
 HEADERS += \
+    config/container.h \
+    config/io.h \
     converter.h \
     importandroid.h \
     log.h \

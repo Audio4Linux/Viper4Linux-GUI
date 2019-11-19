@@ -59,11 +59,6 @@
        <string>GST Plugin</string>
       </property>
      </item>
-     <item>
-      <property name="text">
-       <string>Viper</string>
-      </property>
-     </item>
     </widget>
    </item>
   </layout>

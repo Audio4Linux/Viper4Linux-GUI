@@ -25,8 +25,7 @@ void log::reject()
 void log::updateLog(){
     ui->viperlog->clear();
     QString path;
-    if(ui->select->currentText()=="Viper") path = "/tmp/viper4linux/ui_viper.log";
-    else if(ui->select->currentText()=="GST Plugin") path = "/tmp/viper4linux/viper.log";
+    if(ui->select->currentText()=="GST Plugin") path = "/tmp/viper4linux/viper.log";
     else path = "/tmp/viper4linux/ui.log";
 
     QFile file(path);

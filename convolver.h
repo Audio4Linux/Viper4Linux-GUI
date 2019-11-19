@@ -27,6 +27,7 @@ private slots:
     void selectFolder();
 private:
     Ui::Convolver *ui;
+    QString configpath = "";
 };
 
 #endif // CONVOLVER_H

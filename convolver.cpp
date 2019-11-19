@@ -13,7 +13,6 @@
 #include <QInputDialog>
 #include <QMessageBox>
 static bool lockupdate = false;
-static QString configpath = "";
 using namespace std;
 Convolver::Convolver(QWidget *parent) :
     QDialog(parent),
