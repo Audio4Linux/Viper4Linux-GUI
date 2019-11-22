@@ -4,6 +4,9 @@
 #include <QDialog>
 #include <QNetworkReply>
 #include "converter.h"
+#include "items/configitem.h"
+#include "items/delegates.h"
+
 namespace Ui {
 class Preset;
 }
@@ -34,6 +37,9 @@ private slots:
     void visitGithub();
     void performIRSDownload(QNetworkReply* reply);
     void performDownload(QNetworkReply* reply);
+    void updateStormviperList();
+    void loadStormviper();
+
 private:
     Ui::Preset *ui;
     QStringList irs;

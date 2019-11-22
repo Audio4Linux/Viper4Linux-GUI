@@ -76,6 +76,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->colmpreset->setMenu(menuC);
     SetStyle();
     ConnectActions();
+
+    //extract stormviper presets
+    QFileInfo audioconf(QString::fromStdString(path));
+    QDir(audioconf.absolutePath()+QDir::separator()+"stormviper").removeRecursively();
+    QDir configdir(audioconf.absolutePath());
+    configdir.mkpath("stormviper");
+    QString cdir = configdir.absolutePath() + QDir::separator() + "stormviper" + QDir::separator();
+    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Viper4Linux Pbone.txt").copy(cdir + "Stormviper™ Viper4Linux Pbone.txt");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Cinematic.conf").copy(cdir + "Stormviper™ Cinematic.conf");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Music.conf").copy(cdir + "Stormviper™ Music.conf");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Stage.conf").copy(cdir + "Stormviper™ Stage.conf");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper Unity™.irs").copy(cdir + "Stormviper Unity™.irs");
+
 }
 
 MainWindow::~MainWindow()
@@ -391,6 +404,7 @@ void MainWindow::OnRelease(){
     }
 }
 void MainWindow::ConfirmConf(bool restart){
+    conf->setValue("fx_enable",QVariant(!ui->disableFX->isChecked()));
     conf->setValue("tube_enable",QVariant(ui->tubesim->isChecked()));
     conf->setValue("colm_enable",QVariant(ui->colm->isChecked()));
     conf->setValue("colm_widening",QVariant(ui->colmwide->value()));
@@ -667,6 +681,7 @@ void MainWindow::loadConfig(){
     updateAll();
 
     QString ir = conf->getString("conv_ir_path");
+    qDebug() << ir;
     if(ir.size() > 2){
         ir.remove(0,1); //remove double quotes
         ir.chop(1);

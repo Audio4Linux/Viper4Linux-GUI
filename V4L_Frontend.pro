@@ -30,6 +30,7 @@ SOURCES += \
     config/io.cpp \
     converter.cpp \
     importandroid.cpp \
+    items/configitem.cpp \
     log.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -43,6 +44,8 @@ HEADERS += \
     config/io.h \
     converter.h \
     importandroid.h \
+    items/configitem.h \
+    items/delegates.h \
     log.h \
         mainwindow.h \
     configlist.h \
@@ -54,6 +57,7 @@ HEADERS += \
 
 FORMS += \
     importandroid.ui \
+    items/configitem.ui \
     log.ui \
         mainwindow.ui \
     palette.ui \

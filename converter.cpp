@@ -400,6 +400,8 @@ string converter::toLinux(const string& path,configtype cmode){
     QString dyn_bg(conf->dynsys_bassgain);
     out += to_string((int)((dyn_bg.toInt() * 20) + 100)) + n;
 
+    out += "fx_enable=true";
+
     string info;
     if(conf->found_ddc) info += "Viper DDC not supported\n";
     if(conf->found_spkopt) info += "Speaker Optimization not supported\n";
