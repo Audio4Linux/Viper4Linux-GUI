@@ -13,6 +13,7 @@ Official UI for Viper4Linux [https://github.com/noahbliss/Viper4Linux](https://g
 * Convolver Selection
 * UI-Theming/Stylesheets/Color Palettes
 * Import/Export Android Configs
+* Stormviper™ Limited PBone Edition (bundled)
 
 ## Installation
 * [Ubuntu PPA](#ubuntu-ppa)
@@ -127,6 +128,7 @@ sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/
 ![Screenshot](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/tab3_dark.png?raw=true)
 ![GIF](https://github.com/ThePBone/Viper4Linux-GUI/blob/master/screenshots/contexthelp.gif?raw=true)
 ## Credits
+* [Stormviper™ Presets + IRS by stormviper](https://sourceforge.net/projects/stormviper/)
 * [Material Icons](https://material.io/tools/icons/)
 * [QSS Stylesheets - GTRONICK (modified by ThePBone)](https://github.com/GTRONICK/QSS)
 * [Viper4Linux - noahbliss](https://github.com/noahbliss/Viper4Linux)
