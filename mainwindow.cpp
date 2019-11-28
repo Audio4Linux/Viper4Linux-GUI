@@ -83,11 +83,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QDir configdir(audioconf.absolutePath());
     configdir.mkpath("stormviper");
     QString cdir = configdir.absolutePath() + QDir::separator() + "stormviper" + QDir::separator();
-    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Viper4Linux Pbone.txt").copy(cdir + "Stormviper™ Viper4Linux Pbone.txt");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Cinematic.conf").copy(cdir + "Stormviper™ Cinematic.conf");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Music.conf").copy(cdir + "Stormviper™ Music.conf");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper™ Stage.conf").copy(cdir + "Stormviper™ Stage.conf");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper Unity™.irs").copy(cdir + "Stormviper Unity™.irs");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper Viper4Linux Pbone.txt").copy(cdir + "Stormviper Viper4Linux Pbone.txt");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper Cinematic.conf").copy(cdir + "Stormviper Cinematic.conf");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper Music.conf").copy(cdir + "Stormviper Music.conf");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper Stage.conf").copy(cdir + "Stormviper Stage.conf");
+    QFile(":/assets/Stormviper PBone Edition/Stormviper Unity.irs").copy(cdir + "Stormviper Unity.irs");
 
 }
 

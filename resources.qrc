@@ -8,10 +8,10 @@
         <file>icons/settings.svg</file>
         <file>icons/settings-white.svg</file>
         <file>icons/viper.png</file>
-        <file>assets/Stormviper PBone Edition/Stormviper Unity™.irs</file>
-        <file>assets/Stormviper PBone Edition/Stormviper™ Cinematic.conf</file>
-        <file>assets/Stormviper PBone Edition/Stormviper™ Music.conf</file>
-        <file>assets/Stormviper PBone Edition/Stormviper™ Stage.conf</file>
-        <file>assets/Stormviper PBone Edition/Stormviper™ Viper4Linux Pbone.txt</file>
+        <file>assets/Stormviper PBone Edition/Stormviper Unity.irs</file>
+        <file>assets/Stormviper PBone Edition/Stormviper Cinematic.conf</file>
+        <file>assets/Stormviper PBone Edition/Stormviper Music.conf</file>
+        <file>assets/Stormviper PBone Edition/Stormviper Stage.conf</file>
+        <file>assets/Stormviper PBone Edition/Stormviper Viper4Linux Pbone.txt</file>
     </qresource>
 </RCC>

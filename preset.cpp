@@ -54,7 +54,7 @@ Preset::Preset(QWidget *parent) :
         QDesktopServices::openUrl(QUrl("https://stormviper.sourceforge.io/"));
     });
     connect(ui->readmeSV,&QPushButton::clicked,[this]{
-        QString fileName(":/assets/Stormviper PBone Edition/Stormviper™ Viper4Linux Pbone.txt");
+        QString fileName(":/assets/Stormviper PBone Edition/Stormviper Viper4Linux Pbone.txt");
         QString text = "";
 
         QDialog* dialog = new QDialog(this);
@@ -516,13 +516,13 @@ void Preset::loadStormviper(){
     int id = ui->svIndex->currentIndex().row();
     switch (id) {
     case 0:
-        name = "Stormviper™ Cinematic.conf";
+        name = "Stormviper Cinematic.conf";
         break;
     case 1:
-        name = "Stormviper™ Music.conf";
+        name = "Stormviper Music.conf";
         break;
     case 2:
-        name = "Stormviper™ Stage.conf";
+        name = "Stormviper Stage.conf";
         break;
     }
 
