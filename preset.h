@@ -37,8 +37,6 @@ private slots:
     void visitGithub();
     void performIRSDownload(QNetworkReply* reply);
     void performDownload(QNetworkReply* reply);
-    void updateStormviperList();
-    void loadStormviper();
 
 private:
     Ui::Preset *ui;

@@ -46,31 +46,6 @@ Preset::Preset(QWidget *parent) :
     connect(ui->files, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)), this, SLOT(repoIndexChanged()));
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
 
-    connect(ui->loadSV,SIGNAL(clicked()),SLOT(loadStormviper()));
-    connect(ui->telegramSV,&QPushButton::clicked,[this]{
-        QDesktopServices::openUrl(QUrl("https://t.me/Stormaudio"));
-    });
-    connect(ui->sourceforgeSV,&QPushButton::clicked,[this]{
-        QDesktopServices::openUrl(QUrl("https://stormviper.sourceforge.io/"));
-    });
-    connect(ui->readmeSV,&QPushButton::clicked,[this]{
-        QString fileName(":/assets/Stormviper PBone Edition/Stormviper Viper4Linux Pbone.txt");
-        QString text = "";
-
-        QDialog* dialog = new QDialog(this);
-        QFile file(fileName);
-        if(file.open(QIODevice::ReadOnly))
-            text = file.readAll();
-
-        QTextBrowser *tb = new QTextBrowser(this);
-        tb->setOpenExternalLinks(true);
-        tb->setText(text);
-        dialog->setModal(true);
-        dialog->setLayout(new QHBoxLayout);
-        dialog->layout()->addWidget(tb);
-        dialog->show();
-    });
-
     QMenu *menu = new QMenu();
     menu->addAction("Android Profile", this,SLOT(importAndroid()));
     menu->addAction("Linux Configuration", this,SLOT(importLinux()));
@@ -88,8 +63,6 @@ Preset::Preset(QWidget *parent) :
     QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
     request.setUrl(url);
     manager->get(request);
-
-    updateStormviperList();
 }
 Preset::~Preset()
 {
@@ -350,7 +323,8 @@ void Preset::load(){
         msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
         UpdateList();
         return;
-    }
+    }    void updateStormviperList();
+    void loadStormviper();
     mainwin->LoadPresetFile(fullpath);
 }
 void Preset::nameChanged(const QString& name){
@@ -483,57 +457,4 @@ void Preset::download(){
     connect(dlmanager,SIGNAL(finished(QNetworkReply*)),this,SLOT(performDownload(QNetworkReply*)));
     QString url = ui->repoindex->currentItem()->data(Qt::UserRole).toString();
     dlmanager->get(QNetworkRequest(QUrl(url)));
-}
-void Preset::updateStormviperList(){
-    ui->svIndex->setItemDelegate(new ItemSizeDelegate);
-    configitem *item = new configitem();
-    item->setData("Stormviper™ Cinematic","Perfectly suitable when watching movies");
-    QListWidgetItem* li = new QListWidgetItem();
-    ui->svIndex->addItem(li);
-    ui->svIndex->setItemWidget(ui->svIndex->item(ui->svIndex->count()-1),item);
-
-    configitem *item2 = new configitem();
-    item2->setData("Stormviper™ Music","Balance between bass and reverbation");
-    QListWidgetItem* li2 = new QListWidgetItem();
-    ui->svIndex->addItem(li2);
-    ui->svIndex->setItemWidget(ui->svIndex->item(ui->svIndex->count()-1),item2);
-
-    configitem *item3 = new configitem();
-    item3->setData("Stormviper™ Stage","Simulate a live stage environment");
-    QListWidgetItem* li3 = new QListWidgetItem();
-    ui->svIndex->addItem(li3);
-    ui->svIndex->setItemWidget(ui->svIndex->item(ui->svIndex->count()-1),item3);
-}
-
-void Preset::loadStormviper(){
-    if(ui->svIndex->selectedItems().length() == 0){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
-        return;
-    }
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
-    QString name = "";
-    int id = ui->svIndex->currentIndex().row();
-    switch (id) {
-    case 0:
-        name = "Stormviper Cinematic.conf";
-        break;
-    case 1:
-        name = "Stormviper Music.conf";
-        break;
-    case 2:
-        name = "Stormviper Stage.conf";
-        break;
-    }
-
-    QString path = pathAppend(d.absolutePath(),"stormviper");
-    QString fullpath = QDir(path).filePath(name);
-    qDebug() << fullpath;
-    if(!QFile::exists(fullpath)){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
-        UpdateList();
-        return;
-    }
-    mainwin->LoadPresetFile(fullpath);
 }
