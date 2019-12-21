@@ -452,6 +452,12 @@ void MainWindow::ConfirmConf(bool restart){
     conf->setValue("vb_freq",QVariant(ui->vbfreq->value()));
     conf->setValue("vb_gain",QVariant(ui->vbgain->value()));
     conf->setValue("vb_mode",QVariant(ui->vbmode->value()));
+    conf->setValue("fetcomp_enable",QVariant(ui->enable_comp->isChecked()));
+    conf->setValue("fetcomp_autoattack",QVariant(ui->m_attack->isChecked()));
+    conf->setValue("fetcomp_autogain",QVariant(ui->m_gain->isChecked()));
+    conf->setValue("fetcomp_autoknee",QVariant(ui->m_width->isChecked()));
+    conf->setValue("fetcomp_autorelease",QVariant(ui->m_release->isChecked()));
+    conf->setValue("fetcomp_noclip",QVariant(ui->noclip->isChecked()));
     conf->setValue("fetcomp_threshold",QVariant(ui->comp_thres->value()));
     conf->setValue("fetcomp_gain",QVariant(ui->compgain->value()));
     conf->setValue("fetcomp_kneewidth",QVariant(ui->compwidth->value()));
@@ -646,8 +652,8 @@ void MainWindow::loadConfig(){
     ui->enable_comp->setChecked(conf->getBool("fetcomp_enable"));
     ui->m_gain->setChecked(conf->getBool("fetcomp_autogain"));
     ui->m_width->setChecked(conf->getBool("fetcomp_autoknee"));
-    ui->m_attack->setChecked(conf->getBool("fetcomp_attack"));
-    ui->m_release->setChecked(conf->getBool("fetcomp_release"));
+    ui->m_attack->setChecked(conf->getBool("fetcomp_autoattack"));
+    ui->m_release->setChecked(conf->getBool("fetcomp_autorelease"));
     ui->noclip->setChecked(conf->getBool("fetcomp_noclip"));
     ui->comp_thres->setValue(conf->getInt("fetcomp_threshold"));
     ui->compgain->setValue(conf->getInt("fetcomp_gain"));
