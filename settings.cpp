@@ -1,21 +1,14 @@
 #include "settings.h"
 #include "ui_settings.h"
 #include "main.h"
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <QDialog>
-#include <unistd.h>
-#include <pwd.h>
+#include "palette.h"
+
 #include <QCloseEvent>
-#include <cstdio>
-#include <cstdlib>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QMessageBox>
 #include <QDebug>
 #include <QStyleFactory>
-#include "palette.h"
 
 using namespace std;
 static bool lockslot = false;
@@ -28,29 +21,14 @@ settings::settings(QWidget *parent) :
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
     connect(ui->paletteSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changePalette(const QString&)));
     connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
-    struct passwd *pw = getpwuid(getuid());
-    const char *homedir = pw->pw_dir;
-    char result[100];
-    strcpy(result,homedir);
-    strcat(result,"/.config/viper4linux/audio.conf");
 
-    string path = mainwin->getPath();
-    string irspath = mainwin->getIrsPath();
-    string style_sheet = mainwin->getStylesheet();
-    int thememode = mainwin->getThememode();
-    string palette = mainwin->getColorpalette();
-    int autofxmode = mainwin->getAutoFxMode();
-    int conv_deftab = mainwin->getConv_DefTab();
-    string theme = mainwin->getTheme();
+    appconf = mainwin->getACWrapper();
 
-    if(path.empty()) ui->path->setText(QString::fromUtf8(result));
-    else ui->path->setText(QString::fromStdString(path));
-
-    ui->irspath->setText(QString::fromStdString(irspath));
-
-    ui->autofx->setChecked(mainwin->getAutoFx());
-    ui->muteonrestart->setChecked(mainwin->getMuteOnRestart());
-    ui->glavafix->setChecked(mainwin->getGFix());
+    ui->path->setText(appconf->getPath());
+    ui->irspath->setText(appconf->getIrsPath());
+    ui->autofx->setChecked(appconf->getAutoFx());
+    ui->muteonrestart->setChecked(appconf->getMuteOnRestart());
+    ui->glavafix->setChecked(appconf->getGFix());
 
     connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
@@ -100,7 +78,7 @@ settings::settings(QWidget *parent) :
     for ( const auto& i : QStyleFactory::keys() )
         ui->themeSelect->addItem(i);
 
-    QString qvT(QString::fromStdString(theme));
+    QString qvT(appconf->getTheme());
     int indexT = ui->themeSelect->findText(qvT);
     if ( indexT != -1 ) {
        ui->themeSelect->setCurrentIndex(indexT);
@@ -110,30 +88,33 @@ settings::settings(QWidget *parent) :
            ui->themeSelect->setCurrentIndex(index_fallback);
     }
 
-    QVariant qvS(QString::fromStdString(style_sheet));
+    QVariant qvS(appconf->getStylesheet());
+    qDebug() << appconf->getStylesheet();
     int index = ui->styleSelect->findData(qvS);
     if ( index != -1 ) {
        ui->styleSelect->setCurrentIndex(index);
+       qDebug() << index;
     }
 
-    QVariant qvS2(QString::fromStdString(palette));
+    QVariant qvS2(appconf->getColorpalette());
     int index2 = ui->paletteSelect->findData(qvS2);
     if ( index2 != -1 ) {
        ui->paletteSelect->setCurrentIndex(index2);
     }
 
-    ui->styleSelect->setEnabled(!thememode);
-    ui->paletteConfig->setEnabled(thememode && palette=="custom");
-    ui->paletteSelect->setEnabled(thememode);
+    ui->styleSelect->setEnabled(!appconf->getThememode());
+    ui->paletteConfig->setEnabled(appconf->getThememode() && appconf->getColorpalette()=="custom");
+    ui->paletteSelect->setEnabled(appconf->getThememode());
 
-    ui->uimode_css->setChecked(!thememode);//If 0 set true, else false
-    ui->uimode_pal->setChecked(thememode);//If 0 set false, else true
+    ui->uimode_css->setChecked(!appconf->getThememode());//If 0 set true, else false
+    ui->uimode_pal->setChecked(appconf->getThememode());//If 0 set false, else true
 
-    ui->aa_instant->setChecked(!autofxmode);//same here..
-    ui->aa_release->setChecked(autofxmode);
+    ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
+    ui->aa_release->setChecked(appconf->getAutoFxMode());
 
-    ui->deftab_favorite->setChecked(!conv_deftab);
-    ui->deftab_filesys->setChecked(conv_deftab);
+    ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
+    ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
+
     lockslot = false;
 }
 settings::~settings(){
@@ -141,36 +122,42 @@ settings::~settings(){
 }
 void settings::updateTheme(){
     if(lockslot)return;
-    mainwin->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
+    appconf->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
 }
 void settings::updateAutoFX(){
-    mainwin->setAutoFx(ui->autofx->isChecked());
+    appconf->setAutoFx(ui->autofx->isChecked());
 }
 void settings::updateMuteRestart(){
-    mainwin->setMuteOnRestart(ui->muteonrestart->isChecked());
+    appconf->setMuteOnRestart(ui->muteonrestart->isChecked());
 };
 void settings::updatePath(){
-    mainwin->setPath(ui->path->text().toUtf8().constData());
+    appconf->setPath(ui->path->text());
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Restart required", "Please restart this application to make sure all changes are applied correctly.\n"
+                                                            "Press 'OK' to quit or 'Cancel' if you want to continue without a restart.",
+                                  QMessageBox::Ok|QMessageBox::Cancel);
+    if (reply == QMessageBox::Ok)
+      QApplication::quit();
 }
 void settings::updateIrsPath(){
-    mainwin->setIrsPath(ui->irspath->text().toUtf8().constData());
+    appconf->setIrsPath(ui->irspath->text());
 }
 void settings::updateGLava(){
-    mainwin->setGFix(ui->glavafix->isChecked());
+    appconf->setGFix(ui->glavafix->isChecked());
 }
 void settings::updateAutoFxMode(){
     if(lockslot)return;
     int mode = 0;
     if(ui->aa_instant->isChecked())mode=0;
     else if(ui->aa_release->isChecked())mode=1;
-    mainwin->setAutoFxMode(mode);
+    appconf->setAutoFxMode(mode);
 }
 void settings::updateCDefTab(){
     if(lockslot)return;
     int mode = 0;
     if(ui->deftab_favorite->isChecked())mode=0;
     else if(ui->deftab_filesys->isChecked())mode=1;
-    mainwin->setConv_DefTab(mode);
+    appconf->setConv_DefTab(mode);
 }
 void settings::changeThemeMode(){
     if(lockslot)return;
@@ -181,24 +168,25 @@ void settings::changeThemeMode(){
 
     ui->styleSelect->setEnabled(!mode);
     ui->paletteSelect->setEnabled(mode);
-    ui->paletteConfig->setEnabled(mode && mainwin->getColorpalette()=="custom");
-    mainwin->setThememode(mode);
+    ui->paletteConfig->setEnabled(mode && appconf->getColorpalette()=="custom");
+    appconf->setThememode(mode);
 }
 void settings::changePalette(const QString&){
     if(lockslot)return;
-    mainwin->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString().toUtf8().constData());
-    ui->paletteConfig->setEnabled(mainwin->getColorpalette()=="custom");
+    appconf->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString());
+    ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
 }
 void settings::openPalConfig(){
     auto c = new class palette(this);
     c->setFixedSize(c->geometry().width(),c->geometry().height());
     c->show();
 }
-void settings::changeStyle(const QString& style){
-    mainwin->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString().toUtf8().constData());
+void settings::changeStyle(const QString&){
+    if(lockslot)return;
+    appconf->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString());
 }
 void settings::github(){
-    QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI"));
+    QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI-Legacy"));
 }
 void settings::reject()
 {

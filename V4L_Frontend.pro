@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    config/appconfigwrapper.cpp \
     config/container.cpp \
     config/io.cpp \
     converter.cpp \
@@ -34,12 +35,15 @@ SOURCES += \
     log.cpp \
         main.cpp \
         mainwindow.cpp \
+    misc/loghelper.cpp \
+    misc/stylehelper.cpp \
     palette.cpp \
     settings.cpp \
     convolver.cpp \
     preset.cpp
 
 HEADERS += \
+    config/appconfigwrapper.h \
     config/container.h \
     config/io.h \
     converter.h \
@@ -49,6 +53,9 @@ HEADERS += \
     log.h \
         mainwindow.h \
     configlist.h \
+    misc/loghelper.h \
+    misc/mathfunctions.h \
+    misc/stylehelper.h \
     palette.h \
     settings.h \
     convolver.h \

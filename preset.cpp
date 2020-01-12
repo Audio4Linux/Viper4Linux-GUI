@@ -1,30 +1,21 @@
 #include "preset.h"
 #include "ui_preset.h"
 #include "main.h"
+#include "converter.h"
+#include "importandroid.h"
+#include "misc/loghelper.h"
+
 #include <QDir>
-#include <pwd.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <QString>
 #include <QCloseEvent>
 #include <QDebug>
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QMenu>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include "converter.h"
-#include "importandroid.h"
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QRegExp>
 #include <QJsonObject>
-#include <QVector>
-#include <QTimer>
-#include <QTextBrowser>
 #include <QDesktopServices>
 
 Preset::Preset(QWidget *parent) :
@@ -33,6 +24,7 @@ Preset::Preset(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    appconf = mainwin->getACWrapper();
     manager = new QNetworkAccessManager(this);
     UpdateList();
     connect(ui->add,SIGNAL(clicked()),SLOT(add()));
@@ -81,7 +73,7 @@ void Preset::reloadRepo(){
 
 void Preset::indexDownloaded(QNetworkReply* reply){
     if (reply->error()) {
-        mainwin->writeLog("Cannot download repo index: " + reply->errorString() + " (presets/repoindex)");
+        LogHelper::writeLog("Cannot download repo index: " + reply->errorString() + " (presets/repoindex)");
         return;
     }
     QByteArray answer = reply->readAll();
@@ -89,12 +81,12 @@ void Preset::indexDownloaded(QNetworkReply* reply){
     QJsonDocument document = QJsonDocument::fromJson(answer, &parseError);
     if (parseError.error != QJsonParseError::NoError)
     {
-        mainwin->writeLog("Cannot parse GitHub API response (presets/repoindex): " + parseError.errorString());
+        LogHelper::writeLog("Cannot parse GitHub API response (presets/repoindex): " + parseError.errorString());
         return;
     }
     if (!document.isArray())
     {
-        mainwin->writeLog("Malformed GitHub API response (presets/repoindex): Document does not contain array");
+        LogHelper::writeLog("Malformed GitHub API response (presets/repoindex): Document does not contain array");
         return;
     }
     QJsonArray array = document.array();
@@ -140,7 +132,7 @@ void Preset::reject()
 }
 void Preset::UpdateList(){
     ui->files->clear();
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
 
@@ -189,7 +181,7 @@ void Preset::add(){
         return;
     }
     mainwin->ConfirmConf(false);
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
     mainwin->SavePresetFile(path + "/" + ui->presetName->text() + ".conf");
@@ -217,7 +209,7 @@ void Preset::exportAndroid(converter::configtype cmode){
     if(ext!="xml")filename.append(".xml");
 
     // QFileInfo fileInfo(filename);
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
@@ -238,14 +230,14 @@ void Preset::exportAndroid(converter::configtype cmode){
         QTextStream out(&qFile); out << QString::fromStdString(converter::toAndroid(src.toUtf8().constData(),cmode));
         qFile.close();
     }
-    mainwin->writeLog("Exporting to "+filename + " (presets/androidexport)");
+    LogHelper::writeLog("Exporting to "+filename + " (presets/androidexport)");
 }
 void Preset::importLinux(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
     if(filename=="")return;
 
     QFileInfo fileInfo(filename);
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
 
@@ -254,7 +246,7 @@ void Preset::importLinux(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    mainwin->writeLog("Importing from "+filename+ " (presets/linuximport)");
+    LogHelper::writeLog("Importing from "+filename+ " (presets/linuximport)");
 }
 void Preset::exportLinux(){
     if(ui->files->selectedItems().length() == 0){
@@ -270,7 +262,7 @@ void Preset::exportLinux(){
     if(ext!="conf")filename.append(".conf");
 
     QFileInfo fileInfo(filename);
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
@@ -287,7 +279,7 @@ void Preset::exportLinux(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    mainwin->writeLog("Exporting to "+filename+ " (presets/linuxexport)");
+    LogHelper::writeLog("Exporting to "+filename+ " (presets/linuxexport)");
 }
 void Preset::remove(){
     if(ui->files->selectedItems().length() == 0){
@@ -295,7 +287,7 @@ void Preset::remove(){
         msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
         return;
     }
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
@@ -306,7 +298,7 @@ void Preset::remove(){
         return;
     }
     file.remove();
-    mainwin->writeLog("Removed "+fullpath+ " (presets/remove)");
+    LogHelper::writeLog("Removed "+fullpath+ " (presets/remove)");
     UpdateList();
 }
 void Preset::load(){
@@ -315,7 +307,7 @@ void Preset::load(){
         msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
         return;
     }
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     if(!QFile::exists(fullpath)){
@@ -328,7 +320,7 @@ void Preset::load(){
     mainwin->LoadPresetFile(fullpath);
 }
 void Preset::nameChanged(const QString& name){
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText("Overwrite");
     else ui->add->setText("Save");
@@ -341,7 +333,7 @@ void Preset::showContextMenu(const QPoint &pos)
     QAction* action_del = menu.addAction("Delete");
     QListWidgetItem* pointedItem = ui->files->itemAt(pos);
     if(!pointedItem)return;
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     QString fullpath = QDir(path).filePath(pointedItem->text() + ".conf");
 
@@ -367,7 +359,7 @@ void Preset::showContextMenu(const QPoint &pos)
                 }
                 QFile file (fullpath);
                 file.remove();
-                mainwin->writeLog("Removed "+fullpath);
+                LogHelper::writeLog("Removed "+fullpath);
                 UpdateList();
             }
         }
@@ -392,7 +384,7 @@ void Preset::performIRSDownload(QNetworkReply* reply){
         QStringList irsMatches = irs.filter(fileName); //Query for IRS Name
         QFileInfo fileInfo2(irsMatches.first());
         QString name=fileInfo2.baseName().replace("%20","");
-        QFileInfo filepath(QString::fromStdString(mainwin->getPath()));
+        QFileInfo filepath(appconf->getPath());
         QFile *file = new QFile(filepath.absolutePath()+"/"+name+".irs");
         if(file->open(QFile::Append))
         {
@@ -423,7 +415,7 @@ void Preset::performDownload(QNetworkReply* reply){
 
         QString name = ui->repoindex->currentItem()->text();
         QString url = ui->repoindex->currentItem()->data(Qt::UserRole).toString();
-        QFileInfo filepath(QString::fromStdString(mainwin->getPath()));
+        QFileInfo filepath(appconf->getPath());
         QFile *file = new QFile(filepath.absolutePath()+"/presets/"+name+".conf");
         if(file->open(QFile::Append))
         {

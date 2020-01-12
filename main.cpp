@@ -1,10 +1,11 @@
- #ifndef MAIN
+#ifndef MAIN
 #define MAIN
 #endif
 
 #include "mainwindow.h"
 #include "main.h"
 #include "settings.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <string>

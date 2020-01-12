@@ -1,4 +1,5 @@
 #include "container.h"
+
 #include <QDebug>
 
 ConfigContainer::ConfigContainer()

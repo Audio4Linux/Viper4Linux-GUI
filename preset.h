@@ -6,6 +6,7 @@
 #include "converter.h"
 #include "items/configitem.h"
 #include "items/delegates.h"
+#include "config/appconfigwrapper.h"
 
 namespace Ui {
 class Preset;
@@ -40,6 +41,7 @@ private slots:
 
 private:
     Ui::Preset *ui;
+    AppConfigWrapper *appconf;
     QStringList irs;
     QString optimizeName(const QString& s);
     QNetworkAccessManager *manager;

@@ -1,14 +1,16 @@
 #include "converter.h"
 #include "configlist.h"
-#include <iostream>
-#include <sstream>
-#include <cmath>
+#include "misc/loghelper.h"
+#include "main.h"
+
 #include <QDomDocument>
 #include <QFile>
 #include <QDebug>
 #include <QMessageBox>
+#include <cmath>
 #include <fstream>
-#include "main.h"
+#include <sstream>
+
 using namespace std;
 //Messy code but it works :S
 //Returns an error description or the converted linux config
@@ -25,7 +27,7 @@ string converter::toLinux(const string& path,configtype cmode){
                 .arg(errorLine)
                 .arg(errorColumn)
                 .arg(errorMsg);
-        mainwin->writeLog("Converter (a-to-l;mode=" + QString::number(cmode) + "): " + error + " (converter/syntaxcheck)");
+        LogHelper::writeLog("Converter (a-to-l;mode=" + QString::number(cmode) + "): " + error + " (converter/syntaxcheck)");
         return error.toUtf8().constData();
     }
 
@@ -429,7 +431,7 @@ string converter::toAndroid(const string& path,configtype cmode){
         cFile.close();
     }
     else {
-        mainwin->writeLog("Couldn't open config file for reading (converter/linux-to-android)");
+        LogHelper::writeLog("Couldn't open config file for reading (converter/linux-to-android)");
         QMessageBox msgBox;
         msgBox.setText("Viper Configuration File not found at \n" + QString::fromStdString(path) + "");
         msgBox.setInformativeText("You can change the path in the settings.");
@@ -612,7 +614,7 @@ QString converter::boolToQString(bool b){
 void converter::decodeLinuxKey(const string& key,const string& value,configmodel* conf){
     //cout << key << " -> " << value << endl;
     if(value.empty()||is_only_ascii_whitespace(value)){
-        mainwin->writeLog("Key " + QString::fromStdString(key) + " is empty (converter/linuxparser)");
+        LogHelper::writeLog("Key " + QString::fromStdString(key) + " is empty (converter/linuxparser)");
         return;
     }
     switch (resolveConfig(key)) {
@@ -920,7 +922,7 @@ void converter::decodeLinuxKey(const string& key,const string& value,configmodel
         break;
     }
     case unknown: {
-        mainwin->writeLog("Unable to resolve key (converter): " + QString::fromStdString(key)+ " (converter/linuxparser)");
+        LogHelper::writeLog("Unable to resolve key (converter): " + QString::fromStdString(key)+ " (converter/linuxparser)");
         break;
     }
     }

@@ -2,6 +2,7 @@
 #define PALETTE_H
 
 #include <QDialog>
+#include <config/appconfigwrapper.h>
 
 namespace Ui {
 class palette;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::palette *ui;
+    AppConfigWrapper *appconf;
 private slots:
     int loadColor(int index,int rgb_index);
     void closeWin();

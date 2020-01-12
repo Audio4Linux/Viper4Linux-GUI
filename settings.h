@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "ui_settings.h"
+#include "config/appconfigwrapper.h"
+
 class settings : public QDialog
 {
     Q_OBJECT
@@ -27,6 +29,8 @@ private slots:
         void updateAutoFxMode();
         void updateCDefTab();
         void updateTheme();
+private:
+        AppConfigWrapper* appconf;
 };
 
 #endif // SETTINGS_H

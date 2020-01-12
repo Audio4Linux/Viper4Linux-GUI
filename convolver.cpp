@@ -1,17 +1,15 @@
 #include "convolver.h"
 #include "ui_convolver.h"
 #include "main.h"
+#include "misc/loghelper.h"
+
 #include <QDir>
-#include <pwd.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <QString>
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QDebug>
-#include <QFileInfo>
 #include <QInputDialog>
 #include <QMessageBox>
+
 static bool lockupdate = false;
 using namespace std;
 Convolver::Convolver(QWidget *parent) :
@@ -20,11 +18,13 @@ Convolver::Convolver(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    AppConfigWrapper* appconf = mainwin->getACWrapper();
+
+    QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     configpath = QDir::cleanPath(absolute + QDir::separator());
 
-    ui->path->setText(QString::fromStdString(mainwin->getIrsPath()));
+    ui->path->setText(appconf->getIrsPath());
 
     QDir irs_fav(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites"));
     if (!irs_fav.exists())
@@ -41,7 +41,7 @@ Convolver::Convolver(QWidget *parent) :
     connect(ui->favorites, SIGNAL(itemSelectionChanged()), this, SLOT(updateIR_Fav()));
     connect(ui->fileSelect, SIGNAL(clicked()), this, SLOT(selectFolder()));
 
-    ui->tabWidget->setCurrentIndex(mainwin->getConv_DefTab());
+    ui->tabWidget->setCurrentIndex(appconf->getConv_DefTab());
 }
 
 Convolver::~Convolver()
@@ -120,7 +120,7 @@ void Convolver::removeFav(){
     }
     QFile file (fullpath);
     file.remove();
-    mainwin->writeLog("Removed "+fullpath+" from favorites (convolver/remove)");
+    LogHelper::writeLog("Removed "+fullpath+" from favorites (convolver/remove)");
     reloadFav();
 }
 void Convolver::addFav(){
@@ -132,19 +132,19 @@ void Convolver::addFav(){
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    mainwin->writeLog("Adding " + src + " to favorites (convolver/add)");
+    LogHelper::writeLog("Adding " + src + " to favorites (convolver/add)");
     reloadFav();
 }
 
 void Convolver::updateIR(){
     if(lockupdate || ui->files->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
-    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData());
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData(),true);
 }
 void Convolver::updateIR_Fav(){
     if(lockupdate || ui->favorites->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites")).filePath(ui->favorites->selectedItems().first()->text());
-    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData());
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData(),true);
 }
 void Convolver::reject()
 {

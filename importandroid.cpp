@@ -2,11 +2,14 @@
 #include "ui_importandroid.h"
 #include "converter.h"
 #include "main.h"
+#include "misc/loghelper.h"
+
 #include <QFileDialog>
 #include <QMessageBox>
 #include <iostream>
 #include <sstream>
 #include <fstream>
+
 using namespace std;
 importandroid::importandroid(QWidget *parent) :
     QDialog(parent),
@@ -36,7 +39,7 @@ void importandroid::import(){
     string::size_type loc = response.find( "Syntax error", 0 );
     if( loc == 0 ) {
         QMessageBox::warning(this, "Syntax Error", QString::fromStdString(response),QMessageBox::Ok);
-        mainwin->writeLog("Converter (a-to-l;mode=" + QString::number(mode) + "): " + QString::fromStdString(response)+ " (importandroid/syntaxcheck)");
+        LogHelper::writeLog("Converter (a-to-l;mode=" + QString::number(mode) + "): " + QString::fromStdString(response)+ " (importandroid/syntaxcheck)");
         return;
     }
 
@@ -58,7 +61,7 @@ void importandroid::import(){
         msginfotext += QString::fromStdString(notices);
     }
 
-    QDir d = QFileInfo(QString::fromStdString(mainwin->getPath())).absoluteDir();
+    QDir d = QFileInfo(mainwin->getACWrapper()->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
 
@@ -71,7 +74,7 @@ void importandroid::import(){
             cfile << newconfig;
             cfile.close();
         }
-        mainwin->writeLog("Unable to create new file at '" + QDir::cleanPath(path + QDir::separator() + text + ".conf") + "'; cannot import converted android config (importandroid/importer)");
+        LogHelper::writeLog("Unable to create new file at '" + QDir::cleanPath(path + QDir::separator() + text + ".conf") + "'; cannot import converted android config (importandroid/importer)");
     }
 
     preset->UpdateList();

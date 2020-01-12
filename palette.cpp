@@ -1,7 +1,8 @@
 #include "palette.h"
 #include "ui_palette.h"
-#include <QColorDialog>
 #include "main.h"
+
+#include <QColorDialog>
 
 palette::palette(QWidget *parent) :
     QDialog(parent),
@@ -9,7 +10,9 @@ palette::palette(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->whiteicons->setChecked(mainwin->getWhiteIcons());
+    appconf = mainwin->getACWrapper();
+
+    ui->whiteicons->setChecked(appconf->getWhiteIcons());
 
     QObject::connect(ui->base, SIGNAL(clicked()),
                      this, SLOT(updateBase()));
@@ -36,10 +39,10 @@ void palette::closeWin(){
     this->close();
 }
 void palette::Reset(){
-    mainwin->setCustompalette("25,25,25;53,53,53;255,255,255;42,130,218;85,85,85");
+    appconf->setCustompalette("25,25,25;53,53,53;255,255,255;42,130,218;85,85,85");
 }
 int palette::loadColor(int index,int rgb_index){
-    QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
+    QStringList elements = appconf->getCustompalette().split(';');
     if(elements.length()<5||elements[index].split(',').size()<3){
         if(index==0)return 25;
         else if(index==1)return 53;
@@ -56,13 +59,13 @@ int palette::loadColor(int index,int rgb_index){
 }
 void palette::saveColor(int index,const QColor& color){
     QString strcolor = QString::number(color.red()) + "," + QString::number(color.green()) + "," + QString::number(color.blue());
-    QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
+    QStringList elements = appconf->getCustompalette().split(';');
     while(elements.size()<5)elements.append("");
     elements.replace(index,strcolor);
-    mainwin->setCustompalette(elements.join(";").toUtf8().constData());
+    appconf->setCustompalette(elements.join(";"));
 }
 void palette::updateIcons(){
-    mainwin->setWhiteIcons(ui->whiteicons->isChecked());
+    appconf->setWhiteIcons(ui->whiteicons->isChecked());
 }
 void palette::updateBase(){
     QColorDialog *base = new QColorDialog();

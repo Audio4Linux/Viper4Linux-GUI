@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Viper4Linux GUI</string>
+   <string>Viper4Linux GUI Legacy</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -1970,16 +1970,16 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <item>
-                  <widget class="QPushButton" name="paste_eq">
+                  <widget class="QPushButton" name="copy_eq">
                    <property name="text">
-                    <string>Paste</string>
+                    <string>Copy</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="copy_eq">
+                  <widget class="QPushButton" name="paste_eq">
                    <property name="text">
-                    <string>Copy</string>
+                    <string>Paste</string>
                    </property>
                   </widget>
                  </item>
@@ -3378,7 +3378,6 @@
   <tabstop>eq10</tabstop>
   <tabstop>enable_eq</tabstop>
   <tabstop>eqpreset</tabstop>
-  <tabstop>paste_eq</tabstop>
   <tabstop>copy_eq</tabstop>
   <tabstop>reset_eq</tabstop>
   <tabstop>enable_comp</tabstop>

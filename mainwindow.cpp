@@ -1,22 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "main.h"
+
+#include <QMenu>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QClipboard>
+#include <QWhatsThis>
+#include <QDebug>
+#include <cmath>
+#include <string>
+#include <sstream>
+#include <fstream>
+
 using namespace std;
 
-static string theme_str;
-static string path;
-static string irs_path;
-static string appcpath;
-static string style_sheet;
-static string color_palette;
-static string custom_palette;
-static int theme_mode = 0;
-static int conv_deftab = 0;
-static int autofxmode = 0;
-static bool custom_whiteicons;
-static bool autofx;
-static bool muteOnRestart;
-static bool glava_fix;
 static bool settingsdlg_enabled=true;
 static bool presetdlg_enabled=true;
 static bool logdlg_enabled=true;
@@ -28,36 +26,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     conf = new ConfigContainer();
-    appconf = new ConfigContainer();
 
-    //Clear log
-    QFile file ("/tmp/viper4linux/ui.log");
-    if(file.exists())file.remove();
-    QFile file2 ("/tmp/viper4linux/ui_viper.log");
-    if(file2.exists())file2.remove();
+    LogHelper::clearLog();
+    LogHelper::writeLog("UI launched...");
 
-    writeLog("UI launched...");
+    m_stylehelper = new StyleHelper(this);
+    m_appwrapper = new AppConfigWrapper(m_stylehelper);
 
-    struct passwd *pw = getpwuid(getuid());
-    const char *homedir = pw->pw_dir;
-    char result[100];
-    strcpy(result,homedir);
-    strcat(result,"/.config/viper4linux/audio.conf");
-    char result2[100];
-    strcpy(result2,homedir);
-    strcat(result2,"/.config/viper4linux/ui.conf");
-    path = result;
-    appcpath = result2;
-
-
-    loadAppConfig();
-    conf->setConfigMap(ConfigIO::readFile(QString::fromStdString(path)));
+    m_appwrapper->loadAppConfig();
+    conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
     loadConfig();
-
 
     QMenu *menu = new QMenu();
     menu->addAction("Reload Viper", this,SLOT(Restart()));
-    menu->addAction("Context Help", this,[this](){QWhatsThis::enterWhatsThisMode();});
+    menu->addAction("Context Help", this,[](){QWhatsThis::enterWhatsThisMode();});
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
     menu->addAction("View Logs", this,SLOT(OpenLog()));
@@ -74,276 +56,13 @@ MainWindow::MainWindow(QWidget *parent) :
     menuC->addAction("Level 7", this,[this](){ ui->colmpreset->setText("Level 7"); updatecolmpreset();});
     menuC->addAction("Extreme", this,[this](){ ui->colmpreset->setText("Extreme"); updatecolmpreset();});
     ui->colmpreset->setMenu(menuC);
-    SetStyle();
+    m_stylehelper->SetStyle();
     ConnectActions();
-
-    //extract stormviper presets
-    QFileInfo audioconf(QString::fromStdString(path));
-    QDir(audioconf.absolutePath()+QDir::separator()+"stormviper").removeRecursively();
-    QDir configdir(audioconf.absolutePath());
-    configdir.mkpath("stormviper");
-    QString cdir = configdir.absolutePath() + QDir::separator() + "stormviper" + QDir::separator();
-    QFile(":/assets/Stormviper PBone Edition/Stormviper Viper4Linux Pbone.txt").copy(cdir + "Stormviper Viper4Linux Pbone.txt");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper Cinematic.conf").copy(cdir + "Stormviper Cinematic.conf");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper Music.conf").copy(cdir + "Stormviper Music.conf");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper Stage.conf").copy(cdir + "Stormviper Stage.conf");
-    QFile(":/assets/Stormviper PBone Edition/Stormviper Unity.irs").copy(cdir + "Stormviper Unity.irs");
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-//--Process/Logs
-void MainWindow::writeLog(const QString& log,int mode){
-    //Mode: 0-Log+Stdout 1-Log 2-Stdout
-    QFile f("/tmp/viper4linux/ui.log");
-    QString o = "[" + QTime::currentTime().toString() + "] " + log + "\n";
-    QString o_alt = "[" + QTime::currentTime().toString() + "] " + log;
-
-    if(mode==0||mode==1){
-        if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
-            f.write(o.toUtf8().constData());
-        }
-        f.close();
-    }
-    if(mode==0||mode==2) cout << o_alt.toUtf8().constData() << endl;
-}
-void MainWindow::writeLogF(const QString& log,const QString& _path){
-    QFile f(_path);
-    QString o = "[" + QTime::currentTime().toString() + "] " + log;
-    if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
-        f.write(o.toUtf8().constData());
-    }
-    f.close();
-}
-
-//---Style
-void MainWindow::SetStyle(){
-    QApplication::setStyle(QString::fromStdString(mainwin->getTheme()));
-
-    if(theme_mode==0){
-        QApplication::setPalette(this->style()->standardPalette());
-        QString stylepath = "";
-        if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
-        else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
-        else if (style_sheet=="breeze_light")stylepath = ":/lightbreeze/lightbreeze/lightbreeze.qss";
-        else if (style_sheet=="breeze_dark")stylepath = ":/darkbreeze/darkbreeze/darkbreeze.qss";
-        else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
-        else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
-        else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
-        else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
-        else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
-        else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
-        else stylepath = ":/default.qss";
-        ui->vb->setContentsMargins(4,4,4,4);
-        QFile f(stylepath);
-        if (!f.exists())printf("Unable to set stylesheet, file not found\n");
-        else
-        {
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream ts(&f);
-            qApp->setStyleSheet(ts.readAll());
-            if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark" || style_sheet=="vsdark"){
-                QPixmap pix(":/icons/settings-white.svg");
-                QIcon icon(pix);
-                QPixmap pix2(":/icons/queue-white.svg");
-                QIcon icon2(pix2);
-                QPixmap pix3(":/icons/menu-white.svg");
-                QIcon icon3(pix3);
-                ui->set->setIcon(icon);
-                ui->cpreset->setIcon(icon2);
-                ui->toolButton->setIcon(icon3);
-            }else{
-                QPixmap pix(":/icons/settings.svg");
-                QIcon icon(pix);
-                QPixmap pix2(":/icons/queue.svg");
-                QIcon icon2(pix2);
-                QPixmap pix3(":/icons/menu.svg");
-                QIcon icon3(pix3);
-                ui->set->setIcon(icon);
-                ui->cpreset->setIcon(icon2);
-                ui->toolButton->setIcon(icon3);
-            }
-        }
-    }else{
-        loadIcons(false);
-        if(color_palette=="dark"){
-            QColor background = QColor(53,53,53);
-            QColor foreground = Qt::white;
-            QColor base = QColor(25,25,25);
-            QColor selection = QColor(42, 130, 218);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }else if(color_palette=="purple"){
-            loadIcons(true);
-            QColor background = QColor(26, 0, 25);
-            QColor foreground = Qt::white;
-            QColor base = QColor(23, 0, 19);
-            QColor selection = QColor(42, 130, 218);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }else if(color_palette=="gray"){
-            loadIcons(true);
-            QColor background = QColor(49,49,74);
-            QColor foreground = Qt::white;
-            QColor base = QColor(83,83,125);
-            QColor selection = QColor(85,85,127);
-            setPalette(base,background,foreground,selection,Qt::black,QColor(144,144,179));
-        }else if(color_palette=="white"){
-            QColor background = Qt::white;
-            QColor foreground = Qt::black;
-            QColor base = Qt::white;
-            QColor selection = QColor(56,161,227);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="blue"){
-            loadIcons(true);
-            QColor background = QColor(0,0,50);
-            QColor foreground = Qt::white;
-            QColor base = QColor(0,0,38);
-            QColor selection = QColor(85,0,255);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="darkblue"){
-            loadIcons(true);
-            QColor background = QColor(19,25,38);
-            QColor foreground = Qt::white;
-            QColor base = QColor(14,19,29);
-            QColor selection = QColor(70,79,89);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="honeycomb"){
-            QColor background = QColor(212,215,208);
-            QColor foreground = Qt::black;
-            QColor base = QColor(185,188,182);
-            QColor selection = QColor(243,193,41);
-            setPalette(base,background,foreground,selection,Qt::white);
-        }
-        else if(color_palette=="black"){
-            loadIcons(true);
-            QColor background = QColor(16,16,16);
-            QColor foreground = QColor(222,222,222);
-            QColor base = Qt::black;
-            QColor selection = QColor(132,132,132);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="solarized"){
-            loadIcons(true);
-            QColor background = QColor(15,30,49);
-            QColor foreground = QColor(154,174,180);
-            QColor base = Qt::black;
-            QColor selection = QColor(3,50,63);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="silver"){
-            QColor background = QColor(176,180,196);
-            QColor foreground = QColor(20,20,20);
-            QColor base = QColor(176,180,196);
-            QColor selection = Qt::white;
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="darkgreen"){
-            loadIcons(true);
-            QColor background = QColor(27,34,36);
-            QColor foreground = QColor(197,209,217);
-            QColor base = QColor(30,30,30);
-            QColor selection = QColor(21,67,58);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="custom"){
-            QColor base = QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2));
-            QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));
-            QColor foreground = QColor(loadColor(2,0),loadColor(2,1),loadColor(2,2));
-            QColor selection = QColor(loadColor(3,0),loadColor(3,1),loadColor(3,2));
-            QColor disabled = QColor(loadColor(4,0),loadColor(4,1),loadColor(4,2));
-            QColor selectiontext = QColor(255-loadColor(3,0),255-loadColor(3,1),255-loadColor(3,2));
-
-            setPalette(base,background,foreground,selection,selectiontext,disabled);
-            loadIcons(getWhiteIcons());
-        }
-        else{
-            QApplication::setPalette(this->style()->standardPalette());
-            QFile f(":/default.qss");
-            if (!f.exists())printf("Unable to set stylesheet, file not found\n");
-            else
-            {
-                f.open(QFile::ReadOnly | QFile::Text);
-                QTextStream ts(&f);
-                qApp->setStyleSheet(ts.readAll());
-            }
-        }
-
-    }
-}
-void MainWindow::setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor& selection = QColor(42,130,218),const QColor& selectiontext = Qt::black,const QColor& disabled){
-    QPalette *palette = new QPalette();
-    palette->setColor(QPalette::Window, background);
-    palette->setColor(QPalette::WindowText, foreground);
-    palette->setColor(QPalette::Base, base);
-    palette->setColor(QPalette::AlternateBase, background);
-    palette->setColor(QPalette::ToolTipBase, background);
-    palette->setColor(QPalette::ToolTipText, foreground);
-    palette->setColor(QPalette::Text, foreground);
-    palette->setColor(QPalette::Button, background);
-    palette->setColor(QPalette::ButtonText, foreground);
-    palette->setColor(QPalette::BrightText, Qt::red);
-    palette->setColor(QPalette::Link, QColor(42, 130, 218));
-    palette->setColor(QPalette::Highlight, selection);
-    palette->setColor(QPalette::HighlightedText, selectiontext);
-    app->setPalette(*palette);
-    QString rgbdisabled = disabled.name();
-    app->setStyleSheet("QFrame[frameShape=\"4\"], QFrame[frameShape=\"5\"]{ color: gray; }*::disabled { color: " + rgbdisabled +";}QToolButton::disabled { color: " + rgbdisabled +";}QComboBox::disabled { color: " + rgbdisabled +";}");
-}
-void MainWindow::loadIcons(bool white){
-    if(white){
-        QPixmap pix(":/icons/settings-white.svg");
-        QIcon icon(pix);
-        QPixmap pix2(":/icons/queue-white.svg");
-        QIcon icon2(pix2);
-        QPixmap pix3(":/icons/menu-white.svg");
-        QIcon icon3(pix3);
-        ui->set->setIcon(icon);
-        ui->cpreset->setIcon(icon2);
-        ui->toolButton->setIcon(icon3);
-    }else{
-        QPixmap pix(":/icons/settings.svg");
-        QIcon icon(pix);
-        QPixmap pix2(":/icons/queue.svg");
-        QIcon icon2(pix2);
-        QPixmap pix3(":/icons/menu.svg");
-        QIcon icon3(pix3);
-        ui->set->setIcon(icon);
-        ui->cpreset->setIcon(icon2);
-        ui->toolButton->setIcon(icon3);
-    }
-}
-int MainWindow::loadColor(int index,int rgb_index){
-    QStringList elements = QString::fromStdString(mainwin->getCustompalette()).split(';');
-    if(elements.length()<5||elements[index].split(',').size()<3){
-        if(index==0)return 25;
-        else if(index==1)return 53;
-        else if(index==2)return 255;
-        else if(index==3){
-            if(rgb_index==0)return 42;
-            else if(rgb_index==1)return 130;
-            else if(rgb_index==2)return 218;
-        }
-        else if(index==4) return 85;
-    }
-    QStringList rgb = elements[index].split(',');
-    return rgb[rgb_index].toInt();
-}
-void MainWindow::switchPalette(const QPalette& palette)
-{
-    app->setPalette(palette);
-
-    QList<QWidget*> widgets = this->findChildren<QWidget*>();
-
-    foreach (QWidget* w, widgets)
-    {
-        w->setPalette(palette);
-    }
 }
 
 //---Dialogs
@@ -394,14 +113,14 @@ void MainWindow::enableLogBtn(bool on){
 //---Apply
 void MainWindow::OnUpdate(bool ignoremode){
     //Will be called when slider has been moved, dynsys/eq preset set or spinbox changed
-    if((autofx&&(ignoremode||autofxmode==0)) && !lockapply){
+    if((m_appwrapper->getAutoFx() &&
+        (ignoremode||m_appwrapper->getAutoFxMode()==0)) && !lockapply)
         ConfirmConf();
-    }
 }
 void MainWindow::OnRelease(){
-    if((autofx&&(autofxmode==1)) && !lockapply){
+    if((m_appwrapper->getAutoFx() &&
+        m_appwrapper->getAutoFxMode()==1) && !lockapply)
         ConfirmConf();
-    }
 }
 void MainWindow::ConfirmConf(bool restart){
     conf->setValue("fx_enable",QVariant(!ui->disableFX->isChecked()));
@@ -481,9 +200,8 @@ void MainWindow::ConfirmConf(bool restart){
     conf->setValue("eq_band9",QVariant(ui->eq9->value()));
     conf->setValue("eq_band10",QVariant(ui->eq10->value()));
 
-    ConfigIO::writeFile(QString::fromStdString(path),conf->getConfigMap());
-
-    if(restart)Restart();
+    ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
+    if(restart) Restart();
 }
 void MainWindow::Reset(){
     QMessageBox::StandardButton reply;
@@ -491,24 +209,23 @@ void MainWindow::Reset(){
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         std::filebuf fb;
-        fb.open (path,std::ios::out);
+        fb.open (m_appwrapper->getPath().toUtf8().constData(),std::ios::out);
         std::ostream os(&fb);
         os << default_config;
         fb.close();
 
-        conf->setConfigMap(ConfigIO::readFile(QString::fromStdString(path)));
+        conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
         loadConfig();
 
         ConfirmConf();
     }
 }
 void MainWindow::Restart(){
-    if(muteOnRestart)system("pactl set-sink-mute 0 1");
-    if(glava_fix)system("killall -r glava");
+    if(m_appwrapper->getMuteOnRestart())system("pactl set-sink-mute 0 1");
+    if(m_appwrapper->getGFix())system("killall -r glava");
     system("viper restart");
-    if(glava_fix)system("setsid glava -d >/dev/null 2>&1 &");
-    if(muteOnRestart)system("pactl set-sink-mute 0 0");
-
+    if(m_appwrapper->getGFix())system("setsid glava -d >/dev/null 2>&1 &");
+    if(m_appwrapper->getMuteOnRestart())system("pactl set-sink-mute 0 0");
 }
 void MainWindow::DisableFX(){
     //Apply instantly
@@ -518,34 +235,34 @@ void MainWindow::DisableFX(){
 //---Save/Load Presets
 void MainWindow::LoadPresetFile(const QString& filename){
     const QString& src = filename;
-    const QString dest = QString::fromStdString(path);
+    const QString dest = m_appwrapper->getPath();
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    writeLog("Loading from " + filename+ " (main/loadpreset)");
-    conf->setConfigMap(ConfigIO::readFile(QString::fromStdString(path)));
+    LogHelper::writeLog("Loading from " + filename+ " (main/loadpreset)");
+    conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
     loadConfig();
 
     ConfirmConf();
 }
 void MainWindow::SavePresetFile(const QString& filename){
-    const QString src = QString::fromStdString(path);
+    const QString src = m_appwrapper->getPath();
     const QString& dest = filename;
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    writeLog("Saving to " + filename+ " (main/savepreset)");
+    LogHelper::writeLog("Saving to " + filename+ " (main/savepreset)");
 }
 void MainWindow::LoadExternalFile(){
     QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
     if(filename=="")return;
     const QString& src = filename;
-    const QString dest = QString::fromStdString(path);
+    const QString dest = m_appwrapper->getPath();
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    writeLog("Loading from " + filename+ " (main/loadexternal)");
-    conf->setConfigMap(ConfigIO::readFile(QString::fromStdString(path)));
+    LogHelper::writeLog("Loading from " + filename+ " (main/loadexternal)");
+    conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
     loadConfig();
 
     ConfirmConf();
@@ -557,51 +274,12 @@ void MainWindow::SaveExternalFile(){
     QString ext = fi.suffix();
     if(ext!="conf")filename.append(".conf");
 
-    const QString src = QString::fromStdString(path);
+    const QString src = m_appwrapper->getPath();
     const QString dest = filename;
     if (QFile::exists(dest))QFile::remove(dest);
 
     QFile::copy(src,dest);
-    writeLog("Saving to " + filename+ " (main/saveexternal)");
-}
-
-//---UI Config Loader
-void MainWindow::loadAppConfig(bool once){
-    //writeLog("Reloading UI-Config... (main/uiparser)");
-    appconf->setConfigMap(ConfigIO::readFile(QString::fromStdString(appcpath),false));
-    std::string p = chopFirstLastChar(appconf->getString("configpath")).toUtf8().constData();
-    std::string i = chopFirstLastChar(appconf->getString("irspath")).toUtf8().constData();
-    autofx = appconf->getBool("autoapply");
-    autofxmode = appconf->getInt("autoapplymode");
-    path = (p.length() < 1) ? path : p;
-    irs_path = (i.length() < 1) ? irs_path : i;
-    glava_fix = appconf->getBool("glavafix");
-    custom_whiteicons = appconf->getBool("customwhiteicons");
-    style_sheet = appconf->getString("stylesheet").toUtf8().constData();
-    theme_mode = appconf->getInt("thememode");
-    conv_deftab = appconf->getInt("convolver_defaulttab");
-    color_palette = appconf->getString("colorpalette").toUtf8().constData();
-    custom_palette = appconf->getString("custompalette").toUtf8().constData();
-    muteOnRestart = appconf->getBool("muteOnRestart");
-    theme_str = appconf->getBool("theme");
-}
-
-//---UI Config Generator
-void MainWindow::saveAppConfig(){
-    appconf->setValue("autoapply",QVariant(autofx));
-    appconf->setValue("autoapplymode",QVariant(autofxmode));
-    appconf->setValue("configpath",QVariant("\"" + QString::fromStdString(path) + "\""));
-    appconf->setValue("irspath",QVariant("\"" + QString::fromStdString(irs_path) + "\""));
-    appconf->setValue("muteOnRestart",QVariant(muteOnRestart));
-    appconf->setValue("glavafix",QVariant(glava_fix));
-    appconf->setValue("stylesheet",QVariant(QString::fromStdString(style_sheet)));
-    appconf->setValue("thememode",QVariant(theme_mode));
-    appconf->setValue("colorpalette",QVariant(QString::fromStdString(color_palette)));
-    appconf->setValue("custompalette",QVariant(QString::fromStdString(custom_palette)));
-    appconf->setValue("theme",QVariant(QString::fromStdString(theme_str)));
-    appconf->setValue("customwhiteicons",QVariant(custom_whiteicons));
-    appconf->setValue("convolver_defaulttab",QVariant(conv_deftab));
-    ConfigIO::writeFile(QString::fromStdString(appcpath),appconf->getConfigMap());
+    LogHelper::writeLog("Saving to " + filename+ " (main/saveexternal)");
 }
 
 //---Viper Config Loader
@@ -1056,17 +734,17 @@ void MainWindow::update(int d,QObject *alt){
         updateWidgetUnit(obj,QString::number(roundf(in))+"m (" + QString::number(d) + ")",alt==nullptr);
     }
     //Compressor
-    else if(obj==ui->comp_thres)updateWidgetUnit(obj,DoCompressorMath(0,d),alt==nullptr);
-    else if(obj==ui->comp_ratio)updateWidgetUnit(obj,DoCompressorMath(1,d),alt==nullptr);
-    else if(obj==ui->compwidth)updateWidgetUnit(obj,DoCompressorMath(2,d),alt==nullptr);
-    else if(obj==ui->compgain)updateWidgetUnit(obj,DoCompressorMath(3,d),alt==nullptr);
-    else if(obj==ui->compattack)updateWidgetUnit(obj,DoCompressorMath(4,d),alt==nullptr);
-    else if(obj==ui->comprelease)updateWidgetUnit(obj,DoCompressorMath(5,d),alt==nullptr);
-    else if(obj==ui->a_kneewidth)updateWidgetUnit(obj,DoCompressorMath(6,d),alt==nullptr);
-    else if(obj==ui->a_maxatk)updateWidgetUnit(obj,DoCompressorMath(7,d),alt==nullptr);
-    else if(obj==ui->a_maxrel)updateWidgetUnit(obj,DoCompressorMath(8,d),alt==nullptr);
-    else if(obj==ui->a_crest)updateWidgetUnit(obj,DoCompressorMath(9,d),alt==nullptr);
-    else if(obj==ui->a_adapt)updateWidgetUnit(obj,DoCompressorMath(10,d),alt==nullptr);
+    else if(obj==ui->comp_thres)  updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(0,d),alt==nullptr);
+    else if(obj==ui->comp_ratio)  updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(1,d),alt==nullptr);
+    else if(obj==ui->compwidth)   updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(2,d),alt==nullptr);
+    else if(obj==ui->compgain)    updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(3,d),alt==nullptr);
+    else if(obj==ui->compattack)  updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(4,d),alt==nullptr);
+    else if(obj==ui->comprelease) updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(5,d),alt==nullptr);
+    else if(obj==ui->a_kneewidth) updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(6,d),alt==nullptr);
+    else if(obj==ui->a_maxatk)    updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(7,d),alt==nullptr);
+    else if(obj==ui->a_maxrel)    updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(8,d),alt==nullptr);
+    else if(obj==ui->a_crest)     updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(9,d),alt==nullptr);
+    else if(obj==ui->a_adapt)     updateWidgetUnit(obj,MathFunctions::buildCompressorUnitString(10,d),alt==nullptr);
     else{
         //Reverb
         if(obj==ui->roomdamp)post = "%";
@@ -1082,56 +760,6 @@ void MainWindow::update(int d,QObject *alt){
         updateWidgetUnit(obj,pre + QString::number(d) + post,alt==nullptr);
     }
     if(!lockapply||obj!=nullptr)OnUpdate(false);
-}
-QString MainWindow::DoCompressorMath(int mode, float f){
-    //Mode: 0-Threshold, 1-Ratio, 2-Knee, 3-Gain, 4-Atk, 5-Rel, 6-Kneemulti, 7-MaxAtk, 8-MaxRel, 9-Crest, 10-Adapt
-    float orig = f;
-    long double in;
-    f = f/100;
-    switch (mode) {
-    case 0:
-        in = log10(pow(10.0L, ((double) (-60.0f * f)) / 20.0L)) * 20.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
-    case 1:
-        if(f>0.99f)return "\u221E:1";
-        in = 1.0L / (1.0L - ((double) f));
-        return QString::number(roundf((in)*100)/100,'f',2) + ":1 (" + QString::number(orig) + ")";
-    case 2:
-        in = log10(pow(10.0L, ((double) (60.0f * f)) / 20.0L)) * 20.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
-    case 3:
-        in = log10(pow(10.0L, ((double) (60.0f * f)) / 20.0L)) * 20.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
-    case 4:
-        in = ((double) CompMathA(f, 1.0E-4f, 0.2f)) * 1000.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
-    case 5:
-        in = ((double) CompMathA(f, 0.005f, 2.0f)) * 1000.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
-    case 6:
-        in = ((double) CompMathB(f, 0.0f, 4.0f));
-        return QString::number(roundf((in)*100)/100,'f',2) + "x (" + QString::number(orig) + ")";
-    case 7:
-        in = ((double) CompMathA(f, 1.0E-4f, 0.2f)) * 1000.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
-    case 8:
-        in = ((double) CompMathA(f, 0.005f, 2.0f)) * 1000.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
-
-    case 9:
-        in = log10(pow(10.0L, ((double) (60.0f * f)) / 20.0L)) * 20.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "dB (" + QString::number(orig) + ")";
-    case 10:
-        in = ((double) CompMathA(f, 1.0f, 4.0f)) * 1000.0L;
-        return QString::number(roundf((in)*100)/100,'f',2) + "ms (" + QString::number(orig) + ")";
-    }
-    return "E: Mode out of range";
-}
-float MainWindow::CompMathA(float f, float f2, float f3) {
-    return (float) exp(std::log((double) f2) + (((double) f) * (std::log((double) f3) - std::log((double) f2))));
-}
-float MainWindow::CompMathB(float f, float f2, float f3) {
-    return ((f3 - f2) * f) + f2;
 }
 void MainWindow::updateeq(int f){
     QString pre = "";
@@ -1149,33 +777,13 @@ void MainWindow::updateeq(int f){
     }
     ui->info->setText(s);
 }
-float MainWindow::translate(int value,int leftMin,int leftMax,float rightMin,float rightMax){
-    float leftSpan = leftMax - leftMin;
-    float rightSpan = rightMax - rightMin;
-    float valueScaled = float(value - leftMin) / float(leftSpan);
-    return rightMin + (valueScaled * rightSpan);
-}
 void MainWindow::updateWidgetUnit(QObject* sender,QString text,bool viasignal){
     QWidget *w = qobject_cast<QWidget*>(sender);
     w->setToolTip(text);
     if(viasignal)ui->info->setText(text);
 }
 
-//---Getter/Setter
-bool MainWindow::getAutoFx(){
-    return autofx;
-}
-void MainWindow::setAutoFx(bool afx){
-    autofx = afx;
-    saveAppConfig();
-}
-bool MainWindow::getMuteOnRestart(){
-    return muteOnRestart;
-}
-void MainWindow::setMuteOnRestart(bool on){
-    muteOnRestart = on;
-    saveAppConfig();
-}
+//---Helper
 void MainWindow::setIRS(const string& irs,bool apply){
     activeirs = irs;
     QFileInfo irsInfo(QString::fromStdString(irs));
@@ -1183,103 +791,8 @@ void MainWindow::setIRS(const string& irs,bool apply){
     ui->convpath->setCursorPosition(0);
     if(apply)ConfirmConf();
 }
-void MainWindow::setGFix(bool f){
-    glava_fix = f;
-    saveAppConfig();
-}
-bool MainWindow::getGFix(){
-    return glava_fix;
-}
-void MainWindow::setPath(string npath){
-    path = std::move(npath);
-    saveAppConfig();
-}
-string MainWindow::getPath(){
-    return path;
-}
-void MainWindow::setStylesheet(string s){
-    style_sheet = std::move(s);
-    SetStyle();
-    saveAppConfig();
-}
-string MainWindow::getStylesheet(){
-    return style_sheet;
-}
-int MainWindow::getThememode(){
-    return theme_mode;
-}
-void MainWindow::setThememode(int mode){
-    //Modes:
-    //  0 - Default/QSS
-    //  1 - Color Palette
-    theme_mode = mode;
-    SetStyle();
-    saveAppConfig();
-}
-void MainWindow::setColorpalette(string s){
-    color_palette = std::move(s);
-    SetStyle();
-    saveAppConfig();
-}
-string MainWindow::getColorpalette(){
-    return color_palette;
-}
-void MainWindow::setCustompalette(string s){
-    custom_palette = std::move(s);
-    SetStyle();
-    saveAppConfig();
-}
-string MainWindow::getCustompalette(){
-    return custom_palette;
-}
-void MainWindow::setWhiteIcons(bool b){
-    custom_whiteicons = b;
-    SetStyle();
-    saveAppConfig();
-}
-bool MainWindow::getWhiteIcons(){
-    return custom_whiteicons;
-}
-int MainWindow::getAutoFxMode(){
-    return autofxmode;
-}
-void MainWindow::setAutoFxMode(int mode){
-    autofxmode = mode;
-    saveAppConfig();
-}
-void MainWindow::setIrsPath(string npath){
-    irs_path = std::move(npath);
-    saveAppConfig();
-}
-int MainWindow::getConv_DefTab(){
-    return conv_deftab;
-}
-void MainWindow::setConv_DefTab(int mode){
-    //Modes:
-    //  0 - Fav
-    //  1 - Filesys
-    conv_deftab = mode;
-    saveAppConfig();
-}
-void MainWindow::setTheme(string thm){
-    theme_str = std::move(thm);
-    SetStyle();
-    saveAppConfig();
-}
-string MainWindow::getTheme(){
-    return theme_str;
-}
-
-string MainWindow::getIrsPath(){
-    if(irs_path.empty()){
-        struct passwd *pw = getpwuid(getuid());
-        const char *homedir = pw->pw_dir;
-        char result[100];
-        strcpy(result,homedir);
-        strcat(result,"/IRS");
-        return result;
-    }
-    return irs_path;
+AppConfigWrapper* MainWindow::getACWrapper(){
+    return m_appwrapper;
 }
 
 //---Connect UI-Signals
@@ -1379,8 +892,6 @@ void MainWindow::ConnectActions(){
     connect( ui->dyn_bassgain , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect( ui->dyn_sidegain1 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
     connect( ui->dyn_sidegain2 , SIGNAL(valueChanged(int)),this, SLOT(update(int)));
-
-
     connect( ui->convcc , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect( ui->vbfreq , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect( ui->vbgain, SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
@@ -1438,19 +949,4 @@ void MainWindow::ConnectActions(){
     connect(ui->eq8, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect(ui->eq9, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect(ui->eq10, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-}
-
-//---Helper
-bool MainWindow::is_number(const string& s)
-{
-    return !s.empty() && std::find_if(s.begin(),
-                                      s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
-}
-bool MainWindow::is_only_ascii_whitespace( const std::string& str )
-{
-    auto it = str.begin();
-    do {
-        if (it == str.end()) return true;
-    } while (*it >= 0 && *it <= 0x7f && std::isspace(*(it++)));
-    return false;
 }

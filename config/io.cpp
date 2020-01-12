@@ -1,8 +1,9 @@
 #include "io.h"
-#include <fstream>
-#include <string>
+
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <fstream>
+#include <string>
 
 void ConfigIO::writeFile(QString path,QVariantMap map){
     std::ofstream myfile(path.toUtf8().constData());

@@ -1,6 +1,7 @@
 #include "log.h"
 #include "ui_log.h"
 #include "main.h"
+
 #include <QFile>
 
 log::log(QWidget *parent) :
