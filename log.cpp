@@ -20,7 +20,7 @@ log::~log()
 }
 void log::reject()
 {
-    mainwin->enableLogBtn(true);
+    mainwin->EnableLogButton(true);
     QDialog::reject();
 }
 void log::updateLog(){

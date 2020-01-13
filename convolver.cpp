@@ -49,7 +49,7 @@ Convolver::~Convolver()
     delete ui;
 }
 void Convolver::closeWindow(){
-    mainwin->enableConvBtn(true);
+    mainwin->EnableConvolverButton(true);
     this->close();
 }
 void Convolver::reload(){
@@ -139,16 +139,16 @@ void Convolver::addFav(){
 void Convolver::updateIR(){
     if(lockupdate || ui->files->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
-    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData(),true);
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->SetIRS(path.toUtf8().constData(),true);
 }
 void Convolver::updateIR_Fav(){
     if(lockupdate || ui->favorites->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites")).filePath(ui->favorites->selectedItems().first()->text());
-    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->setIRS(path.toUtf8().constData(),true);
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->SetIRS(path.toUtf8().constData(),true);
 }
 void Convolver::reject()
 {
-    mainwin->enableConvBtn(true);
+    mainwin->EnableConvolverButton(true);
     QDialog::reject();
 }
 void Convolver::selectFolder(){

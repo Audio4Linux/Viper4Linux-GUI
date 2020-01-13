@@ -9,5 +9,4 @@
 #endif
 EXTERN MainWindow *mainwin;
 EXTERN QApplication *app;
-EXTERN Preset *preset;
 #endif // MAIN_H

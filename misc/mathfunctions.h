@@ -57,5 +57,21 @@ public:
         }
         return "E: Mode out of range";
     }
+    static QString buildEqGainString(int f){
+        QString pre("");
+        if(f < 0 ) pre = "-";
+
+        QString s;
+        if(QString::number(abs(f)%100).length()==1)
+        {
+            char buffer[5];
+            snprintf(buffer, sizeof(buffer), "%02d", abs(f)%100);
+            s = pre + QString::number(abs(f)/100) + "."  + QString::fromUtf8(buffer) + "dB";
+        }
+        else
+            s = pre + QString::number(abs(f)/100) + "."  + QString::number(abs(f%100)) + "dB";
+        return s;
+    }
+
 };
 #endif // MATHFUNCTIONS_H

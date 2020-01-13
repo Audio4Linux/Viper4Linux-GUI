@@ -52,9 +52,10 @@ HEADERS += \
     items/delegates.h \
     log.h \
         mainwindow.h \
-    configlist.h \
+    misc/common.h \
     misc/loghelper.h \
     misc/mathfunctions.h \
+    misc/presetextension.h \
     misc/stylehelper.h \
     palette.h \
     settings.h \

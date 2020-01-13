@@ -16,6 +16,8 @@ public:
     ~importandroid();
 private slots:
     void import();
+signals:
+    void importFinished();
 private:
     Ui::importandroid *ui;
     QString pathAppend(const QString& path1, const QString& path2);

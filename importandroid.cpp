@@ -35,30 +35,18 @@ void importandroid::import(){
     if(filename=="")return;
     auto mode = converter::officialV4A;
     if(ui->comboBox->currentIndex()==1)mode = converter::teamDeWittV4A;
-    string response = converter::toLinux(filename.toUtf8().constData(),mode);
-    string::size_type loc = response.find( "Syntax error", 0 );
-    if( loc == 0 ) {
-        QMessageBox::warning(this, "Syntax Error", QString::fromStdString(response),QMessageBox::Ok);
-        LogHelper::writeLog("Converter (a-to-l;mode=" + QString::number(mode) + "): " + QString::fromStdString(response)+ " (importandroid/syntaxcheck)");
+    conversion_result_t response = converter::toLinux(filename,mode);
+    if( response.error ) {
+        QMessageBox::warning(this, "Syntax Error", response.notices,QMessageBox::Ok);
+        LogHelper::writeLog("Converter (a-to-l;mode=" + QString::number(mode) + "): " + response.notices + " (importandroid/syntaxcheck)");
         return;
     }
 
-    char* resp = strtok(&response[0u], "|");
-    string newconfig;
-    string notices;
-    int count_resp = 0;
-    while (resp != nullptr) {
-        if (count_resp == 0)newconfig=resp;
-        else if (count_resp == 1)notices=resp;
-        else break;
-        resp = strtok (nullptr, ";");
-        count_resp++;
-    }
-
+    string newconfig = response.configuration.toUtf8().constData();
     QString msginfotext = "Successfully converted!\n";
-    if(!notices.empty()){
+    if(response.notices.length() > 0){
         msginfotext += "\nNotices:\n";
-        msginfotext += QString::fromStdString(notices);
+        msginfotext += response.notices;
     }
 
     QDir d = QFileInfo(mainwin->getACWrapper()->getPath()).absoluteDir();
@@ -74,10 +62,11 @@ void importandroid::import(){
             cfile << newconfig;
             cfile.close();
         }
-        LogHelper::writeLog("Unable to create new file at '" + QDir::cleanPath(path + QDir::separator() + text + ".conf") + "'; cannot import converted android config (importandroid/importer)");
+        else
+            LogHelper::writeLog("Unable to create new file at '" + QDir::cleanPath(path + QDir::separator() + text + ".conf") + "'; cannot import converted android config (importandroid/importer)");
     }
 
-    preset->UpdateList();
+    emit importFinished();
     QMessageBox::information(this,"Import",msginfotext);
     this->close();
 }

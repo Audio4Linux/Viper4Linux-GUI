@@ -89,18 +89,14 @@ settings::settings(QWidget *parent) :
     }
 
     QVariant qvS(appconf->getStylesheet());
-    qDebug() << appconf->getStylesheet();
     int index = ui->styleSelect->findData(qvS);
-    if ( index != -1 ) {
+    if ( index != -1 )
        ui->styleSelect->setCurrentIndex(index);
-       qDebug() << index;
-    }
 
     QVariant qvS2(appconf->getColorpalette());
     int index2 = ui->paletteSelect->findData(qvS2);
-    if ( index2 != -1 ) {
+    if ( index2 != -1 )
        ui->paletteSelect->setCurrentIndex(index2);
-    }
 
     ui->styleSelect->setEnabled(!appconf->getThememode());
     ui->paletteConfig->setEnabled(appconf->getThememode() && appconf->getColorpalette()=="custom");
@@ -190,7 +186,7 @@ void settings::github(){
 }
 void settings::reject()
 {
-    mainwin->enableSetBtn(true);
+    mainwin->EnableSettingButton(true);
     QDialog::reject();
 }
 void settings::glava_help(){

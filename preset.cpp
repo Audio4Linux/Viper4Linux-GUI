@@ -127,7 +127,7 @@ void Preset::visitGithub(){
 }
 void Preset::reject()
 {
-    mainwin->enablePresetBtn(true);
+    mainwin->EnablePresetButton(true);
     QDialog::reject();
 }
 void Preset::UpdateList(){
@@ -180,7 +180,7 @@ void Preset::add(){
         msg = QMessageBox::warning(this, "Error", "Preset Name is empty",QMessageBox::Ok);
         return;
     }
-    mainwin->ConfirmConf(false);
+    mainwin->ApplyConfig(false);
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
@@ -192,6 +192,9 @@ void Preset::importAndroid(){
     auto ia = new importandroid(this);
     ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
     ia->show();
+    connect(ia,&importandroid::importFinished,this,[this](){
+        UpdateList();
+    });
 }
 void Preset::exportAndroid(converter::configtype cmode){
     if(ui->files->selectedItems().length() == 0){
@@ -208,7 +211,6 @@ void Preset::exportAndroid(converter::configtype cmode){
     QString ext = fi.suffix();
     if(ext!="xml")filename.append(".xml");
 
-    // QFileInfo fileInfo(filename);
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
@@ -227,7 +229,8 @@ void Preset::exportAndroid(converter::configtype cmode){
     if (QFile::exists(dest))QFile::remove(dest);
     QFile qFile(dest);
     if (qFile.open(QIODevice::WriteOnly)) {
-        QTextStream out(&qFile); out << QString::fromStdString(converter::toAndroid(src.toUtf8().constData(),cmode));
+        conversion_result_t re = converter::toAndroid(src,cmode);
+        QTextStream out(&qFile); out << re.configuration;
         qFile.close();
     }
     LogHelper::writeLog("Exporting to "+filename + " (presets/androidexport)");
