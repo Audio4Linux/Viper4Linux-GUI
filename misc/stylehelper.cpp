@@ -69,13 +69,6 @@ void StyleHelper::SetStyle(){
             QColor base = QColor(25,25,25);
             QColor selection = QColor(42, 130, 218);
             setPalette(base,background,foreground,selection,Qt::black);
-        }else if(color_palette=="purple"){
-            loadIcons(true);
-            QColor background = QColor(26, 0, 25);
-            QColor foreground = Qt::white;
-            QColor base = QColor(23, 0, 19);
-            QColor selection = QColor(42, 130, 218);
-            setPalette(base,background,foreground,selection,Qt::black);
         }else if(color_palette=="gray"){
             loadIcons(true);
             QColor background = QColor(49,49,74);

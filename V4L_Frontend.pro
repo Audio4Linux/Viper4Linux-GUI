@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml network
+QT       += core gui xml network dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,6 +28,7 @@ CONFIG += c++11
 SOURCES += \
     config/appconfigwrapper.cpp \
     config/container.cpp \
+    config/dbusproxy.cpp \
     config/io.cpp \
     converter.cpp \
     importandroid.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     misc/loghelper.cpp \
+    misc/statusdialog.cpp \
     misc/stylehelper.cpp \
     palette.cpp \
     settings.cpp \
@@ -45,6 +47,7 @@ SOURCES += \
 HEADERS += \
     config/appconfigwrapper.h \
     config/container.h \
+    config/dbusproxy.h \
     config/io.h \
     converter.h \
     importandroid.h \
@@ -56,6 +59,7 @@ HEADERS += \
     misc/loghelper.h \
     misc/mathfunctions.h \
     misc/presetextension.h \
+    misc/statusdialog.h \
     misc/stylehelper.h \
     palette.h \
     settings.h \
@@ -68,6 +72,7 @@ FORMS += \
     items/configitem.ui \
     log.ui \
         mainwindow.ui \
+    misc/statusdialog.ui \
     palette.ui \
     settings.ui \
     convolver.ui \

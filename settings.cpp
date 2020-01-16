@@ -69,7 +69,6 @@ settings::settings(QWidget *parent) :
     ui->paletteSelect->addItem("Dark Green","darkgreen");
     ui->paletteSelect->addItem("Honeycomb","honeycomb");
     ui->paletteSelect->addItem("Gray","gray");
-    ui->paletteSelect->addItem("Purple","purple");
     ui->paletteSelect->addItem("Silver","silver");
     ui->paletteSelect->addItem("Solarized","solarized");
     ui->paletteSelect->addItem("White","white");

@@ -16,6 +16,7 @@
 #include "misc/loghelper.h"
 #include "misc/presetextension.h"
 #include "misc/common.h"
+#include "config/dbusproxy.h"
 
 using namespace std;
 namespace Ui {
@@ -63,6 +64,8 @@ private:
     ConfigContainer* conf;
     AppConfigWrapper* m_appwrapper;
     StyleHelper* m_stylehelper;
+    DBusProxy* m_dbus;
+    bool m_irsNeedUpdate = false;
     bool settingsdlg_enabled=true;
     bool presetdlg_enabled=true;
     bool logdlg_enabled=true;

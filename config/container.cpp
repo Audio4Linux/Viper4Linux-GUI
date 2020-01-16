@@ -18,6 +18,7 @@ QVariant ConfigContainer::getVariant(QString key){
 QString ConfigContainer::getString(QString key){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
+        map[key] = "";
         return "";
     }
     return getVariant(key).toString();
@@ -25,6 +26,7 @@ QString ConfigContainer::getString(QString key){
 int ConfigContainer::getInt(QString key){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
+        map[key] = 0;
         return 0;
     }
     return getVariant(key).toInt();
@@ -32,6 +34,7 @@ int ConfigContainer::getInt(QString key){
 float ConfigContainer::getFloat(QString key){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
+        map[key] = 0.0f;
         return 0.0f;
     }
     return getVariant(key).toFloat();
@@ -39,6 +42,7 @@ float ConfigContainer::getFloat(QString key){
 bool ConfigContainer::getBool(QString key){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
+        map[key] = false;
         return false;
     }
     return getVariant(key).toBool();

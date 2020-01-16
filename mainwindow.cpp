@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "main.h"
+#include "misc/statusdialog.h"
 
 #include <QMenu>
 #include <QMessageBox>
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_stylehelper = new StyleHelper(this);
     m_appwrapper = new AppConfigWrapper(m_stylehelper);
+    m_dbus = new DBusProxy();
 
     m_appwrapper->loadAppConfig();
     conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
@@ -34,14 +36,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QMenu *menu = new QMenu();
     menu->addAction("Reload Viper", this,SLOT(Restart()));
-    menu->addAction("Context Help", this,[](){QWhatsThis::enterWhatsThisMode();});
+    menu->addAction("Driver status", this,[this](){
+        StatusDialog* sd = new StatusDialog(m_dbus);
+        sd->setModal(true);
+        sd->show();
+    });
     menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
     menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
-    menu->addAction("View Logs", this,SLOT(OpenLog()));
+    menu->addAction("View logs", this,SLOT(OpenLog()));
+    menu->addAction("What's this...", this,[](){QWhatsThis::enterWhatsThisMode();});
 
     ui->toolButton->setMenu(menu);
     QMenu *menuC = new QMenu();
-    menuC->addAction("Slight", this,[this](){ ui->colmpreset->setText("Slight"); ColmPresetSelectionUpdated();});
+    menuC->addAction("Slight",  this,[this](){ ui->colmpreset->setText("Slight"); ColmPresetSelectionUpdated();});
     menuC->addAction("Level 1", this,[this](){ ui->colmpreset->setText("Level 1"); ColmPresetSelectionUpdated();});
     menuC->addAction("Level 2", this,[this](){ ui->colmpreset->setText("Level 2"); ColmPresetSelectionUpdated();});
     menuC->addAction("Level 3", this,[this](){ ui->colmpreset->setText("Level 3"); ColmPresetSelectionUpdated();});
@@ -53,6 +60,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->colmpreset->setMenu(menuC);
     m_stylehelper->SetStyle();
     ConnectActions();
+
+    connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
+        conf->setConfigMap(m_dbus->FetchPropertyMap());
+        LoadConfig();
+    });
 }
 
 MainWindow::~MainWindow()
@@ -104,6 +116,7 @@ void MainWindow::Reset(){
 
         conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
         LoadConfig();
+        m_irsNeedUpdate = true;
 
         ApplyConfig();
     }
@@ -155,6 +168,7 @@ void MainWindow::LoadPresetFile(const QString& filename){
     LogHelper::writeLog("Loading from " + filename+ " (main/loadpreset)");
     conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
     LoadConfig();
+    m_irsNeedUpdate = true;
 
     ApplyConfig();
 }
@@ -177,6 +191,7 @@ void MainWindow::LoadExternalFile(){
     LogHelper::writeLog("Loading from " + filename+ " (main/loadexternal)");
     conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
     LoadConfig();
+    m_irsNeedUpdate = true;
 
     ApplyConfig();
 }
@@ -367,7 +382,21 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("eq_band10",QVariant(ui->eq10->value()));
 
     ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
-    if(restart) Restart();
+
+    ConfigContainer dbus_template = *conf;
+    dbus_template.setValue("conv_ir_path",QString::fromStdString(activeirs));
+    m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
+
+    if(restart){
+        if(conf->getString("conv_ir_path").contains('$') && m_irsNeedUpdate)
+            Restart();
+        else
+            if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS)
+                m_dbus->CommitProperties(DBusProxy::PARAM_GROUP_ALL);
+            else
+                Restart();
+        m_irsNeedUpdate = false;
+    }
 }
 
 //---Predefined Presets
@@ -378,6 +407,7 @@ void MainWindow::EqPresetSelectionUpdated(){
 }
 void MainWindow::DynsysPresetSelectionUpdated(){
     const int* data = EQ::lookupDynsysPreset(ui->dynsys_preset->currentText());
+    if(data==nullptr)return;
     lockapply=true;
     ui->dyn_xcoeff1->setValue(data[0]);
     ui->dyn_xcoeff2->setValue(data[1]);
@@ -581,9 +611,9 @@ void MainWindow::SetEQ(const int* data){
 }
 void MainWindow::CopyEQ(){
     QString s = QString("%1,%2,%3,%4,%5,%6,%7,%8,%9,%10").arg(ui->eq1->value()).arg(ui->eq2->value()).arg(ui->eq3->value())
-                                                         .arg(ui->eq4->value()).arg(ui->eq5->value()).arg(ui->eq6->value())
-                                                         .arg(ui->eq7->value()).arg(ui->eq8->value()).arg(ui->eq9->value())
-                                                         .arg(ui->eq10->value());
+            .arg(ui->eq4->value()).arg(ui->eq5->value()).arg(ui->eq6->value())
+            .arg(ui->eq7->value()).arg(ui->eq8->value()).arg(ui->eq9->value())
+            .arg(ui->eq10->value());
     app->clipboard()->setText(s);
 }
 void MainWindow::PasteEQ(){
@@ -606,6 +636,7 @@ void MainWindow::ResetEQ(){
     SetEQ(EQ::defaultEQPreset());
 }
 void MainWindow::SetIRS(const string& irs,bool apply){
+    if(activeirs != irs) m_irsNeedUpdate = true;
     activeirs = irs;
     QFileInfo irsInfo(QString::fromStdString(irs));
     ui->convpath->setText(irsInfo.baseName());

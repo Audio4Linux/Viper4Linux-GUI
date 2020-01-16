@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Viper4Linux GUI Legacy</string>
+   <string>Viper4Linux GUI</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">

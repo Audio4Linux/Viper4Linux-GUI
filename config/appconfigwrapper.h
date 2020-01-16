@@ -8,6 +8,11 @@
 
 using namespace std;
 
+typedef enum class ReloadMethod{
+    DIRECT_DBUS,
+    USE_VIPERSCRIPT
+}ReloadMethod;
+
 class AppConfigWrapper
 {
 public:
@@ -32,6 +37,8 @@ public:
     QString getColorpalette();
     void setAutoFx(bool autofx);
     bool getAutoFx();
+    ReloadMethod getReloadMethod();
+    void setReloadMethod(ReloadMethod mode);
     int getThememode();
     void setThememode(int mode);
     bool getGFix();
