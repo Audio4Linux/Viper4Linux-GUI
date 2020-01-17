@@ -78,6 +78,9 @@ FORMS += \
     convolver.ui \
     preset.ui
 
+TRANSLATIONS += translations/lang_en.ts \
+                translations/lang_de.ts
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /usr/bin/
