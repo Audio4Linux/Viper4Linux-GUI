@@ -29,6 +29,7 @@ settings::settings(QWidget *parent) :
     ui->autofx->setChecked(appconf->getAutoFx());
     ui->muteonrestart->setChecked(appconf->getMuteOnRestart());
     ui->glavafix->setChecked(appconf->getGFix());
+    ui->reloadmethod->setCurrentIndex((int)appconf->getReloadMethod());
 
     connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
@@ -48,6 +49,11 @@ settings::settings(QWidget *parent) :
     connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
     connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
     connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
+
+    connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
+        if(lockslot)return;
+        appconf->setReloadMethod((ReloadMethod)ui->reloadmethod->currentIndex());
+    });
 
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
