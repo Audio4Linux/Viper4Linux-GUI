@@ -10,8 +10,8 @@ StatusDialog::StatusDialog(DBusProxy* dbus, QWidget *parent) :
 {
     ui->setupUi(this);
     if(!dbus->isValid()){
-        QMessageBox::critical(this,"DBus connection error","Unable to connect to DBus interface.\n"
-                                                           "Please make sure viper is running and you are using the lastest version of gst-plugin-viperfx");
+        QMessageBox::critical(this,tr("DBus connection error"),tr("Unable to connect to DBus interface.\n"
+                                                           "Please make sure viper is running and you are using the lastest version of gst-plugin-viperfx"));
         this->close();
         return;
     }
@@ -29,9 +29,9 @@ StatusDialog::StatusDialog(DBusProxy* dbus, QWidget *parent) :
     ui->core_ver->setText(versionfinal_core);
 
     int proc = dbus->GetDriverStatus(DBusProxy::PARAM_GET_DRVCANWORK);
-    ui->proc->setText(proc ? "Processing" : "Not processing");
+    ui->proc->setText(proc ? tr("Processing") : tr("Not processing"));
     int enab = dbus->GetDriverStatus(DBusProxy::PARAM_GET_ENABLED);
-    ui->enabled->setText(enab ? "Enabled" : "Disabled");
+    ui->enabled->setText(enab ? tr("Enabled") : tr("Disabled"));
 
     int samplerate = dbus->GetDriverStatus(DBusProxy::PARAM_GET_SAMPLINGRATE);
     ui->samplerate->setText(QString::number(samplerate));

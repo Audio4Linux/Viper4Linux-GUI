@@ -16,8 +16,8 @@ importandroid::importandroid(QWidget *parent) :
     ui(new Ui::importandroid)
 {
     ui->setupUi(this);
-    ui->comboBox->addItem("Official Viper4Android",0);
-    ui->comboBox->addItem("Viper4Android >2.7 by Team DeWitt",1);
+    ui->comboBox->addItem(tr("Official Viper4Android"),0);
+    ui->comboBox->addItem(tr("Viper4Android >2.7 by Team DeWitt"),1);
     connect(ui->pushButton,SIGNAL(clicked()),SLOT(import()));
 }
 
@@ -28,24 +28,24 @@ importandroid::~importandroid()
 
 void importandroid::import(){
     if(ui->lineEdit->text()==""){
-        QMessageBox::warning(this, "Missing Input", "Name is not set",QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Missing Input"), tr("Name is not set"),QMessageBox::Ok);
         return;
     }
-    QString filename = QFileDialog::getOpenFileName(this,"Import Viper4Android config file (xml)","","*.xml");
+    QString filename = QFileDialog::getOpenFileName(this,tr("Import Viper4Android config file (xml)"),"","*.xml");
     if(filename=="")return;
     auto mode = converter::officialV4A;
     if(ui->comboBox->currentIndex()==1)mode = converter::teamDeWittV4A;
     conversion_result_t response = converter::toLinux(filename,mode);
     if( response.error ) {
-        QMessageBox::warning(this, "Syntax Error", response.notices,QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Syntax Error"), response.notices,QMessageBox::Ok);
         LogHelper::writeLog("Converter (a-to-l;mode=" + QString::number(mode) + "): " + response.notices + " (importandroid/syntaxcheck)");
         return;
     }
 
     string newconfig = response.configuration.toUtf8().constData();
-    QString msginfotext = "Successfully converted!\n";
+    QString msginfotext = tr("Successfully converted!\n");
     if(response.notices.length() > 0){
-        msginfotext += "\nNotices:\n";
+        msginfotext += tr("\nNotices:\n");
         msginfotext += response.notices;
     }
 
@@ -67,7 +67,7 @@ void importandroid::import(){
     }
 
     emit importFinished();
-    QMessageBox::information(this,"Import",msginfotext);
+    QMessageBox::information(this,tr("Import"),msginfotext);
     this->close();
 }
 QString importandroid::pathAppend(const QString& path1, const QString& path2)

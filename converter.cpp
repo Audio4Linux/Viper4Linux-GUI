@@ -27,7 +27,7 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
     QDomDocument document;
     if (!document.setContent(&modelFile, &errorMsg, &errorLine, &errorColumn))
     {
-        QString error("Syntax error line %1, column %2:\n%3");
+        QString error(QObject::tr("Syntax error line %1, column %2:\n%3"));
         error = error
                 .arg(errorLine)
                 .arg(errorColumn)
@@ -51,7 +51,7 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
             QDomElement att = keynode.toElement();
             QString key = att.attribute("name");
             if (key == "65584" || key == prefix + ".analogx.enable")conf->setValue("ax_enable",att.attribute("value") == "true");
-            else if (key == "65553" || key == prefix + ".colorfulmusic.enable")conf->setValue("colm_enable",att.attribute("value") == "true");
+            else if (key == "655path53" || key == prefix + ".colorfulmusic.enable")conf->setValue("colm_enable",att.attribute("value") == "true");
             else if (key == "65581" || key == prefix + ".cure.enable")conf->setValue("cure_enable", att.attribute("value") == "true");
             else if (key == "65557" || key == prefix + ".diffsurr.enable")conf->setValue("ds_enable", att.attribute("value") == "true");
             else if (key == "65618" || key == prefix + ".fetcompressor.autoattack")conf->setValue("fetcomp_autoattack", att.attribute("value") == "true");
@@ -272,9 +272,9 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
     result.configuration = ConfigIO::writeString(conf->getConfigMap());
 
     QString info;
-    if(result.found_ddc) info += "Viper DDC not supported\n";
-    if(result.found_spkopt) info += "Speaker Optimization not supported\n";
-    if(result.found_irs) info += "IRS must be manually reselected\n";
+    if(result.found_ddc) info += QObject::tr("Viper DDC not supported\n");
+    if(result.found_spkopt) info += QObject::tr("Speaker Optimization not supported\n");
+    if(result.found_irs) info += QObject::tr("IRS must be manually reselected\n");
     result.notices = info;
     return result;
 }
@@ -447,7 +447,7 @@ conversion_result_t converter::toAndroid(const QString& path,configtype cmode){
         map.appendChild(generateXmlEntry(&doc,"int","65549;65550",QString::number(translate(conf->getInt("vse_bark_cons"),0.01f,0.1f,0.1f,1)/1000)));
     }
     else{
-        result.notices = "Error: Unknown config type";
+        result.notices = QObject::tr("Error: Unknown config type");
         return result;
     }
     doc.appendChild(map);

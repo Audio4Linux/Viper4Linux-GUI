@@ -35,28 +35,28 @@ MainWindow::MainWindow(QWidget *parent) :
     LoadConfig();
 
     QMenu *menu = new QMenu();
-    menu->addAction("Reload Viper", this,SLOT(Restart()));
-    menu->addAction("Driver status", this,[this](){
+    menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
+    menu->addAction(tr("Driver status"), this,[this](){
         StatusDialog* sd = new StatusDialog(m_dbus);
         sd->setModal(true);
         sd->show();
     });
-    menu->addAction("Load from file", this,SLOT(LoadExternalFile()));
-    menu->addAction("Save to file", this,SLOT(SaveExternalFile()));
-    menu->addAction("View logs", this,SLOT(OpenLog()));
-    menu->addAction("What's this...", this,[](){QWhatsThis::enterWhatsThisMode();});
+    menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
+    menu->addAction(tr("Save to file"), this,SLOT(SaveExternalFile()));
+    menu->addAction(tr("View logs"), this,SLOT(OpenLog()));
+    menu->addAction(tr("What's this..."), this,[](){QWhatsThis::enterWhatsThisMode();});
 
     ui->toolButton->setMenu(menu);
     QMenu *menuC = new QMenu();
-    menuC->addAction("Slight",  this,[this](){ ui->colmpreset->setText("Slight"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 1", this,[this](){ ui->colmpreset->setText("Level 1"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 2", this,[this](){ ui->colmpreset->setText("Level 2"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 3", this,[this](){ ui->colmpreset->setText("Level 3"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 4", this,[this](){ ui->colmpreset->setText("Level 4"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 5", this,[this](){ ui->colmpreset->setText("Level 5"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 6", this,[this](){ ui->colmpreset->setText("Level 6"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Level 7", this,[this](){ ui->colmpreset->setText("Level 7"); ColmPresetSelectionUpdated();});
-    menuC->addAction("Extreme", this,[this](){ ui->colmpreset->setText("Extreme"); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Slight"), this,[this](){ ui->colmpreset->setText(tr("Slight")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 1"), this,[this](){ ui->colmpreset->setText(tr("Level 1")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 2"), this,[this](){ ui->colmpreset->setText(tr("Level 2")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 3"), this,[this](){ ui->colmpreset->setText(tr("Level 3")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 4"), this,[this](){ ui->colmpreset->setText(tr("Level 4")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 5"), this,[this](){ ui->colmpreset->setText(tr("Level 5")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 6"), this,[this](){ ui->colmpreset->setText(tr("Level 6")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Level 7"), this,[this](){ ui->colmpreset->setText(tr("Level 7")); ColmPresetSelectionUpdated();});
+    menuC->addAction(tr("Extreme"), this,[this](){ ui->colmpreset->setText(tr("Extreme")); ColmPresetSelectionUpdated();});
     ui->colmpreset->setMenu(menuC);
     m_stylehelper->SetStyle();
     ConnectActions();
@@ -105,7 +105,7 @@ void MainWindow::OpenLog(){
 }
 void MainWindow::Reset(){
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this,"Reset Configuration","Are you sure?",
+    reply = QMessageBox::question(this,tr("Reset Configuration"),tr("Are you sure?"),
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         std::filebuf fb;
@@ -181,7 +181,7 @@ void MainWindow::SavePresetFile(const QString& filename){
     LogHelper::writeLog("Saving to " + filename+ " (main/savepreset)");
 }
 void MainWindow::LoadExternalFile(){
-    QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
+    QString filename = QFileDialog::getOpenFileName(this,tr("Load custom audio.conf"),"","*.conf");
     if(filename=="")return;
     const QString& src = filename;
     const QString dest = m_appwrapper->getPath();
@@ -196,7 +196,7 @@ void MainWindow::LoadExternalFile(){
     ApplyConfig();
 }
 void MainWindow::SaveExternalFile(){
-    QString filename = QFileDialog::getSaveFileName(this,"Save current audio.conf","","*.conf");
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save current audio.conf"),"","*.conf");
     if(filename=="")return;
     QFileInfo fi(filename);
     QString ext = fi.suffix();
@@ -440,38 +440,38 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     QString post = "";
     if(obj==ui->vbmode){
         //Bass
-        if(d==0) UpdateTooltipLabelUnit(obj,"Natural Bass",alt==nullptr);
-        else if(d==1) UpdateTooltipLabelUnit(obj,"Pure Bass+",alt==nullptr);
-        else if(d==2) UpdateTooltipLabelUnit(obj,"Subwoofer",alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
+        if(d==0) UpdateTooltipLabelUnit(obj,tr("Natural Bass"),alt==nullptr);
+        else if(d==1) UpdateTooltipLabelUnit(obj,tr("Pure Bass+"),alt==nullptr);
+        else if(d==2) UpdateTooltipLabelUnit(obj,tr("Subwoofer"),alt==nullptr);
+        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
     }
     else if(obj==ui->vcmode){
         //Clarity
-        if(d==0) UpdateTooltipLabelUnit(obj,"Natural",alt==nullptr);
-        else if(d==1) UpdateTooltipLabelUnit(obj,"OZone+",alt==nullptr);
-        else if(d==2) UpdateTooltipLabelUnit(obj,"XHiFi",alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
+        if(d==0) UpdateTooltipLabelUnit(obj,tr("Natural"),alt==nullptr);
+        else if(d==1) UpdateTooltipLabelUnit(obj,tr("OZone+"),alt==nullptr);
+        else if(d==2) UpdateTooltipLabelUnit(obj,tr("XHiFi"),alt==nullptr);
+        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
     }
     else if(obj==ui->gain){
         //AGC
-        if(d < 50) UpdateTooltipLabelUnit(obj,"Very Slight (" + QString::number( d ) + ")",alt==nullptr);
-        else if(d < 100) UpdateTooltipLabelUnit(obj,"Slight (" + QString::number( d )+")",alt==nullptr);
-        else if(d < 300) UpdateTooltipLabelUnit(obj,"Moderate (" + QString::number( d )+")",alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,"Extreme (" + QString::number( d )+")",alt==nullptr);
+        if(d < 50) UpdateTooltipLabelUnit(obj,tr("Very Slight (%1)").arg(QString::number(d)),alt==nullptr);
+        else if(d < 100) UpdateTooltipLabelUnit(obj,tr("Slight (%1)").arg(QString::number(d)),alt==nullptr);
+        else if(d < 300) UpdateTooltipLabelUnit(obj,tr("Moderate (%1)").arg(QString::number(d)),alt==nullptr);
+        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
     }
     else if(obj==ui->axmode){
         //AnalogX
-        if(d==0) UpdateTooltipLabelUnit(obj,"Slight",alt==nullptr);
-        else if(d==1) UpdateTooltipLabelUnit(obj,"Moderate",alt==nullptr);
-        else if(d==2) UpdateTooltipLabelUnit(obj,"Extreme",alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
+        if(d==0) UpdateTooltipLabelUnit(obj,tr("Slight"),alt==nullptr);
+        else if(d==1) UpdateTooltipLabelUnit(obj,tr("Moderate"),alt==nullptr);
+        else if(d==2) UpdateTooltipLabelUnit(obj,tr("Extreme"),alt==nullptr);
+        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
     }
     else if(obj==ui->vcurelvl){
         //Cure+
-        if(d==0) UpdateTooltipLabelUnit(obj,"Slight",alt==nullptr);
-        else if(d==1) UpdateTooltipLabelUnit(obj,"Moderate",alt==nullptr);
-        else if(d==2) UpdateTooltipLabelUnit(obj,"Extreme",alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,"Mode "+QString::number( d ),alt==nullptr);
+        if(d==0) UpdateTooltipLabelUnit(obj,tr("Slight"),alt==nullptr);
+        else if(d==1) UpdateTooltipLabelUnit(obj,tr("Moderate"),alt==nullptr);
+        else if(d==2) UpdateTooltipLabelUnit(obj,tr("Extreme"),alt==nullptr);
+        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
     }
     //Dynsys
     else if(obj==ui->dyn_bassgain) UpdateTooltipLabelUnit(obj,QString::number( (d-100)/20 ) + "%",alt==nullptr);
@@ -502,7 +502,7 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     }
     else if(obj==ui->limiter)UpdateTooltipLabelUnit(obj,QString::number(roundf(translate(d,100,0,0,-30)*100)/100)+"dB (" + QString::number(d) + ")",alt==nullptr);
     //Headphone Engine
-    else if(obj==ui->vhplvl)UpdateTooltipLabelUnit(obj,"Level " + QString::number(d+1),alt==nullptr);
+    else if(obj==ui->vhplvl)UpdateTooltipLabelUnit(obj,tr("Level %1").arg(QString::number(d+1)),alt==nullptr);
     //Reverb
     else if(obj==ui->roomsize){
         long double x = d;
@@ -533,7 +533,7 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
         //Bass
         else if(obj==ui->vbfreq)post = "Hz";
         //Spectrum Expend
-        else if(obj==ui->barkcon)pre = "Level ";
+        else if(obj==ui->barkcon)pre = tr("Level ");
         else if(obj==ui->barkfreq)post = "Hz";
         //Convolver
         else if(obj==ui->convcc)post = "%";

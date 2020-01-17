@@ -31,7 +31,7 @@ void log::updateLog(){
 
     QFile file(path);
     if(!file.open(QIODevice::ReadOnly)) {
-        ui->viperlog->append("<Failed to open '" + path + "'>");
+        ui->viperlog->append(tr("<Failed to open '%1'>").arg(path));
     }
 
     QTextStream in(&file);

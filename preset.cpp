@@ -39,17 +39,17 @@ Preset::Preset(QWidget *parent) :
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
 
     QMenu *menu = new QMenu();
-    menu->addAction("Android Profile", this,SLOT(importAndroid()));
-    menu->addAction("Linux Configuration", this,SLOT(importLinux()));
+    menu->addAction(tr("Android Profile"), this,SLOT(importAndroid()));
+    menu->addAction(tr("Linux Configuration"), this,SLOT(importLinux()));
     ui->importBtn->setMenu(menu);
 
     QMenu *menuEx = new QMenu();
 
     QMenu *exportSubA = menuEx->addMenu(tr("Android Profile"));
-    exportSubA->addAction("Official V4A (<2.5.0.5)",this,[this]{exportAndroid(converter::officialV4A);});
-    exportSubA->addAction("V4A by Team DeWitt (>2.7)",this,[this]{exportAndroid(converter::teamDeWittV4A);});
+    exportSubA->addAction(tr("Official V4A (<2.5.0.5)"),this,[this]{exportAndroid(converter::officialV4A);});
+    exportSubA->addAction(tr("V4A by Team DeWitt (>2.7)"),this,[this]{exportAndroid(converter::teamDeWittV4A);});
 
-    menuEx->addAction("Linux Configuration", this,SLOT(exportLinux()));
+    menuEx->addAction(tr("Linux Configuration"), this,SLOT(exportLinux()));
     ui->exportBtn->setMenu(menuEx);
 
     QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
@@ -149,7 +149,7 @@ void Preset::UpdateList(){
 
         QListWidgetItem* placeholder = new QListWidgetItem;
         placeholder->setFont(font);
-        placeholder->setText("No presets saved");
+        placeholder->setText(tr("No presets saved"));
         placeholder->setFlags(placeholder->flags() & ~Qt::ItemIsEnabled);
         ui->files->addItem(placeholder);
         return;
@@ -177,7 +177,7 @@ QString Preset::pathAppend(const QString& path1, const QString& path2)
 void Preset::add(){
     if(ui->presetName->text()==""){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Preset Name is empty",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Preset Name is empty"),QMessageBox::Ok);
         return;
     }
     mainwin->ApplyConfig(false);
@@ -199,13 +199,13 @@ void Preset::importAndroid(){
 void Preset::exportAndroid(converter::configtype cmode){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
     QString newname;
     if(cmode==converter::officialV4A)newname = "com.vipercn.viper4android_v2.headset.xml";
     else newname = "headset.xml";
-    QString filename = QFileDialog::getSaveFileName(this,"Save XML",newname,"*.xml");
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save XML"),newname,"*.xml");
     if(filename=="")return;
     QFileInfo fi(filename);
     QString ext = fi.suffix();
@@ -218,7 +218,7 @@ void Preset::exportAndroid(converter::configtype cmode){
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         return;
     }
@@ -236,7 +236,7 @@ void Preset::exportAndroid(converter::configtype cmode){
     LogHelper::writeLog("Exporting to "+filename + " (presets/androidexport)");
 }
 void Preset::importLinux(){
-    QString filename = QFileDialog::getOpenFileName(this,"Load custom audio.conf","","*.conf");
+    QString filename = QFileDialog::getOpenFileName(this,tr("Load custom audio.conf"),"","*.conf");
     if(filename=="")return;
 
     QFileInfo fileInfo(filename);
@@ -254,11 +254,11 @@ void Preset::importLinux(){
 void Preset::exportLinux(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
 
-    QString filename = QFileDialog::getSaveFileName(this,"Save audio.conf","","*.conf");
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save audio.conf"),"","*.conf");
     if(filename=="")return;
     QFileInfo fi(filename);
     QString ext = fi.suffix();
@@ -272,7 +272,7 @@ void Preset::exportLinux(){
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         return;
     }
@@ -287,7 +287,7 @@ void Preset::exportLinux(){
 void Preset::remove(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
@@ -296,7 +296,7 @@ void Preset::remove(){
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         return;
     }
@@ -307,7 +307,7 @@ void Preset::remove(){
 void Preset::load(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Nothing selected",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
@@ -315,7 +315,7 @@ void Preset::load(){
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     if(!QFile::exists(fullpath)){
         QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         return;
     }    void updateStormviperList();
@@ -325,15 +325,15 @@ void Preset::load(){
 void Preset::nameChanged(const QString& name){
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
-    if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText("Overwrite");
-    else ui->add->setText("Save");
+    if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText(tr("Overwrite"));
+    else ui->add->setText(tr("Save"));
 }
 void Preset::showContextMenu(const QPoint &pos)
 {
     QPoint globalPos = ui->files->mapToGlobal(pos);
     QMenu menu;
-    QAction* action_rename = menu.addAction("Rename");
-    QAction* action_del = menu.addAction("Delete");
+    QAction* action_rename = menu.addAction(tr("Rename"));
+    QAction* action_del = menu.addAction(tr("Delete"));
     QListWidgetItem* pointedItem = ui->files->itemAt(pos);
     if(!pointedItem)return;
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
@@ -347,8 +347,8 @@ void Preset::showContextMenu(const QPoint &pos)
         if(selectedAction) {
             if(selectedAction == action_rename) {
                 bool ok;
-                QString text = QInputDialog::getText(this, "Rename",
-                                                     "New Name", QLineEdit::Normal,
+                QString text = QInputDialog::getText(this, tr("Rename"),
+                                                     tr("New Name"), QLineEdit::Normal,
                                                      pointedItem->text(), &ok);
                 if (ok && !text.isEmpty())QFile::rename(fullpath,QDir(path).filePath(text + ".conf"));
                 UpdateList();
@@ -356,7 +356,7 @@ void Preset::showContextMenu(const QPoint &pos)
             if(selectedAction == action_del) {
                 if(!QFile::exists(fullpath)){
                     QMessageBox::StandardButton msg;
-                    msg = QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+                    msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
                     UpdateList();
                     return;
                 }
@@ -372,15 +372,15 @@ void Preset::showContextMenu(const QPoint &pos)
 void Preset::performIRSDownload(QNetworkReply* reply){
     if(reply->error())
     {
-        ui->status->setText("Error: " + reply->errorString());
+        ui->status->setText(tr("Error: %1").arg(reply->errorString()));
     }
     else
     {
         if(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt()!=200){
-            ui->status->setText("Error " + reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString() + " - " + reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString());
+            ui->status->setText(tr("Error: %1").arg(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()) + " - " + reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString());
             return;
         }else{
-            ui->status->setText("HTTP-Response " + reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString());
+            ui->status->setText(tr("HTTP-Response %1").arg(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()));
         }
         QFileInfo fileInfo(ui->repoindex->currentItem()->data(Qt::UserRole).toString());
         QString fileName=fileInfo.baseName();
@@ -396,7 +396,7 @@ void Preset::performIRSDownload(QNetworkReply* reply){
             file->close();
         }
         delete file;
-        ui->status->setText("Download finished");
+        ui->status->setText(tr("Download finished"));
     }
     reply->deleteLater();
     UpdateList();
@@ -404,16 +404,16 @@ void Preset::performIRSDownload(QNetworkReply* reply){
 void Preset::performDownload(QNetworkReply* reply){
     if(reply->error())
     {
-        ui->status->setText("Error: " + reply->errorString());
+        ui->status->setText(tr("Error: %1").arg(reply->errorString()));
     }
     else
     {
         //--CONF Download
         if(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt()!=200){
-            ui->status->setText("Error " + reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString() + " - " + reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString());
+            ui->status->setText(tr("Error: %1").arg(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()) + " - " + reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString());
             return;
         }else{
-            ui->status->setText("HTTP-Response " + reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString());
+            ui->status->setText(tr("HTTP-Response %1").arg(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()));
         }
 
         QString name = ui->repoindex->currentItem()->text();
@@ -429,12 +429,12 @@ void Preset::performDownload(QNetworkReply* reply){
         delete file;
 
         //--IRS Download
-        ui->status->setText("Downloading IRS...");
+        ui->status->setText(tr("Downloading IRS..."));
         QFileInfo fileInfo(url);
         QString fileName=fileInfo.baseName();
         QStringList irsMatches = irs.filter(fileName); //Query for IRS
         if(irsMatches.count()==0){
-            ui->status->setText("Download finished");
+            ui->status->setText(tr("Download finished"));
         }else{
             QString match = irsMatches.first();
             QNetworkAccessManager* dlmanagerIRS = new QNetworkAccessManager(this);
@@ -447,7 +447,7 @@ void Preset::performDownload(QNetworkReply* reply){
 }
 void Preset::download(){
     if(ui->repoindex->currentItem()==nullptr)return;
-    ui->status->setText("Downloading Config...");
+    ui->status->setText(tr("Downloading Config..."));
     QNetworkAccessManager* dlmanager = new QNetworkAccessManager(this);
     connect(dlmanager,SIGNAL(finished(QNetworkReply*)),this,SLOT(performDownload(QNetworkReply*)));
     QString url = ui->repoindex->currentItem()->data(Qt::UserRole).toString();

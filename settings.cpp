@@ -134,8 +134,8 @@ void settings::updateMuteRestart(){
 void settings::updatePath(){
     appconf->setPath(ui->path->text());
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Restart required", "Please restart this application to make sure all changes are applied correctly.\n"
-                                                            "Press 'OK' to quit or 'Cancel' if you want to continue without a restart.",
+    reply = QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
+                                                            "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
                                   QMessageBox::Ok|QMessageBox::Cancel);
     if (reply == QMessageBox::Ok)
       QApplication::quit();
@@ -196,7 +196,7 @@ void settings::reject()
 }
 void settings::glava_help(){
     QMessageBox *msgBox = new QMessageBox(this);
-     msgBox->setText("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting.");
+     msgBox->setText(tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
      msgBox->setStandardButtons(QMessageBox::Ok);
      msgBox->setDefaultButton(QMessageBox::Ok);
      msgBox->exec();

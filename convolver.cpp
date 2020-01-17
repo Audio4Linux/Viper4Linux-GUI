@@ -66,7 +66,7 @@ void Convolver::reload(){
 
         QListWidgetItem* placeholder = new QListWidgetItem;
         placeholder->setFont(font);
-        placeholder->setText("No IRS files found");
+        placeholder->setText(tr("No IRS files found"));
         placeholder->setFlags(placeholder->flags() & ~Qt::ItemIsEnabled);
         ui->files->addItem(placeholder);
     }
@@ -87,12 +87,12 @@ void Convolver::reloadFav(){
 
         QListWidgetItem* placeholder = new QListWidgetItem;
         placeholder->setFont(font);
-        placeholder->setText("Nothing here yet...");
+        placeholder->setText(tr("Nothing here yet..."));
         placeholder->setFlags(placeholder->flags() & ~Qt::ItemIsEnabled);
         ui->favorites->addItem(placeholder);
         QListWidgetItem* placeholder2 = new QListWidgetItem;
         //placeholder2->setFont(font);
-        placeholder2->setText("Add some IRS files in the 'filesystem' tab");
+        placeholder2->setText(tr("Add some IRS files in the 'filesystem' tab"));
         placeholder2->setFlags(placeholder2->flags() & ~Qt::ItemIsEnabled);
         ui->favorites->addItem(placeholder2);
     }
@@ -102,8 +102,8 @@ void Convolver::reloadFav(){
 void Convolver::renameFav(){
     if(ui->favorites->selectedItems().count()<1)return;
     bool ok;
-    QString text = QInputDialog::getText(this, "Rename",
-                                         "New Name", QLineEdit::Normal,
+    QString text = QInputDialog::getText(this, tr("Rename"),
+                                         tr("New Name"), QLineEdit::Normal,
                                          ui->favorites->selectedItems().first()->text(), &ok);
     QString fullpath = QDir(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites")).filePath(ui->favorites->selectedItems().first()->text());;
     QString dest = QDir::cleanPath(configpath + QDir::separator() + "irs_favorites");
@@ -114,7 +114,7 @@ void Convolver::removeFav(){
     if(ui->favorites->selectedItems().count()<1)return;
     QString fullpath = QDir(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites")).filePath(ui->favorites->selectedItems().first()->text());;
     if(!QFile::exists(fullpath)){
-        QMessageBox::warning(this, "Error", "Selected File doesn't exist",QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         reloadFav();
         return;
     }
