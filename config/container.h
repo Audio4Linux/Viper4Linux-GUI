@@ -10,7 +10,7 @@ public:
     ConfigContainer();
     void setValue(QString key,QVariant value);
     QVariant getVariant(QString key);
-    QString getString(QString key);
+    QString getString(QString key,bool setToDefaultIfMissing=true);
     int getInt(QString key);
     float getFloat(QString key);
     bool getBool(QString key);

@@ -45,8 +45,8 @@ void AppConfigWrapper::setPath(QString npath){
     saveAppConfig();
 }
 QString AppConfigWrapper::getPath(){
-    QString path = chopFirstLastChar(appconf->getString("io.configpath"));
-    if(path.length() < 1)
+    QString path = chopFirstLastChar(appconf->getString("io.configpath",true));
+    if(path.length() < 2)
         return QString("%1/.config/viper4linux/audio.conf").arg(QDir::homePath());
     return path;
 }
@@ -124,8 +124,8 @@ QString AppConfigWrapper::getTheme(){
     return appconf->getString("theme.name");
 }
 QString AppConfigWrapper::getIrsPath(){
-    QString irs_path = chopFirstLastChar(appconf->getString("convolver.default.irspath"));
-    if(irs_path.length() < 1)
+    QString irs_path = chopFirstLastChar(appconf->getString("convolver.default.irspath",false));
+    if(irs_path.length() < 2)
         return QString("%1/IRS").arg(QDir::homePath());
     return irs_path;
 }

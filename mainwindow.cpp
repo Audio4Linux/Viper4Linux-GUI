@@ -292,10 +292,10 @@ void MainWindow::LoadConfig(){
 
     UpdateAllUnitLabels();
 
-    QString ir = conf->getString("conv_ir_path");
+    QString ir = conf->getString("conv_ir_path",false);
     if(ir.size() > 2){
-        ir.remove(0,1); //remove double quotes
-        ir.chop(1);
+        if(ir.at(0)=='"')ir.remove(0,1); //remove double quotes
+        if(ir.at(ir.length()-1)=='"')ir.chop(1);
         activeirs = ir.toUtf8().constData();
         QFileInfo irsInfo(ir);
         ui->convpath->setText(irsInfo.baseName());
@@ -388,7 +388,7 @@ void MainWindow::ApplyConfig(bool restart){
     m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
 
     if(restart){
-        if(conf->getString("conv_ir_path").contains('$') && m_irsNeedUpdate)
+        if(conf->getString("conv_ir_path",false).contains('$') && m_irsNeedUpdate)
             Restart();
         else
             if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS)
