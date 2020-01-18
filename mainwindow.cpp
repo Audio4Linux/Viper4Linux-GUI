@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "misc/statusdialog.h"
+#include "dialog/statusdialog.h"
 
 #include <QMenu>
 #include <QMessageBox>
