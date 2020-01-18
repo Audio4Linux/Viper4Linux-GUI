@@ -1,6 +1,6 @@
-#include "preset.h"
+#include "presetdlg.h"
 #include "ui_preset.h"
-#include "main.h"
+#include "mainwindow.h"
 #include "converter.h"
 #include "importandroid.h"
 #include "misc/loghelper.h"
@@ -18,12 +18,12 @@
 #include <QJsonObject>
 #include <QDesktopServices>
 
-Preset::Preset(QWidget *parent) :
+PresetDlg::PresetDlg(MainWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Preset)
 {
     ui->setupUi(this);
-
+    m_mainwin = mainwin;
     appconf = mainwin->getACWrapper();
     manager = new QNetworkAccessManager(this);
     UpdateList();
@@ -56,22 +56,22 @@ Preset::Preset(QWidget *parent) :
     request.setUrl(url);
     manager->get(request);
 }
-Preset::~Preset()
+PresetDlg::~PresetDlg()
 {
     delete ui;
 }
-void Preset::repoIndexChanged(){
+void PresetDlg::repoIndexChanged(){
     if(ui->files->currentItem() == nullptr)return;
     ui->presetName->setText(ui->files->currentItem()->text());
 }
-void Preset::reloadRepo(){
+void PresetDlg::reloadRepo(){
     ui->repoindex->clear();
     QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
     request.setUrl(url);
     manager->get(request);
 }
 
-void Preset::indexDownloaded(QNetworkReply* reply){
+void PresetDlg::indexDownloaded(QNetworkReply* reply){
     if (reply->error()) {
         LogHelper::writeLog("Cannot download repo index: " + reply->errorString() + " (presets/repoindex)");
         return;
@@ -112,7 +112,7 @@ void Preset::indexDownloaded(QNetworkReply* reply){
     }
 
 }
-QString Preset::optimizeName(const QString& s){
+QString PresetDlg::optimizeName(const QString& s){
     QRegExp rx("(\\-)"); //Split Confname by -
     QStringList query = s.split(rx);
     if(query.count()!=3) return ""; //Filter configs which ignore the naming convention
@@ -122,15 +122,14 @@ QString Preset::optimizeName(const QString& s){
     if(ui->camelcase->checkState()==Qt::CheckState::Checked)return toCamelCase(description) + " by " + author;
     else return description + " by " + author;
 }
-void Preset::visitGithub(){
+void PresetDlg::visitGithub(){
     QDesktopServices::openUrl(QUrl("https://github.com/noahbliss/Viper4Linux-Configs"));
 }
-void Preset::reject()
+void PresetDlg::reject()
 {
-    mainwin->EnablePresetButton(true);
     QDialog::reject();
 }
-void Preset::UpdateList(){
+void PresetDlg::UpdateList(){
     ui->files->clear();
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
@@ -162,7 +161,7 @@ void Preset::UpdateList(){
 
     ui->files->addItems(files);
 }
-QString Preset::toCamelCase(const QString& s)
+QString PresetDlg::toCamelCase(const QString& s)
 {
     QStringList parts = s.split(' ', QString::SkipEmptyParts);
     for (int i = 0; i < parts.size(); ++i)
@@ -170,33 +169,33 @@ QString Preset::toCamelCase(const QString& s)
 
     return parts.join(" ");
 }
-QString Preset::pathAppend(const QString& path1, const QString& path2)
+QString PresetDlg::pathAppend(const QString& path1, const QString& path2)
 {
     return QDir::cleanPath(path1 + QDir::separator() + path2);
 }
-void Preset::add(){
+void PresetDlg::add(){
     if(ui->presetName->text()==""){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Preset Name is empty"),QMessageBox::Ok);
         return;
     }
-    mainwin->ApplyConfig(false);
+    m_mainwin->ApplyConfig(false);
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
-    mainwin->SavePresetFile(path + "/" + ui->presetName->text() + ".conf");
+    m_mainwin->SavePresetFile(path + "/" + ui->presetName->text() + ".conf");
     ui->presetName->text() = "";
     UpdateList();
 }
-void Preset::importAndroid(){
-    auto ia = new importandroid(this);
+void PresetDlg::importAndroid(){
+    auto ia = new importandroid(m_mainwin->getACWrapper()->getPath(),this);
     ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
     ia->show();
     connect(ia,&importandroid::importFinished,this,[this](){
         UpdateList();
     });
 }
-void Preset::exportAndroid(converter::configtype cmode){
+void PresetDlg::exportAndroid(converter::configtype cmode){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
@@ -235,7 +234,7 @@ void Preset::exportAndroid(converter::configtype cmode){
     }
     LogHelper::writeLog("Exporting to "+filename + " (presets/androidexport)");
 }
-void Preset::importLinux(){
+void PresetDlg::importLinux(){
     QString filename = QFileDialog::getOpenFileName(this,tr("Load custom audio.conf"),"","*.conf");
     if(filename=="")return;
 
@@ -251,7 +250,7 @@ void Preset::importLinux(){
     QFile::copy(src,dest);
     LogHelper::writeLog("Importing from "+filename+ " (presets/linuximport)");
 }
-void Preset::exportLinux(){
+void PresetDlg::exportLinux(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
@@ -284,7 +283,7 @@ void Preset::exportLinux(){
     QFile::copy(src,dest);
     LogHelper::writeLog("Exporting to "+filename+ " (presets/linuxexport)");
 }
-void Preset::remove(){
+void PresetDlg::remove(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
@@ -304,7 +303,7 @@ void Preset::remove(){
     LogHelper::writeLog("Removed "+fullpath+ " (presets/remove)");
     UpdateList();
 }
-void Preset::load(){
+void PresetDlg::load(){
     if(ui->files->selectedItems().length() == 0){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
@@ -320,15 +319,15 @@ void Preset::load(){
         return;
     }    void updateStormviperList();
     void loadStormviper();
-    mainwin->LoadPresetFile(fullpath);
+    m_mainwin->LoadPresetFile(fullpath);
 }
-void Preset::nameChanged(const QString& name){
+void PresetDlg::nameChanged(const QString& name){
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText(tr("Overwrite"));
     else ui->add->setText(tr("Save"));
 }
-void Preset::showContextMenu(const QPoint &pos)
+void PresetDlg::showContextMenu(const QPoint &pos)
 {
     QPoint globalPos = ui->files->mapToGlobal(pos);
     QMenu menu;
@@ -369,7 +368,7 @@ void Preset::showContextMenu(const QPoint &pos)
     }
     menu.exec(globalPos);
 }
-void Preset::performIRSDownload(QNetworkReply* reply){
+void PresetDlg::performIRSDownload(QNetworkReply* reply){
     if(reply->error())
     {
         ui->status->setText(tr("Error: %1").arg(reply->errorString()));
@@ -401,7 +400,7 @@ void Preset::performIRSDownload(QNetworkReply* reply){
     reply->deleteLater();
     UpdateList();
 }
-void Preset::performDownload(QNetworkReply* reply){
+void PresetDlg::performDownload(QNetworkReply* reply){
     if(reply->error())
     {
         ui->status->setText(tr("Error: %1").arg(reply->errorString()));
@@ -445,7 +444,7 @@ void Preset::performDownload(QNetworkReply* reply){
     reply->deleteLater();
     UpdateList();
 }
-void Preset::download(){
+void PresetDlg::download(){
     if(ui->repoindex->currentItem()==nullptr)return;
     ui->status->setText(tr("Downloading Config..."));
     QNetworkAccessManager* dlmanager = new QNetworkAccessManager(this);

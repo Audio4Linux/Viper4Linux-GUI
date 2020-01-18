@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "main.h"
 #include "misc/statusdialog.h"
 
 #include <QMenu>
@@ -16,16 +15,18 @@
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    conf = new ConfigContainer();
+    m_exepath = exepath;
+    m_startupInTraySwitch = statupInTray;
 
     LogHelper::clearLog();
     LogHelper::writeLog("UI launched...");
 
+    conf = new ConfigContainer();
     m_stylehelper = new StyleHelper(this);
     m_appwrapper = new AppConfigWrapper(m_stylehelper);
     m_dbus = new DBusProxy();
@@ -34,12 +35,22 @@ MainWindow::MainWindow(QWidget *parent) :
     conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
     LoadConfig();
 
+    conv_dlg = new ConvolverDlg(this);
+    settings_dlg = new SettingsDlg(this);
+    preset_dlg = new PresetDlg(this);
+    log_dlg = new LogDlg();
+
     QMenu *menu = new QMenu();
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(tr("Driver status"), this,[this](){
         StatusDialog* sd = new StatusDialog(m_dbus);
         sd->setModal(true);
         sd->show();
+    });
+    menu->addAction(tr("Reconnect"), this,[this](){
+        m_dbus = new DBusProxy();
+        if(m_dbus->isValid()) QMessageBox::information(this,"Reconnect","Successfully reconnected to DBus interface");
+        else QMessageBox::critical(this,"Reconnect","Unable to connect to DBus interface");
     });
     menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
     menu->addAction(tr("Save to file"), this,SLOT(SaveExternalFile()));
@@ -61,6 +72,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_stylehelper->SetStyle();
     ConnectActions();
 
+    createTrayIcon();
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+    if(m_appwrapper->getTrayMode() || m_startupInTraySwitch) trayIcon->show();
+    else trayIcon->hide();
+
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
         conf->setConfigMap(m_dbus->FetchPropertyMap());
         LoadConfig();
@@ -72,36 +88,89 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//---Dialogs/Buttons
-void MainWindow::DialogHandler(){
-    if(sender() == ui->conv_select){
-        EnableConvolverButton(false);
-        (new Convolver(this))->show();
+//Overrides
+void MainWindow::setVisible(bool visible)
+{
+    //Reconnect to dbus to make sure the connection isn't stale
+    m_dbus = new DBusProxy();
+    minimizeAction->setEnabled(visible);
+    restoreAction->setEnabled(isMaximized() || !visible);
+    if(!visible){
+        conv_dlg->hide();
+        settings_dlg->hide();
+        log_dlg->hide();
+        preset_dlg->hide();
     }
-    else if(sender() == ui->set){
-        if(settingsdlg_enabled){
-            EnableSettingButton(false);
-            (new settings(this))->show();
-        }
+    QMainWindow::setVisible(visible);
+}
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+#ifdef Q_OS_OSX
+    if (!event->spontaneous() || !isVisible()) {
+        return;
     }
-    else if(sender() == ui->cpreset){
-        if(presetdlg_enabled){
-            EnablePresetButton(false);
-            (new Preset(this))->show();
-        }
-    }
-    else if(sender() == ui->set){
-        if(settingsdlg_enabled){
-            EnableSettingButton(false);
-            (new settings(this))->show();
-        }
+#endif
+    if (trayIcon->isVisible()) {
+        hide();
+        event->ignore();
     }
 }
-void MainWindow::OpenLog(){
-    if(logdlg_enabled){
-        EnableLogButton(false);
-        (new class log(this))->show();
+//Systray
+void MainWindow::setTrayVisible(bool visible){
+    if(visible) trayIcon->show();
+    else trayIcon->hide();
+}
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+        setVisible(!this->isVisible());
+        if(isVisible()){
+            this->showNormal();
+            this->activateWindow();
+        }
+        //Hide tray icon if disabled and MainWin is visible (for cmdline force switch)
+        if(!m_appwrapper->getTrayMode() && this->isVisible()) trayIcon->hide();
+        break;
+    default:
+        ;
     }
+}
+void MainWindow::createTrayIcon()
+{
+    minimizeAction = new QAction(tr("Mi&nimize"), this);
+    connect(minimizeAction, &QAction::triggered, this, &QWidget::hide);
+
+    restoreAction = new QAction(tr("&Restore"), this);
+    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
+
+    quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setToolTip("Viper4Linux");
+    trayIcon->setContextMenu(trayIconMenu);
+
+    trayIcon->setIcon(QIcon(":/icons/viper.png"));
+}
+
+//---Dialogs/Buttons
+void MainWindow::DialogHandler(){
+    if(sender() == ui->conv_select)
+        conv_dlg->show();
+    else if(sender() == ui->set)
+        settings_dlg->show();
+    else if(sender() == ui->cpreset)
+        preset_dlg->show();
+}
+void MainWindow::OpenLog(){
+    log_dlg->show();
 }
 void MainWindow::Reset(){
     QMessageBox::StandardButton reply;
@@ -124,18 +193,6 @@ void MainWindow::Reset(){
 void MainWindow::DisableFX(){
     //Apply instantly
     if(!lockapply)ApplyConfig();
-}
-void MainWindow::EnableSettingButton(bool on){
-    settingsdlg_enabled=on;
-}
-void MainWindow::EnablePresetButton(bool on){
-    presetdlg_enabled=on;
-}
-void MainWindow::EnableConvolverButton(bool on){
-    ui->conv_select->setEnabled(on);
-}
-void MainWindow::EnableLogButton(bool on){
-    logdlg_enabled=on;
 }
 
 //---Reloader
@@ -296,7 +353,7 @@ void MainWindow::LoadConfig(){
     if(ir.size() > 2){
         if(ir.at(0)=='"')ir.remove(0,1); //remove double quotes
         if(ir.at(ir.length()-1)=='"')ir.chop(1);
-        activeirs = ir.toUtf8().constData();
+        activeirs = ir;
         QFileInfo irsInfo(ir);
         ui->convpath->setText(irsInfo.baseName());
         ui->convpath->setCursorPosition(0);
@@ -322,7 +379,7 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("vse_bark_cons",QVariant(ui->barkcon->value()));
     conf->setValue("conv_enable",QVariant(ui->conv->isChecked()));
     conf->setValue("conv_cc_level",QVariant(ui->convcc->value()));
-    conf->setValue("conv_ir_path",QVariant("\""+ QString::fromStdString(activeirs) + "\""));
+    conf->setValue("conv_ir_path",QVariant("\""+ activeirs + "\""));
     conf->setValue("dynsys_enable",QVariant(ui->dynsys->isChecked()));
     conf->setValue("dynsys_bassgain",QVariant(ui->dyn_bassgain->value()));
     conf->setValue("dynsys_sidegain1",QVariant(ui->dyn_sidegain1->value()));
@@ -384,7 +441,7 @@ void MainWindow::ApplyConfig(bool restart){
     ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
 
     ConfigContainer dbus_template = *conf;
-    dbus_template.setValue("conv_ir_path",QString::fromStdString(activeirs));
+    dbus_template.setValue("conv_ir_path",activeirs);
     m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
 
     if(restart){
@@ -614,10 +671,10 @@ void MainWindow::CopyEQ(){
             .arg(ui->eq4->value()).arg(ui->eq5->value()).arg(ui->eq6->value())
             .arg(ui->eq7->value()).arg(ui->eq8->value()).arg(ui->eq9->value())
             .arg(ui->eq10->value());
-    app->clipboard()->setText(s);
+    qApp->clipboard()->setText(s);
 }
 void MainWindow::PasteEQ(){
-    QClipboard* a = app->clipboard();
+    QClipboard* a = qApp->clipboard();
     std::string str = a->text().toUtf8().constData();
     std::vector<int> vect;
     std::stringstream ss(str);
@@ -635,13 +692,16 @@ void MainWindow::PasteEQ(){
 void MainWindow::ResetEQ(){
     SetEQ(EQ::defaultEQPreset());
 }
-void MainWindow::SetIRS(const string& irs,bool apply){
+void MainWindow::SetIRS(const QString& irs,bool apply){
     if(activeirs != irs) m_irsNeedUpdate = true;
     activeirs = irs;
-    QFileInfo irsInfo(QString::fromStdString(irs));
+    QFileInfo irsInfo(irs);
     ui->convpath->setText(irsInfo.baseName());
     ui->convpath->setCursorPosition(0);
     if(apply)ApplyConfig();
+}
+QString MainWindow::GetExecutablePath(){
+    return m_exepath;
 }
 AppConfigWrapper* MainWindow::getACWrapper(){
     return m_appwrapper;

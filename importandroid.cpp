@@ -1,7 +1,7 @@
 #include "importandroid.h"
 #include "ui_importandroid.h"
 #include "converter.h"
-#include "main.h"
+#include "mainwindow.h"
 #include "misc/loghelper.h"
 
 #include <QFileDialog>
@@ -11,10 +11,11 @@
 #include <fstream>
 
 using namespace std;
-importandroid::importandroid(QWidget *parent) :
+importandroid::importandroid(QString confpath,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::importandroid)
 {
+    m_confpath = confpath;
     ui->setupUi(this);
     ui->comboBox->addItem(tr("Official Viper4Android"),0);
     ui->comboBox->addItem(tr("Viper4Android >2.7 by Team DeWitt"),1);
@@ -49,7 +50,7 @@ void importandroid::import(){
         msginfotext += response.notices;
     }
 
-    QDir d = QFileInfo(mainwin->getACWrapper()->getPath()).absoluteDir();
+    QDir d = QFileInfo(m_confpath).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
 

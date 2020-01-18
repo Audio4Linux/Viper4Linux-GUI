@@ -49,6 +49,9 @@ public:
     void setPath(QString npath);
     QString getStylesheet();
     void setStylesheet(QString);
+    void setTrayMode(int);
+    int getTrayMode();
+
 private:
     ConfigContainer* appconf;
     StyleHelper*     m_stylehelper;

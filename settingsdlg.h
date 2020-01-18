@@ -5,17 +5,18 @@
 #include "ui_settings.h"
 #include "config/appconfigwrapper.h"
 
-class settings : public QDialog
+class MainWindow;
+
+class SettingsDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    settings(QWidget *parent = nullptr);
+    SettingsDlg(MainWindow* mainwin, QWidget *parent = nullptr);
     Ui::settings *ui;
-    ~settings();
+    ~SettingsDlg();
 private slots:
         void openPalConfig();
-        void reject();
         void github();
         void glava_help();
         void changeStyle(const QString&);
@@ -31,6 +32,7 @@ private slots:
         void updateTheme();
 private:
         AppConfigWrapper* appconf;
+        MainWindow* m_mainwin;
 };
 
 #endif // SETTINGS_H

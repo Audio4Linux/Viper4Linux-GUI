@@ -8,18 +8,20 @@
 #include "items/delegates.h"
 #include "config/appconfigwrapper.h"
 
+class MainWindow;
+
 namespace Ui {
 class Preset;
 }
 
-class Preset : public QDialog
+class PresetDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Preset(QWidget *parent = nullptr);
+    explicit PresetDlg(MainWindow *mainwin,QWidget *parent = nullptr);
     void UpdateList();
-    ~Preset();
+    ~PresetDlg();
 private slots:
     void reject();
     void add();
@@ -41,6 +43,7 @@ private slots:
 
 private:
     Ui::Preset *ui;
+    MainWindow* m_mainwin;
     AppConfigWrapper *appconf;
     QStringList irs;
     QString optimizeName(const QString& s);

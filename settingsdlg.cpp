@@ -1,7 +1,8 @@
-#include "settings.h"
+#include "settingsdlg.h"
 #include "ui_settings.h"
-#include "main.h"
+#include "mainwindow.h"
 #include "palette.h"
+#include "misc/autostartmanager.h"
 
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -9,13 +10,15 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QStyleFactory>
+#include <QSystemTrayIcon>
 
 using namespace std;
 static bool lockslot = false;
-settings::settings(QWidget *parent) :
+SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settings){
     ui->setupUi(this);
+    m_mainwin = mainwin;
 
     lockslot = true;
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
@@ -23,6 +26,7 @@ settings::settings(QWidget *parent) :
     connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
 
     appconf = mainwin->getACWrapper();
+    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
     ui->path->setText(appconf->getPath());
     ui->irspath->setText(appconf->getIrsPath());
@@ -53,6 +57,38 @@ settings::settings(QWidget *parent) :
     connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
         if(lockslot)return;
         appconf->setReloadMethod((ReloadMethod)ui->reloadmethod->currentIndex());
+    });
+    connect(ui->systray_r_none,&QRadioButton::clicked,this,[this,mainwin](){
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->systray_r_none->isChecked())mode=0;
+        else if(ui->systray_r_showtray->isChecked())mode=1;
+        appconf->setTrayMode(mode);
+        mainwin->setTrayVisible(mode);
+        ui->systray_icon_box->setEnabled(mode);
+    });
+    connect(ui->systray_r_showtray,&QRadioButton::clicked,this,[this,mainwin](){
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->systray_r_none->isChecked())mode=0;
+        else if(ui->systray_r_showtray->isChecked())mode=1;
+        appconf->setTrayMode(mode);
+        mainwin->setTrayVisible(mode);
+        ui->systray_icon_box->setEnabled(mode);
+    });
+    connect(ui->systray_minOnBoot,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
+        if(ui->systray_minOnBoot->isChecked()){
+            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
+                                              ui->systray_autostartViper->isChecked());
+        }
+        else QFile(autostart_path).remove();
+        ui->systray_autostartViper->setEnabled(ui->systray_minOnBoot->isChecked());
+    });
+    connect(ui->systray_autostartViper,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
+        if(ui->systray_minOnBoot->isChecked())
+            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
+                                              ui->systray_autostartViper->isChecked());
+        else QFile(autostart_path).remove();
     });
 
     ui->styleSelect->addItem("Default","default");
@@ -86,22 +122,22 @@ settings::settings(QWidget *parent) :
     QString qvT(appconf->getTheme());
     int indexT = ui->themeSelect->findText(qvT);
     if ( indexT != -1 ) {
-       ui->themeSelect->setCurrentIndex(indexT);
+        ui->themeSelect->setCurrentIndex(indexT);
     }else{
         int index_fallback = ui->themeSelect->findText("Fusion");
         if ( index_fallback != -1 )
-           ui->themeSelect->setCurrentIndex(index_fallback);
+            ui->themeSelect->setCurrentIndex(index_fallback);
     }
 
     QVariant qvS(appconf->getStylesheet());
     int index = ui->styleSelect->findData(qvS);
     if ( index != -1 )
-       ui->styleSelect->setCurrentIndex(index);
+        ui->styleSelect->setCurrentIndex(index);
 
     QVariant qvS2(appconf->getColorpalette());
     int index2 = ui->paletteSelect->findData(qvS2);
     if ( index2 != -1 )
-       ui->paletteSelect->setCurrentIndex(index2);
+        ui->paletteSelect->setCurrentIndex(index2);
 
     ui->styleSelect->setEnabled(!appconf->getThememode());
     ui->paletteConfig->setEnabled(appconf->getThememode() && appconf->getColorpalette()=="custom");
@@ -113,54 +149,76 @@ settings::settings(QWidget *parent) :
     ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
     ui->aa_release->setChecked(appconf->getAutoFxMode());
 
+    ui->systray_r_none->setChecked(!appconf->getTrayMode());
+    ui->systray_r_showtray->setChecked(appconf->getTrayMode());
+    ui->systray_icon_box->setEnabled(appconf->getTrayMode());
+
+    bool autostart_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Exists);
+    bool autostartviper_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::UsesViperAutostart);
+
+    ui->systray_minOnBoot->setChecked(autostart_enabled);
+    ui->systray_autostartViper->setEnabled(autostart_enabled);
+    ui->systray_autostartViper->setChecked(autostartviper_enabled);
+
     ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
 
+#ifndef QT_NO_SYSTEMTRAYICON
+    ui->systray_unsupported->hide();
+#else
+    ui->session->setEnabled(false);
+#endif
+
+    if(!QSystemTrayIcon::isSystemTrayAvailable()){
+        ui->systray_unsupported->show();
+        ui->session->setEnabled(false);
+    }
+
     lockslot = false;
 }
-settings::~settings(){
+SettingsDlg::~SettingsDlg(){
     delete ui;
 }
-void settings::updateTheme(){
+void SettingsDlg::updateTheme(){
     if(lockslot)return;
     appconf->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
 }
-void settings::updateAutoFX(){
+void SettingsDlg::updateAutoFX(){
     appconf->setAutoFx(ui->autofx->isChecked());
 }
-void settings::updateMuteRestart(){
+void SettingsDlg::updateMuteRestart(){
     appconf->setMuteOnRestart(ui->muteonrestart->isChecked());
 };
-void settings::updatePath(){
+void SettingsDlg::updatePath(){
     appconf->setPath(ui->path->text());
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
-                                                            "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
+                                                                   "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
                                   QMessageBox::Ok|QMessageBox::Cancel);
     if (reply == QMessageBox::Ok)
-      QApplication::quit();
+        QApplication::quit();
 }
-void settings::updateIrsPath(){
+void SettingsDlg::updateIrsPath(){
     appconf->setIrsPath(ui->irspath->text());
 }
-void settings::updateGLava(){
+void SettingsDlg::updateGLava(){
     appconf->setGFix(ui->glavafix->isChecked());
 }
-void settings::updateAutoFxMode(){
+void SettingsDlg::updateAutoFxMode(){
     if(lockslot)return;
     int mode = 0;
     if(ui->aa_instant->isChecked())mode=0;
     else if(ui->aa_release->isChecked())mode=1;
     appconf->setAutoFxMode(mode);
 }
-void settings::updateCDefTab(){
+void SettingsDlg::updateCDefTab(){
     if(lockslot)return;
     int mode = 0;
     if(ui->deftab_favorite->isChecked())mode=0;
     else if(ui->deftab_filesys->isChecked())mode=1;
     appconf->setConv_DefTab(mode);
 }
-void settings::changeThemeMode(){
+void SettingsDlg::changeThemeMode(){
     if(lockslot)return;
 
     int mode = 0;
@@ -172,32 +230,27 @@ void settings::changeThemeMode(){
     ui->paletteConfig->setEnabled(mode && appconf->getColorpalette()=="custom");
     appconf->setThememode(mode);
 }
-void settings::changePalette(const QString&){
+void SettingsDlg::changePalette(const QString&){
     if(lockslot)return;
     appconf->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString());
     ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
 }
-void settings::openPalConfig(){
-    auto c = new class palette(this);
+void SettingsDlg::openPalConfig(){
+    auto c = new class PaletteEditor(appconf,this);
     c->setFixedSize(c->geometry().width(),c->geometry().height());
     c->show();
 }
-void settings::changeStyle(const QString&){
+void SettingsDlg::changeStyle(const QString&){
     if(lockslot)return;
     appconf->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString());
 }
-void settings::github(){
+void SettingsDlg::github(){
     QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI-Legacy"));
 }
-void settings::reject()
-{
-    mainwin->EnableSettingButton(true);
-    QDialog::reject();
-}
-void settings::glava_help(){
+void SettingsDlg::glava_help(){
     QMessageBox *msgBox = new QMessageBox(this);
-     msgBox->setText(tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
-     msgBox->setStandardButtons(QMessageBox::Ok);
-     msgBox->setDefaultButton(QMessageBox::Ok);
-     msgBox->exec();
+    msgBox->setText(tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
+    msgBox->setStandardButtons(QMessageBox::Ok);
+    msgBox->setDefaultButton(QMessageBox::Ok);
+    msgBox->exec();
 }

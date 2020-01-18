@@ -2,14 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
+#include <QCloseEvent>
+
 #include "config/io.h"
 #include "config/container.h"
-#include "settings.h"
-#include "preset.h"
+#include "settingsdlg.h"
+#include "presetdlg.h"
 #include "ui_settings.h"
-#include "convolver.h"
+#include "convolverdlg.h"
 #include "converter.h"
-#include "log.h"
+#include "logdlg.h"
 #include "misc/stylehelper.h"
 #include "config/appconfigwrapper.h"
 #include "misc/mathfunctions.h"
@@ -31,20 +34,22 @@ public:
     Ui::MainWindow *ui;
     void LoadPresetFile(const QString&);
     void SavePresetFile(const QString&);
-    void EnableSettingButton(bool on);
-    void EnableLogButton(bool on);
-    void EnableConvolverButton(bool on);
-    void EnablePresetButton(bool on);
     AppConfigWrapper* getACWrapper();
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QString exepath,bool traySwitch,QWidget *parent = nullptr);
     void SetEQ(const int *data);
-    void SetIRS(const string& irs,bool apply);
+    void SetIRS(const QString& irs,bool apply);
+    QString GetExecutablePath();
+    void setVisible(bool visible) override;
+    void setTrayVisible(bool visible);
     ~MainWindow();
+protected:
+    void closeEvent(QCloseEvent *event) override;
 public slots:
     void Reset();
     void Restart();
     void ColmPresetSelectionUpdated();
     void ApplyConfig(bool restart=true);
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
 private slots:
     void DisableFX();
     void CopyEQ();
@@ -65,13 +70,28 @@ private:
     AppConfigWrapper* m_appwrapper;
     StyleHelper* m_stylehelper;
     DBusProxy* m_dbus;
+    QString m_exepath;
+
+    bool m_startupInTraySwitch;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
+    QAction *minimizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
+
+    ConvolverDlg *conv_dlg;
+    SettingsDlg *settings_dlg;
+    PresetDlg *preset_dlg;
+    LogDlg *log_dlg;
+
     bool m_irsNeedUpdate = false;
     bool settingsdlg_enabled=true;
     bool presetdlg_enabled=true;
     bool logdlg_enabled=true;
     bool lockapply = false;
-    string activeirs = "";
+    QString activeirs = "";
 
+    void createTrayIcon();
     void UpdateTooltipLabelUnit(QObject* sender,QString text,bool);
     void LoadConfig();
     void ConnectActions();

@@ -1,10 +1,10 @@
-#include "log.h"
+#include "logdlg.h"
 #include "ui_log.h"
-#include "main.h"
 
+#include <QTextStream>
 #include <QFile>
 
-log::log(QWidget *parent) :
+LogDlg::LogDlg(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::log)
 {
@@ -14,16 +14,15 @@ log::log(QWidget *parent) :
     updateLog();
 }
 
-log::~log()
+LogDlg::~LogDlg()
 {
     delete ui;
 }
-void log::reject()
+void LogDlg::reject()
 {
-    mainwin->EnableLogButton(true);
     QDialog::reject();
 }
-void log::updateLog(){
+void LogDlg::updateLog(){
     ui->viperlog->clear();
     QString path;
     if(ui->select->currentText()=="GST Plugin") path = "/tmp/viper4linux/viper.log";

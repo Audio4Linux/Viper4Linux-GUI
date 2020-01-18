@@ -8,13 +8,13 @@ namespace Ui {
 class palette;
 }
 
-class palette : public QDialog
+class PaletteEditor : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit palette(QWidget *parent = nullptr);
-    ~palette();
+    explicit PaletteEditor(AppConfigWrapper *_appconf, QWidget *parent = nullptr);
+    ~PaletteEditor();
 
 private:
     Ui::palette *ui;

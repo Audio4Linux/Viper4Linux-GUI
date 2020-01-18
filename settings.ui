@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
+    <width>347</width>
     <height>339</height>
    </rect>
   </property>
@@ -227,6 +227,89 @@
          </property>
          <property name="sizeType">
           <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="session">
+      <attribute name="title">
+       <string>Session</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QGroupBox" name="systray_box">
+         <property name="title">
+          <string>Systray Behaviour</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QRadioButton" name="systray_r_none">
+            <property name="text">
+             <string>None</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="systray_r_showtray">
+            <property name="text">
+             <string>Show tray icon</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="systray_icon_box">
+            <property name="title">
+             <string>Tray Icon</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <widget class="QCheckBox" name="systray_minOnBoot">
+               <property name="text">
+                <string>Start minimized on boot</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="systray_autostartViper">
+               <property name="text">
+                <string>Autostart viper service</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="systray_unsupported">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(200, 50, 0)</string>
+         </property>
+         <property name="text">
+          <string>Systray not supported on this system</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -587,14 +670,26 @@
   <tabstop>path</tabstop>
   <tabstop>savepath</tabstop>
   <tabstop>glavafix_help</tabstop>
+  <tabstop>glavafix</tabstop>
+  <tabstop>muteonrestart</tabstop>
   <tabstop>autofx</tabstop>
   <tabstop>aa_instant</tabstop>
   <tabstop>aa_release</tabstop>
+  <tabstop>reloadmethod</tabstop>
+  <tabstop>systray_r_none</tabstop>
+  <tabstop>systray_r_showtray</tabstop>
+  <tabstop>systray_minOnBoot</tabstop>
+  <tabstop>systray_autostartViper</tabstop>
+  <tabstop>themeSelect</tabstop>
   <tabstop>uimode_css</tabstop>
   <tabstop>uimode_pal</tabstop>
   <tabstop>styleSelect</tabstop>
   <tabstop>paletteSelect</tabstop>
   <tabstop>paletteConfig</tabstop>
+  <tabstop>irspath</tabstop>
+  <tabstop>saveirspath</tabstop>
+  <tabstop>deftab_favorite</tabstop>
+  <tabstop>deftab_filesys</tabstop>
   <tabstop>github</tabstop>
   <tabstop>close</tabstop>
  </tabstops>

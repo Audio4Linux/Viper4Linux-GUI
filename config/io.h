@@ -8,7 +8,7 @@ class ConfigIO
 {
 public:
     static QString writeString(QVariantMap map);
-    static void writeFile(QString path,QVariantMap map);
+    static void writeFile(QString path,QVariantMap map,QString prefix = "");
     static QVariantMap readFile(QString path,bool allowWarning = true);
 };
 

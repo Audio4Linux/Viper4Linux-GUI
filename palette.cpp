@@ -1,16 +1,15 @@
 #include "palette.h"
 #include "ui_palette.h"
-#include "main.h"
 
 #include <QColorDialog>
 
-palette::palette(QWidget *parent) :
+PaletteEditor::PaletteEditor(AppConfigWrapper *_appconf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::palette)
 {
     ui->setupUi(this);
 
-    appconf = mainwin->getACWrapper();
+    appconf = _appconf;
 
     ui->whiteicons->setChecked(appconf->getWhiteIcons());
 
@@ -30,18 +29,18 @@ palette::palette(QWidget *parent) :
     connect(ui->reset,SIGNAL(clicked()),this,SLOT(Reset()));
 }
 
-palette::~palette()
+PaletteEditor::~PaletteEditor()
 {
     delete ui;
 }
 
-void palette::closeWin(){
+void PaletteEditor::closeWin(){
     this->close();
 }
-void palette::Reset(){
+void PaletteEditor::Reset(){
     appconf->setCustompalette("25,25,25;53,53,53;255,255,255;42,130,218;85,85,85");
 }
-int palette::loadColor(int index,int rgb_index){
+int PaletteEditor::loadColor(int index,int rgb_index){
     QStringList elements = appconf->getCustompalette().split(';');
     if(elements.length()<5||elements[index].split(',').size()<3){
         if(index==0)return 25;
@@ -57,17 +56,17 @@ int palette::loadColor(int index,int rgb_index){
     QStringList rgb = elements[index].split(',');
     return rgb[rgb_index].toInt();
 }
-void palette::saveColor(int index,const QColor& color){
+void PaletteEditor::saveColor(int index,const QColor& color){
     QString strcolor = QString::number(color.red()) + "," + QString::number(color.green()) + "," + QString::number(color.blue());
     QStringList elements = appconf->getCustompalette().split(';');
     while(elements.size()<5)elements.append("");
     elements.replace(index,strcolor);
     appconf->setCustompalette(elements.join(";"));
 }
-void palette::updateIcons(){
+void PaletteEditor::updateIcons(){
     appconf->setWhiteIcons(ui->whiteicons->isChecked());
 }
-void palette::updateBase(){
+void PaletteEditor::updateBase(){
     QColorDialog *base = new QColorDialog();
     base->setOptions(QColorDialog::DontUseNativeDialog);
     base->setCurrentColor(QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2)));
@@ -79,7 +78,7 @@ void palette::updateBase(){
     }
 }
 
-void palette::updateBack(){
+void PaletteEditor::updateBack(){
     QColorDialog *back = new QColorDialog();
     back->setOptions(QColorDialog::DontUseNativeDialog);
     back->setCurrentColor(QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2)));
@@ -91,7 +90,7 @@ void palette::updateBack(){
     }
 }
 
-void palette::updateFore(){
+void PaletteEditor::updateFore(){
     QColorDialog *fore = new QColorDialog();
     fore->setOptions(QColorDialog::DontUseNativeDialog);
     fore->setCurrentColor(QColor(loadColor(2,0),loadColor(2,1),loadColor(2,2)));
@@ -103,7 +102,7 @@ void palette::updateFore(){
     }
 }
 
-void palette::updateSelection(){
+void PaletteEditor::updateSelection(){
     QColorDialog *sel = new QColorDialog();
     sel->setOptions(QColorDialog::DontUseNativeDialog);
     sel->setCurrentColor(QColor(loadColor(3,0),loadColor(3,1),loadColor(3,2)));
@@ -115,7 +114,7 @@ void palette::updateSelection(){
     }
 }
 
-void palette::updateDisabled(){
+void PaletteEditor::updateDisabled(){
     QColorDialog *sel = new QColorDialog();
     sel->setOptions(QColorDialog::DontUseNativeDialog);
     sel->setCurrentColor(QColor(loadColor(4,0),loadColor(4,1),loadColor(4,2)));

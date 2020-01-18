@@ -11,10 +11,11 @@ QString ConfigIO::writeString(QVariantMap map){
        ret += QString("%1=%2\n").arg(e).arg(map.value(e).toString());
     return ret;
 }
-void ConfigIO::writeFile(QString path,QVariantMap map){
+void ConfigIO::writeFile(QString path,QVariantMap map,QString prefix){
     std::ofstream myfile(path.toUtf8().constData());
     if (myfile.is_open())
     {
+        myfile << prefix.toUtf8().constData() << std::endl;
         for(auto e : map.keys())
           myfile << e.toStdString() << "=" << map.value(e).toString().toStdString() << std::endl;
         myfile.close();
@@ -28,7 +29,8 @@ QVariantMap ConfigIO::readFile(QString path,bool allowWarning){
     {
         std::string line;
         while(getline(cFile, line)){
-            if(QString::fromStdString(line).trimmed()[0] == '#' || line.empty()) continue; //Skip commented lines
+            if(QString::fromStdString(line).trimmed()[0] == '#' ||
+                    QString::fromStdString(line).trimmed()[0] == '[' || line.empty()) continue; //Skip commented lines
             auto delimiterInlineComment = line.find('#'); //Look for config properties mixed up with comments
             auto extractedProperty = line.substr(0, delimiterInlineComment);
             auto delimiterPos = extractedProperty.find('=');

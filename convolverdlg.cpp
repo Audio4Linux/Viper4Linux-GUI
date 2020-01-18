@@ -1,7 +1,7 @@
-#include "convolver.h"
+#include "convolverdlg.h"
 #include "ui_convolver.h"
-#include "main.h"
 #include "misc/loghelper.h"
+#include "mainwindow.h"
 
 #include <QDir>
 #include <QCloseEvent>
@@ -12,12 +12,12 @@
 
 static bool lockupdate = false;
 using namespace std;
-Convolver::Convolver(QWidget *parent) :
+ConvolverDlg::ConvolverDlg(MainWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Convolver)
 {
     ui->setupUi(this);
-
+    m_mainwin = mainwin;
     AppConfigWrapper* appconf = mainwin->getACWrapper();
 
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
@@ -44,15 +44,14 @@ Convolver::Convolver(QWidget *parent) :
     ui->tabWidget->setCurrentIndex(appconf->getConv_DefTab());
 }
 
-Convolver::~Convolver()
+ConvolverDlg::~ConvolverDlg()
 {
     delete ui;
 }
-void Convolver::closeWindow(){
-    mainwin->EnableConvolverButton(true);
+void ConvolverDlg::closeWindow(){
     this->close();
 }
-void Convolver::reload(){
+void ConvolverDlg::reload(){
     lockupdate=true;
     QDir path(ui->path->text());
     QStringList nameFilter("*.wav");
@@ -73,7 +72,7 @@ void Convolver::reload(){
     else ui->files->addItems(files);
     lockupdate=false;
 }
-void Convolver::reloadFav(){
+void ConvolverDlg::reloadFav(){
     lockupdate=true;
     QDir path(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites"));
     QStringList nameFilter("*.wav");
@@ -99,7 +98,7 @@ void Convolver::reloadFav(){
     else ui->favorites->addItems(files);
     lockupdate=false;
 }
-void Convolver::renameFav(){
+void ConvolverDlg::renameFav(){
     if(ui->favorites->selectedItems().count()<1)return;
     bool ok;
     QString text = QInputDialog::getText(this, tr("Rename"),
@@ -110,7 +109,7 @@ void Convolver::renameFav(){
     if (ok && !text.isEmpty())QFile::rename(fullpath,QDir(dest).filePath(text));
     reloadFav();
 }
-void Convolver::removeFav(){
+void ConvolverDlg::removeFav(){
     if(ui->favorites->selectedItems().count()<1)return;
     QString fullpath = QDir(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites")).filePath(ui->favorites->selectedItems().first()->text());;
     if(!QFile::exists(fullpath)){
@@ -123,7 +122,7 @@ void Convolver::removeFav(){
     LogHelper::writeLog("Removed "+fullpath+" from favorites (convolver/remove)");
     reloadFav();
 }
-void Convolver::addFav(){
+void ConvolverDlg::addFav(){
     if(ui->files->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
 
     const QString src = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
@@ -136,22 +135,21 @@ void Convolver::addFav(){
     reloadFav();
 }
 
-void Convolver::updateIR(){
+void ConvolverDlg::updateIR(){
     if(lockupdate || ui->files->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(ui->path->text()).filePath(ui->files->selectedItems().first()->text());
-    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->SetIRS(path.toUtf8().constData(),true);
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())m_mainwin->SetIRS(path,true);
 }
-void Convolver::updateIR_Fav(){
+void ConvolverDlg::updateIR_Fav(){
     if(lockupdate || ui->favorites->selectedItems().count()<1)return; //Clearing Selection by code != User Interaction
     QString path = QDir(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites")).filePath(ui->favorites->selectedItems().first()->text());
-    if(QFileInfo::exists(path) && QFileInfo(path).isFile())mainwin->SetIRS(path.toUtf8().constData(),true);
+    if(QFileInfo::exists(path) && QFileInfo(path).isFile())m_mainwin->SetIRS(path,true);
 }
-void Convolver::reject()
+void ConvolverDlg::reject()
 {
-    mainwin->EnableConvolverButton(true);
     QDialog::reject();
 }
-void Convolver::selectFolder(){
+void ConvolverDlg::selectFolder(){
 
     QFileDialog *fd = new QFileDialog;
     fd->setFileMode(QFileDialog::Directory);

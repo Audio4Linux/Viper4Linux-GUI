@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += core gui xml network dbus
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = V4L_Frontend
@@ -31,18 +30,19 @@ SOURCES += \
     config/dbusproxy.cpp \
     config/io.cpp \
     converter.cpp \
+    convolverdlg.cpp \
     importandroid.cpp \
     items/configitem.cpp \
-    log.cpp \
+    logdlg.cpp \
         main.cpp \
         mainwindow.cpp \
+    misc/autostartmanager.cpp \
     misc/loghelper.cpp \
     misc/statusdialog.cpp \
     misc/stylehelper.cpp \
     palette.cpp \
-    settings.cpp \
-    convolver.cpp \
-    preset.cpp
+    presetdlg.cpp \
+    settingsdlg.cpp
 
 HEADERS += \
     config/appconfigwrapper.h \
@@ -50,22 +50,23 @@ HEADERS += \
     config/dbusproxy.h \
     config/io.h \
     converter.h \
+    convolverdlg.h \
     importandroid.h \
     items/configitem.h \
     items/delegates.h \
-    log.h \
+    logdlg.h \
         mainwindow.h \
+    misc/autostartmanager.h \
     misc/common.h \
+    misc/findbinary.h \
     misc/loghelper.h \
     misc/mathfunctions.h \
     misc/presetextension.h \
     misc/statusdialog.h \
     misc/stylehelper.h \
     palette.h \
-    settings.h \
-    convolver.h \
-    main.h \
-    preset.h
+    presetdlg.h \
+    settingsdlg.h
 
 FORMS += \
     importandroid.ui \

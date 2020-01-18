@@ -7,13 +7,13 @@ namespace Ui {
 class log;
 }
 
-class log : public QDialog
+class LogDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit log(QWidget *parent = nullptr);
-    ~log();
+    explicit LogDlg(QWidget *parent = nullptr);
+    ~LogDlg();
 private slots:
     void reject();
     void updateLog();

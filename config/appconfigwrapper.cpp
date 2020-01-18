@@ -129,6 +129,14 @@ QString AppConfigWrapper::getIrsPath(){
         return QString("%1/IRS").arg(QDir::homePath());
     return irs_path;
 }
+int AppConfigWrapper::getTrayMode(){
+    return appconf->getInt("session.tray.mode");
+}
+void AppConfigWrapper::setTrayMode(int mode){
+    appconf->setValue("session.tray.mode",QVariant(mode));
+    saveAppConfig();
+}
+
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){
     return QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath());

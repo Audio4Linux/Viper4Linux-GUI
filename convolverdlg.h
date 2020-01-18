@@ -2,18 +2,19 @@
 #define CONVOLVER_H
 
 #include <QDialog>
+class MainWindow;
 
 namespace Ui {
 class Convolver;
 }
 
-class Convolver : public QDialog
+class ConvolverDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Convolver(QWidget *parent = nullptr);
-    ~Convolver();
+    explicit ConvolverDlg(MainWindow* mainwin,QWidget *parent = nullptr);
+    ~ConvolverDlg();
 private slots:
     void reject();
     void reload();
@@ -27,6 +28,7 @@ private slots:
     void selectFolder();
 private:
     Ui::Convolver *ui;
+    MainWindow* m_mainwin;
     QString configpath = "";
 };
 
