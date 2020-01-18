@@ -91,7 +91,8 @@ else: unix:!android: target.path = /usr/bin/
 
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    translations/lang_de.ts
 
 RESOURCES += \
     resources.qrc \
