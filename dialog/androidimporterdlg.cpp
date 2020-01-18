@@ -1,4 +1,4 @@
-#include "importandroid.h"
+#include "androidimporterdlg.h"
 #include "ui_importandroid.h"
 #include "converter.h"
 #include "mainwindow.h"
@@ -11,7 +11,7 @@
 #include <fstream>
 
 using namespace std;
-importandroid::importandroid(QString confpath,QWidget *parent) :
+AndroidImporterDlg::AndroidImporterDlg(QString confpath,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::importandroid)
 {
@@ -22,12 +22,12 @@ importandroid::importandroid(QString confpath,QWidget *parent) :
     connect(ui->pushButton,SIGNAL(clicked()),SLOT(import()));
 }
 
-importandroid::~importandroid()
+AndroidImporterDlg::~AndroidImporterDlg()
 {
     delete ui;
 }
 
-void importandroid::import(){
+void AndroidImporterDlg::import(){
     if(ui->lineEdit->text()==""){
         QMessageBox::warning(this, tr("Missing Input"), tr("Name is not set"),QMessageBox::Ok);
         return;
@@ -71,7 +71,7 @@ void importandroid::import(){
     QMessageBox::information(this,tr("Import"),msginfotext);
     this->close();
 }
-QString importandroid::pathAppend(const QString& path1, const QString& path2)
+QString AndroidImporterDlg::pathAppend(const QString& path1, const QString& path2)
 {
     return QDir::cleanPath(path1 + QDir::separator() + path2);
 }

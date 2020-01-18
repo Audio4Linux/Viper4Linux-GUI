@@ -3,7 +3,6 @@
 #endif
 
 #include "mainwindow.h"
-#include "settingsdlg.h"
 #include "misc/findbinary.h"
 
 #include <QApplication>

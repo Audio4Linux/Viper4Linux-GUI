@@ -1,4 +1,4 @@
-#include "palette.h"
+#include "palettedlg.h"
 #include "ui_palette.h"
 
 #include <QColorDialog>

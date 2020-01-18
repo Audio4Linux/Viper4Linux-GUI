@@ -7,13 +7,13 @@ namespace Ui {
 class importandroid;
 }
 
-class importandroid : public QDialog
+class AndroidImporterDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit importandroid(QString confpath, QWidget *parent = nullptr);
-    ~importandroid();
+    explicit AndroidImporterDlg(QString confpath, QWidget *parent = nullptr);
+    ~AndroidImporterDlg();
 private slots:
     void import();
 signals:

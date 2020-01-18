@@ -1,7 +1,7 @@
 #include "settingsdlg.h"
 #include "ui_settings.h"
 #include "mainwindow.h"
-#include "palette.h"
+#include "palettedlg.h"
 #include "misc/autostartmanager.h"
 
 #include <QCloseEvent>

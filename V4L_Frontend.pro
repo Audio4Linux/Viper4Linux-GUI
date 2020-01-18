@@ -30,19 +30,19 @@ SOURCES += \
     config/dbusproxy.cpp \
     config/io.cpp \
     converter.cpp \
-    convolverdlg.cpp \
-    importandroid.cpp \
+    dialog/androidimporterdlg.cpp \
+    dialog/convolverdlg.cpp \
+    dialog/logdlg.cpp \
+    dialog/palettedlg.cpp \
+    dialog/presetdlg.cpp \
+    dialog/settingsdlg.cpp \
+    dialog/statusdialog.cpp \
     items/configitem.cpp \
-    logdlg.cpp \
-        main.cpp \
-        mainwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
     misc/autostartmanager.cpp \
     misc/loghelper.cpp \
-    misc/statusdialog.cpp \
-    misc/stylehelper.cpp \
-    palette.cpp \
-    presetdlg.cpp \
-    settingsdlg.cpp
+    misc/stylehelper.cpp
 
 HEADERS += \
     config/appconfigwrapper.h \
@@ -50,34 +50,34 @@ HEADERS += \
     config/dbusproxy.h \
     config/io.h \
     converter.h \
-    convolverdlg.h \
-    importandroid.h \
+    dialog/androidimporterdlg.h \
+    dialog/convolverdlg.h \
+    dialog/logdlg.h \
+    dialog/palettedlg.h \
+    dialog/presetdlg.h \
+    dialog/settingsdlg.h \
+    dialog/statusdialog.h \
     items/configitem.h \
     items/delegates.h \
-    logdlg.h \
-        mainwindow.h \
+    mainwindow.h \
     misc/autostartmanager.h \
     misc/common.h \
     misc/findbinary.h \
     misc/loghelper.h \
     misc/mathfunctions.h \
     misc/presetextension.h \
-    misc/statusdialog.h \
-    misc/stylehelper.h \
-    palette.h \
-    presetdlg.h \
-    settingsdlg.h
+    misc/stylehelper.h
 
 FORMS += \
-    importandroid.ui \
+    dialog/convolver.ui \
+    dialog/importandroid.ui \
+    dialog/log.ui \
+    dialog/palettedlg.ui \
+    dialog/preset.ui \
+    dialog/settings.ui \
+    dialog/statusdialog.ui \
     items/configitem.ui \
-    log.ui \
-        mainwindow.ui \
-    misc/statusdialog.ui \
-    palette.ui \
-    settings.ui \
-    convolver.ui \
-    preset.ui
+    mainwindow.ui
 
 TRANSLATIONS += translations/lang_en.ts \
                 translations/lang_de.ts

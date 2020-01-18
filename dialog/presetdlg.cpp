@@ -2,7 +2,7 @@
 #include "ui_preset.h"
 #include "mainwindow.h"
 #include "converter.h"
-#include "importandroid.h"
+#include "androidimporterdlg.h"
 #include "misc/loghelper.h"
 
 #include <QDir>
@@ -188,10 +188,10 @@ void PresetDlg::add(){
     UpdateList();
 }
 void PresetDlg::importAndroid(){
-    auto ia = new importandroid(m_mainwin->getACWrapper()->getPath(),this);
+    auto ia = new AndroidImporterDlg(m_mainwin->getACWrapper()->getPath(),this);
     ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
     ia->show();
-    connect(ia,&importandroid::importFinished,this,[this](){
+    connect(ia,&AndroidImporterDlg::importFinished,this,[this](){
         UpdateList();
     });
 }
