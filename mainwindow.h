@@ -47,6 +47,7 @@ protected:
 public slots:
     void Reset();
     void Restart();
+    void raiseWindow();
     void ColmPresetSelectionUpdated();
     void ApplyConfig(bool restart=true);
     void iconActivated(QSystemTrayIcon::ActivationReason reason);

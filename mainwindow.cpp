@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dialog/statusdialog.h"
+#include "dbus/serveradaptor.h"
+#include "dbus/clientproxy.h"
 
 #include <QMenu>
 #include <QMessageBox>
@@ -25,6 +27,33 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
 
     LogHelper::clearLog();
     LogHelper::writeLog("UI launched...");
+
+    //This section checks if another instance is already running and switches to it.
+    new GuiAdaptor(this);
+    QDBusConnection connection = QDBusConnection::sessionBus();
+    bool serviceRegistrationSuccessful = connection.registerObject("/Gui", this);
+    bool objectRegistrationSuccessful = connection.registerService("cf.thebone.viper4linux.Gui");
+    if(serviceRegistrationSuccessful && objectRegistrationSuccessful)
+        LogHelper::writeLog("DBus service registration successful");
+    else{
+        LogHelper::writeLog("DBus service registration failed. Name already aquired by other instance");
+        LogHelper::writeLog("Attempting to switch to this instance...");
+        auto m_dbInterface = new cf::thebone::viper4linux::Gui("cf.thebone.viper4linux.Gui", "/Gui",
+                                                                            QDBusConnection::sessionBus(), this);
+        if(!m_dbInterface->isValid())
+            LogHelper::writeLog("Critical: Unable to connect to other DBus instance. Continuing anyway...");
+        else{
+            QDBusPendingReply<> msg = m_dbInterface->raiseWindow();
+            if(msg.isError() || msg.isValid()){
+                LogHelper::writeLog("Critical: Other DBus instance returned invalid or error message. Continuing anyway...");
+            }
+            else{
+               LogHelper::writeLog("Success! Waiting for event loop to exit...");
+               QTimer::singleShot(0, qApp, &QCoreApplication::quit);
+            }
+        }
+
+    }
 
     disableAction = new QAction();
     conf = new ConfigContainer();
@@ -113,6 +142,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 //Systray
+void MainWindow::raiseWindow(){
+    Qt::WindowFlags eFlags = this->windowFlags();
+    eFlags |= Qt::WindowStaysOnTopHint;
+    this->setWindowFlags(eFlags);
+    this->show();
+    eFlags &= ~Qt::WindowStaysOnTopHint;
+    this->setWindowFlags(eFlags);
+    this->showNormal();
+    this->setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    this->raise();
+    this->activateWindow();
+}
 void MainWindow::setTrayVisible(bool visible){
     if(visible) trayIcon->show();
     else trayIcon->hide();
@@ -122,10 +163,6 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     switch (reason) {
     case QSystemTrayIcon::Trigger:
         setVisible(!this->isVisible());
-        if(isVisible()){
-            this->showNormal();
-            this->activateWindow();
-        }
         //Hide tray icon if disabled and MainWin is visible (for cmdline force switch)
         if(!m_appwrapper->getTrayMode() && this->isVisible()) trayIcon->hide();
         break;

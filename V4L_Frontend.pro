@@ -30,6 +30,8 @@ SOURCES += \
     config/dbusproxy.cpp \
     config/io.cpp \
     converter.cpp \
+    dbus/clientproxy.cpp \
+    dbus/serveradaptor.cpp \
     dialog/androidimporterdlg.cpp \
     dialog/convolverdlg.cpp \
     dialog/logdlg.cpp \
@@ -50,6 +52,8 @@ HEADERS += \
     config/dbusproxy.h \
     config/io.h \
     converter.h \
+    dbus/clientproxy.h \
+    dbus/serveradaptor.h \
     dialog/androidimporterdlg.h \
     dialog/convolverdlg.h \
     dialog/logdlg.h \
@@ -93,6 +97,7 @@ else: unix:!android: target.path = /usr/bin/
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    dbus/manifest.xml \
     translations/lang_de.ts
 
 RESOURCES += \
