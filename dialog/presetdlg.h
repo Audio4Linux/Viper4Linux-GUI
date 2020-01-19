@@ -50,8 +50,9 @@ private:
     QNetworkAccessManager *manager;
     QNetworkRequest request;
     QString toCamelCase(const QString& s);
-    QString pathAppend(const QString& path1, const QString& path2);
 
+signals:
+    void presetChanged();
 };
 class FileObject
 {

@@ -4,6 +4,7 @@
 #include "converter.h"
 #include "androidimporterdlg.h"
 #include "misc/loghelper.h"
+#include "misc/common.h"
 
 #include <QDir>
 #include <QCloseEvent>
@@ -169,10 +170,7 @@ QString PresetDlg::toCamelCase(const QString& s)
 
     return parts.join(" ");
 }
-QString PresetDlg::pathAppend(const QString& path1, const QString& path2)
-{
-    return QDir::cleanPath(path1 + QDir::separator() + path2);
-}
+
 void PresetDlg::add(){
     if(ui->presetName->text()==""){
         QMessageBox::StandardButton msg;
@@ -186,6 +184,7 @@ void PresetDlg::add(){
     m_mainwin->SavePresetFile(path + "/" + ui->presetName->text() + ".conf");
     ui->presetName->text() = "";
     UpdateList();
+    emit presetChanged();
 }
 void PresetDlg::importAndroid(){
     auto ia = new AndroidImporterDlg(m_mainwin->getACWrapper()->getPath(),this);
@@ -193,6 +192,7 @@ void PresetDlg::importAndroid(){
     ia->show();
     connect(ia,&AndroidImporterDlg::importFinished,this,[this](){
         UpdateList();
+        emit presetChanged();
     });
 }
 void PresetDlg::exportAndroid(converter::configtype cmode){
@@ -219,6 +219,7 @@ void PresetDlg::exportAndroid(converter::configtype cmode){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
+        emit presetChanged();
         return;
     }
 
@@ -273,6 +274,7 @@ void PresetDlg::exportLinux(){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
+        emit presetChanged();
         return;
     }
 
@@ -297,11 +299,13 @@ void PresetDlg::remove(){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
+        emit presetChanged();
         return;
     }
     file.remove();
     LogHelper::writeLog("Removed "+fullpath+ " (presets/remove)");
     UpdateList();
+    emit presetChanged();
 }
 void PresetDlg::load(){
     if(ui->files->selectedItems().length() == 0){
@@ -316,9 +320,9 @@ void PresetDlg::load(){
         QMessageBox::StandardButton msg;
         msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
+        emit presetChanged();
         return;
-    }    void updateStormviperList();
-    void loadStormviper();
+    }
     m_mainwin->LoadPresetFile(fullpath);
 }
 void PresetDlg::nameChanged(const QString& name){
@@ -351,18 +355,22 @@ void PresetDlg::showContextMenu(const QPoint &pos)
                                                      pointedItem->text(), &ok);
                 if (ok && !text.isEmpty())QFile::rename(fullpath,QDir(path).filePath(text + ".conf"));
                 UpdateList();
+                emit presetChanged();
             }
             if(selectedAction == action_del) {
                 if(!QFile::exists(fullpath)){
                     QMessageBox::StandardButton msg;
                     msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
                     UpdateList();
+                    emit presetChanged();
                     return;
                 }
                 QFile file (fullpath);
                 file.remove();
                 LogHelper::writeLog("Removed "+fullpath);
                 UpdateList();
+                emit presetChanged();
+
             }
         }
     }
@@ -399,6 +407,7 @@ void PresetDlg::performIRSDownload(QNetworkReply* reply){
     }
     reply->deleteLater();
     UpdateList();
+    emit presetChanged();
 }
 void PresetDlg::performDownload(QNetworkReply* reply){
     if(reply->error())
@@ -443,6 +452,7 @@ void PresetDlg::performDownload(QNetworkReply* reply){
     }
     reply->deleteLater();
     UpdateList();
+    emit presetChanged();
 }
 void PresetDlg::download(){
     if(ui->repoindex->currentItem()==nullptr)return;

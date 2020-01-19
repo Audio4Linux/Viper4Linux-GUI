@@ -26,6 +26,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     LogHelper::clearLog();
     LogHelper::writeLog("UI launched...");
 
+    disableAction = new QAction();
     conf = new ConfigContainer();
     m_stylehelper = new StyleHelper(this);
     m_appwrapper = new AppConfigWrapper(m_stylehelper);
@@ -40,17 +41,15 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     preset_dlg = new PresetDlg(this);
     log_dlg = new LogDlg();
 
+    createTrayIcon();
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+
     QMenu *menu = new QMenu();
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(tr("Driver status"), this,[this](){
         StatusDialog* sd = new StatusDialog(m_dbus);
         sd->setModal(true);
         sd->show();
-    });
-    menu->addAction(tr("Reconnect"), this,[this](){
-        m_dbus = new DBusProxy();
-        if(m_dbus->isValid()) QMessageBox::information(this,"Reconnect","Successfully reconnected to DBus interface");
-        else QMessageBox::critical(this,"Reconnect","Unable to connect to DBus interface");
     });
     menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
     menu->addAction(tr("Save to file"), this,SLOT(SaveExternalFile()));
@@ -72,8 +71,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     m_stylehelper->SetStyle();
     ConnectActions();
 
-    createTrayIcon();
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
     if(m_appwrapper->getTrayMode() || m_startupInTraySwitch) trayIcon->show();
     else trayIcon->hide();
 
@@ -93,8 +90,8 @@ void MainWindow::setVisible(bool visible)
 {
     //Reconnect to dbus to make sure the connection isn't stale
     m_dbus = new DBusProxy();
-    minimizeAction->setEnabled(visible);
-    restoreAction->setEnabled(isMaximized() || !visible);
+    updateTrayPresetList();
+    //Hide all other windows if set to invisible
     if(!visible){
         conv_dlg->hide();
         settings_dlg->hide();
@@ -136,20 +133,64 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
         ;
     }
 }
+void MainWindow::updateTrayPresetList(){
+    if(presetMenu != nullptr){
+        presetMenu->clear();
+        QString absolute = QFileInfo(m_appwrapper->getPath()).absoluteDir().absolutePath();
+        QString path = pathAppend(absolute,"presets");
+
+        QDir dir(path);
+        if (!dir.exists())
+            dir.mkpath(".");
+
+        QStringList nameFilter("*.conf");
+        QStringList files = dir.entryList(nameFilter);
+        if(files.count()<1){
+            QAction *noPresets = new QAction("No presets found");
+            noPresets->setEnabled(false);
+            presetMenu->addAction(noPresets);
+        }
+        else{
+            for(int i = 0; i < files.count(); i++){
+                //Strip extensions
+                QFileInfo fi(files[i]);
+                files[i] = fi.completeBaseName();
+                //Add entry
+                QAction *newEntry = new QAction(files[i]);
+                connect(newEntry,&QAction::triggered,this,[=](){
+                    LoadPresetFile(pathAppend(path,QString("%1.conf").arg(files[i])));
+                });
+                presetMenu->addAction(newEntry);
+            }
+        }
+    }
+}
 void MainWindow::createTrayIcon()
 {
-    minimizeAction = new QAction(tr("Mi&nimize"), this);
-    connect(minimizeAction, &QAction::triggered, this, &QWidget::hide);
+    disableAction = new QAction(tr("&Disable FX"), this);
+    disableAction->setCheckable(true);
+    disableAction->setChecked(!conf->getBool("fx_enable"));
+    connect(disableAction, &QAction::triggered, this, [this](){
+        conf->setValue("fx_enable",!disableAction->isChecked());
+        ui->disableFX->setChecked(disableAction->isChecked());
+        ApplyConfig();
+    });
+    QAction *reloadAction = new QAction(tr("&Reload viper"), this);
+    connect(reloadAction, &QAction::triggered, this, [this](){
+        Restart();
+    });
 
-    restoreAction = new QAction(tr("&Restore"), this);
-    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
+    presetMenu = new QMenu(tr("&Presets"));
+    connect(preset_dlg,&PresetDlg::presetChanged,this,&MainWindow::updateTrayPresetList);
 
     quitAction = new QAction(tr("&Quit"), this);
     connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
     trayIconMenu = new QMenu(this);
-    trayIconMenu->addAction(minimizeAction);
-    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(disableAction);
+    trayIconMenu->addAction(reloadAction);
+    trayIconMenu->addMenu(presetMenu);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
 
@@ -191,6 +232,7 @@ void MainWindow::Reset(){
     }
 }
 void MainWindow::DisableFX(){
+    disableAction->setChecked(ui->disableFX->isChecked());
     //Apply instantly
     if(!lockapply)ApplyConfig();
 }
@@ -270,6 +312,7 @@ void MainWindow::SaveExternalFile(){
 //---Config IO
 void MainWindow::LoadConfig(){
     lockapply=true;
+    disableAction->setChecked(!conf->getBool("fx_enable"));
     ui->disableFX->setChecked(!conf->getBool("fx_enable"));
     ui->tubesim->setChecked(conf->getBool("tube_enable"));
     ui->colm->setChecked(conf->getBool("colm_enable"));

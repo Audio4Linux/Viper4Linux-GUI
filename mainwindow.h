@@ -65,6 +65,7 @@ private slots:
     void SaveExternalFile();
     void OpenLog();
     void DialogHandler();
+    void updateTrayPresetList();
 private:
     ConfigContainer* conf;
     AppConfigWrapper* m_appwrapper;
@@ -75,9 +76,9 @@ private:
     bool m_startupInTraySwitch;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
-    QAction *minimizeAction;
-    QAction *restoreAction;
     QAction *quitAction;
+    QAction *disableAction;
+    QMenu *presetMenu;
 
     ConvolverDlg *conv_dlg;
     SettingsDlg *settings_dlg;
