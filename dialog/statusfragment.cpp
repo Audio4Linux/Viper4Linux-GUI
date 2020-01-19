@@ -1,5 +1,5 @@
 #include "statusfragment.h"
-#include "ui_statusdialog.h"
+#include "ui_statusfragment.h"
 
 #include <QDebug>
 #include <QMessageBox>
