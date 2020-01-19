@@ -1,7 +1,7 @@
 #include "presetdlg.h"
 #include "ui_preset.h"
 #include "mainwindow.h"
-#include "converter.h"
+#include "misc/converter.h"
 #include "androidimporterdlg.h"
 #include "misc/loghelper.h"
 #include "misc/common.h"

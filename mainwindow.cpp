@@ -4,6 +4,7 @@
 #include "dbus/serveradaptor.h"
 #include "dbus/clientproxy.h"
 
+#include <WAF.h>
 #include <QMenu>
 #include <QMessageBox>
 #include <QFileDialog>

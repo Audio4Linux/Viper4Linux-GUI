@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QNetworkReply>
-#include "converter.h"
+#include "misc/converter.h"
 #include "items/configitem.h"
 #include "items/delegates.h"
 #include "config/appconfigwrapper.h"

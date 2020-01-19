@@ -1,6 +1,6 @@
 #include "androidimporterdlg.h"
 #include "ui_importandroid.h"
-#include "converter.h"
+#include "misc/converter.h"
 #include "mainwindow.h"
 #include "misc/loghelper.h"
 

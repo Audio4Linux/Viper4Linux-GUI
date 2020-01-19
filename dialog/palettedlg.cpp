@@ -1,5 +1,5 @@
 #include "palettedlg.h"
-#include "ui_palette.h"
+#include "ui_palettedlg.h"
 
 #include <QColorDialog>
 

@@ -11,7 +11,7 @@
 #include "dialog/presetdlg.h"
 #include "ui_settings.h"
 #include "dialog/convolverdlg.h"
-#include "converter.h"
+#include "misc/converter.h"
 #include "dialog/logdlg.h"
 #include "misc/stylehelper.h"
 #include "config/appconfigwrapper.h"
