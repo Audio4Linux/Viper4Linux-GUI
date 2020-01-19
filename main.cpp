@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     QApplication::setQuitOnLastWindowClosed( false );
     MainWindow w(QString::fromLocal8Bit(exepath),parser.isSet(tray));
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    //QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
     if(!parser.isSet(tray)) w.show();
