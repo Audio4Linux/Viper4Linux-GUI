@@ -39,7 +39,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
         LogHelper::writeLog("DBus service registration failed. Name already aquired by other instance");
         LogHelper::writeLog("Attempting to switch to this instance...");
         auto m_dbInterface = new cf::thebone::viper4linux::Gui("cf.thebone.viper4linux.Gui", "/Gui",
-                                                                            QDBusConnection::sessionBus(), this);
+                                                               QDBusConnection::sessionBus(), this);
         if(!m_dbInterface->isValid())
             LogHelper::writeLog("Critical: Unable to connect to other DBus instance. Continuing anyway...");
         else{
@@ -48,8 +48,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
                 LogHelper::writeLog("Critical: Other DBus instance returned invalid or error message. Continuing anyway...");
             }
             else{
-               LogHelper::writeLog("Success! Waiting for event loop to exit...");
-               QTimer::singleShot(0, qApp, &QCoreApplication::quit);
+                LogHelper::writeLog("Success! Waiting for event loop to exit...");
+                QTimer::singleShot(0, qApp, &QCoreApplication::quit);
             }
         }
 
@@ -163,6 +163,12 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     switch (reason) {
     case QSystemTrayIcon::Trigger:
         setVisible(!this->isVisible());
+        if(isVisible()){
+            this->showNormal();
+            this->setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+            this->raise();
+            this->activateWindow();
+        }
         //Hide tray icon if disabled and MainWin is visible (for cmdline force switch)
         if(!m_appwrapper->getTrayMode() && this->isVisible()) trayIcon->hide();
         break;
