@@ -15,6 +15,8 @@ class StatusDialog : public QDialog
 public:
     explicit StatusDialog(DBusProxy* dbus, QWidget *parent = nullptr);
     ~StatusDialog();
+signals:
+    void closePressed();
 
 private:
     Ui::StatusDialog *ui;

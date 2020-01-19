@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "dialog/statusdialog.h"
+#include "dialog/statusfragment.h"
 #include "dbus/serveradaptor.h"
 #include "dbus/clientproxy.h"
 
-#include <WAF.h>
+#include <Animation/Animation.h>
+#include <StackedWidgetAnimation/StackedWidgetAnimation.h>
+
 #include <QMenu>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -78,8 +80,17 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(tr("Driver status"), this,[this](){
         StatusDialog* sd = new StatusDialog(m_dbus);
-        sd->setModal(true);
-        sd->show();
+
+        QWidget* auth = new QWidget(this);
+        auth->setProperty("menu", false);
+        QVBoxLayout* authLayout = new QVBoxLayout(auth);
+        authLayout->addWidget(sd);
+        auth->hide();
+        connect(sd,&StatusDialog::closePressed,this,[auth,this](){
+            WAF::Animation::sideSlideOut(auth, WAF::BottomSide);
+        });
+
+        WAF::Animation::sideSlideIn(auth, WAF::BottomSide);
     });
     menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
     menu->addAction(tr("Save to file"), this,SLOT(SaveExternalFile()));
@@ -104,10 +115,12 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     if(m_appwrapper->getTrayMode() || m_startupInTraySwitch) trayIcon->show();
     else trayIcon->hide();
 
+
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
         conf->setConfigMap(m_dbus->FetchPropertyMap());
         LoadConfig();
     });
+
 }
 
 MainWindow::~MainWindow()

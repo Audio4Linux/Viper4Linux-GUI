@@ -10,8 +10,11 @@ QComboBox::disabled { color: #999999;}
 QMainWindow {
 	background-color:#1e1d23;
 }
+QWidget {
+        background-color:#1e1d23;
+}
 QDialog {
-	background-color:#1e1d23;
+        background-color:#1e1d23;
 }
 QColorDialog {
 	background-color:#1e1d23;

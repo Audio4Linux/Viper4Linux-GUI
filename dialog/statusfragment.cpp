@@ -1,4 +1,4 @@
-#include "statusdialog.h"
+#include "statusfragment.h"
 #include "ui_statusdialog.h"
 
 #include <QDebug>
@@ -12,7 +12,7 @@ StatusDialog::StatusDialog(DBusProxy* dbus, QWidget *parent) :
     if(!dbus->isValid()){
         QMessageBox::critical(this,tr("DBus connection error"),tr("Unable to connect to DBus interface.\n"
                                                            "Please make sure viper is running and you are using the lastest version of gst-plugin-viperfx"));
-        this->close();
+        emit closePressed();
         return;
     }
     ui->gst_plugin_ver->setText(dbus->GetVersion());
@@ -35,6 +35,8 @@ StatusDialog::StatusDialog(DBusProxy* dbus, QWidget *parent) :
 
     int samplerate = dbus->GetDriverStatus(DBusProxy::PARAM_GET_SAMPLINGRATE);
     ui->samplerate->setText(QString::number(samplerate));
+
+    connect(ui->buttonBox,&QDialogButtonBox::rejected,this,&StatusDialog::closePressed);
 
 }
 

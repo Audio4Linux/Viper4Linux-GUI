@@ -53,7 +53,7 @@ SOURCES += \
     dialog/palettedlg.cpp \
     dialog/presetdlg.cpp \
     dialog/settingsdlg.cpp \
-    dialog/statusdialog.cpp \
+    dialog/statusfragment.cpp \
     items/configitem.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -95,7 +95,7 @@ HEADERS += \
     dialog/palettedlg.h \
     dialog/presetdlg.h \
     dialog/settingsdlg.h \
-    dialog/statusdialog.h \
+    dialog/statusfragment.h \
     items/configitem.h \
     items/delegates.h \
     mainwindow.h \
@@ -115,7 +115,7 @@ FORMS += \
     dialog/palettedlg.ui \
     dialog/preset.ui \
     dialog/settings.ui \
-    dialog/statusdialog.ui \
+    dialog/statusfragment.ui \
     items/configitem.ui \
     mainwindow.ui
 
