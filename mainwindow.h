@@ -35,7 +35,7 @@ public:
     void LoadPresetFile(const QString&);
     void SavePresetFile(const QString&);
     AppConfigWrapper* getACWrapper();
-    explicit MainWindow(QString exepath,bool traySwitch,QWidget *parent = nullptr);
+    explicit MainWindow(QString exepath,bool traySwitch,bool allowMultipleInst,QWidget *parent = nullptr);
     void SetEQ(const int *data);
     void SetIRS(const QString& irs,bool apply);
     QString GetExecutablePath();

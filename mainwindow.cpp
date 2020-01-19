@@ -20,7 +20,7 @@
 
 using namespace std;
 
-MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
+MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleInst, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -40,22 +40,23 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
         LogHelper::writeLog("DBus service registration successful");
     else{
         LogHelper::writeLog("DBus service registration failed. Name already aquired by other instance");
-        LogHelper::writeLog("Attempting to switch to this instance...");
-        auto m_dbInterface = new cf::thebone::viper4linux::Gui("cf.thebone.viper4linux.Gui", "/Gui",
-                                                               QDBusConnection::sessionBus(), this);
-        if(!m_dbInterface->isValid())
-            LogHelper::writeLog("Critical: Unable to connect to other DBus instance. Continuing anyway...");
-        else{
-            QDBusPendingReply<> msg = m_dbInterface->raiseWindow();
-            if(msg.isError() || msg.isValid()){
-                LogHelper::writeLog("Critical: Other DBus instance returned invalid or error message. Continuing anyway...");
-            }
+        if(!allowMultipleInst){
+            LogHelper::writeLog("Attempting to switch to this instance...");
+            auto m_dbInterface = new cf::thebone::viper4linux::Gui("cf.thebone.viper4linux.Gui", "/Gui",
+                                                                   QDBusConnection::sessionBus(), this);
+            if(!m_dbInterface->isValid())
+                LogHelper::writeLog("Critical: Unable to connect to other DBus instance. Continuing anyway...");
             else{
-                LogHelper::writeLog("Success! Waiting for event loop to exit...");
-                QTimer::singleShot(0, qApp, &QCoreApplication::quit);
+                QDBusPendingReply<> msg = m_dbInterface->raiseWindow();
+                if(msg.isError() || msg.isValid()){
+                    LogHelper::writeLog("Critical: Other DBus instance returned invalid or error message. Continuing anyway...");
+                }
+                else{
+                    LogHelper::writeLog("Success! Waiting for event loop to exit...");
+                    QTimer::singleShot(0, qApp, &QCoreApplication::quit);
+                }
             }
         }
-
     }
 
     disableAction = new QAction();

@@ -28,10 +28,12 @@ int main(int argc, char *argv[])
     parser.addOption(tray);
     QCommandLineOption sviper(QStringList() << "s" << "startviper", "Start viper on launch");
     parser.addOption(sviper);
+    QCommandLineOption minst(QStringList() << "m" << "allow-multiple-instances", "Allow multiple instances of this app");
+    parser.addOption(minst);
     parser.process(a);
 
     QApplication::setQuitOnLastWindowClosed( false );
-    MainWindow w(QString::fromLocal8Bit(exepath),parser.isSet(tray));
+    MainWindow w(QString::fromLocal8Bit(exepath),parser.isSet(tray),parser.isSet(minst));
     //QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
