@@ -41,6 +41,9 @@ ConvolverDlg::ConvolverDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->favorites, SIGNAL(itemSelectionChanged()), this, SLOT(updateIR_Fav()));
     connect(ui->fileSelect, SIGNAL(clicked()), this, SLOT(selectFolder()));
 
+    connect(ui->closeA,&QPushButton::clicked,this,&ConvolverDlg::closePressed);
+    connect(ui->closeB,&QPushButton::clicked,this,&ConvolverDlg::closePressed);
+
     ui->tabWidget->setCurrentIndex(appconf->getConv_DefTab());
 }
 

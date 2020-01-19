@@ -26,6 +26,8 @@ private slots:
     void updateIR();
     void updateIR_Fav();
     void selectFolder();
+signals:
+    void closePressed();
 private:
     Ui::Convolver *ui;
     MainWindow* m_mainwin;

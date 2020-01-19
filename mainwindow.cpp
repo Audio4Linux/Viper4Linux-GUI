@@ -81,16 +81,16 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     menu->addAction(tr("Driver status"), this,[this](){
         StatusDialog* sd = new StatusDialog(m_dbus);
 
-        QWidget* auth = new QWidget(this);
-        auth->setProperty("menu", false);
-        QVBoxLayout* authLayout = new QVBoxLayout(auth);
-        authLayout->addWidget(sd);
-        auth->hide();
-        connect(sd,&StatusDialog::closePressed,this,[auth,this](){
-            WAF::Animation::sideSlideOut(auth, WAF::BottomSide);
+        QWidget* host = new QWidget(this);
+        host->setProperty("menu", false);
+        QVBoxLayout* hostLayout = new QVBoxLayout(host);
+        hostLayout->addWidget(sd);
+        host->hide();
+        connect(sd,&StatusDialog::closePressed,this,[host,this](){
+            WAF::Animation::sideSlideOut(host, WAF::BottomSide);
         });
 
-        WAF::Animation::sideSlideIn(auth, WAF::BottomSide);
+        WAF::Animation::sideSlideIn(host, WAF::BottomSide);
     });
     menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
     menu->addAction(tr("Save to file"), this,SLOT(SaveExternalFile()));
@@ -115,7 +115,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, QWidget *parent) :
     if(m_appwrapper->getTrayMode() || m_startupInTraySwitch) trayIcon->show();
     else trayIcon->hide();
 
-
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
         conf->setConfigMap(m_dbus->FetchPropertyMap());
         LoadConfig();
@@ -136,7 +135,6 @@ void MainWindow::setVisible(bool visible)
     updateTrayPresetList();
     //Hide all other windows if set to invisible
     if(!visible){
-        conv_dlg->hide();
         settings_dlg->hide();
         log_dlg->hide();
         preset_dlg->hide();
@@ -260,8 +258,17 @@ void MainWindow::createTrayIcon()
 
 //---Dialogs/Buttons
 void MainWindow::DialogHandler(){
-    if(sender() == ui->conv_select)
-        conv_dlg->show();
+    if(sender() == ui->conv_select){
+        QWidget* host = new QWidget(this);
+        host->setProperty("menu", false);
+        QVBoxLayout* hostLayout = new QVBoxLayout(host);
+        hostLayout->addWidget(conv_dlg);
+        host->hide();
+        connect(conv_dlg,&ConvolverDlg::closePressed,this,[host](){
+            WAF::Animation::sideSlideOut(host, WAF::BottomSide);
+        });
+
+        WAF::Animation::sideSlideIn(host, WAF::BottomSide);    }
     else if(sender() == ui->set)
         settings_dlg->show();
     else if(sender() == ui->cpreset)

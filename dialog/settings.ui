@@ -26,7 +26,7 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../resources.qrc">
     <normaloff>:/icons/viper.png</normaloff>:/icons/viper.png</iconset>
   </property>
   <property name="sizeGripEnabled">
@@ -36,7 +36,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -599,7 +599,7 @@
           <item>
            <widget class="QRadioButton" name="deftab_filesys">
             <property name="text">
-             <string>Filesystem</string>
+             <string>Local</string>
             </property>
            </widget>
           </item>
@@ -694,7 +694,7 @@
   <tabstop>close</tabstop>
  </tabstops>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections/>
 </ui>
