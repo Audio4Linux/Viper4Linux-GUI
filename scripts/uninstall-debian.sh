@@ -10,7 +10,7 @@ fi
 
 if pgrep viper-gui >/dev/null 2>&1
   then
-    printf "${RED}viper-gui is in use\n${NC}Please close all Viper4Linux-UI windows and try again.\n"
+    printf "${RED}viper-gui is in use\n${NC}Please terminate all Viper4Linux-GUI processes and try again.\n"
     exit 1
 fi
 
