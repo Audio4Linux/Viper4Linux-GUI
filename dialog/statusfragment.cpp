@@ -10,8 +10,6 @@ StatusDialog::StatusDialog(DBusProxy* dbus, QWidget *parent) :
 {
     ui->setupUi(this);
     if(!dbus->isValid()){
-        QMessageBox::critical(this,tr("DBus connection error"),tr("Unable to connect to DBus interface.\n"
-                                                           "Please make sure viper is running and you are using the lastest version of gst-plugin-viperfx"));
         emit closePressed();
         return;
     }

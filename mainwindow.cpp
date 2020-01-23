@@ -81,8 +81,16 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     QMenu *menu = new QMenu();
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(tr("Driver status"), this,[this](){
-        StatusDialog* sd = new StatusDialog(m_dbus);
+        if(!m_dbus->isValid()){
+            OverlayMsgProxy::openError(this,tr("Viper not connected"),
+                                       tr("Unable to connect to DBus interface.\n"
+                                          "Please make sure viper is running and you are using\n"
+                                          "the lastest version of gst-plugin-viperfx"));
 
+            return;
+        }
+
+        StatusDialog* sd = new StatusDialog(m_dbus);
         QWidget* host = new QWidget(this);
         host->setProperty("menu", false);
         QVBoxLayout* hostLayout = new QVBoxLayout(host);

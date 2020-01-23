@@ -53,7 +53,8 @@ void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QStrin
     a->setEasingCurve(QEasingCurve::InBack);
     a->start(QPropertyAnimation::DeleteWhenStopped);
 
-    connect(lbClose, &QPushButton::clicked, lightBox, [lightBox](){
+    connect(lbClose, &QPushButton::clicked, lightBox, [lightBox,lbClose](){
+        lbClose->setEnabled(false);
         QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
         lightBox->setGraphicsEffect(eff);
         QPropertyAnimation *a = new QPropertyAnimation(eff,"opacity");
