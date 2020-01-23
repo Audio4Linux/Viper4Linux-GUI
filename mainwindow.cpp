@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dialog/statusfragment.h"
+#include "misc/overlaymsgproxy.h"
 #include "dbus/serveradaptor.h"
 #include "dbus/clientproxy.h"
 
@@ -66,7 +67,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     m_dbus = new DBusProxy();
 
     m_appwrapper->loadAppConfig();
-    conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
+    conf->setConfigMap(readConfig());
     LoadConfig();
 
     conv_dlg = new ConvolverDlg(this);
@@ -120,7 +121,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         conf->setConfigMap(m_dbus->FetchPropertyMap());
         LoadConfig();
     });
-
 }
 
 MainWindow::~MainWindow()
@@ -289,7 +289,7 @@ void MainWindow::Reset(){
         os << default_config;
         fb.close();
 
-        conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
+        conf->setConfigMap(readConfig());
         LoadConfig();
         m_irsNeedUpdate = true;
 
@@ -330,7 +330,7 @@ void MainWindow::LoadPresetFile(const QString& filename){
 
     QFile::copy(src,dest);
     LogHelper::writeLog("Loading from " + filename+ " (main/loadpreset)");
-    conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
+    conf->setConfigMap(readConfig());
     LoadConfig();
     m_irsNeedUpdate = true;
 
@@ -353,7 +353,7 @@ void MainWindow::LoadExternalFile(){
 
     QFile::copy(src,dest);
     LogHelper::writeLog("Loading from " + filename+ " (main/loadexternal)");
-    conf->setConfigMap(ConfigIO::readFile(m_appwrapper->getPath()));
+    conf->setConfigMap(readConfig());
     LoadConfig();
     m_irsNeedUpdate = true;
 
@@ -807,6 +807,17 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
     ui->convpath->setText(irsInfo.baseName());
     ui->convpath->setCursorPosition(0);
     if(apply)ApplyConfig();
+}
+QVariantMap MainWindow::readConfig(){
+    QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
+    if(confmap.count() < 1)
+        OverlayMsgProxy::openError(this,
+                                   tr("Viper not properly installed"),
+                                   tr("Unable to find a configuration file for viper,\n"
+                                      "please make sure that viper has been installed correctly.\n"
+                                      "If you're sure that your setup is correct, no further actions\n"
+                                      "are required. This GUI will automatically generate a configuration."));
+    return confmap;
 }
 QString MainWindow::GetExecutablePath(){
     return m_exepath;

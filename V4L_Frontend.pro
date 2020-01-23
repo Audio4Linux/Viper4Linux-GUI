@@ -52,6 +52,7 @@ SOURCES += \
     dialog/logdlg.cpp \
     dialog/palettedlg.cpp \
     dialog/presetdlg.cpp \
+    dialog/qmessageoverlay.cpp \
     dialog/settingsdlg.cpp \
     dialog/statusfragment.cpp \
     items/configitem.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
     misc/autostartmanager.cpp \
     misc/converter.cpp \
     misc/loghelper.cpp \
+    misc/overlaymsgproxy.cpp \
     misc/stylehelper.cpp
 
 HEADERS += \
@@ -94,6 +96,7 @@ HEADERS += \
     dialog/logdlg.h \
     dialog/palettedlg.h \
     dialog/presetdlg.h \
+    dialog/qmessageoverlay.h \
     dialog/settingsdlg.h \
     dialog/statusfragment.h \
     items/configitem.h \
@@ -105,6 +108,7 @@ HEADERS += \
     misc/findbinary.h \
     misc/loghelper.h \
     misc/mathfunctions.h \
+    misc/overlaymsgproxy.h \
     misc/presetextension.h \
     misc/stylehelper.h
 

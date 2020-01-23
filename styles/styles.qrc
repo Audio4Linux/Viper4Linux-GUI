@@ -166,6 +166,7 @@
     </qresource>
     <qresource prefix="/">
         <file>default.qss</file>
+        <file>../icons/error.svg</file>
     </qresource>
     <qresource prefix="/vsdark">
         <file>vsdark/vsdark.qss</file>

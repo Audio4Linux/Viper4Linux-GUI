@@ -97,6 +97,7 @@ private:
     void UpdateTooltipLabelUnit(QObject* sender,QString text,bool);
     void LoadConfig();
     void ConnectActions();
+    QVariantMap readConfig();
 };
 
 #endif // MAINWINDOW_H

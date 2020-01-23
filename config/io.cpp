@@ -54,15 +54,6 @@ QVariantMap ConfigIO::readFile(QString path,bool allowWarning){
         }
         cFile.close();
     }
-    else if(allowWarning){
-        QMessageBox msgBox;
-        msgBox.setText(QString(QObject::tr("Configuration file not found at \n%1")).arg(path));
-        msgBox.setInformativeText(QObject::tr("You can change the path in the settings."));
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.setIcon(QMessageBox::Icon::Critical);
-        msgBox.exec();
-    }
 
     return map;
 }
