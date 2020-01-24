@@ -6,6 +6,9 @@
 #include "misc/loghelper.h"
 #include "misc/common.h"
 
+#include <Animation/Animation.h>
+#include <StackedWidgetAnimation/StackedWidgetAnimation.h>
+
 #include <QDir>
 #include <QCloseEvent>
 #include <QDebug>
@@ -187,10 +190,16 @@ void PresetDlg::add(){
     emit presetChanged();
 }
 void PresetDlg::importAndroid(){
-    auto ia = new AndroidImporterDlg(m_mainwin->getACWrapper()->getPath(),this);
-    ia->setFixedSize(ia->geometry().width(),ia->geometry().height());
-    ia->show();
-    connect(ia,&AndroidImporterDlg::importFinished,this,[this](){
+    AndroidImporterDlg* ia = new AndroidImporterDlg(m_mainwin->getACWrapper()->getPath(),this);
+    QWidget* host = new QWidget(this);
+    host->setProperty("menu", false);
+    QVBoxLayout* hostLayout = new QVBoxLayout(host);
+    hostLayout->addWidget(ia);
+    host->hide();
+    WAF::Animation::sideSlideIn(host, WAF::BottomSide);
+
+    connect(ia,&AndroidImporterDlg::importFinished,this,[host,this](){
+        WAF::Animation::sideSlideOut(host, WAF::BottomSide);
         UpdateList();
         emit presetChanged();
     });
