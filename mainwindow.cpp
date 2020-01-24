@@ -75,10 +75,10 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     conf->setConfigMap(readConfig());
     LoadConfig();
 
-    conv_dlg = new ConvolverDlg(this);
-    settings_dlg = new SettingsDlg(this);
-    preset_dlg = new PresetDlg(this);
-    log_dlg = new LogDlg();
+    conv_dlg = new ConvolverDlg(this,this);
+    settings_dlg = new SettingsDlg(this,this);
+    preset_dlg = new PresetDlg(this,this);
+    log_dlg = new LogDlg(this);
 
     createTrayIcon();
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
