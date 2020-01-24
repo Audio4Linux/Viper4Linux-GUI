@@ -100,7 +100,7 @@ void PresetDlg::indexDownloaded(QNetworkReply* reply){
         QJsonValue url = obj.value("download_url");
         QFileInfo namefi(name.toString());
         if(name.isUndefined()||url.isUndefined())continue;
-        if(name.toString().at(0)==".")continue; //Skip hidden files
+        if(name.toString().at(0)==QChar('.'))continue; //Skip hidden files
         if(namefi.completeSuffix()!="conf"&&namefi.completeSuffix()!="irs")continue; //Skip unrelated files
         if(namefi.completeSuffix()=="conf"){
             ui->repoindex->addItem(optimizeName(namefi.baseName()));

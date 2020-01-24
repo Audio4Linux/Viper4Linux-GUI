@@ -9,20 +9,19 @@
 #include <QGridLayout>
 #include <QPushButton>
 
-OverlayMsgProxy::OverlayMsgProxy()
+OverlayMsgProxy::OverlayMsgProxy(QWidget* _obj)
 {
-
+    lightBox = new QMessageOverlay(_obj,false);
+    obj = _obj;
 }
 
-void OverlayMsgProxy::openError(QWidget* obj, QString title, QString desc, QString close){
-    openBase(obj,title,desc,":/icons/error.svg",close,"#d72828");
+void OverlayMsgProxy::openError(QString title, QString desc, QString close){
+    openBase(title,desc,":/icons/error.svg",close,"#d72828");
 }
-void OverlayMsgProxy::openNormal(QWidget* obj, QString title, QString desc, QString color){
-    openBase(obj,title,desc,"",tr("Close"),color);
+void OverlayMsgProxy::openNormal(QString title, QString desc, QString color){
+    openBase(title,desc,"",tr("Close"),color);
 }
-void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QString icon, QString close, QString color){
-    QMessageOverlay *lightBox = new QMessageOverlay(obj,false);
-
+void OverlayMsgProxy::openBase(QString title, QString desc, QString icon, QString close, QString color){
     QLabel* lbTitle = new QLabel(title);
     lbTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: white");
     QLabel* lbIcon = new QLabel;
@@ -59,7 +58,8 @@ void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QStrin
     a->setEasingCurve(QEasingCurve::InBack);
     a->start(QPropertyAnimation::DeleteWhenStopped);
 
-    connect(lbClose, &QPushButton::clicked, lightBox, [lightBox,lbClose](){
+    connect(lbClose, &QPushButton::clicked, this, &OverlayMsgProxy::buttonPressed);
+    connect(lbClose, &QPushButton::clicked, lightBox, [lbClose,this](){
         lbClose->setEnabled(false);
         QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
         lightBox->setGraphicsEffect(eff);
@@ -69,9 +69,12 @@ void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QStrin
         a->setEndValue(0);
         a->setEasingCurve(QEasingCurve::OutBack);
         a->start(QPropertyAnimation::DeleteWhenStopped);
-        connect(a,&QAbstractAnimation::finished, [lightBox](){
+        connect(a,&QAbstractAnimation::finished, [this](){
             lightBox->hide();
         });
     });
     lightBox->setLayout(lbLayout);
+}
+void OverlayMsgProxy::hide(){
+    lightBox->hide();
 }

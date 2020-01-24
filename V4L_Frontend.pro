@@ -110,7 +110,8 @@ HEADERS += \
     misc/mathfunctions.h \
     misc/overlaymsgproxy.h \
     misc/presetextension.h \
-    misc/stylehelper.h
+    misc/stylehelper.h \
+    misc/versioncontainer.h
 
 FORMS += \
     dialog/convolver.ui \

@@ -4,6 +4,7 @@
 #include "misc/overlaymsgproxy.h"
 #include "dbus/serveradaptor.h"
 #include "dbus/clientproxy.h"
+#include "misc/versioncontainer.h"
 
 #include <Animation/Animation.h>
 #include <StackedWidgetAnimation/StackedWidgetAnimation.h>
@@ -31,6 +32,10 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
 
     LogHelper::clearLog();
     LogHelper::writeLog("UI launched...");
+
+    msg_notrunning = new OverlayMsgProxy(this);
+    msg_launchfail = new OverlayMsgProxy(this);
+    msg_versionmismatch = new OverlayMsgProxy(this);
 
     //This section checks if another instance is already running and switches to it.
     new GuiAdaptor(this);
@@ -82,11 +87,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(tr("Driver status"), this,[this](){
         if(!m_dbus->isValid()){
-            OverlayMsgProxy::openError(this,tr("Viper not connected"),
-                                       tr("Unable to connect to DBus interface.\n"
-                                          "Please make sure viper is running and you are using\n"
-                                          "the lastest version of gst-plugin-viperfx"));
-
+            ShowDBusError();
             return;
         }
 
@@ -130,13 +131,19 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         LoadConfig();
     });
 
-    //Check if viper is installed
-    if(system("which viper") != 0)
-        OverlayMsgProxy::openError(this,tr("Viper not installed"),
-                                   tr("Unable to find viper executable.\n"
-                                      "Please make sure viper is installed and you\n"
-                                      "are using the lastest version of gst-plugin-viperfx"),
-                                   tr("Continue anyway"));
+    //Check if viper is installed and running
+    if(system("which viper") != 0){
+        OverlayMsgProxy msg(this);
+        msg.openError(tr("Viper not installed"),
+                      tr("Unable to find viper executable.\n"
+                         "Please make sure viper is installed and you\n"
+                         "are using the lastest version of gst-plugin-viperfx"),
+                      tr("Continue anyway"));
+    }
+    else if(!m_dbus->isValid())
+        ShowDBusError();
+    else
+        CheckDBusVersion();
 }
 
 MainWindow::~MainWindow()
@@ -168,6 +175,51 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if (trayIcon->isVisible()) {
         hide();
         event->ignore();
+    }
+}
+//DBus
+void MainWindow::ShowDBusError(){
+    if(msg_notrunning != nullptr)
+        msg_notrunning->hide();
+    msg_notrunning = new OverlayMsgProxy(this);
+    msg_notrunning->openError(tr("Viper not running"),
+                              tr("Unable to connect to DBus interface.\n"
+                                 "Please make sure viper is running and you are\n"
+                                 "using the lastest version of gst-plugin-viperfx"),
+                              tr("Launch viper"));
+    connect(msg_notrunning,&OverlayMsgProxy::buttonPressed,[this](){
+        int returncode = system("viper start");
+        if(returncode != 0){
+            if(msg_launchfail != nullptr)
+                msg_launchfail->hide();
+            msg_launchfail = new OverlayMsgProxy(this);
+            msg_launchfail->openError(tr("Failed to launch viper"),
+                                      tr("viper.sh has returned a non-null exit code.\n"
+                                         "Please make sure viper is correctly installed\n"
+                                         "and try to restart it manually"),
+                                      tr("Continue anyway"));
+        } else {
+            //Reconnect DBus
+            QTimer::singleShot(1000,this,[this](){
+                m_dbus = new DBusProxy();
+            });
+        }
+    });
+}
+void MainWindow::CheckDBusVersion(){
+    VersionContainer currentPluginVersion(m_dbus->GetVersion());
+    VersionContainer minimumPluginVersion(QString(MINIMUM_PLUGIN_VERSION));
+    if(currentPluginVersion < minimumPluginVersion){
+        if(msg_versionmismatch != nullptr)
+            msg_versionmismatch->hide();
+        msg_versionmismatch = new OverlayMsgProxy(this);
+        msg_versionmismatch->openError(tr("Version unsupported"),
+                                       tr("This app requires a different version\n"
+                                          "of gst-plugin-viperfx to function correctly.\n"
+                                          "Consider to update gst-plugin-viperfx and/or\n"
+                                          "this GUI in order to ensure full functionality.\n"
+                                          "Current version: %1, Required version: >=%2").arg(currentPluginVersion).arg(MINIMUM_PLUGIN_VERSION),
+                                       tr("Close"));
     }
 }
 //Systray
@@ -567,13 +619,16 @@ void MainWindow::ApplyConfig(bool restart){
     ConfigContainer dbus_template = *conf;
     dbus_template.setValue("conv_ir_path",activeirs);
     m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
-
     if(restart){
         if(conf->getString("conv_ir_path",false).contains('$') && m_irsNeedUpdate)
             Restart();
         else
-            if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS)
-                m_dbus->CommitProperties(DBusProxy::PARAM_GROUP_ALL);
+            if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS){
+                if(!m_dbus->isValid())
+                    ShowDBusError();
+                else
+                    m_dbus->CommitProperties(DBusProxy::PARAM_GROUP_ALL);
+            }
             else
                 Restart();
         m_irsNeedUpdate = false;
@@ -826,13 +881,14 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
 }
 QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
-    if(confmap.count() < 1)
-        OverlayMsgProxy::openError(this,
-                                   tr("Viper not properly installed"),
-                                   tr("Unable to find a configuration file for viper,\n"
-                                      "please make sure that viper has been installed correctly.\n"
-                                      "If you're sure that your setup is correct, no further actions\n"
-                                      "are required. This GUI will automatically generate a configuration."));
+    if(confmap.count() < 1){
+        OverlayMsgProxy msg(this);
+        msg.openError(tr("Viper not properly installed"),
+                      tr("Unable to find a configuration file for viper,\n"
+                         "please make sure that viper has been installed correctly.\n"
+                         "If you're sure that your setup is correct, no further actions\n"
+                         "are required. This GUI will automatically generate a configuration."));
+    }
     return confmap;
 }
 QString MainWindow::GetExecutablePath(){

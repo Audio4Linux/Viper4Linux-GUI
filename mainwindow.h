@@ -20,6 +20,10 @@
 #include "misc/presetextension.h"
 #include "misc/common.h"
 #include "config/dbusproxy.h"
+#include "misc/overlaymsgproxy.h"
+
+//Minimum required version of gst-plugin-viperfx
+#define MINIMUM_PLUGIN_VERSION "2.0.0"
 
 using namespace std;
 namespace Ui {
@@ -81,6 +85,10 @@ private:
     QAction *disableAction;
     QMenu *presetMenu;
 
+    OverlayMsgProxy *msg_notrunning;
+    OverlayMsgProxy *msg_launchfail;
+    OverlayMsgProxy *msg_versionmismatch;
+
     ConvolverDlg *conv_dlg;
     SettingsDlg *settings_dlg;
     PresetDlg *preset_dlg;
@@ -97,6 +105,8 @@ private:
     void UpdateTooltipLabelUnit(QObject* sender,QString text,bool);
     void LoadConfig();
     void ConnectActions();
+    void ShowDBusError();
+    void CheckDBusVersion();
     QVariantMap readConfig();
 };
 
