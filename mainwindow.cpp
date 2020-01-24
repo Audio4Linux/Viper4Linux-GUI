@@ -77,7 +77,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
 
     conv_dlg = new ConvolverDlg(this,this);
     settings_dlg = new SettingsDlg(this,this);
-    preset_dlg = new PresetDlg(this,this);
+    preset_dlg = new PresetDlg(this);
     log_dlg = new LogDlg(this);
 
     createTrayIcon();
