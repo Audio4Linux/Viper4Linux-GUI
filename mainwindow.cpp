@@ -132,7 +132,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     });
 
     //Check if viper is installed and running
-    if(system("which viper") == 0){
+    if(system("which viper") != 0){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
                       tr("Unable to find viper executable.\n"
@@ -881,7 +881,7 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
 }
 QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
-    if(confmap.count() > 1){
+    if(confmap.count() < 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not properly installed"),
                       tr("Unable to find a configuration file for viper,\n"
