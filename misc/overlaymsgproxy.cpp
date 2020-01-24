@@ -4,6 +4,8 @@
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 #include <QLabel>
+#include <QFile>
+#include <QTextStream>
 #include <QGridLayout>
 #include <QPushButton>
 
@@ -12,13 +14,13 @@ OverlayMsgProxy::OverlayMsgProxy()
 
 }
 
-void OverlayMsgProxy::openError(QWidget* obj, QString title, QString desc){
-    openBase(obj,title,desc,":/icons/error.svg");
+void OverlayMsgProxy::openError(QWidget* obj, QString title, QString desc, QString close){
+    openBase(obj,title,desc,":/icons/error.svg",close,"#d72828");
 }
-void OverlayMsgProxy::openNormal(QWidget* obj, QString title, QString desc){
-    openBase(obj,title,desc,"");
+void OverlayMsgProxy::openNormal(QWidget* obj, QString title, QString desc, QString color){
+    openBase(obj,title,desc,"",tr("Close"),color);
 }
-void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QString icon){
+void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QString icon, QString close, QString color){
     QMessageOverlay *lightBox = new QMessageOverlay(obj,false);
 
     QLabel* lbTitle = new QLabel(title);
@@ -28,7 +30,7 @@ void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QStrin
     QLabel* lbDescription = new QLabel(desc);
     lbDescription->setStyleSheet("color: white");
     lbDescription->setWordWrap(true);
-    QPushButton* lbClose = new QPushButton(tr("Close"));
+    QPushButton* lbClose = new QPushButton(close);
 
     QGridLayout* lbLayout = new QGridLayout;
     lbLayout->setRowStretch(0, 1);
@@ -40,7 +42,11 @@ void OverlayMsgProxy::openBase(QWidget* obj, QString title, QString desc, QStrin
     lbLayout->addWidget(lbDescription, 2, 1, 1, 2);
     lbLayout->addWidget(lbClose, 3, 2);
     lbLayout->setRowStretch(4, 1);
-    lbClose->setStyleSheet("QPushButton{ border-style: solid; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent; border-bottom-color: transparent; border-width: 1px; border-style: solid; padding: 4 12 4 12; background-color: #000000; } QPushButton::default{ border-style: solid; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent; border-bottom-color: #d72828; border-width: 1px; padding: 2px; background-color: #000000; } QPushButton:hover{ border-style: solid; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent; border-bottom-color: #d72828; border-bottom-width: 1px; border-style: solid; color: #FFFFFF; padding-bottom: 2px; background-color: #000000; } QPushButton:pressed{ border-style: solid; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent; border-bottom-color: #d72828; border-bottom-width: 2px; border-style: solid; color: #d72828; padding-bottom: 1px; background-color: #000000; } QPushButton:disabled{ border-style: solid; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent; border-bottom-color: transparent; border-bottom-width: 2px; border-style: solid; color: #808086; padding-bottom: 1px; background-color: #000000; }");
+
+    QFile f(":/overlay.qss");
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    lbClose->setStyleSheet(ts.readAll().replace("#e67e22",color));
 
     QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
     lightBox->setGraphicsEffect(eff);

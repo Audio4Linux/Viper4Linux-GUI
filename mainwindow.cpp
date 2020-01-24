@@ -129,6 +129,14 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         conf->setConfigMap(m_dbus->FetchPropertyMap());
         LoadConfig();
     });
+
+    //Check if viper is installed
+    if(system("which viper") != 0)
+        OverlayMsgProxy::openError(this,tr("Viper not installed"),
+                                   tr("Unable to find viper executable.\n"
+                                      "Please make sure viper is installed and you\n"
+                                      "are using the lastest version of gst-plugin-viperfx"),
+                                   tr("Continue anyway"));
 }
 
 MainWindow::~MainWindow()
