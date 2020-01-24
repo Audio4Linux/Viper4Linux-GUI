@@ -61,9 +61,9 @@ void OverlayMsgProxy::openBase(QString title, QString desc, QString icon, QStrin
     connect(lbClose, &QPushButton::clicked, this, &OverlayMsgProxy::buttonPressed);
     connect(lbClose, &QPushButton::clicked, lightBox, [lbClose,this](){
         lbClose->setEnabled(false);
-        QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
-        lightBox->setGraphicsEffect(eff);
-        QPropertyAnimation *a = new QPropertyAnimation(eff,"opacity");
+        QGraphicsOpacityEffect *eff2 = new QGraphicsOpacityEffect();
+        lightBox->setGraphicsEffect(eff2);
+        QPropertyAnimation *a = new QPropertyAnimation(eff2,"opacity");
         a->setDuration(500);
         a->setStartValue(1);
         a->setEndValue(0);

@@ -132,9 +132,9 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     });
 
     //Check if viper is installed and running
-    if(system("which viper") != 0){
-        OverlayMsgProxy msg(this);
-        msg.openError(tr("Viper not installed"),
+    if(system("which viper") == 0){
+        OverlayMsgProxy *msg = new OverlayMsgProxy(this);
+        msg->openError(tr("Viper not installed"),
                       tr("Unable to find viper executable.\n"
                          "Please make sure viper is installed and you\n"
                          "are using the lastest version of gst-plugin-viperfx"),
@@ -881,9 +881,9 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
 }
 QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
-    if(confmap.count() < 1){
-        OverlayMsgProxy msg(this);
-        msg.openError(tr("Viper not properly installed"),
+    if(confmap.count() > 1){
+        OverlayMsgProxy *msg = new OverlayMsgProxy(this);
+        msg->openError(tr("Viper not properly installed"),
                       tr("Unable to find a configuration file for viper,\n"
                          "please make sure that viper has been installed correctly.\n"
                          "If you're sure that your setup is correct, no further actions\n"
