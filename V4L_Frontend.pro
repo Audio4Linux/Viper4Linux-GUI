@@ -55,7 +55,6 @@ SOURCES += \
     dialog/qmessageoverlay.cpp \
     dialog/settingsdlg.cpp \
     dialog/statusfragment.cpp \
-    items/configitem.cpp \
     main.cpp \
     mainwindow.cpp \
     misc/autostartmanager.cpp \
@@ -99,8 +98,6 @@ HEADERS += \
     dialog/qmessageoverlay.h \
     dialog/settingsdlg.h \
     dialog/statusfragment.h \
-    items/configitem.h \
-    items/delegates.h \
     mainwindow.h \
     misc/autostartmanager.h \
     misc/common.h \
@@ -121,7 +118,6 @@ FORMS += \
     dialog/preset.ui \
     dialog/settings.ui \
     dialog/statusfragment.ui \
-    items/configitem.ui \
     mainwindow.ui
 
 TRANSLATIONS += translations/lang_en.ts \
