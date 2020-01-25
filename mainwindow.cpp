@@ -160,7 +160,6 @@ void MainWindow::setVisible(bool visible)
     updateTrayPresetList();
     //Hide all other windows if set to invisible
     if(!visible){
-        settings_dlg->hide();
         log_dlg->hide();
         preset_dlg->hide();
     }
