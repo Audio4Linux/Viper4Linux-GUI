@@ -161,6 +161,7 @@ void StyleHelper::SetStyle(){
         }
 
     }
+    emit styleChanged();
 }
 void StyleHelper::setPalette(const QColor& base,const QColor& background,const QColor& foreground,const QColor& selection,const QColor& selectiontext,const QColor& disabled){
     QPalette *palette = new QPalette();

@@ -35,7 +35,7 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->glavafix->setChecked(appconf->getGFix());
     ui->reloadmethod->setCurrentIndex((int)appconf->getReloadMethod());
 
-    connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(ui->close, &QPushButton::clicked, this, &SettingsDlg::closeClicked);
     connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
     connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
     connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
@@ -53,6 +53,11 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
     connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
     connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
+
+    ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
+    connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem* prev){
+        ui->stackedWidget->setCurrentIndex(ui->selector->indexOfTopLevelItem(cur));
+    });
 
     connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
         if(lockslot)return;

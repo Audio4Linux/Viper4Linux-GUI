@@ -209,6 +209,22 @@ QListWidget {
         border-width: 1px; border-radius: 4px;
         border-style: solid;
 }
+QTreeWidget {
+        color: #a9b7c6;
+        border-color: #505050;
+        background-color: #1e1d23;
+        selection-background-color:#0a7b5b;
+        selection-color: #FFFFFF;
+        border-width: 1px; border-radius: 4px;
+        border-style: solid;
+}
+QHeaderView {
+        color: #0a7b5b;
+        border-color: #505050;
+        background-color: #1e1d23;
+        border-width: 1px; border-radius: 4px;
+        border-style: solid;
+}
 QLabel {
 	color: #a9b7c6;
 }

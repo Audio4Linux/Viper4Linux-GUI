@@ -17,8 +17,9 @@
 #include <QObject>
 #include <QColor>
 
-class StyleHelper
+class StyleHelper : public QObject
 {
+    Q_OBJECT
 public:
     StyleHelper(QObject* host);
     void SetStyle();
@@ -30,6 +31,8 @@ public:
                                  const QColor& selectiontext = Qt::black,const QColor& disabled = QColor(85,85,85));
 private:
     QObject* m_objhost;
+signals:
+    void styleChanged();
 };
 
 #endif // STYLEHELPER_H

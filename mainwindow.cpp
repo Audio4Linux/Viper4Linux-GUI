@@ -97,6 +97,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         QVBoxLayout* hostLayout = new QVBoxLayout(host);
         hostLayout->addWidget(sd);
         host->hide();
+        host->setAutoFillBackground(true);
         connect(sd,&StatusDialog::closePressed,this,[host,this](){
             WAF::Animation::sideSlideOut(host, WAF::BottomSide);
         });
@@ -333,13 +334,28 @@ void MainWindow::DialogHandler(){
         QVBoxLayout* hostLayout = new QVBoxLayout(host);
         hostLayout->addWidget(conv_dlg);
         host->hide();
+        host->setAutoFillBackground(true);
         connect(conv_dlg,&ConvolverDlg::closePressed,this,[host](){
             WAF::Animation::sideSlideOut(host, WAF::BottomSide);
         });
 
         WAF::Animation::sideSlideIn(host, WAF::BottomSide);    }
-    else if(sender() == ui->set)
-        settings_dlg->show();
+    else if(sender() == ui->set){
+        QFrame* host = new QFrame(this);
+        host->setProperty("menu", false);
+        QVBoxLayout* hostLayout = new QVBoxLayout(host);
+        hostLayout->addWidget(settings_dlg);
+        host->hide();
+        host->setAutoFillBackground(true);
+
+        connect(settings_dlg,&SettingsDlg::closeClicked,this,[host](){
+            host->update();
+            host->repaint();
+            WAF::Animation::sideSlideOut(host, WAF::BottomSide);
+        });
+
+        WAF::Animation::sideSlideIn(host, WAF::BottomSide);
+    }
     else if(sender() == ui->cpreset)
         preset_dlg->show();
 }

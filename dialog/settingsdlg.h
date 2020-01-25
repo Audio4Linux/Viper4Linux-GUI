@@ -44,6 +44,8 @@ private slots:
         void updateAutoFxMode();
         void updateCDefTab();
         void updateTheme();
+signals:
+        void closeClicked();
 private:
         AppConfigWrapper* appconf;
         MainWindow* m_mainwin;
