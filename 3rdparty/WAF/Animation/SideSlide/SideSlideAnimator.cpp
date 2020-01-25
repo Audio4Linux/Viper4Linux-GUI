@@ -202,6 +202,8 @@ void SideSlideAnimator::slideOut()
     if (isAnimated() && isAnimatedBackward()) return;
     setAnimatedBackward();
 
+    m_decorator->grabSlideWidget(widgetForSlide());
+
     if (widgetForSlide()->isVisible()) {
         //
         // Определим самый верхний виджет
