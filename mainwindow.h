@@ -19,6 +19,9 @@
 #include <QSystemTrayIcon>
 #include <QCloseEvent>
 
+#include "visualization/audiostreamengine.h"
+#include "visualization/spectrograph.h"
+
 #include "config/io.h"
 #include "config/container.h"
 #include "dialog/settingsdlg.h"
@@ -63,6 +66,7 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 public slots:
+    void RestartSpectrum();
     void Reset();
     void Restart();
     void raiseWindow();
@@ -85,6 +89,7 @@ private slots:
     void OpenLog();
     void DialogHandler();
     void updateTrayPresetList();
+    void RefreshSpectrumParameters();
 private:
     ConfigContainer* conf;
     AppConfigWrapper* m_appwrapper;
@@ -99,6 +104,8 @@ private:
     QAction *disableAction;
     QMenu *presetMenu;
 
+    QAction *spectrum;
+
     OverlayMsgProxy *msg_notrunning;
     OverlayMsgProxy *msg_launchfail;
     OverlayMsgProxy *msg_versionmismatch;
@@ -108,6 +115,10 @@ private:
     PresetDlg *preset_dlg;
     LogDlg *log_dlg;
 
+    QScopedPointer<QHBoxLayout> analysisLayout;
+    Spectrograph* m_spectrograph;
+    AudioStreamEngine* m_audioengine;
+
     bool m_irsNeedUpdate = false;
     bool settingsdlg_enabled=true;
     bool presetdlg_enabled=true;
@@ -115,6 +126,8 @@ private:
     bool lockapply = false;
     QString activeirs = "";
 
+    void InitializeSpectrum();
+    void ToggleSpectrum(bool on,bool ctrl_visibility);
     void createTrayIcon();
     void UpdateTooltipLabelUnit(QObject* sender,QString text,bool);
     void LoadConfig();

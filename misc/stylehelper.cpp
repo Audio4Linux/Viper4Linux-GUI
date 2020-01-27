@@ -20,10 +20,7 @@ void StyleHelper::SetStyle(){
     if(theme_mode==0){
         QApplication::setPalette(qApp->style()->standardPalette());
         QString stylepath = "";
-        if(style_sheet=="dark_orange")stylepath = ":darkorange/darkorange.qss";
-        else if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
-        else if (style_sheet=="breeze_light")stylepath = ":/lightbreeze/lightbreeze/lightbreeze.qss";
-        else if (style_sheet=="breeze_dark")stylepath = ":/darkbreeze/darkbreeze/darkbreeze.qss";
+        if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
         else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
         else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
         else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
@@ -39,7 +36,7 @@ void StyleHelper::SetStyle(){
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
             qApp->setStyleSheet(ts.readAll());
-            if(style_sheet=="amoled" || style_sheet=="console" || style_sheet=="materialdark" || style_sheet=="breeze_dark" || style_sheet=="vsdark"){
+            if(style_sheet=="amoled" || style_sheet=="materialdark" || style_sheet=="vsdark"){
                 QPixmap pix(":/icons/settings-white.svg");
                 QIcon icon(pix);
                 QPixmap pix2(":/icons/queue-white.svg");
@@ -135,6 +132,14 @@ void StyleHelper::SetStyle(){
             QColor foreground = QColor(197,209,217);
             QColor base = QColor(30,30,30);
             QColor selection = QColor(21,67,58);
+            setPalette(base,background,foreground,selection,Qt::black);
+        }
+        else if(color_palette=="green"){
+            loadIcons(true);
+            QColor background = QColor(0,12,0);
+            QColor foreground = Qt::white;
+            QColor base = QColor(6,29,12);
+            QColor selection = QColor(86,191,121);
             setPalette(base,background,foreground,selection,Qt::black);
         }
         else if(color_palette=="custom"){

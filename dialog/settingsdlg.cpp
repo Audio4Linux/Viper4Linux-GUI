@@ -1,6 +1,7 @@
 #include "settingsdlg.h"
 #include "ui_settings.h"
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "palettedlg.h"
 #include "misc/autostartmanager.h"
 
@@ -55,9 +56,21 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
 
     ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
+    ui->stackedWidget->setCurrentIndex(0);
     connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem* prev){
-        ui->stackedWidget->setCurrentIndex(ui->selector->indexOfTopLevelItem(cur));
+        int toplevel_index = ui->selector->indexOfTopLevelItem(cur);
+        switch(toplevel_index){
+            case -1:
+            if(cur->text(0) == "Design")
+                ui->stackedWidget->setCurrentIndex(5);
+            if(cur->text(0) == "Advanced")
+                ui->stackedWidget->setCurrentIndex(6);
+            break;
+        default:
+            ui->stackedWidget->setCurrentIndex(toplevel_index);
+        }
     });
+    ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
 
     connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
         if(lockslot)return;
@@ -99,9 +112,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
     ui->styleSelect->addItem("Blue","blue");
-    ui->styleSelect->addItem("Breeze Light","breeze_light");
-    ui->styleSelect->addItem("Breeze Dark","breeze_dark");
-    ui->styleSelect->addItem("Gray","dark_orange");
     ui->styleSelect->addItem("MacOS","aqua");
     ui->styleSelect->addItem("Material Dark","materialdark");
     ui->styleSelect->addItem("Ubuntu","ubuntu");
@@ -116,10 +126,24 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->paletteSelect->addItem("Dark Green","darkgreen");
     ui->paletteSelect->addItem("Honeycomb","honeycomb");
     ui->paletteSelect->addItem("Gray","gray");
+    ui->paletteSelect->addItem("Green","green");
     ui->paletteSelect->addItem("Silver","silver");
     ui->paletteSelect->addItem("Solarized","solarized");
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
+
+    for ( const auto& dev: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
+        ui->sa_input->addItem(dev.deviceName());
+
+    QString qvSA(appconf->getSpectrumInput());
+    int indexSA = ui->sa_input->findText(qvSA);
+    if ( indexSA != -1 ) {
+        ui->sa_input->setCurrentIndex(indexSA);
+    }else{
+        int index_fallback = ui->themeSelect->findText("default");
+        if ( index_fallback != -1 )
+            ui->sa_input->setCurrentIndex(index_fallback);
+    }
 
     for ( const auto& i : QStyleFactory::keys() )
         ui->themeSelect->addItem(i);
@@ -168,6 +192,82 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
 
+    int bands = appconf->getSpectrumBands();
+    int minfreq = appconf->getSpectrumMinFreq();
+    int maxfreq = appconf->getSpectrumMaxFreq();
+    int refresh = appconf->getSpectrumRefresh();
+    float multiplier = appconf->getSpectrumMultiplier();
+    //Set default values if undefined
+    if(bands == 0) bands = 50;
+    if(maxfreq == 0) maxfreq = 1000;
+    if(refresh == 0) refresh = 20;
+    if(multiplier == 0) multiplier = 0.15;
+
+    //Check boundaries
+    if(bands < 5 ) bands = 5;
+    else if(bands > 300) bands = 300;
+    if(minfreq < 0) minfreq = 0;
+    else if(minfreq > 10000) minfreq = 10000;
+    if(maxfreq < 100) maxfreq = 100;
+    else if(maxfreq > 24000) maxfreq = 24000;
+    if(refresh < 10) refresh = 10;
+    else if(refresh > 500) refresh = 500;
+    if(multiplier < 0.01) multiplier = 0.01;
+    else if(multiplier > 1) multiplier = 1;
+
+    if(maxfreq < minfreq) maxfreq = minfreq + 100;
+    ui->sa_enable->setChecked(appconf->getSpetrumEnable());
+    ui->sa_bands->setValue(bands);
+    ui->sa_minfreq->setValue(minfreq);
+    ui->sa_maxfreq->setValue(maxfreq);
+    ui->sa_grid->setChecked(appconf->getSpetrumGrid());
+    ui->sa_refresh->setValue(refresh);
+    ui->sa_multi->setValue(multiplier);
+
+    ui->sa_theme_default->setChecked(!appconf->getSpectrumTheme());
+    ui->sa_theme_inherit->setChecked(appconf->getSpectrumTheme());
+
+    connect(ui->sa_bands,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumBands(number);
+    });
+    connect(ui->sa_minfreq,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumMinFreq(number);
+    });
+    connect(ui->sa_maxfreq,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumMaxFreq(number);
+    });
+    connect(ui->sa_refresh,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumRefresh(number);
+    });
+    connect(ui->sa_multi,static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),this,[this](double number){
+        appconf->setSpectrumMultiplier(number);
+    });
+    connect(ui->sa_enable,&QGroupBox::clicked,this,[this,mainwin](){
+        appconf->setSpectrumEnable(ui->sa_enable->isChecked());
+        emit closeClicked();
+        mainwin->ui->set->click();
+    });
+    connect(ui->sa_grid,&QCheckBox::clicked,this,[this](){
+        appconf->setSpectrumGrid(ui->sa_grid->isChecked());
+    });
+    connect(ui->sa_theme_default,&QRadioButton::clicked,this,[this](){
+        int mode = 0;
+        if(ui->sa_theme_default->isChecked())mode=0;
+        else if(ui->sa_theme_inherit->isChecked())mode=1;
+        appconf->setSpectrumTheme(mode);
+    });
+    connect(ui->sa_theme_inherit,&QRadioButton::clicked,this,[this](){
+        int mode = 0;
+        if(ui->sa_theme_default->isChecked())mode=0;
+        else if(ui->sa_theme_inherit->isChecked())mode=1;
+        appconf->setSpectrumTheme(mode);
+    });
+    connect(ui->sa_input,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, [this](const QString& str){
+        if(lockslot)return;
+        appconf->setSpectrumInput(str);
+    });
+
+
 #ifndef QT_NO_SYSTEMTRAYICON
     ui->systray_unsupported->hide();
 #else
@@ -183,6 +283,23 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
 }
 SettingsDlg::~SettingsDlg(){
     delete ui;
+}
+void SettingsDlg::updateInputSinks(){
+    lockslot = true;
+    ui->sa_input->clear();
+    for ( const auto& dev: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
+        ui->sa_input->addItem(dev.deviceName());
+
+    QString qvSA(appconf->getSpectrumInput());
+    int indexSA = ui->sa_input->findText(qvSA);
+    if ( indexSA != -1 ) {
+        ui->sa_input->setCurrentIndex(indexSA);
+    }else{
+        int index_fallback = ui->themeSelect->findText("default");
+        if ( index_fallback != -1 )
+            ui->sa_input->setCurrentIndex(index_fallback);
+    }
+    lockslot = false;
 }
 void SettingsDlg::updateTheme(){
     if(lockslot)return;

@@ -27,8 +27,9 @@ typedef enum class ReloadMethod{
     USE_VIPERSCRIPT
 }ReloadMethod;
 
-class AppConfigWrapper
+class AppConfigWrapper : public QObject
 {
+    Q_OBJECT
 public:
     AppConfigWrapper(StyleHelper* stylehelper);
     void saveAppConfig();
@@ -65,7 +66,28 @@ public:
     void setStylesheet(QString);
     void setTrayMode(int);
     int getTrayMode();
-
+    void setSpectrumEnable(bool b);
+    bool getSpetrumEnable();
+    int getSpectrumBands();
+    void setSpectrumBands(int number);
+    int getSpectrumMinFreq();
+    void setSpectrumMinFreq(int number);
+    int getSpectrumMaxFreq();
+    void setSpectrumMaxFreq(int number);
+    void setSpectrumGrid(bool b);
+    bool getSpetrumGrid();
+    int getSpectrumTheme();
+    void setSpectrumTheme(int number);
+    void setSpectrumInput(QString npath);
+    QString getSpectrumInput();
+    int getSpectrumRefresh();
+    void setSpectrumRefresh(int number);
+    float getSpectrumMultiplier();
+    void setSpectrumMultiplier(float number);
+signals:
+    void spectrumChanged();
+    void spectrumReloadRequired();
+    void styleChanged();
 private:
     ConfigContainer* appconf;
     StyleHelper*     m_stylehelper;

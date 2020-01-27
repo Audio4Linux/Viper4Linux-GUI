@@ -29,6 +29,7 @@ public:
     SettingsDlg(MainWindow* mainwin, QWidget *parent = nullptr);
     Ui::settings *ui;
     ~SettingsDlg();
+    void updateInputSinks();
 private slots:
         void openPalConfig();
         void github();

@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     QCommandLineOption minst(QStringList() << "m" << "allow-multiple-instances", "Allow multiple instances of this app");
     parser.addOption(minst);
     parser.process(a);
+    if(parser.isSet(sviper)) system("viper start");
 
     QApplication::setQuitOnLastWindowClosed( false );
     MainWindow w(QString::fromLocal8Bit(exepath),parser.isSet(tray),parser.isSet(minst));
@@ -38,7 +39,6 @@ int main(int argc, char *argv[])
     w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
     if(!parser.isSet(tray)) w.show();
-    if(parser.isSet(sviper)) system("viper start");
 
     QApplication::setQuitOnLastWindowClosed( true );
     return QApplication::exec();

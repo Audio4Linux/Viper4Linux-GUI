@@ -53,6 +53,7 @@ QString AppConfigWrapper::getPath(){
 void AppConfigWrapper::setStylesheet(QString s){
     appconf->setValue("theme.stylesheet",QVariant(s));
     m_stylehelper->SetStyle();
+    emit styleChanged();
     saveAppConfig();
 }
 QString AppConfigWrapper::getStylesheet(){
@@ -64,11 +65,13 @@ int AppConfigWrapper::getThememode(){
 void AppConfigWrapper::setThememode(int mode){
     appconf->setValue("theme.mode",QVariant(mode));
     m_stylehelper->SetStyle();
+    emit styleChanged();
     saveAppConfig();
 }
 void AppConfigWrapper::setColorpalette(QString s){
     appconf->setValue("theme.palette",QVariant(s));
     m_stylehelper->SetStyle();
+    emit styleChanged();
     saveAppConfig();
 }
 QString AppConfigWrapper::getColorpalette(){
@@ -77,6 +80,7 @@ QString AppConfigWrapper::getColorpalette(){
 void AppConfigWrapper::setCustompalette(QString s){
     appconf->setValue("theme.palette.custom",QVariant(s));
     m_stylehelper->SetStyle();
+    emit styleChanged();
     saveAppConfig();
 }
 QString AppConfigWrapper::getCustompalette(){
@@ -85,6 +89,7 @@ QString AppConfigWrapper::getCustompalette(){
 void AppConfigWrapper::setWhiteIcons(bool b){
     appconf->setValue("theme.icons.white",QVariant(b));
     m_stylehelper->SetStyle();
+    emit styleChanged();
     saveAppConfig();
 }
 bool AppConfigWrapper::getWhiteIcons(){
@@ -118,6 +123,7 @@ void AppConfigWrapper::setConv_DefTab(int mode){
 void AppConfigWrapper::setTheme(QString thm){
     appconf->setValue("theme.name",QVariant(thm));
     m_stylehelper->SetStyle();
+    emit styleChanged();
     saveAppConfig();
 }
 QString AppConfigWrapper::getTheme(){
@@ -136,7 +142,81 @@ void AppConfigWrapper::setTrayMode(int mode){
     appconf->setValue("session.tray.mode",QVariant(mode));
     saveAppConfig();
 }
-
+void AppConfigWrapper::setSpectrumEnable(bool b){
+    appconf->setValue("visualizer.spectrum.enable",QVariant(b));
+    emit spectrumChanged();
+    saveAppConfig();
+}
+bool AppConfigWrapper::getSpetrumEnable(){
+    return appconf->getBool("visualizer.spectrum.enable");
+}
+int AppConfigWrapper::getSpectrumBands(){
+    return appconf->getInt("visualizer.spectrum.bands");
+}
+void AppConfigWrapper::setSpectrumBands(int number){
+    appconf->setValue("visualizer.spectrum.bands",QVariant(number));
+    emit spectrumChanged();
+    saveAppConfig();
+}
+int AppConfigWrapper::getSpectrumMinFreq(){
+    return appconf->getInt("visualizer.spectrum.frequency.min");
+}
+void AppConfigWrapper::setSpectrumMinFreq(int number){
+    appconf->setValue("visualizer.spectrum.frequency.min",QVariant(number));
+    emit spectrumChanged();
+    saveAppConfig();
+}
+int AppConfigWrapper::getSpectrumMaxFreq(){
+    return appconf->getInt("visualizer.spectrum.frequency.max");
+}
+void AppConfigWrapper::setSpectrumMaxFreq(int number){
+    appconf->setValue("visualizer.spectrum.frequency.max",QVariant(number));
+    emit spectrumChanged();
+    saveAppConfig();
+}
+void AppConfigWrapper::setSpectrumGrid(bool b){
+    appconf->setValue("visualizer.spectrum.grid",QVariant(b));
+    emit spectrumChanged();
+    saveAppConfig();
+}
+bool AppConfigWrapper::getSpetrumGrid(){
+    return appconf->getBool("visualizer.spectrum.grid");
+}
+int AppConfigWrapper::getSpectrumTheme(){
+    return appconf->getInt("visualizer.spectrum.theme");
+}
+void AppConfigWrapper::setSpectrumTheme(int number){
+    appconf->setValue("visualizer.spectrum.theme",QVariant(number));
+    emit spectrumChanged();
+    saveAppConfig();
+}
+void AppConfigWrapper::setSpectrumInput(QString npath){
+    appconf->setValue("visualizer.spectrum.device",QVariant(npath));
+    emit spectrumReloadRequired();
+    saveAppConfig();
+}
+QString AppConfigWrapper::getSpectrumInput(){
+    QString in = appconf->getString("visualizer.spectrum.device",false);
+    if(in.length() < 1)
+        return QString("viper.monitor");
+    return in;
+}
+int AppConfigWrapper::getSpectrumRefresh(){
+    return appconf->getInt("visualizer.spectrum.interval");
+}
+void AppConfigWrapper::setSpectrumRefresh(int number){
+    appconf->setValue("visualizer.spectrum.interval",QVariant(number));
+    emit spectrumReloadRequired();
+    saveAppConfig();
+}
+float AppConfigWrapper::getSpectrumMultiplier(){
+    return appconf->getFloat("visualizer.spectrum.multiplier");
+}
+void AppConfigWrapper::setSpectrumMultiplier(float number){
+    appconf->setValue("visualizer.spectrum.multiplier",QVariant(number));
+    emit spectrumChanged();
+    saveAppConfig();
+}
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){
     return QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath());

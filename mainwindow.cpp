@@ -27,6 +27,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    bool aboutToQuit = false;
+
     m_exepath = exepath;
     m_startupInTraySwitch = statupInTray;
 
@@ -36,6 +38,21 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     msg_notrunning = new OverlayMsgProxy(this);
     msg_launchfail = new OverlayMsgProxy(this);
     msg_versionmismatch = new OverlayMsgProxy(this);
+
+    disableAction = new QAction();
+    conf = new ConfigContainer();
+    m_stylehelper = new StyleHelper(this);
+    m_appwrapper = new AppConfigWrapper(m_stylehelper);
+    m_dbus = new DBusProxy();
+
+    m_appwrapper->loadAppConfig();
+    conf->setConfigMap(readConfig());
+    LoadConfig();
+
+    conv_dlg = new ConvolverDlg(this,this);
+    settings_dlg = new SettingsDlg(this,this);
+    preset_dlg = new PresetDlg(this);
+    log_dlg = new LogDlg(this);
 
     //This section checks if another instance is already running and switches to it.
     new GuiAdaptor(this);
@@ -58,6 +75,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
                     LogHelper::writeLog("Critical: Other DBus instance returned invalid or error message. Continuing anyway...");
                 }
                 else{
+                    aboutToQuit = true;
                     LogHelper::writeLog("Success! Waiting for event loop to exit...");
                     QTimer::singleShot(0, qApp, &QCoreApplication::quit);
                 }
@@ -65,26 +83,18 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         }
     }
 
-    disableAction = new QAction();
-    conf = new ConfigContainer();
-    m_stylehelper = new StyleHelper(this);
-    m_appwrapper = new AppConfigWrapper(m_stylehelper);
-    m_dbus = new DBusProxy();
-
-    m_appwrapper->loadAppConfig();
-    conf->setConfigMap(readConfig());
-    LoadConfig();
-
-    conv_dlg = new ConvolverDlg(this,this);
-    settings_dlg = new SettingsDlg(this,this);
-    preset_dlg = new PresetDlg(this);
-    log_dlg = new LogDlg(this);
-
     createTrayIcon();
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
 
+    //Cancel constructor if quitting soon
+    if(aboutToQuit) return;
+
     QMenu *menu = new QMenu();
+    spectrum = new QAction("Reload spectrum",this);
+    connect(spectrum,&QAction::triggered,this,&MainWindow::RestartSpectrum);
+
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
+    menu->addAction(spectrum);
     menu->addAction(tr("Driver status"), this,[this](){
         if(!m_dbus->isValid()){
             ShowDBusError();
@@ -101,7 +111,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         connect(sd,&StatusDialog::closePressed,this,[host,this](){
             WAF::Animation::sideSlideOut(host, WAF::BottomSide);
         });
-
         WAF::Animation::sideSlideIn(host, WAF::BottomSide);
     });
     menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
@@ -132,26 +141,135 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         LoadConfig();
     });
 
+    InitializeSpectrum();
+
     //Check if viper is installed and running
-    if(system("which viper") != 0){
+    if(system("which viper") == 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
-                      tr("Unable to find viper executable.\n"
-                         "Please make sure viper is installed and you\n"
-                         "are using the lastest version of gst-plugin-viperfx"),
-                      tr("Continue anyway"));
+                       tr("Unable to find viper executable.\n"
+                          "Please make sure viper is installed and you\n"
+                          "are using the lastest version of gst-plugin-viperfx"),
+                       tr("Continue anyway"));
     }
     else if(!m_dbus->isValid())
         ShowDBusError();
     else
         CheckDBusVersion();
+
+    ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+//Spec trum
+void MainWindow::InitializeSpectrum(){
+    m_spectrograph = new Spectrograph(this);
+    m_audioengine = new AudioStreamEngine(this);
 
+    analysisLayout.reset(new QHBoxLayout());
+    analysisLayout->addWidget(m_spectrograph);
+    m_spectrograph->hide();
+
+    auto buttonbox = ui->centralWidget->layout()->takeAt(ui->centralWidget->layout()->count()-1);
+    ui->centralWidget->layout()->addItem(analysisLayout.data());
+    ui->centralWidget->layout()->addItem(buttonbox);
+    analysisLayout.take();
+
+    connect(m_appwrapper,&AppConfigWrapper::spectrumChanged,this,[this](){
+        ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
+    });
+    connect(m_appwrapper,&AppConfigWrapper::spectrumReloadRequired,this,&MainWindow::RestartSpectrum);
+    connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
+        ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
+    });
+}
+void MainWindow::RestartSpectrum(){
+    ToggleSpectrum(false,false);
+    ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
+}
+void MainWindow::RefreshSpectrumParameters(){
+    int bands = m_appwrapper->getSpectrumBands();
+    int minfreq = m_appwrapper->getSpectrumMinFreq();
+    int maxfreq = m_appwrapper->getSpectrumMaxFreq();
+    int refresh = m_appwrapper->getSpectrumRefresh();
+    float multiplier = m_appwrapper->getSpectrumMultiplier();
+    //Set default values if undefined
+    if(bands == 0) bands = 50;
+    if(maxfreq == 0) maxfreq = 1000;
+    if(refresh == 0) refresh = 20;
+    if(multiplier == 0) multiplier = 0.15;
+
+    //Check boundaries
+    if(bands < 5 ) bands = 5;
+    else if(bands > 300) bands = 300;
+    if(minfreq < 0) minfreq = 0;
+    else if(minfreq > 10000) minfreq = 10000;
+    if(maxfreq < 100) maxfreq = 100;
+    else if(maxfreq > 24000) maxfreq = 24000;
+    if(refresh < 10) refresh = 10;
+    else if(refresh > 500) refresh = 500;
+    if(multiplier < 0.01) multiplier = 0.01;
+    else if(multiplier > 1) multiplier = 1;
+
+    if(maxfreq < minfreq) maxfreq = minfreq + 100;
+
+    if(m_appwrapper->getSpectrumTheme() == 0)
+        m_spectrograph->setTheme(Qt::black,QColor(51,204,201),QColor(255,255,0),m_appwrapper->getSpetrumGrid());
+    else
+        m_spectrograph->setTheme(palette().background().color().lighter(),palette().highlight().color(),palette().text().color(),m_appwrapper->getSpetrumGrid());
+
+    m_spectrograph->setParams(bands, minfreq, maxfreq);
+    m_audioengine->setNotifyIntervalMs(refresh);
+    m_audioengine->setMultiplier(multiplier);
+}
+void MainWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
+    RefreshSpectrumParameters();
+    if(ctrl_visibility)spectrum->setVisible(on);
+    if(on && (!m_spectrograph->isVisible() || !ctrl_visibility)){
+        if(ctrl_visibility){
+            m_spectrograph->show();
+            this->setFixedSize(this->width(),this->height()+m_spectrograph->size().height());
+        }
+
+        QAudioDeviceInfo in;
+        for(auto item : QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
+            if(item.deviceName()==m_appwrapper->getSpectrumInput())
+                in = item;
+
+        LogHelper::writeLog("Spectrum Expected Input Device: "+m_appwrapper->getSpectrumInput());
+        LogHelper::writeLog("Spectrum Found Input Device: "+in.deviceName());
+        LogHelper::writeLog("Spectrum Default Input Device: "+QAudioDeviceInfo::defaultInputDevice().deviceName());
+
+        m_audioengine->setAudioInputDevice(in);
+        m_audioengine->initializeRecord();
+        m_audioengine->startRecording();
+
+        connect(m_audioengine, static_cast<void (AudioStreamEngine::*)(QAudio::Mode,QAudio::State)>(&AudioStreamEngine::stateChanged),
+                this, [this](QAudio::Mode mode,QAudio::State state){
+            Q_UNUSED(mode);
+
+            if (QAudio::ActiveState != state && QAudio::SuspendedState != state) {
+                m_spectrograph->reset();
+            }
+        });
+
+        connect(m_audioengine, static_cast<void (AudioStreamEngine::*)(qint64, qint64, const FrequencySpectrum &)>(&AudioStreamEngine::spectrumChanged),
+                this, [this](qint64 position, qint64 length,const FrequencySpectrum &spectrum){
+            m_spectrograph->spectrumChanged(spectrum);
+        });
+    }
+    else if(!on && (m_spectrograph->isVisible() || !ctrl_visibility)){
+        if(ctrl_visibility){
+            m_spectrograph->hide();
+            this->setFixedSize(this->width(),this->height()-m_spectrograph->size().height());
+        }
+        m_spectrograph->reset();
+        m_audioengine->reset();
+    }
+}
 //Overrides
 void MainWindow::setVisible(bool visible)
 {
@@ -200,8 +318,9 @@ void MainWindow::ShowDBusError(){
                                       tr("Continue anyway"));
         } else {
             //Reconnect DBus
-            QTimer::singleShot(1000,this,[this](){
+            QTimer::singleShot(500,this,[this](){
                 m_dbus = new DBusProxy();
+                RestartSpectrum();
             });
         }
     });
@@ -346,6 +465,7 @@ void MainWindow::DialogHandler(){
         hostLayout->addWidget(settings_dlg);
         host->hide();
         host->setAutoFillBackground(true);
+        settings_dlg->updateInputSinks();
 
         connect(settings_dlg,&SettingsDlg::closeClicked,this,[host](){
             host->update();
@@ -403,6 +523,7 @@ void MainWindow::Restart(){
     system("viper restart");
     if(m_appwrapper->getGFix())system("setsid glava -d >/dev/null 2>&1 &");
     if(m_appwrapper->getMuteOnRestart())system("pactl set-sink-mute 0 0");
+    RestartSpectrum();
 }
 
 //---User preset management
@@ -899,10 +1020,10 @@ QVariantMap MainWindow::readConfig(){
     if(confmap.count() < 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not properly installed"),
-                      tr("Unable to find a configuration file for viper,\n"
-                         "please make sure that viper has been installed correctly.\n"
-                         "If you're sure that your setup is correct, no further actions\n"
-                         "are required. This GUI will automatically generate a configuration."));
+                       tr("Unable to find a configuration file for viper,\n"
+                          "please make sure that viper has been installed correctly.\n"
+                          "If you're sure that your setup is correct, no further actions\n"
+                          "are required. This GUI will automatically generate a configuration."));
     }
     return confmap;
 }

@@ -1,8 +1,5 @@
 <RCC>
-    <qresource prefix="/darkorange">
-        <file alias="darkorange.qss">darkorange/style.qss</file>
-        <file>darkorange/rc/indicator.png</file>
-    </qresource>
+    <qresource prefix="/darkorange"/>
     <qresource prefix="/darkblue">
         <file>darkblue/darkblue.qss</file>
         <file>darkblue/rc/branch_closed-on.png</file>
@@ -61,97 +58,8 @@
         <file>darkblue/rc/Vmovetoolbar.png</file>
         <file>darkblue/rc/Vsepartoolbar.png</file>
     </qresource>
-    <qresource prefix="/lightbreeze">
-        <file>lightbreeze/rc/branch_closed-on.svg</file>
-        <file>lightbreeze/rc/branch_closed.svg</file>
-        <file>lightbreeze/rc/branch_open-on.svg</file>
-        <file>lightbreeze/rc/branch_open.svg</file>
-        <file>lightbreeze/rc/checkbox_checked_disabled.svg</file>
-        <file>lightbreeze/rc/checkbox_checked-hover.svg</file>
-        <file>lightbreeze/rc/checkbox_checked.svg</file>
-        <file>lightbreeze/rc/checkbox_indeterminate_disabled.svg</file>
-        <file>lightbreeze/rc/checkbox_indeterminate-hover.svg</file>
-        <file>lightbreeze/rc/checkbox_indeterminate.svg</file>
-        <file>lightbreeze/rc/checkbox_unchecked_disabled.svg</file>
-        <file>lightbreeze/rc/checkbox_unchecked-hover.svg</file>
-        <file>lightbreeze/rc/close-hover.svg</file>
-        <file>lightbreeze/rc/close-pressed.svg</file>
-        <file>lightbreeze/rc/close.svg</file>
-        <file>lightbreeze/rc/down_arrow_disabled.svg</file>
-        <file>lightbreeze/rc/down_arrow-hover.svg</file>
-        <file>lightbreeze/rc/down_arrow.svg</file>
-        <file>lightbreeze/rc/hmovetoolbar.svg</file>
-        <file>lightbreeze/rc/hsepartoolbar.svg</file>
-        <file>lightbreeze/rc/left_arrow_disabled.svg</file>
-        <file>lightbreeze/rc/left_arrow.svg</file>
-        <file>lightbreeze/rc/radio_checked_disabled.svg</file>
-        <file>lightbreeze/rc/radio_checked-hover.svg</file>
-        <file>lightbreeze/rc/radio_checked.svg</file>
-        <file>lightbreeze/rc/radio_unchecked_disabled.svg</file>
-        <file>lightbreeze/rc/radio_unchecked-hover.svg</file>
-        <file>lightbreeze/rc/right_arrow_disabled.svg</file>
-        <file>lightbreeze/rc/right_arrow.svg</file>
-        <file>lightbreeze/rc/sizegrip.svg</file>
-        <file>lightbreeze/rc/spinup_disabled.svg</file>
-        <file>lightbreeze/rc/stylesheet-branch-end-closed.svg</file>
-        <file>lightbreeze/rc/stylesheet-branch-end-open.svg</file>
-        <file>lightbreeze/rc/stylesheet-branch-end.svg</file>
-        <file>lightbreeze/rc/stylesheet-branch-more.svg</file>
-        <file>lightbreeze/rc/stylesheet-vline.svg</file>
-        <file>lightbreeze/rc/transparent.svg</file>
-        <file>lightbreeze/rc/undock-hover.svg</file>
-        <file>lightbreeze/rc/undock.svg</file>
-        <file>lightbreeze/rc/up_arrow_disabled.svg</file>
-        <file>lightbreeze/rc/up_arrow-hover.svg</file>
-        <file>lightbreeze/rc/up_arrow.svg</file>
-        <file>lightbreeze/rc/vmovetoolbar.svg</file>
-        <file>lightbreeze/rc/vsepartoolbars.svg</file>
-        <file>lightbreeze/lightbreeze.qss</file>
-    </qresource>
-    <qresource prefix="/darkbreeze">
-        <file>darkbreeze/rc/branch_closed-on.svg</file>
-        <file>darkbreeze/rc/branch_closed.svg</file>
-        <file>darkbreeze/rc/branch_open-on.svg</file>
-        <file>darkbreeze/rc/branch_open.svg</file>
-        <file>darkbreeze/rc/checkbox_checked_disabled.svg</file>
-        <file>darkbreeze/rc/checkbox_checked.svg</file>
-        <file>darkbreeze/rc/checkbox_indeterminate_disabled.svg</file>
-        <file>darkbreeze/rc/checkbox_indeterminate.svg</file>
-        <file>darkbreeze/rc/checkbox_unchecked_disabled.svg</file>
-        <file>darkbreeze/rc/checkbox_unchecked.svg</file>
-        <file>darkbreeze/rc/close-hover.svg</file>
-        <file>darkbreeze/rc/close-pressed.svg</file>
-        <file>darkbreeze/rc/close.svg</file>
-        <file>darkbreeze/rc/down_arrow_disabled.svg</file>
-        <file>darkbreeze/rc/down_arrow-hover.svg</file>
-        <file>darkbreeze/rc/down_arrow.svg</file>
-        <file>darkbreeze/rc/hmovetoolbar.svg</file>
-        <file>darkbreeze/rc/hsepartoolbar.svg</file>
-        <file>darkbreeze/rc/left_arrow_disabled.svg</file>
-        <file>darkbreeze/rc/left_arrow.svg</file>
-        <file>darkbreeze/rc/radio_checked_disabled.svg</file>
-        <file>darkbreeze/rc/radio_checked.svg</file>
-        <file>darkbreeze/rc/radio_unchecked_disabled.svg</file>
-        <file>darkbreeze/rc/radio_unchecked.svg</file>
-        <file>darkbreeze/rc/right_arrow_disabled.svg</file>
-        <file>darkbreeze/rc/right_arrow.svg</file>
-        <file>darkbreeze/rc/sizegrip.svg</file>
-        <file>darkbreeze/rc/spinup_disabled.svg</file>
-        <file>darkbreeze/rc/stylesheet-branch-end-closed.svg</file>
-        <file>darkbreeze/rc/stylesheet-branch-end-open.svg</file>
-        <file>darkbreeze/rc/stylesheet-branch-end.svg</file>
-        <file>darkbreeze/rc/stylesheet-branch-more.svg</file>
-        <file>darkbreeze/rc/stylesheet-vline.svg</file>
-        <file>darkbreeze/rc/transparent.svg</file>
-        <file>darkbreeze/rc/undock-hover.svg</file>
-        <file>darkbreeze/rc/undock.svg</file>
-        <file>darkbreeze/rc/up_arrow_disabled.svg</file>
-        <file>darkbreeze/rc/up_arrow-hover.svg</file>
-        <file>darkbreeze/rc/up_arrow.svg</file>
-        <file>darkbreeze/rc/vmovetoolbar.svg</file>
-        <file>darkbreeze/rc/vsepartoolbars.svg</file>
-        <file>darkbreeze/darkbreeze.qss</file>
-    </qresource>
+    <qresource prefix="/lightbreeze"/>
+    <qresource prefix="/darkbreeze"/>
     <qresource prefix="/amoled">
         <file>amoled/amoled.qss</file>
     </qresource>
