@@ -158,13 +158,36 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         ui->eq_widget->setAlwaysDrawHandles(m_appwrapper->getEqualizerPermanentHandles());
     });
 
-    //Check if viper is installed and running
-    if(system("which viper") == 1){
+    //Check if viper is correctly installed and running
+    QFile pidfile("/tmp/viper4linux/pid.tmp");
+    QString pid;
+    if (pidfile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream stream(&pidfile);
+        if (!stream.atEnd())
+            pid = stream.readLine();
+    }
+    pidfile.close();
+
+    if(system("which viper > /dev/null 2>&1") == 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
                        tr("Unable to find viper executable.\n"
                           "Please make sure viper is installed and you\n"
                           "are using the lastest version of gst-plugin-viperfx"),
+                       tr("Continue anyway"));
+    }
+    else if(pidfile.exists() && !m_dbus->isValid() &&
+            system("kill -0 $(cat /tmp/viper4linux/pid.tmp) > /dev/null")==1){
+        OverlayMsgProxy *msg = new OverlayMsgProxy(this);
+        msg->openError(tr("Unsupported version"),
+                       tr("Looks like you are using an older version of\n"
+                          "gst-plugin-viperfx. Viper appears to be running\n"
+                          "but no DBus interface has been found, so either the\n"
+                          "DBus server was unable to launch and to acquire a busname\n"
+                          "or you're trying to use Viper4Linux-Legacy with the GUI\n"
+                          "for Viper4Linux2. Keep in mind that there is a separate GUI\n"
+                          "for the legacy version of Viper4Linux!\n"
+                          ""),
                        tr("Continue anyway"));
     }
     else if(!m_dbus->isValid())
@@ -768,16 +791,16 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("fetcomp_meta_maxrelease",QVariant(ui->a_maxrel->value()));
     conf->setValue("fetcomp_meta_kneemulti",QVariant(ui->a_kneewidth->value()));
     conf->setValue("eq_enable",QVariant(ui->enable_eq->isChecked()));
-    conf->setValue("eq_band1",QVariant(ui->eq_widget->getBand(0)*100));
-    conf->setValue("eq_band2",QVariant(ui->eq_widget->getBand(1)*100));
-    conf->setValue("eq_band3",QVariant(ui->eq_widget->getBand(2)*100));
-    conf->setValue("eq_band4",QVariant(ui->eq_widget->getBand(3)*100));
-    conf->setValue("eq_band5",QVariant(ui->eq_widget->getBand(4)*100));
-    conf->setValue("eq_band6",QVariant(ui->eq_widget->getBand(5)*100));
-    conf->setValue("eq_band7",QVariant(ui->eq_widget->getBand(6)*100));
-    conf->setValue("eq_band8",QVariant(ui->eq_widget->getBand(7)*100));
-    conf->setValue("eq_band9",QVariant(ui->eq_widget->getBand(8)*100));
-    conf->setValue("eq_band10",QVariant(ui->eq_widget->getBand(9)*100));
+    conf->setValue("eq_band1",QVariant(int(ui->eq_widget->getBand(0)*100)));
+    conf->setValue("eq_band2",QVariant(int(ui->eq_widget->getBand(1)*100)));
+    conf->setValue("eq_band3",QVariant(int(ui->eq_widget->getBand(2)*100)));
+    conf->setValue("eq_band4",QVariant(int(ui->eq_widget->getBand(3)*100)));
+    conf->setValue("eq_band5",QVariant(int(ui->eq_widget->getBand(4)*100)));
+    conf->setValue("eq_band6",QVariant(int(ui->eq_widget->getBand(5)*100)));
+    conf->setValue("eq_band7",QVariant(int(ui->eq_widget->getBand(6)*100)));
+    conf->setValue("eq_band8",QVariant(int(ui->eq_widget->getBand(7)*100)));
+    conf->setValue("eq_band9",QVariant(int(ui->eq_widget->getBand(8)*100)));
+    conf->setValue("eq_band10",QVariant(int(ui->eq_widget->getBand(9)*100)));
 
     ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
 
