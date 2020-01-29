@@ -84,10 +84,13 @@ public:
     void setSpectrumRefresh(int number);
     float getSpectrumMultiplier();
     void setSpectrumMultiplier(float number);
+    void setEqualizerPermanentHandles(bool b);
+    bool getEqualizerPermanentHandles();
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();
     void styleChanged();
+    void eqChanged();
 private:
     ConfigContainer* appconf;
     StyleHelper*     m_stylehelper;

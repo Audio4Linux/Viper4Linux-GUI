@@ -217,6 +217,14 @@ void AppConfigWrapper::setSpectrumMultiplier(float number){
     emit spectrumChanged();
     saveAppConfig();
 }
+void AppConfigWrapper::setEqualizerPermanentHandles(bool b){
+    appconf->setValue("equalizer.handle.permanent",QVariant(b));
+    emit eqChanged();
+    saveAppConfig();
+}
+bool AppConfigWrapper::getEqualizerPermanentHandles(){
+    return appconf->getBool("equalizer.handle.permanent");
+}
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){
     return QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath());

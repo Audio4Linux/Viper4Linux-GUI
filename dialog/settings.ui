@@ -97,7 +97,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>5</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -577,6 +577,22 @@
             </widget>
            </item>
           </layout>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_6">
+           <property name="title">
+            <string>Equalizer</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_15">
+            <item>
+             <widget class="QCheckBox" name="eq_alwaysdrawhandles">
+              <property name="text">
+               <string>Always display handles</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
           <spacer name="verticalSpacer_2">

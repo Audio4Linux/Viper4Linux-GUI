@@ -23,7 +23,6 @@ void StyleHelper::SetStyle(){
         if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
         else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
         else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
-        else if (style_sheet=="materialdark")stylepath = ":/materialdark/materialdark/materialdark.qss";
         else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
         else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
         else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
@@ -36,7 +35,7 @@ void StyleHelper::SetStyle(){
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
             qApp->setStyleSheet(ts.readAll());
-            if(style_sheet=="amoled" || style_sheet=="materialdark" || style_sheet=="vsdark"){
+            if(style_sheet=="amoled" || style_sheet=="vsdark"){
                 QPixmap pix(":/icons/settings-white.svg");
                 QIcon icon(pix);
                 QPixmap pix2(":/icons/queue-white.svg");
@@ -109,21 +108,6 @@ void StyleHelper::SetStyle(){
             QColor foreground = QColor(222,222,222);
             QColor base = Qt::black;
             QColor selection = QColor(132,132,132);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="solarized"){
-            loadIcons(true);
-            QColor background = QColor(15,30,49);
-            QColor foreground = QColor(154,174,180);
-            QColor base = Qt::black;
-            QColor selection = QColor(3,50,63);
-            setPalette(base,background,foreground,selection,Qt::black);
-        }
-        else if(color_palette=="silver"){
-            QColor background = QColor(176,180,196);
-            QColor foreground = QColor(20,20,20);
-            QColor base = QColor(176,180,196);
-            QColor selection = Qt::white;
             setPalette(base,background,foreground,selection,Qt::black);
         }
         else if(color_palette=="darkgreen"){

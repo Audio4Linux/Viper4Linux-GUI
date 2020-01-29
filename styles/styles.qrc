@@ -66,9 +66,7 @@
     <qresource prefix="/aqua">
         <file>aqua/aqua.qss</file>
     </qresource>
-    <qresource prefix="/materialdark">
-        <file>materialdark/materialdark.qss</file>
-    </qresource>
+    <qresource prefix="/materialdark"/>
     <qresource prefix="/ubuntu">
         <file>ubuntu/ubuntu.qss</file>
     </qresource>

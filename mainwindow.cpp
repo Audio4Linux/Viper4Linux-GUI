@@ -5,6 +5,8 @@
 #include "dbus/serveradaptor.h"
 #include "dbus/clientproxy.h"
 #include "misc/versioncontainer.h"
+#include "dialog/liquidequalizerwidget.h"
+#include "misc/eventfilter.h"
 
 #include <Animation/Animation.h>
 #include <StackedWidgetAnimation/StackedWidgetAnimation.h>
@@ -12,7 +14,6 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QClipboard>
 #include <QWhatsThis>
 #include <QDebug>
 #include <cmath>
@@ -131,6 +132,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     menuC->addAction(tr("Extreme"), this,[this](){ ui->colmpreset->setText(tr("Extreme")); ColmPresetSelectionUpdated();});
     ui->colmpreset->setMenu(menuC);
     m_stylehelper->SetStyle();
+    ui->eq_widget->setAccentColor(palette().highlight().color());
+
     ConnectActions();
 
     if(m_appwrapper->getTrayMode() || m_startupInTraySwitch) trayIcon->show();
@@ -141,7 +144,19 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         LoadConfig();
     });
 
+    //Disable keyboard events to avoid fast item changes
+    ui->eqpreset->installEventFilter(new KeyboardFilter());
+
     InitializeSpectrum();
+    connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
+        ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
+        ui->eq_widget->setAccentColor(palette().highlight().color());
+    });
+
+    ui->eq_widget->setAlwaysDrawHandles(m_appwrapper->getEqualizerPermanentHandles());
+    connect(m_appwrapper,&AppConfigWrapper::eqChanged,this,[this](){
+        ui->eq_widget->setAlwaysDrawHandles(m_appwrapper->getEqualizerPermanentHandles());
+    });
 
     //Check if viper is installed and running
     if(system("which viper") == 1){
@@ -182,10 +197,8 @@ void MainWindow::InitializeSpectrum(){
         ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
     });
     connect(m_appwrapper,&AppConfigWrapper::spectrumReloadRequired,this,&MainWindow::RestartSpectrum);
-    connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
-        ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
-    });
 }
+
 void MainWindow::RestartSpectrum(){
     ToggleSpectrum(false,false);
     ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
@@ -614,16 +627,6 @@ void MainWindow::LoadConfig(){
     ui->outputpan->setValue(conf->getInt("out_pan"));
     ui->outvolume->setValue(conf->getInt("out_volume"));
     ui->enable_eq->setChecked(conf->getBool("eq_enable"));
-    ui->eq1->setValue(conf->getInt("eq_band1"));
-    ui->eq2->setValue(conf->getInt("eq_band2"));
-    ui->eq3->setValue(conf->getInt("eq_band3"));
-    ui->eq4->setValue(conf->getInt("eq_band4"));
-    ui->eq5->setValue(conf->getInt("eq_band5"));
-    ui->eq6->setValue(conf->getInt("eq_band6"));
-    ui->eq7->setValue(conf->getInt("eq_band7"));
-    ui->eq8->setValue(conf->getInt("eq_band8"));
-    ui->eq9->setValue(conf->getInt("eq_band9"));
-    ui->eq10->setValue(conf->getInt("eq_band10"));
     ui->enable_comp->setChecked(conf->getBool("fetcomp_enable"));
     ui->m_gain->setChecked(conf->getBool("fetcomp_autogain"));
     ui->m_width->setChecked(conf->getBool("fetcomp_autoknee"));
@@ -658,6 +661,32 @@ void MainWindow::LoadConfig(){
     ui->dyn_sidegain1->setValue(conf->getInt("dynsys_sidegain1"));
     ui->dyn_sidegain2->setValue(conf->getInt("dynsys_sidegain1"));
     ui->dyn_bassgain->setValue(conf->getInt("dynsys_bassgain"));
+
+    int eq1 = conf->getInt("eq_band1");
+    int eq2 = conf->getInt("eq_band2");
+    int eq3 = conf->getInt("eq_band3");
+    int eq4 = conf->getInt("eq_band4");
+    int eq5 = conf->getInt("eq_band5");
+    int eq6 = conf->getInt("eq_band6");
+    int eq7 = conf->getInt("eq_band7");
+    int eq8 = conf->getInt("eq_band8");
+    int eq9 = conf->getInt("eq_band9");
+    int eq10 = conf->getInt("eq_band10");
+    auto eq_data = QVector<float>(std::initializer_list<float>({eq1/100.0f,eq2/100.0f,
+                                                                eq3/100.0f,eq4/100.0f,
+                                                                eq5/100.0f,eq6/100.0f,
+                                                                eq7/100.0f,eq8/100.0f,
+                                                                eq9/100.0f,eq10/100.0f}));
+    int it = 0;
+    bool eqReloadRequired = false;
+    for(auto cur_data : ui->eq_widget->getBands()){
+        bool equal = isApproximatelyEqual<float>(cur_data,eq_data.at(it));
+        if(eqReloadRequired == false)
+            eqReloadRequired = !equal;
+        it++;
+    }
+    if(eqReloadRequired)
+        ui->eq_widget->setBands(eq_data);
 
     UpdateAllUnitLabels();
 
@@ -739,16 +768,16 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("fetcomp_meta_maxrelease",QVariant(ui->a_maxrel->value()));
     conf->setValue("fetcomp_meta_kneemulti",QVariant(ui->a_kneewidth->value()));
     conf->setValue("eq_enable",QVariant(ui->enable_eq->isChecked()));
-    conf->setValue("eq_band1",QVariant(ui->eq1->value()));
-    conf->setValue("eq_band2",QVariant(ui->eq2->value()));
-    conf->setValue("eq_band3",QVariant(ui->eq3->value()));
-    conf->setValue("eq_band4",QVariant(ui->eq4->value()));
-    conf->setValue("eq_band5",QVariant(ui->eq5->value()));
-    conf->setValue("eq_band6",QVariant(ui->eq6->value()));
-    conf->setValue("eq_band7",QVariant(ui->eq7->value()));
-    conf->setValue("eq_band8",QVariant(ui->eq8->value()));
-    conf->setValue("eq_band9",QVariant(ui->eq9->value()));
-    conf->setValue("eq_band10",QVariant(ui->eq10->value()));
+    conf->setValue("eq_band1",QVariant(ui->eq_widget->getBand(0)*100));
+    conf->setValue("eq_band2",QVariant(ui->eq_widget->getBand(1)*100));
+    conf->setValue("eq_band3",QVariant(ui->eq_widget->getBand(2)*100));
+    conf->setValue("eq_band4",QVariant(ui->eq_widget->getBand(3)*100));
+    conf->setValue("eq_band5",QVariant(ui->eq_widget->getBand(4)*100));
+    conf->setValue("eq_band6",QVariant(ui->eq_widget->getBand(5)*100));
+    conf->setValue("eq_band7",QVariant(ui->eq_widget->getBand(6)*100));
+    conf->setValue("eq_band8",QVariant(ui->eq_widget->getBand(7)*100));
+    conf->setValue("eq_band9",QVariant(ui->eq_widget->getBand(8)*100));
+    conf->setValue("eq_band10",QVariant(ui->eq_widget->getBand(9)*100));
 
     ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
 
@@ -773,8 +802,8 @@ void MainWindow::ApplyConfig(bool restart){
 
 //---Predefined Presets
 void MainWindow::EqPresetSelectionUpdated(){
-    const int* preset = EQ::lookupEQPreset(ui->eqpreset->currentText());
-    if(preset != nullptr) SetEQ(preset);
+    auto preset = EQ::lookupEQPreset(ui->eqpreset->currentText());
+    if(preset.size() > 0)SetEQ(preset);
     else ResetEQ();
 }
 void MainWindow::DynsysPresetSelectionUpdated(){
@@ -847,8 +876,6 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     }
     //Dynsys
     else if(obj==ui->dyn_bassgain) UpdateTooltipLabelUnit(obj,QString::number( (d-100)/20 ) + "%",alt==nullptr);
-    else if(obj==ui->eq1||obj==ui->eq2||obj==ui->eq3||obj==ui->eq4||obj==ui->eq5||obj==ui->eq6||obj==ui->eq7||obj==ui->eq8||obj==ui->eq9||obj==ui->eq10)
-        ui->info->setText(MathFunctions::buildEqGainString(d));
     //Diff-Surround
     else if(obj==ui->difflvl)UpdateTooltipLabelUnit(obj,QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)",alt==nullptr);
     //AGC
@@ -966,45 +993,19 @@ void MainWindow::UpdateAllUnitLabels(){
 }
 
 //---Helper
-void MainWindow::SetEQ(const int* data){
+void MainWindow::SetEQ(const std::initializer_list<float> data){
     lockapply=true;
-    ui->eq1->setValue(data[0]);
-    ui->eq2->setValue(data[1]);
-    ui->eq3->setValue(data[2]);
-    ui->eq4->setValue(data[3]);
-    ui->eq5->setValue(data[4]);
-    ui->eq6->setValue(data[5]);
-    ui->eq7->setValue(data[6]);
-    ui->eq8->setValue(data[7]);
-    ui->eq9->setValue(data[8]);
-    ui->eq10->setValue(data[9]);
+    ui->eq_widget->setBands(QVector<float>(data));
     lockapply=false;
-    OnUpdate(true);
-}
-void MainWindow::CopyEQ(){
-    QString s = QString("%1,%2,%3,%4,%5,%6,%7,%8,%9,%10").arg(ui->eq1->value()).arg(ui->eq2->value()).arg(ui->eq3->value())
-            .arg(ui->eq4->value()).arg(ui->eq5->value()).arg(ui->eq6->value())
-            .arg(ui->eq7->value()).arg(ui->eq8->value()).arg(ui->eq9->value())
-            .arg(ui->eq10->value());
-    qApp->clipboard()->setText(s);
-}
-void MainWindow::PasteEQ(){
-    QClipboard* a = qApp->clipboard();
-    std::string str = a->text().toUtf8().constData();
-    std::vector<int> vect;
-    std::stringstream ss(str);
-    int i;
-    while (ss >> i)
-    {
-        vect.push_back(i);
-        if (ss.peek() == ',')
-            ss.ignore();
-    }
-    int data[100];
-    std::copy(vect.begin(), vect.end(), data);
-    SetEQ(data);
+    QTimer::singleShot(510,this,[this](){
+        OnUpdate(true);
+    });
 }
 void MainWindow::ResetEQ(){
+    ui->reset_eq->setEnabled(false);
+    QTimer::singleShot(510,this,[this](){
+        ui->reset_eq->setEnabled(true);
+    });
     SetEQ(EQ::defaultEQPreset());
 }
 void MainWindow::SetIRS(const QString& irs,bool apply){
@@ -1035,17 +1036,17 @@ AppConfigWrapper* MainWindow::getACWrapper(){
 }
 
 //---Connect UI-Signals
-void MainWindow::ConnectActions(){
+void MainWindow::ConnectActions(){    
     connect(ui->apply, SIGNAL(clicked()), this, SLOT(ApplyConfig()));
     connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(DisableFX()));
     connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
     connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
     connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(DialogHandler()));
-    connect(ui->copy_eq, SIGNAL(clicked()), this, SLOT(CopyEQ()));
-    connect(ui->paste_eq, SIGNAL(clicked()), this, SLOT(PasteEQ()));
 
     connect(ui->cpreset, SIGNAL(clicked()), this, SLOT(DialogHandler()));
     connect(ui->set, SIGNAL(clicked()), this, SLOT(DialogHandler()));
+
+    connect(ui->eq_widget, SIGNAL(bandsUpdated()),this, SLOT(ApplyConfig()));
 
     connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
     connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
@@ -1086,16 +1087,6 @@ void MainWindow::ConnectActions(){
     connect(ui->a_maxrel, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
     connect(ui->a_kneewidth, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
 
-    connect(ui->eq1, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq2, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq3, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq4, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq5, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq6, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq7, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq8, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq9, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->eq10, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
     connect(ui->eqpreset, SIGNAL(currentIndexChanged(int)),this,SLOT(EqPresetSelectionUpdated()));
 
     connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
@@ -1177,15 +1168,4 @@ void MainWindow::ConnectActions(){
     connect( ui->dyn_bassgain , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect( ui->dyn_sidegain1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
     connect( ui->dyn_sidegain2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-
-    connect(ui->eq1, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq2, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq3, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq4, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq5, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq6, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq7, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq8, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq9, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->eq10, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
 }

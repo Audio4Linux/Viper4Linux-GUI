@@ -57,7 +57,7 @@ public:
     void SavePresetFile(const QString&);
     AppConfigWrapper* getACWrapper();
     explicit MainWindow(QString exepath,bool traySwitch,bool allowMultipleInst,QWidget *parent = nullptr);
-    void SetEQ(const int *data);
+    void SetEQ(const std::initializer_list<float> data);
     void SetIRS(const QString& irs,bool apply);
     QString GetExecutablePath();
     void setVisible(bool visible) override;
@@ -75,8 +75,6 @@ public slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 private slots:
     void DisableFX();
-    void CopyEQ();
-    void PasteEQ();
     void OnUpdate(bool = true);
     void OnRelease();
     void ResetEQ();
@@ -135,6 +133,19 @@ private:
     void ShowDBusError();
     void CheckDBusVersion();
     QVariantMap readConfig();
+
+    template<typename TReal>
+    static bool isApproximatelyEqual(TReal a, TReal b, TReal tolerance = std::numeric_limits<TReal>::epsilon())
+    {
+        TReal diff = std::fabs(a - b);
+        if (diff <= tolerance)
+            return true;
+
+        if (diff < std::fmax(std::fabs(a), std::fabs(b)) * tolerance)
+            return true;
+
+        return false;
+    }
 };
 
 #endif // MAINWINDOW_H

@@ -51,6 +51,7 @@ SOURCES += \
     dbus/serveradaptor.cpp \
     dialog/androidimporterdlg.cpp \
     dialog/convolverdlg.cpp \
+    dialog/liquidequalizerwidget.cpp \
     dialog/logdlg.cpp \
     dialog/palettedlg.cpp \
     dialog/presetdlg.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     misc/autostartmanager.cpp \
+    misc/biquad.cpp \
     misc/converter.cpp \
     misc/loghelper.cpp \
     misc/overlaymsgproxy.cpp \
@@ -94,6 +96,7 @@ HEADERS += \
     dbus/serveradaptor.h \
     dialog/androidimporterdlg.h \
     dialog/convolverdlg.h \
+    dialog/liquidequalizerwidget.h \
     dialog/logdlg.h \
     dialog/palettedlg.h \
     dialog/presetdlg.h \
@@ -102,8 +105,10 @@ HEADERS += \
     dialog/statusfragment.h \
     mainwindow.h \
     misc/autostartmanager.h \
+    misc/biquad.h \
     misc/common.h \
     misc/converter.h \
+    misc/eventfilter.h \
     misc/findbinary.h \
     misc/loghelper.h \
     misc/mathfunctions.h \

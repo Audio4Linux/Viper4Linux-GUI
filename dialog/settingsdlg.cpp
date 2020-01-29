@@ -113,7 +113,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->styleSelect->addItem("Black","amoled");
     ui->styleSelect->addItem("Blue","blue");
     ui->styleSelect->addItem("MacOS","aqua");
-    ui->styleSelect->addItem("Material Dark","materialdark");
     ui->styleSelect->addItem("Ubuntu","ubuntu");
     ui->styleSelect->addItem("Visual Studio Dark","vsdark");
     ui->styleSelect->addItem("Visual Studio Light","vslight");
@@ -127,8 +126,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->paletteSelect->addItem("Honeycomb","honeycomb");
     ui->paletteSelect->addItem("Gray","gray");
     ui->paletteSelect->addItem("Green","green");
-    ui->paletteSelect->addItem("Silver","silver");
-    ui->paletteSelect->addItem("Solarized","solarized");
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
 
@@ -191,6 +188,11 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
 
     ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
+
+    ui->eq_alwaysdrawhandles->setChecked(appconf->getEqualizerPermanentHandles());
+    connect(ui->eq_alwaysdrawhandles,&QCheckBox::clicked,[this](){
+        appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
+    });
 
     int bands = appconf->getSpectrumBands();
     int minfreq = appconf->getSpectrumMinFreq();
