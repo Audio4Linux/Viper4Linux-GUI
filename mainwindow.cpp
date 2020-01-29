@@ -47,6 +47,9 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     m_dbus = new DBusProxy();
 
     m_appwrapper->loadAppConfig();
+
+    InitializeSpectrum();
+
     conf->setConfigMap(readConfig());
     LoadConfig();
 
@@ -147,7 +150,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     //Disable keyboard events to avoid fast item changes
     ui->eqpreset->installEventFilter(new KeyboardFilter());
 
-    InitializeSpectrum();
     connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
         ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
         ui->eq_widget->setAccentColor(palette().highlight().color());
@@ -177,7 +179,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
                        tr("Continue anyway"));
     }
     else if(pidfile.exists() && !m_dbus->isValid() &&
-            system("kill -0 $(cat /tmp/viper4linux/pid.tmp) > /dev/null")==1){
+            system("kill -0 $(cat /tmp/viper4linux/pid.tmp) > /dev/null")==0){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Unsupported version"),
                        tr("Looks like you are using an older version of\n"
@@ -206,6 +208,12 @@ MainWindow::~MainWindow()
 void MainWindow::InitializeSpectrum(){
     m_spectrograph = new Spectrograph(this);
     m_audioengine = new AudioStreamEngine(this);
+
+    int refresh = m_appwrapper->getSpectrumRefresh();
+    if(refresh == 0) refresh = 20;
+    if(refresh < 10) refresh = 10;
+    else if(refresh > 500) refresh = 500;
+    m_audioengine->setNotifyIntervalMs(refresh);
 
     analysisLayout.reset(new QHBoxLayout());
     analysisLayout->addWidget(m_spectrograph);
