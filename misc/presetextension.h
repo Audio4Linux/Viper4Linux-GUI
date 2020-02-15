@@ -96,6 +96,7 @@ inline const int* lookupDynsysPreset(QString preset){
         return std::initializer_list<int>({1000,6200,80,140,0,0}).begin();
     else if(preset == "Unknown Type IV")
         return std::initializer_list<int>({800,6200,80,140,0,0}).begin();
+    return nullptr;
 }
 inline const int* lookupColmPreset(QString preset){
     if(preset == "Slight")
@@ -116,6 +117,7 @@ inline const int* lookupColmPreset(QString preset){
         return std::initializer_list<int>({190,725}).begin();
     else if(preset == "Extreme")
         return std::initializer_list<int>({200,800}).begin();
+return nullptr;
 }
 
 inline const std::initializer_list<float> defaultEQPreset(){
