@@ -151,7 +151,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     ui->eqpreset->installEventFilter(new KeyboardFilter());
 
     connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
-        ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
+        RestartSpectrum();
         ui->eq_widget->setAccentColor(palette().highlight().color());
     });
 
@@ -224,7 +224,7 @@ void MainWindow::InitializeSpectrum(){
     ui->centralWidget->layout()->addItem(buttonbox);
     analysisLayout.take();
 
-    connect(m_appwrapper,&AppConfigWrapper::spectrumChanged,this,[this](){
+    connect(m_appwrapper,&AppConfigWrapper::spectrumChanged,this,[this]{
         ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
     });
     connect(m_appwrapper,&AppConfigWrapper::spectrumReloadRequired,this,&MainWindow::RestartSpectrum);

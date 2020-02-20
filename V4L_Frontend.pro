@@ -115,6 +115,7 @@ HEADERS += \
     misc/overlaymsgproxy.h \
     misc/presetextension.h \
     misc/stylehelper.h \
+    misc/styles/darkstyle.h \
     misc/versioncontainer.h
 
 FORMS += \
