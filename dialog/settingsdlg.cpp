@@ -200,9 +200,9 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     int refresh = appconf->getSpectrumRefresh();
     float multiplier = appconf->getSpectrumMultiplier();
     //Set default values if undefined
-    if(bands == 0) bands = 50;
+    if(bands == 0) bands = 100;
     if(maxfreq == 0) maxfreq = 1000;
-    if(refresh == 0) refresh = 20;
+    if(refresh == 0) refresh = 10;
     if(multiplier == 0) multiplier = 0.15;
 
     //Check boundaries
