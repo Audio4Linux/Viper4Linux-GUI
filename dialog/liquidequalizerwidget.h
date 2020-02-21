@@ -69,6 +69,8 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 private:
+    QVariantAnimation* anim[BANDS_NUM];
+
     QPainter mGridLines;
     QPainter mControlBarText;
     QPainter mFrequencyResponseBg;

@@ -50,7 +50,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    enum class Context;
 public:
     Ui::MainWindow *ui;
     void LoadPresetFile(const QString&);
@@ -130,11 +130,16 @@ private:
     void ToggleSpectrum(bool on,bool ctrl_visibility);
     void createTrayIcon();
     void UpdateTooltipLabelUnit(QObject* sender,QString text,bool);
-    void LoadConfig();
+    void LoadConfig(Context ctx = Context::Application);
     void ConnectActions();
     void ShowDBusError();
     void CheckDBusVersion();
     QVariantMap readConfig();
+
+    enum class Context{
+        DBus,
+        Application
+    };
 };
 
 #endif // MAINWINDOW_H

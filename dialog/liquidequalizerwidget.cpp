@@ -25,6 +25,9 @@ using namespace std;
 LiquidEqualizerWidget::LiquidEqualizerWidget(QWidget *parent)
     : QWidget(parent)
 {
+    for (int i = 0; i < BANDS_NUM;i++) {
+        anim[i] = new QVariantAnimation(this);
+    }
     connect(this,&LiquidEqualizerWidget::redrawRequired,[this](){
         repaint();
     });
@@ -243,19 +246,20 @@ void LiquidEqualizerWidget::setBand(int i, float value, bool animate, bool manua
     mSelectedBand = i;
     mManual = manual;
     if(animate){
-        QVariantAnimation* anim = new QVariantAnimation(this);
-        anim->setDuration(mAnimationDuration);
-        anim->setEasingCurve(QEasingCurve(QEasingCurve::Type::InOutCirc));
-        anim->setStartValue(value);
-        anim->setEndValue(mLevels[i]);
-        anim->setDirection(QVariantAnimation::Backward);
+        anim[i]->stop();
+        anim[i] = new QVariantAnimation(this);
+        anim[i]->setDuration(500);
+        anim[i]->setEasingCurve(QEasingCurve(QEasingCurve::Type::InOutCirc));
+        anim[i]->setStartValue(mLevels[i]);
+        anim[i]->setEndValue(value);
+        anim[i]->setDirection(QVariantAnimation::Direction::Forward);
 
-        connect(anim,QOverload<const QVariant &>::of(&QVariantAnimation::valueChanged),[this,i](const QVariant& v){
+        connect(anim[i],QOverload<const QVariant &>::of(&QVariantAnimation::valueChanged),[this,i](const QVariant& v){
             mLevels[i] = v.toFloat();
             repaint();
         });
 
-        anim->start();
+        anim[i]->start();
 
     }
     else{

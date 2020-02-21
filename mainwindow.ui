@@ -139,7 +139,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="vbgain">
+                <widget class="QAnimatedSlider" name="vbgain">
                  <property name="toolTipDuration">
                   <number>-1</number>
                  </property>
@@ -168,7 +168,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="vbfreq">
+                <widget class="QAnimatedSlider" name="vbfreq">
                  <property name="minimum">
                   <number>20</number>
                  </property>
@@ -298,7 +298,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="vclvl">
+                <widget class="QAnimatedSlider" name="vclvl">
                  <property name="minimum">
                   <number>0</number>
                  </property>
@@ -345,7 +345,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="vcurelvl">
+                <widget class="QAnimatedSlider" name="vcurelvl">
                  <property name="minimum">
                   <number>0</number>
                  </property>
@@ -418,7 +418,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="dyn_bassgain">
+              <widget class="QAnimatedSlider" name="dyn_bassgain">
                <property name="minimum">
                 <number>100</number>
                </property>
@@ -438,7 +438,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="dyn_xcoeff1">
+              <widget class="QAnimatedSlider" name="dyn_xcoeff1">
                <property name="maximum">
                 <number>2000</number>
                </property>
@@ -455,7 +455,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="dyn_xcoeff2">
+              <widget class="QAnimatedSlider" name="dyn_xcoeff2">
                <property name="minimum">
                 <number>5000</number>
                </property>
@@ -475,7 +475,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="dyn_sidegain1">
+              <widget class="QAnimatedSlider" name="dyn_sidegain1">
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -492,7 +492,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="dyn_sidegain2">
+              <widget class="QAnimatedSlider" name="dyn_sidegain2">
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -663,7 +663,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="dyn_ycoeff1">
+                <widget class="QAnimatedSlider" name="dyn_ycoeff1">
                  <property name="minimum">
                   <number>0</number>
                  </property>
@@ -686,7 +686,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="dyn_ycoeff2">
+                <widget class="QAnimatedSlider" name="dyn_ycoeff2">
                  <property name="minimum">
                   <number>0</number>
                  </property>
@@ -764,7 +764,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="vhplvl">
+                <widget class="QAnimatedSlider" name="vhplvl">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -840,7 +840,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="difflvl">
+                <widget class="QAnimatedSlider" name="difflvl">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -932,7 +932,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="roomsize">
+                <widget class="QAnimatedSlider" name="roomsize">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -967,7 +967,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="roomwidth">
+                <widget class="QAnimatedSlider" name="roomwidth">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1002,7 +1002,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="roomdamp">
+                <widget class="QAnimatedSlider" name="roomdamp">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1049,7 +1049,7 @@
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QSlider" name="wet">
+                  <widget class="QAnimatedSlider" name="wet">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1077,7 +1077,7 @@
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QSlider" name="dry">
+                  <widget class="QAnimatedSlider" name="dry">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1346,7 +1346,7 @@
              <number>8</number>
             </property>
             <item row="1" column="1">
-             <widget class="QSlider" name="comp_ratio">
+             <widget class="QAnimatedSlider" name="comp_ratio">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1372,7 +1372,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QSlider" name="comp_thres">
+             <widget class="QAnimatedSlider" name="comp_thres">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1444,7 +1444,7 @@
                 <number>6</number>
                </property>
                <item>
-                <widget class="QSlider" name="compattack">
+                <widget class="QAnimatedSlider" name="compattack">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1493,7 +1493,7 @@
                 <number>6</number>
                </property>
                <item>
-                <widget class="QSlider" name="comprelease">
+                <widget class="QAnimatedSlider" name="comprelease">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1556,7 +1556,7 @@
               <number>6</number>
              </property>
              <item>
-              <widget class="QSlider" name="compgain">
+              <widget class="QAnimatedSlider" name="compgain">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1602,7 +1602,7 @@
               <number>6</number>
              </property>
              <item>
-              <widget class="QSlider" name="compwidth">
+              <widget class="QAnimatedSlider" name="compwidth">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1669,7 +1669,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="a_kneewidth">
+              <widget class="QAnimatedSlider" name="a_kneewidth">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1698,7 +1698,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="a_maxatk">
+              <widget class="QAnimatedSlider" name="a_maxatk">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1727,7 +1727,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="a_maxrel">
+              <widget class="QAnimatedSlider" name="a_maxrel">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1756,7 +1756,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="a_adapt">
+              <widget class="QAnimatedSlider" name="a_adapt">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1785,7 +1785,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="a_crest">
+              <widget class="QAnimatedSlider" name="a_crest">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1849,7 +1849,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="gain">
+              <widget class="QAnimatedSlider" name="gain">
                <property name="minimum">
                 <number>50</number>
                </property>
@@ -1878,7 +1878,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="maxvol">
+              <widget class="QAnimatedSlider" name="maxvol">
                <property name="minimum">
                 <number>0</number>
                </property>
@@ -1907,7 +1907,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="maxgain">
+              <widget class="QAnimatedSlider" name="maxgain">
                <property name="minimum">
                 <number>100</number>
                </property>
@@ -1980,7 +1980,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="outvolume">
+              <widget class="QAnimatedSlider" name="outvolume">
                <property name="minimum">
                 <number>0</number>
                </property>
@@ -2009,7 +2009,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="outputpan">
+              <widget class="QAnimatedSlider" name="outputpan">
                <property name="minimum">
                 <number>-100</number>
                </property>
@@ -2038,7 +2038,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="limiter">
+              <widget class="QAnimatedSlider" name="limiter">
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -2126,7 +2126,7 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QSlider" name="colmmidimg">
+                <widget class="QAnimatedSlider" name="colmmidimg">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2161,7 +2161,7 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QSlider" name="colmwide">
+                <widget class="QAnimatedSlider" name="colmwide">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2196,7 +2196,7 @@
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QSlider" name="colmdepth">
+                <widget class="QAnimatedSlider" name="colmdepth">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2343,7 +2343,7 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QSlider" name="axmode">
+                <widget class="QAnimatedSlider" name="axmode">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2443,7 +2443,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="barkfreq">
+              <widget class="QAnimatedSlider" name="barkfreq">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2478,7 +2478,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="barkcon">
+              <widget class="QAnimatedSlider" name="barkcon">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2600,7 +2600,7 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QSlider" name="convcc">
+                <widget class="QAnimatedSlider" name="convcc">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2788,6 +2788,11 @@
    <extends>QWidget</extends>
    <header>dialog/liquidequalizerwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QAnimatedSlider</class>
+   <extends>QSlider</extends>
+   <header>dialog/qanimatedslider.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -144,11 +144,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
 
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
         conf->setConfigMap(m_dbus->FetchPropertyMap());
-        LoadConfig();
+        LoadConfig(Context::DBus);
     });
-
-    //Disable keyboard events to avoid fast item changes
-    ui->eqpreset->installEventFilter(new KeyboardFilter());
 
     connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
         RestartSpectrum();
@@ -185,7 +182,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
                        tr("Looks like you are using an older version of\n"
                           "gst-plugin-viperfx. Viper appears to be running\n"
                           "but no DBus interface has been found, so either the\n"
-                          "DBus server was unable to launch and to acquire a busname\n"
+                          "DBus server was unable to launch and couldn't acquire a busname\n"
                           "or you're trying to use Viper4Linux-Legacy with the GUI\n"
                           "for Viper4Linux2. Keep in mind that there is a separate GUI\n"
                           "for the legacy version of Viper4Linux!\n"
@@ -624,40 +621,40 @@ void MainWindow::SaveExternalFile(){
 }
 
 //---Config IO
-void MainWindow::LoadConfig(){
+void MainWindow::LoadConfig(Context ctx){
     lockapply=true;
     disableAction->setChecked(!conf->getBool("fx_enable"));
     ui->disableFX->setChecked(!conf->getBool("fx_enable"));
     ui->tubesim->setChecked(conf->getBool("tube_enable"));
     ui->colm->setChecked(conf->getBool("colm_enable"));
-    ui->colmwide->setValue(conf->getInt("colm_widening"));
-    ui->colmdepth->setValue(conf->getInt("colm_depth"));
-    ui->colmmidimg->setValue(conf->getInt("colm_midimage"));
-    ui->colmwide->setValue(conf->getInt("colm_widening"));
+    ui->colmwide->setValueA(conf->getInt("colm_widening"));
+    ui->colmdepth->setValueA(conf->getInt("colm_depth"));
+    ui->colmmidimg->setValueA(conf->getInt("colm_midimage"));
+    ui->colmwide->setValueA(conf->getInt("colm_widening"));
     ui->clarity->setChecked(conf->getBool("vc_enable"));
     ui->vcmode->setValue(conf->getInt("vc_mode"));
-    ui->vclvl->setValue(conf->getInt("vc_level"));
+    ui->vclvl->setValueA(conf->getInt("vc_level"));
     ui->vb->setChecked(conf->getBool("vb_enable"));
     ui->vbmode->setValue(conf->getInt("vb_mode"));
-    ui->vbgain->setValue(conf->getInt("vb_gain"));
-    ui->vbfreq->setValue(conf->getInt("vb_freq"));
+    ui->vbgain->setValueA(conf->getInt("vb_gain"));
+    ui->vbfreq->setValueA(conf->getInt("vb_freq"));
     ui->vhp->setChecked(conf->getBool("vhe_enable"));
-    ui->vhplvl->setValue(conf->getInt("vhe_level"));
+    ui->vhplvl->setValueA(conf->getInt("vhe_level"));
     ui->diff->setChecked(conf->getBool("ds_enable"));
-    ui->difflvl->setValue(conf->getInt("ds_level"));
+    ui->difflvl->setValueA(conf->getInt("ds_level"));
     ui->reverb->setChecked(conf->getBool("reverb_enable"));
-    ui->roomsize->setValue(conf->getInt("reverb_roomsize"));
-    ui->roomwidth->setValue(conf->getInt("reverb_width"));
-    ui->roomdamp->setValue(conf->getInt("reverb_damp"));
-    ui->wet->setValue(conf->getInt("reverb_wet"));
-    ui->dry->setValue(conf->getInt("reverb_dry"));
+    ui->roomsize->setValueA(conf->getInt("reverb_roomsize"));
+    ui->roomwidth->setValueA(conf->getInt("reverb_width"));
+    ui->roomdamp->setValueA(conf->getInt("reverb_damp"));
+    ui->wet->setValueA(conf->getInt("reverb_wet"));
+    ui->dry->setValueA(conf->getInt("reverb_dry"));
     ui->agc->setChecked(conf->getBool("agc_enable"));
-    ui->gain->setValue(conf->getInt("agc_ratio"));
-    ui->maxgain->setValue(conf->getInt("agc_maxgain"));
-    ui->maxvol->setValue(conf->getInt("agc_volume"));
-    ui->limiter->setValue(conf->getInt("lim_threshold"));
-    ui->outputpan->setValue(conf->getInt("out_pan"));
-    ui->outvolume->setValue(conf->getInt("out_volume"));
+    ui->gain->setValueA(conf->getInt("agc_ratio"));
+    ui->maxgain->setValueA(conf->getInt("agc_maxgain"));
+    ui->maxvol->setValueA(conf->getInt("agc_volume"));
+    ui->limiter->setValueA(conf->getInt("lim_threshold"));
+    ui->outputpan->setValueA(conf->getInt("out_pan"));
+    ui->outvolume->setValueA(conf->getInt("out_volume"));
     ui->enable_eq->setChecked(conf->getBool("eq_enable"));
     ui->enable_comp->setChecked(conf->getBool("fetcomp_enable"));
     ui->m_gain->setChecked(conf->getBool("fetcomp_autogain"));
@@ -665,34 +662,34 @@ void MainWindow::LoadConfig(){
     ui->m_attack->setChecked(conf->getBool("fetcomp_autoattack"));
     ui->m_release->setChecked(conf->getBool("fetcomp_autorelease"));
     ui->noclip->setChecked(conf->getBool("fetcomp_noclip"));
-    ui->comp_thres->setValue(conf->getInt("fetcomp_threshold"));
-    ui->compgain->setValue(conf->getInt("fetcomp_gain"));
-    ui->compwidth->setValue(conf->getInt("fetcomp_kneewidth"));
-    ui->comp_ratio->setValue(conf->getInt("fetcomp_ratio"));
-    ui->compattack->setValue(conf->getInt("fetcomp_attack"));
-    ui->comprelease->setValue(conf->getInt("fetcomp_release"));
-    ui->a_adapt->setValue(conf->getInt("fetcomp_meta_adapt"));
-    ui->a_crest->setValue(conf->getInt("fetcomp_meta_crest"));
-    ui->a_maxatk->setValue(conf->getInt("fetcomp_meta_maxattack"));
-    ui->a_maxrel->setValue(conf->getInt("fetcomp_meta_maxrelease"));
-    ui->a_kneewidth->setValue(conf->getInt("fetcomp_meta_kneemulti"));
+    ui->comp_thres->setValueA(conf->getInt("fetcomp_threshold"));
+    ui->compgain->setValueA(conf->getInt("fetcomp_gain"));
+    ui->compwidth->setValueA(conf->getInt("fetcomp_kneewidth"));
+    ui->comp_ratio->setValueA(conf->getInt("fetcomp_ratio"));
+    ui->compattack->setValueA(conf->getInt("fetcomp_attack"));
+    ui->comprelease->setValueA(conf->getInt("fetcomp_release"));
+    ui->a_adapt->setValueA(conf->getInt("fetcomp_meta_adapt"));
+    ui->a_crest->setValueA(conf->getInt("fetcomp_meta_crest"));
+    ui->a_maxatk->setValueA(conf->getInt("fetcomp_meta_maxattack"));
+    ui->a_maxrel->setValueA(conf->getInt("fetcomp_meta_maxrelease"));
+    ui->a_kneewidth->setValueA(conf->getInt("fetcomp_meta_kneemulti"));
     ui->vcure->setChecked(conf->getBool("cure_enable"));
-    ui->vcurelvl->setValue(conf->getInt("cure_level"));
+    ui->vcurelvl->setValueA(conf->getInt("cure_level"));
     ui->ax->setChecked(conf->getBool("ax_enable"));
-    ui->axmode->setValue(conf->getInt("ax_mode"));
+    ui->axmode->setValueA(conf->getInt("ax_mode"));
     ui->vse->setChecked(conf->getBool("vse_enable"));
-    ui->barkfreq->setValue(conf->getInt("vse_ref_bark"));
-    ui->barkcon->setValue(conf->getInt("vse_bark_cons"));
+    ui->barkfreq->setValueA(conf->getInt("vse_ref_bark"));
+    ui->barkcon->setValueA(conf->getInt("vse_bark_cons"));
     ui->conv->setChecked(conf->getBool("conv_enable"));
-    ui->convcc->setValue(conf->getInt("conv_cc_level"));
+    ui->convcc->setValueA(conf->getInt("conv_cc_level"));
     ui->dynsys->setChecked(conf->getBool("dynsys_enable"));
-    ui->dyn_xcoeff1->setValue(conf->getInt("dynsys_xcoeff1"));
-    ui->dyn_xcoeff2->setValue(conf->getInt("dynsys_xcoeff2"));
-    ui->dyn_ycoeff1->setValue(conf->getInt("dynsys_ycoeff1"));
-    ui->dyn_ycoeff2->setValue(conf->getInt("dynsys_ycoeff2"));
-    ui->dyn_sidegain1->setValue(conf->getInt("dynsys_sidegain1"));
-    ui->dyn_sidegain2->setValue(conf->getInt("dynsys_sidegain2"));
-    ui->dyn_bassgain->setValue(conf->getInt("dynsys_bassgain"));
+    ui->dyn_xcoeff1->setValueA(conf->getInt("dynsys_xcoeff1"));
+    ui->dyn_xcoeff2->setValueA(conf->getInt("dynsys_xcoeff2"));
+    ui->dyn_ycoeff1->setValueA(conf->getInt("dynsys_ycoeff1"));
+    ui->dyn_ycoeff2->setValueA(conf->getInt("dynsys_ycoeff2"));
+    ui->dyn_sidegain1->setValueA(conf->getInt("dynsys_sidegain1"));
+    ui->dyn_sidegain2->setValueA(conf->getInt("dynsys_sidegain2"));
+    ui->dyn_bassgain->setValueA(conf->getInt("dynsys_bassgain"));
 
     int eq1 = conf->getInt("eq_band1");
     int eq2 = conf->getInt("eq_band2");
@@ -720,7 +717,7 @@ void MainWindow::LoadConfig(){
     if(eqReloadRequired)
         ui->eq_widget->setBands(eq_data,false);
 
-    UpdateEqStringFromWidget();
+    if(ctx != Context::DBus) UpdateEqStringFromWidget();
     UpdateDynsysStringFromWidget();
     UpdateAllUnitLabels();
 
@@ -739,50 +736,50 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("fx_enable",QVariant(!ui->disableFX->isChecked()));
     conf->setValue("tube_enable",QVariant(ui->tubesim->isChecked()));
     conf->setValue("colm_enable",QVariant(ui->colm->isChecked()));
-    conf->setValue("colm_widening",QVariant(ui->colmwide->value()));
-    conf->setValue("colm_depth",QVariant(ui->colmdepth->value()));
-    conf->setValue("colm_midimage",QVariant(ui->colmmidimg->value()));
+    conf->setValue("colm_widening",QVariant(ui->colmwide->valueA()));
+    conf->setValue("colm_depth",QVariant(ui->colmdepth->valueA()));
+    conf->setValue("colm_midimage",QVariant(ui->colmmidimg->valueA()));
     conf->setValue("vc_enable",QVariant(ui->clarity->isChecked()));
     conf->setValue("vc_mode",QVariant(ui->vcmode->value()));
-    conf->setValue("vc_level",QVariant(ui->vclvl->value()));
+    conf->setValue("vc_level",QVariant(ui->vclvl->valueA()));
     conf->setValue("cure_enable",QVariant(ui->vcure->isChecked()));
     conf->setValue("ax_enable",QVariant(ui->ax->isChecked()));
-    conf->setValue("cure_level",QVariant(ui->vcurelvl->value()));
-    conf->setValue("ax_mode",QVariant(ui->axmode->value()));
+    conf->setValue("cure_level",QVariant(ui->vcurelvl->valueA()));
+    conf->setValue("ax_mode",QVariant(ui->axmode->valueA()));
     conf->setValue("vse_enable",QVariant(ui->vse->isChecked()));
-    conf->setValue("vse_ref_bark",QVariant(ui->barkfreq->value()));
-    conf->setValue("vse_bark_cons",QVariant(ui->barkcon->value()));
+    conf->setValue("vse_ref_bark",QVariant(ui->barkfreq->valueA()));
+    conf->setValue("vse_bark_cons",QVariant(ui->barkcon->valueA()));
     conf->setValue("conv_enable",QVariant(ui->conv->isChecked()));
-    conf->setValue("conv_cc_level",QVariant(ui->convcc->value()));
+    conf->setValue("conv_cc_level",QVariant(ui->convcc->valueA()));
     conf->setValue("conv_ir_path",QVariant("\""+ activeirs + "\""));
     conf->setValue("dynsys_enable",QVariant(ui->dynsys->isChecked()));
-    conf->setValue("dynsys_bassgain",QVariant(ui->dyn_bassgain->value()));
-    conf->setValue("dynsys_sidegain1",QVariant(ui->dyn_sidegain1->value()));
-    conf->setValue("dynsys_sidegain2",QVariant(ui->dyn_sidegain2->value()));
-    conf->setValue("dynsys_xcoeff1",QVariant(ui->dyn_xcoeff1->value()));
-    conf->setValue("dynsys_xcoeff2",QVariant(ui->dyn_xcoeff2->value()));
-    conf->setValue("dynsys_ycoeff1",QVariant(ui->dyn_ycoeff1->value()));
-    conf->setValue("dynsys_ycoeff2",QVariant(ui->dyn_ycoeff2->value()));
+    conf->setValue("dynsys_bassgain",QVariant(ui->dyn_bassgain->valueA()));
+    conf->setValue("dynsys_sidegain1",QVariant(ui->dyn_sidegain1->valueA()));
+    conf->setValue("dynsys_sidegain2",QVariant(ui->dyn_sidegain2->valueA()));
+    conf->setValue("dynsys_xcoeff1",QVariant(ui->dyn_xcoeff1->valueA()));
+    conf->setValue("dynsys_xcoeff2",QVariant(ui->dyn_xcoeff2->valueA()));
+    conf->setValue("dynsys_ycoeff1",QVariant(ui->dyn_ycoeff1->valueA()));
+    conf->setValue("dynsys_ycoeff2",QVariant(ui->dyn_ycoeff2->valueA()));
     conf->setValue("agc_enable",QVariant(ui->agc->isChecked()));
-    conf->setValue("agc_ratio",QVariant(ui->gain->value()));
-    conf->setValue("agc_maxgain",QVariant(ui->maxgain->value()));
-    conf->setValue("agc_volume",QVariant(ui->maxvol->value()));
-    conf->setValue("lim_threshold",QVariant(ui->limiter->value()));
-    conf->setValue("out_pan",QVariant(ui->outputpan->value()));
-    conf->setValue("out_volume",QVariant(ui->outvolume->value()));
+    conf->setValue("agc_ratio",QVariant(ui->gain->valueA()));
+    conf->setValue("agc_maxgain",QVariant(ui->maxgain->valueA()));
+    conf->setValue("agc_volume",QVariant(ui->maxvol->valueA()));
+    conf->setValue("lim_threshold",QVariant(ui->limiter->valueA()));
+    conf->setValue("out_pan",QVariant(ui->outputpan->valueA()));
+    conf->setValue("out_volume",QVariant(ui->outvolume->valueA()));
     conf->setValue("vhe_enable",QVariant(ui->vhp->isChecked()));
-    conf->setValue("vhe_level",QVariant(ui->vhplvl->value()));
+    conf->setValue("vhe_level",QVariant(ui->vhplvl->valueA()));
     conf->setValue("ds_enable",QVariant(ui->diff->isChecked()));
-    conf->setValue("ds_level",QVariant(ui->difflvl->value()));
+    conf->setValue("ds_level",QVariant(ui->difflvl->valueA()));
     conf->setValue("reverb_enable",QVariant(ui->reverb->isChecked()));
-    conf->setValue("reverb_roomsize",QVariant(ui->roomsize->value()));
-    conf->setValue("reverb_width",QVariant(ui->roomwidth->value()));
-    conf->setValue("reverb_damp",QVariant(ui->roomdamp->value()));
-    conf->setValue("reverb_wet",QVariant(ui->wet->value()));
-    conf->setValue("reverb_dry",QVariant(ui->dry->value()));
+    conf->setValue("reverb_roomsize",QVariant(ui->roomsize->valueA()));
+    conf->setValue("reverb_width",QVariant(ui->roomwidth->valueA()));
+    conf->setValue("reverb_damp",QVariant(ui->roomdamp->valueA()));
+    conf->setValue("reverb_wet",QVariant(ui->wet->valueA()));
+    conf->setValue("reverb_dry",QVariant(ui->dry->valueA()));
     conf->setValue("vb_enable",QVariant(ui->vb->isChecked()));
-    conf->setValue("vb_freq",QVariant(ui->vbfreq->value()));
-    conf->setValue("vb_gain",QVariant(ui->vbgain->value()));
+    conf->setValue("vb_freq",QVariant(ui->vbfreq->valueA()));
+    conf->setValue("vb_gain",QVariant(ui->vbgain->valueA()));
     conf->setValue("vb_mode",QVariant(ui->vbmode->value()));
     conf->setValue("fetcomp_enable",QVariant(ui->enable_comp->isChecked()));
     conf->setValue("fetcomp_autoattack",QVariant(ui->m_attack->isChecked()));
@@ -790,17 +787,17 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("fetcomp_autoknee",QVariant(ui->m_width->isChecked()));
     conf->setValue("fetcomp_autorelease",QVariant(ui->m_release->isChecked()));
     conf->setValue("fetcomp_noclip",QVariant(ui->noclip->isChecked()));
-    conf->setValue("fetcomp_threshold",QVariant(ui->comp_thres->value()));
-    conf->setValue("fetcomp_gain",QVariant(ui->compgain->value()));
-    conf->setValue("fetcomp_kneewidth",QVariant(ui->compwidth->value()));
-    conf->setValue("fetcomp_ratio",QVariant(ui->comp_ratio->value()));
-    conf->setValue("fetcomp_attack",QVariant(ui->compattack->value()));
-    conf->setValue("fetcomp_release",QVariant(ui->comprelease->value()));
-    conf->setValue("fetcomp_meta_adapt",QVariant(ui->a_adapt->value()));
-    conf->setValue("fetcomp_meta_crest",QVariant(ui->a_crest->value()));
-    conf->setValue("fetcomp_meta_maxattack",QVariant(ui->a_maxatk->value()));
-    conf->setValue("fetcomp_meta_maxrelease",QVariant(ui->a_maxrel->value()));
-    conf->setValue("fetcomp_meta_kneemulti",QVariant(ui->a_kneewidth->value()));
+    conf->setValue("fetcomp_threshold",QVariant(ui->comp_thres->valueA()));
+    conf->setValue("fetcomp_gain",QVariant(ui->compgain->valueA()));
+    conf->setValue("fetcomp_kneewidth",QVariant(ui->compwidth->valueA()));
+    conf->setValue("fetcomp_ratio",QVariant(ui->comp_ratio->valueA()));
+    conf->setValue("fetcomp_attack",QVariant(ui->compattack->valueA()));
+    conf->setValue("fetcomp_release",QVariant(ui->comprelease->valueA()));
+    conf->setValue("fetcomp_meta_adapt",QVariant(ui->a_adapt->valueA()));
+    conf->setValue("fetcomp_meta_crest",QVariant(ui->a_crest->valueA()));
+    conf->setValue("fetcomp_meta_maxattack",QVariant(ui->a_maxatk->valueA()));
+    conf->setValue("fetcomp_meta_maxrelease",QVariant(ui->a_maxrel->valueA()));
+    conf->setValue("fetcomp_meta_kneemulti",QVariant(ui->a_kneewidth->valueA()));
     conf->setValue("eq_enable",QVariant(ui->enable_eq->isChecked()));
     conf->setValue("eq_band1",QVariant(int(ui->eq_widget->getBand(0)*100)));
     conf->setValue("eq_band2",QVariant(int(ui->eq_widget->getBand(1)*100)));
@@ -849,12 +846,12 @@ void MainWindow::DynsysPresetSelectionUpdated(){
     if(data.size() <= 1)
         return;
     lockapply=true;
-    ui->dyn_xcoeff1->setValue(data.begin()[0]);
-    ui->dyn_xcoeff2->setValue(data.begin()[1]);
-    ui->dyn_ycoeff1->setValue(data.begin()[2]);
-    ui->dyn_ycoeff2->setValue(data.begin()[3]);
-    ui->dyn_sidegain1->setValue(data.begin()[4]);
-    ui->dyn_sidegain2->setValue(data.begin()[5]);
+    ui->dyn_xcoeff1->setValueA(data.begin()[0]);
+    ui->dyn_xcoeff2->setValueA(data.begin()[1]);
+    ui->dyn_ycoeff1->setValueA(data.begin()[2]);
+    ui->dyn_ycoeff2->setValueA(data.begin()[3]);
+    ui->dyn_sidegain1->setValueA(data.begin()[4]);
+    ui->dyn_sidegain2->setValueA(data.begin()[5]);
     lockapply=false;
     OnUpdate(true);
 }
@@ -862,8 +859,8 @@ void MainWindow::ColmPresetSelectionUpdated(){
     QString selection = ui->colmpreset->text();
     const auto data = PresetProvider::Colm::lookupPreset(selection);
     lockapply=true;
-    ui->colmwide->setValue(data.begin()[0]);
-    ui->colmdepth->setValue(data.begin()[1]);
+    ui->colmwide->setValueA(data.begin()[0]);
+    ui->colmdepth->setValueA(data.begin()[1]);
     lockapply=false;
     OnUpdate(true);
 }
@@ -993,7 +990,7 @@ void MainWindow::UpdateTooltipLabelUnit(QObject* sender,QString text,bool viasig
     if(viasignal)ui->info->setText(text);
 }
 void MainWindow::UpdateAllUnitLabels(){
-    QList<QSlider*> slidersToBeUpdated(
+    QList<QAnimatedSlider*> slidersToBeUpdated(
     {ui->colmwide,ui->colmdepth,ui->colmmidimg,ui->vclvl,ui->vbfreq,
      ui->vbgain,ui->vhplvl,ui->difflvl,ui->roomsize,ui->roomwidth,ui->roomdamp,ui->wet,ui->dry,
      ui->gain,ui->maxgain,ui->maxvol,ui->limiter,ui->outputpan,ui->outvolume,ui->comp_thres,
@@ -1004,7 +1001,7 @@ void MainWindow::UpdateAllUnitLabels(){
     QList<QSpinBox*> spinboxesToBeUpdated({ui->vcmode,ui->vbmode});
 
     foreach (auto w, slidersToBeUpdated)
-        UpdateUnitLabel(w->value(),w);
+        UpdateUnitLabel(w->valueA(),w);
 
     foreach (auto w, spinboxesToBeUpdated)
         UpdateUnitLabel(w->value(),w);
@@ -1038,13 +1035,14 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
 void MainWindow::UpdateEqStringFromWidget(){
     QString currentEqPresetName =
             PresetProvider::EQ::reverseLookup(ui->eq_widget->getBands());
+
     ui->eqpreset->setCurrentText(currentEqPresetName);
 }
 void MainWindow::UpdateDynsysStringFromWidget(){
     QString currentDynsysPresetName =
-            PresetProvider::Dynsys::reverseLookup({ui->dyn_xcoeff1->value(),ui->dyn_xcoeff2->value(),
-                                                   ui->dyn_ycoeff1->value(),ui->dyn_ycoeff2->value(),
-                                                   ui->dyn_sidegain1->value(),ui->dyn_sidegain2->value()});
+            PresetProvider::Dynsys::reverseLookup({ui->dyn_xcoeff1->valueA(),ui->dyn_xcoeff2->valueA(),
+                                                   ui->dyn_ycoeff1->valueA(),ui->dyn_ycoeff2->valueA(),
+                                                   ui->dyn_sidegain1->valueA(),ui->dyn_sidegain2->valueA()});
     ui->dynsys_preset->setCurrentText(currentDynsysPresetName);
 }
 

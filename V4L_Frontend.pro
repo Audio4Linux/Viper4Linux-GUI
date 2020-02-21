@@ -55,6 +55,7 @@ SOURCES += \
     dialog/logdlg.cpp \
     dialog/palettedlg.cpp \
     dialog/presetdlg.cpp \
+    dialog/qanimatedslider.cpp \
     dialog/qmessageoverlay.cpp \
     dialog/settingsdlg.cpp \
     dialog/statusfragment.cpp \
@@ -101,6 +102,7 @@ HEADERS += \
     dialog/logdlg.h \
     dialog/palettedlg.h \
     dialog/presetdlg.h \
+    dialog/qanimatedslider.h \
     dialog/qmessageoverlay.h \
     dialog/settingsdlg.h \
     dialog/statusfragment.h \
