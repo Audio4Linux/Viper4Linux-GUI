@@ -126,6 +126,14 @@ void StyleHelper::SetStyle(){
             QColor selection = QColor(86,191,121);
             setPalette(base,background,foreground,selection,Qt::black);
         }
+        else if(color_palette=="stone"){
+            loadIcons(true);
+            QColor background = QColor(34,45,50);
+            QColor foreground = Qt::white;
+            QColor base = QColor(27,36,40);
+            QColor selection = QColor(165,206,255);
+            setPalette(base,background,foreground,selection,Qt::black);
+        }
         else if(color_palette=="custom"){
             QColor base = QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2));
             QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));

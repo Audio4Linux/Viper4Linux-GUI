@@ -123,9 +123,11 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->paletteSelect->addItem("Dark","dark");
     ui->paletteSelect->addItem("Dark Blue","darkblue");
     ui->paletteSelect->addItem("Dark Green","darkgreen");
+
     ui->paletteSelect->addItem("Honeycomb","honeycomb");
     ui->paletteSelect->addItem("Gray","gray");
     ui->paletteSelect->addItem("Green","green");
+    ui->paletteSelect->addItem("Stone","stone");
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
 
