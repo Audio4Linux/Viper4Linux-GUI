@@ -28,9 +28,10 @@ class LogDlg : public QDialog
 public:
     explicit LogDlg(QWidget *parent = nullptr);
     ~LogDlg();
+public slots:
+    void updateLog();
 private slots:
     void reject();
-    void updateLog();
 private:
     Ui::log *ui;
 };

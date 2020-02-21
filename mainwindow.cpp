@@ -204,7 +204,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-//Spec trum
+//Spectrum
 void MainWindow::InitializeSpectrum(){
     m_spectrograph = new Spectrograph(this);
     m_audioengine = new AudioStreamEngine(this);
@@ -524,6 +524,7 @@ void MainWindow::DialogHandler(){
 }
 void MainWindow::OpenLog(){
     log_dlg->show();
+    log_dlg->updateLog();
 }
 void MainWindow::Reset(){
     QMessageBox::StandardButton reply;
@@ -984,52 +985,22 @@ void MainWindow::UpdateTooltipLabelUnit(QObject* sender,QString text,bool viasig
     w->setToolTip(text);
     if(viasignal)ui->info->setText(text);
 }
-#define VAL_OBJ_PAIR(x) ui->x->value(),ui->x
 void MainWindow::UpdateAllUnitLabels(){
-    UpdateUnitLabel(VAL_OBJ_PAIR(colmwide));
-    UpdateUnitLabel(VAL_OBJ_PAIR(colmdepth));
-    UpdateUnitLabel(VAL_OBJ_PAIR(colmmidimg));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vcmode));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vclvl));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vbmode));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vbfreq));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vbgain));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vhplvl));
-    UpdateUnitLabel(VAL_OBJ_PAIR(difflvl));
-    UpdateUnitLabel(VAL_OBJ_PAIR(roomsize));
-    UpdateUnitLabel(VAL_OBJ_PAIR(roomwidth));
-    UpdateUnitLabel(VAL_OBJ_PAIR(roomdamp));
-    UpdateUnitLabel(VAL_OBJ_PAIR(wet));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dry));
-    UpdateUnitLabel(VAL_OBJ_PAIR(gain));
-    UpdateUnitLabel(VAL_OBJ_PAIR(maxgain));
-    UpdateUnitLabel(VAL_OBJ_PAIR(maxvol));
-    UpdateUnitLabel(VAL_OBJ_PAIR(limiter));
-    UpdateUnitLabel(VAL_OBJ_PAIR(outputpan));
-    UpdateUnitLabel(VAL_OBJ_PAIR(outvolume));
-    UpdateUnitLabel(VAL_OBJ_PAIR(comp_thres));
-    UpdateUnitLabel(VAL_OBJ_PAIR(compgain));
-    UpdateUnitLabel(VAL_OBJ_PAIR(compwidth));
-    UpdateUnitLabel(VAL_OBJ_PAIR(comp_ratio));
-    UpdateUnitLabel(VAL_OBJ_PAIR(compattack));
-    UpdateUnitLabel(VAL_OBJ_PAIR(comprelease));
-    UpdateUnitLabel(VAL_OBJ_PAIR(a_adapt));
-    UpdateUnitLabel(VAL_OBJ_PAIR(a_crest));
-    UpdateUnitLabel(VAL_OBJ_PAIR(a_maxatk));
-    UpdateUnitLabel(VAL_OBJ_PAIR(a_maxrel));
-    UpdateUnitLabel(VAL_OBJ_PAIR(a_kneewidth));
-    UpdateUnitLabel(VAL_OBJ_PAIR(vcurelvl));
-    UpdateUnitLabel(VAL_OBJ_PAIR(axmode));
-    UpdateUnitLabel(VAL_OBJ_PAIR(barkcon));
-    UpdateUnitLabel(VAL_OBJ_PAIR(barkfreq));
-    UpdateUnitLabel(VAL_OBJ_PAIR(convcc));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_xcoeff1));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_xcoeff2));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_ycoeff1));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_ycoeff2));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_sidegain1));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_sidegain2));
-    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_bassgain));
+    QList<QSlider*> slidersToBeUpdated(
+    {ui->colmwide,ui->colmdepth,ui->colmmidimg,ui->vclvl,ui->vbfreq,
+     ui->vbgain,ui->vhplvl,ui->difflvl,ui->roomsize,ui->roomwidth,ui->roomdamp,ui->wet,ui->dry,
+     ui->gain,ui->maxgain,ui->maxvol,ui->limiter,ui->outputpan,ui->outvolume,ui->comp_thres,
+     ui->compgain,ui->compwidth,ui->comp_ratio,ui->compattack,ui->comprelease,ui->a_adapt,ui->a_crest,
+     ui->a_maxatk,ui->a_maxrel,ui->a_kneewidth,ui->vcurelvl,ui->axmode,ui->barkcon,ui->barkfreq,ui->convcc,
+     ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_sidegain1,ui->dyn_sidegain2,ui->dyn_bassgain});
+
+    QList<QSpinBox*> spinboxesToBeUpdated({ui->vcmode,ui->vbmode});
+
+    foreach (auto w, slidersToBeUpdated)
+        UpdateUnitLabel(w->value(),w);
+
+    foreach (auto w, spinboxesToBeUpdated)
+        UpdateUnitLabel(w->value(),w);
 }
 
 //---Helper
@@ -1077,135 +1048,43 @@ AppConfigWrapper* MainWindow::getACWrapper(){
 
 //---Connect UI-Signals
 void MainWindow::ConnectActions(){    
-    connect(ui->apply, SIGNAL(clicked()), this, SLOT(ApplyConfig()));
-    connect(ui->disableFX, SIGNAL(clicked()), this, SLOT(DisableFX()));
-    connect(ui->reset_eq, SIGNAL(clicked()), this, SLOT(ResetEQ()));
-    connect(ui->reset, SIGNAL(clicked()), this, SLOT(Reset()));
-    connect(ui->conv_select, SIGNAL(clicked()), this, SLOT(DialogHandler()));
+    QList<QWidget*> registerValueChange(
+    {ui->convcc,ui->vbfreq,ui->vbgain,ui->vbmode,ui->difflvl,ui->vhplvl,ui->roomsize,ui->roomwidth,ui->roomdamp,
+     ui->wet,ui->dry,ui->colmwide,ui->colmmidimg,ui->colmdepth,ui->vclvl,ui->vcmode,ui->gain,ui->maxgain,ui->maxvol,
+     ui->outputpan,ui->limiter,ui->outvolume,ui->vcurelvl,ui->axmode,ui->barkfreq,ui->barkcon,ui->comprelease,ui->compgain,
+     ui->compwidth,ui->comp_ratio,ui->comp_thres,ui->compattack,ui->comprelease,ui->a_adapt,ui->a_crest,ui->a_maxatk,ui->a_maxrel,
+     ui->a_kneewidth,ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_bassgain,ui->dyn_sidegain1,ui->dyn_sidegain2});
 
-    connect(ui->cpreset, SIGNAL(clicked()), this, SLOT(DialogHandler()));
-    connect(ui->set, SIGNAL(clicked()), this, SLOT(DialogHandler()));
+    QList<QWidget*> registerSliderRelease(
+    {ui->convcc,ui->vbfreq,ui->vbgain,ui->difflvl,ui->vhplvl,ui->roomsize,ui->roomwidth,ui->roomdamp,ui->wet,ui->dry,
+     ui->colmwide,ui->colmmidimg,ui->colmdepth,ui->vclvl,ui->gain,ui->maxgain,ui->maxvol,ui->outputpan,ui->limiter,ui->outvolume,
+     ui->vcurelvl,ui->axmode,ui->barkfreq,ui->barkcon,ui->comprelease,ui->compgain,ui->compwidth,ui->comp_ratio,ui->comp_thres,
+     ui->compattack,ui->comprelease,ui->a_adapt,ui->a_crest,ui->a_maxatk,ui->a_maxrel,ui->a_kneewidth,ui->dyn_xcoeff1,ui->dyn_xcoeff2,
+     ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_bassgain,ui->dyn_sidegain1,ui->dyn_sidegain2});
 
-    connect(ui->eq_widget, SIGNAL(bandsUpdated()),this, SLOT(ApplyConfig()));
+    QList<QWidget*> registerClick(
+    {ui->vb,ui->clarity,ui->vcure,ui->tubesim,ui->vhp,ui->diff,ui->reverb,ui->enable_eq,ui->enable_comp,ui->noclip,ui->m_gain,
+     ui->m_width,ui->m_attack,ui->m_release,ui->vb,ui->clarity,ui->vcure,ui->tubesim,ui->agc,ui->colm,ui->vse,ui->conv,ui->ax,ui->dynsys});
 
-    connect( ui->convcc , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->vbfreq , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->vbgain, SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->vbmode , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->difflvl , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->vhplvl , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->roomsize , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->roomwidth , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->roomdamp , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->wet , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->dry , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->colmwide , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->colmmidimg , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->colmdepth, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->vclvl, SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->vcmode, SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->gain , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->maxgain , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->maxvol , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->outputpan , SIGNAL(valueChanged(int)),this,  SLOT(UpdateUnitLabel(int)));
-    connect( ui->limiter , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->outvolume , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->vcurelvl, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->axmode, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->barkfreq, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->barkcon, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->compgain, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->compwidth, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->comp_ratio, SIGNAL(valueChanged(int)),this,SLOT(UpdateUnitLabel(int)));
-    connect(ui->comp_thres, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->compattack, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->comprelease, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->a_adapt, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->a_crest, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->a_maxatk, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->a_maxrel, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect(ui->a_kneewidth, SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
+    foreach (QWidget* w, registerValueChange)
+        connect(w,              SIGNAL(valueChanged(int)),          this,   SLOT(UpdateUnitLabel(int)));
 
-    connect(ui->eqpreset, SIGNAL(currentIndexChanged(int)),this,SLOT(EqPresetSelectionUpdated()));
+    foreach (QWidget* w, registerSliderRelease)
+        connect(w,              SIGNAL(sliderReleased()),           this,   SLOT(OnRelease()));
 
-    connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->vcure , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->tubesim , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->vhp , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->diff , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->reverb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->enable_eq , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->enable_comp , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->noclip , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->m_gain , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->m_width , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->m_attack , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->m_release , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->vb , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->clarity , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->vcure , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->tubesim , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->agc , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->colm , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->vse , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->conv , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->ax , SIGNAL(clicked()),this, SLOT(OnUpdate()));
+    foreach (QWidget* w, registerClick)
+        connect(w,              SIGNAL(clicked()),                  this,   SLOT(OnUpdate()));
 
-    connect(ui->dynsys_preset, SIGNAL(currentIndexChanged(int)),this,SLOT(DynsysPresetSelectionUpdated()));
-    connect( ui->dynsys , SIGNAL(clicked()),this, SLOT(OnUpdate()));
-    connect( ui->dyn_xcoeff1 , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->dyn_xcoeff2 , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->dyn_ycoeff1 , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->dyn_ycoeff2 , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->dyn_bassgain , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->dyn_sidegain1 , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->dyn_sidegain2 , SIGNAL(valueChanged(int)),this, SLOT(UpdateUnitLabel(int)));
-    connect( ui->convcc , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->vbfreq , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->vbgain, SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->vbmode , SIGNAL(valueChanged(int)),this,  SLOT(OnRelease()));
-    connect( ui->difflvl , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->vhplvl , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->roomsize , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->roomwidth , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->roomdamp , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->wet , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->dry , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->colmwide , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->colmmidimg , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->colmdepth, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->vclvl, SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->vcmode, SIGNAL(valueChanged(int)),this,  SLOT(OnRelease()));
-    connect( ui->gain , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->maxgain , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->maxvol , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->outputpan , SIGNAL(sliderReleased()),this,  SLOT(OnRelease()));
-    connect( ui->limiter , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->outvolume , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->vcurelvl, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->axmode, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->barkfreq, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->barkcon, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->comprelease, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->compgain, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->compwidth, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->comp_ratio, SIGNAL(sliderReleased()),this,SLOT(OnRelease()));
-    connect(ui->comp_thres, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->compattack, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->comprelease, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->a_adapt, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->a_crest, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->a_maxatk, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->a_maxrel, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect(ui->a_kneewidth, SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-
-    connect( ui->dyn_xcoeff1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->dyn_xcoeff2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->dyn_ycoeff1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->dyn_ycoeff2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->dyn_bassgain , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->dyn_sidegain1 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
-    connect( ui->dyn_sidegain2 , SIGNAL(sliderReleased()),this, SLOT(OnRelease()));
+    connect(ui->apply,          SIGNAL(clicked()),                  this,   SLOT(ApplyConfig()));
+    connect(ui->disableFX,      SIGNAL(clicked()),                  this,   SLOT(DisableFX()));
+    connect(ui->reset_eq,       SIGNAL(clicked()),                  this,   SLOT(ResetEQ()));
+    connect(ui->reset,          SIGNAL(clicked()),                  this,   SLOT(Reset()));
+    connect(ui->conv_select,    SIGNAL(clicked()),                  this,   SLOT(DialogHandler()));
+    connect(ui->cpreset,        SIGNAL(clicked()),                  this,   SLOT(DialogHandler()));
+    connect(ui->set,            SIGNAL(clicked()),                  this,   SLOT(DialogHandler()));
+    connect(ui->eq_widget,      SIGNAL(bandsUpdated()),             this,   SLOT(ApplyConfig()));
+    connect(ui->eqpreset,       SIGNAL(currentIndexChanged(int)),   this,   SLOT(EqPresetSelectionUpdated()));
+    connect(ui->dynsys_preset,  SIGNAL(currentIndexChanged(int)),   this,   SLOT(DynsysPresetSelectionUpdated()));
+    connect(ui->vbmode,         SIGNAL(valueChanged(int)),          this,   SLOT(OnRelease()));
+    connect(ui->vcmode,         SIGNAL(valueChanged(int)),          this,   SLOT(OnRelease()));
 }
