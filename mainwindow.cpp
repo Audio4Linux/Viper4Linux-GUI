@@ -906,7 +906,15 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
         else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
     }
     //Dynsys
-    else if(obj==ui->dyn_bassgain) UpdateTooltipLabelUnit(obj,QString::number( (d-100)/20 ) + "%",alt==nullptr);
+    else if(obj==ui->dyn_bassgain){
+        double scaled = (d-100.0f)/20.0f;
+        double result = (scaled/100.0f + -1.0f) * 80.0f;
+
+        UpdateTooltipLabelUnit(obj,
+                               QString::number(result, 'f', 2) + "dB "
+                               "(" + QString::number( (d-100)/20 ) + "%)",
+                               alt==nullptr);
+    }
     //Diff-Surround
     else if(obj==ui->difflvl)UpdateTooltipLabelUnit(obj,QString::number(translate(d,0,100,0,20))+"ms (" + QString::number(d) + "%)",alt==nullptr);
     //AGC
