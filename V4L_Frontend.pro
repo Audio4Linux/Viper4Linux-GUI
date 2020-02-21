@@ -110,6 +110,7 @@ HEADERS += \
     misc/converter.h \
     misc/eventfilter.h \
     misc/findbinary.h \
+    misc/initializableqmap.h \
     misc/loghelper.h \
     misc/mathfunctions.h \
     misc/overlaymsgproxy.h \

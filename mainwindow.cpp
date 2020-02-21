@@ -838,24 +838,24 @@ void MainWindow::EqPresetSelectionUpdated(){
     else ResetEQ();
 }
 void MainWindow::DynsysPresetSelectionUpdated(){
-    const int* data = EQ::lookupDynsysPreset(ui->dynsys_preset->currentText());
-    if(data==nullptr)return;
+    const auto data = EQ::lookupDynsysPreset(ui->dynsys_preset->currentText());
+    if(data.size() <= 1)return;
     lockapply=true;
-    ui->dyn_xcoeff1->setValue(data[0]);
-    ui->dyn_xcoeff2->setValue(data[1]);
-    ui->dyn_ycoeff1->setValue(data[2]);
-    ui->dyn_ycoeff2->setValue(data[3]);
-    ui->dyn_sidegain1->setValue(data[4]);
-    ui->dyn_sidegain2->setValue(data[5]);
+    ui->dyn_xcoeff1->setValue(data.begin()[0]);
+    ui->dyn_xcoeff2->setValue(data.begin()[1]);
+    ui->dyn_ycoeff1->setValue(data.begin()[2]);
+    ui->dyn_ycoeff2->setValue(data.begin()[3]);
+    ui->dyn_sidegain1->setValue(data.begin()[4]);
+    ui->dyn_sidegain2->setValue(data.begin()[5]);
     lockapply=false;
     OnUpdate(true);
 }
 void MainWindow::ColmPresetSelectionUpdated(){
     QString selection = ui->colmpreset->text();
-    const int* data = EQ::lookupColmPreset(selection);
+    const auto data = EQ::lookupColmPreset(selection);
     lockapply=true;
-    ui->colmwide->setValue(data[0]);
-    ui->colmdepth->setValue(data[1]);
+    ui->colmwide->setValue(data.begin()[0]);
+    ui->colmdepth->setValue(data.begin()[1]);
     lockapply=false;
     OnUpdate(true);
 }
@@ -984,51 +984,52 @@ void MainWindow::UpdateTooltipLabelUnit(QObject* sender,QString text,bool viasig
     w->setToolTip(text);
     if(viasignal)ui->info->setText(text);
 }
+#define VAL_OBJ_PAIR(x) ui->x->value(),ui->x
 void MainWindow::UpdateAllUnitLabels(){
-    UpdateUnitLabel(ui->colmwide->value(),ui->colmwide);
-    UpdateUnitLabel(ui->colmdepth->value(),ui->colmdepth);
-    UpdateUnitLabel(ui->colmmidimg->value(),ui->colmmidimg);
-    UpdateUnitLabel(ui->vcmode->value(),ui->vcmode);
-    UpdateUnitLabel(ui->vclvl->value(),ui->vclvl);
-    UpdateUnitLabel(ui->vbmode->value(),ui->vbmode);
-    UpdateUnitLabel(ui->vbfreq->value(),ui->vbfreq);
-    UpdateUnitLabel(ui->vbgain->value(),ui->vbgain);
-    UpdateUnitLabel(ui->vhplvl->value(),ui->vhplvl);
-    UpdateUnitLabel(ui->difflvl->value(),ui->difflvl);
-    UpdateUnitLabel(ui->roomsize->value(),ui->roomsize);
-    UpdateUnitLabel(ui->roomwidth->value(),ui->roomwidth);
-    UpdateUnitLabel(ui->roomdamp->value(),ui->roomdamp);
-    UpdateUnitLabel(ui->wet->value(),ui->wet);
-    UpdateUnitLabel(ui->dry->value(),ui->dry);
-    UpdateUnitLabel(ui->gain->value(),ui->gain);
-    UpdateUnitLabel(ui->maxgain->value(),ui->maxgain);
-    UpdateUnitLabel(ui->maxvol->value(),ui->maxvol);
-    UpdateUnitLabel(ui->limiter->value(),ui->limiter);
-    UpdateUnitLabel(ui->outputpan->value(),ui->outputpan);
-    UpdateUnitLabel(ui->outvolume->value(),ui->outvolume);
-    UpdateUnitLabel(ui->comp_thres->value(),ui->comp_thres);
-    UpdateUnitLabel(ui->compgain->value(),ui->compgain);
-    UpdateUnitLabel(ui->compwidth->value(),ui->compwidth);
-    UpdateUnitLabel(ui->comp_ratio->value(),ui->comp_ratio);
-    UpdateUnitLabel(ui->compattack->value(),ui->compattack);
-    UpdateUnitLabel(ui->comprelease->value(),ui->comprelease);
-    UpdateUnitLabel(ui->a_adapt->value(),ui->a_adapt);
-    UpdateUnitLabel(ui->a_crest->value(),ui->a_crest);
-    UpdateUnitLabel(ui->a_maxatk->value(),ui->a_maxatk);
-    UpdateUnitLabel(ui->a_maxrel->value(),ui->a_maxrel);
-    UpdateUnitLabel(ui->a_kneewidth->value(),ui->a_kneewidth);
-    UpdateUnitLabel(ui->vcurelvl->value(),ui->vcurelvl);
-    UpdateUnitLabel(ui->axmode->value(),ui->axmode);
-    UpdateUnitLabel(ui->barkcon->value(),ui->barkcon);
-    UpdateUnitLabel(ui->barkfreq->value(),ui->barkfreq);
-    UpdateUnitLabel(ui->convcc->value(),ui->convcc);
-    UpdateUnitLabel(ui->dyn_xcoeff1->value(),ui->dyn_xcoeff1);
-    UpdateUnitLabel(ui->dyn_xcoeff2->value(),ui->dyn_xcoeff2);
-    UpdateUnitLabel(ui->dyn_ycoeff1->value(),ui->dyn_ycoeff1);
-    UpdateUnitLabel(ui->dyn_ycoeff2->value(),ui->dyn_ycoeff2);
-    UpdateUnitLabel(ui->dyn_sidegain1->value(),ui->dyn_sidegain1);
-    UpdateUnitLabel(ui->dyn_sidegain2->value(),ui->dyn_sidegain2);
-    UpdateUnitLabel(ui->dyn_bassgain->value(),ui->dyn_bassgain);
+    UpdateUnitLabel(VAL_OBJ_PAIR(colmwide));
+    UpdateUnitLabel(VAL_OBJ_PAIR(colmdepth));
+    UpdateUnitLabel(VAL_OBJ_PAIR(colmmidimg));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vcmode));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vclvl));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vbmode));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vbfreq));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vbgain));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vhplvl));
+    UpdateUnitLabel(VAL_OBJ_PAIR(difflvl));
+    UpdateUnitLabel(VAL_OBJ_PAIR(roomsize));
+    UpdateUnitLabel(VAL_OBJ_PAIR(roomwidth));
+    UpdateUnitLabel(VAL_OBJ_PAIR(roomdamp));
+    UpdateUnitLabel(VAL_OBJ_PAIR(wet));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dry));
+    UpdateUnitLabel(VAL_OBJ_PAIR(gain));
+    UpdateUnitLabel(VAL_OBJ_PAIR(maxgain));
+    UpdateUnitLabel(VAL_OBJ_PAIR(maxvol));
+    UpdateUnitLabel(VAL_OBJ_PAIR(limiter));
+    UpdateUnitLabel(VAL_OBJ_PAIR(outputpan));
+    UpdateUnitLabel(VAL_OBJ_PAIR(outvolume));
+    UpdateUnitLabel(VAL_OBJ_PAIR(comp_thres));
+    UpdateUnitLabel(VAL_OBJ_PAIR(compgain));
+    UpdateUnitLabel(VAL_OBJ_PAIR(compwidth));
+    UpdateUnitLabel(VAL_OBJ_PAIR(comp_ratio));
+    UpdateUnitLabel(VAL_OBJ_PAIR(compattack));
+    UpdateUnitLabel(VAL_OBJ_PAIR(comprelease));
+    UpdateUnitLabel(VAL_OBJ_PAIR(a_adapt));
+    UpdateUnitLabel(VAL_OBJ_PAIR(a_crest));
+    UpdateUnitLabel(VAL_OBJ_PAIR(a_maxatk));
+    UpdateUnitLabel(VAL_OBJ_PAIR(a_maxrel));
+    UpdateUnitLabel(VAL_OBJ_PAIR(a_kneewidth));
+    UpdateUnitLabel(VAL_OBJ_PAIR(vcurelvl));
+    UpdateUnitLabel(VAL_OBJ_PAIR(axmode));
+    UpdateUnitLabel(VAL_OBJ_PAIR(barkcon));
+    UpdateUnitLabel(VAL_OBJ_PAIR(barkfreq));
+    UpdateUnitLabel(VAL_OBJ_PAIR(convcc));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_xcoeff1));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_xcoeff2));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_ycoeff1));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_ycoeff2));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_sidegain1));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_sidegain2));
+    UpdateUnitLabel(VAL_OBJ_PAIR(dyn_bassgain));
 }
 
 //---Helper

@@ -15,113 +15,107 @@
 #ifndef PRESETEXTENSION_H
 #define PRESETEXTENSION_H
 #include <QString>
+#include <QMap>
+#include "initializableqmap.h"
+
+#define FLOAT_LIST std::initializer_list<float>
+#define INT_LIST std::initializer_list<int>
+
+#define EQ_UNIT QString,FLOAT_LIST
+#define DYNSYS_UNIT QString,INT_LIST
+#define COLM_UNIT QString,INT_LIST
+
 namespace EQ {
-inline const std::initializer_list<float> lookupEQPreset(QString preset){
-    if(preset == "Pop")
-        return std::initializer_list<float>({0,0,0,1.25,2.50,5.00,-1.50,-3.00,-3.00,-3.00});
-    else if(preset == "Rock")
-        return std::initializer_list<float>({0,0,3.00,-10.00,-1.50,0.75,3.00,3.00,3.00,3.00});
-    else if(preset == "Jazz")
-        return std::initializer_list<float>({0,0,2.73,6.00,-6.00,-2.50,2.50,-0.75,-0.75,-0.75});
-    else if(preset == "Classic")
-        return std::initializer_list<float>({0,0,-9.00,0,1.50,0,0,9.00,9.00,9.00});
-    else if(preset == "Bass")
-        return std::initializer_list<float>({11.50,8.50,5.00,2.00,0,0,0,0,0,0});
-    else if(preset == "Clear")
-        return std::initializer_list<float>({3.50,6.50,9.50,6.50,3.50,1.25,5.00,9.00,11.00,9.00});
-    else if(preset == "Volume Boost")
-        return std::initializer_list<float>({12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00});
-    else if(preset == "Hip-Hop")
-        return std::initializer_list<float>({4.50,4.00,1.50,3.00,-1.50,-1.50,1.50,-1.00,1.50,3.00});
-    else if(preset == "Dubstep")
-        return std::initializer_list<float>({12.00,0.50,-2.00,-5.00,-5.00,-4.50,-2.50,0,-3.00,-.050});
-    else if(preset == "Movie")
-        return std::initializer_list<float>({3.00,6.00,9.00,7.00,6.00,5.00,6.00,3.50,10.50,8.00});
-    else if(preset == "Metal")
-        return std::initializer_list<float>({10.50,7.50,0,5.50,0,0,6.00,0,9.00,12.00});
-    else if(preset == "Vocal Booster")
-        return std::initializer_list<float>({-1.50,-3.00,-3.00,1.50,3.50,3.50,3.00,1.50,0,-1.50});
-    else if(preset == "Hardstyle")
-        return std::initializer_list<float>({6.00,12.00,0,-12.00,3.00,6.50,0,-4.50,-8.00,-10.50});
-    else if(preset == "Acoustic")
-        return std::initializer_list<float>({5.00,4.50,3.50,1.00,1.50,1.50,3.00,3.50,3.00,3.00});
-    else if(preset == "R&B")
-        return std::initializer_list<float>({3.00,7.00,6.00,1.50,-2.00,-1.50,2.00,3.00,3.50,4.00});
-    else if(preset == "Electronic")
-        return std::initializer_list<float>({4.00,3.50,0.50,-0.50,-2.00,1.50,0,0.50,3.00,4.50});
-    else if(preset == "Deep Bass")
-        return std::initializer_list<float>({12.00,0,-12.00,-9.00,-3.50,-6.00,0,-5.00,0,3.00});
-    else if(preset == "Beats")
-        return std::initializer_list<float>({-5.50,-4.50,-4.00,-3.00,-1.50,0,0,0,0,0});
-    else if(preset == "Soft Bass")
-        return std::initializer_list<float>({12.00,10.34,9.00,7.00,6.00,5.00,6.00,3.50,10.50,8.00});
-    return std::initializer_list<float>({});
+inline const QMap<EQ_UNIT> EQ_LOOKUP_TABLE(){
+    InitializableQMap<EQ_UNIT> table;
+    table << QPair<EQ_UNIT>("Default",FLOAT_LIST({0,0,0,0,0,0,0,0,0,0}))
+          << QPair<EQ_UNIT>("Pop",FLOAT_LIST({0,0,0,1.25,2.50,5.00,-1.50,-3.00,-3.00,-3.00}))
+          << QPair<EQ_UNIT>("Rock",FLOAT_LIST({0,0,3.00,-10.00,-1.50,0.75,3.00,3.00,3.00,3.00}))
+          << QPair<EQ_UNIT>("Jazz",FLOAT_LIST({0,0,2.73,6.00,-6.00,-2.50,2.50,-0.75,-0.75,-0.75}))
+          << QPair<EQ_UNIT>("Classic",FLOAT_LIST({0,0,-9.00,0,1.50,0,0,9.00,9.00,9.00}))
+          << QPair<EQ_UNIT>("Bass",FLOAT_LIST({11.50,8.50,5.00,2.00,0,0,0,0,0,0}))
+          << QPair<EQ_UNIT>("Clear",FLOAT_LIST({0,0,0,1.25,2.50,5.00,-1.50,-3.00,-3.00,-3.00}))
+          << QPair<EQ_UNIT>("Volume Boost",FLOAT_LIST({12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00}))
+          << QPair<EQ_UNIT>("Hip-Hop",FLOAT_LIST({4.50,4.00,1.50,3.00,-1.50,-1.50,1.50,-1.00,1.50,3.00}))
+          << QPair<EQ_UNIT>("Dubstep",FLOAT_LIST({12.00,0.50,-2.00,-5.00,-5.00,-4.50,-2.50,0,-3.00,-.050}))
+          << QPair<EQ_UNIT>("Movie",FLOAT_LIST({3.00,6.00,9.00,7.00,6.00,5.00,6.00,3.50,10.50,8.00}))
+          << QPair<EQ_UNIT>("Metal",FLOAT_LIST({10.50,7.50,0,5.50,0,0,6.00,0,9.00,12.00}))
+          << QPair<EQ_UNIT>("Vocal Booster",FLOAT_LIST({-1.50,-3.00,-3.00,1.50,3.50,3.50,3.00,1.50,0,-1.50}))
+          << QPair<EQ_UNIT>("Hardstyle",FLOAT_LIST({6.00,12.00,0,-12.00,3.00,6.50,0,-4.50,-8.00,-10.50}))
+          << QPair<EQ_UNIT>("Acoustic",FLOAT_LIST({5.00,4.50,3.50,1.00,1.50,1.50,3.00,3.50,3.00,3.00}))
+          << QPair<EQ_UNIT>("R&B",FLOAT_LIST({3.00,7.00,6.00,1.50,-2.00,-1.50,2.00,3.00,3.50,4.00}))
+          << QPair<EQ_UNIT>("Electronic",FLOAT_LIST({4.00,3.50,0.50,-0.50,-2.00,1.50,0,0.50,3.00,4.50}))
+          << QPair<EQ_UNIT>("Deep Bass",FLOAT_LIST({12.00,0,-12.00,-9.00,-3.50,-6.00,0,-5.00,0,3.00}))
+          << QPair<EQ_UNIT>("Beats",FLOAT_LIST({-5.50,-4.50,-4.00,-3.00,-1.50,0,0,0,0,0}))
+          << QPair<EQ_UNIT>("Soft Bass",FLOAT_LIST({12.00,10.34,9.00,7.00,6.00,5.00,6.00,3.50,10.50,8.00}));
+    return std::move(table);
 }
-inline const int* lookupDynsysPreset(QString preset){
-    if(preset == "Extreme Headphone (v2)")
-        return std::initializer_list<int>({140,6200,40,60,10,80}).begin();
-    else if(preset == "High-end Headphone (v2)")
-        return std::initializer_list<int>({180,5800,55,80,10,70}).begin();
-    else if(preset == "Common Headphone (v2)")
-        return std::initializer_list<int>({300,5600,60,105,10,50}).begin();
-    else if(preset == "Low-end Headphone (v2)")
-        return std::initializer_list<int>({600,5400,60,105,10,20}).begin();
-    else if(preset == "Common Earphone (v2)")
-        return std::initializer_list<int>({100,5600,40,80,50,50}).begin();
-    else if(preset == "Extreme Headphone (v1)")
-        return std::initializer_list<int>({1200,6200,40,80,0,20}).begin();
-    else if(preset == "High-end Headphone (v1)")
-        return std::initializer_list<int>({1000,6200,40,80,0,10}).begin();
-    else if(preset == "Common Headphone (v1)")
-        return std::initializer_list<int>({800,6200,40,80,10,0}).begin();
-    else if(preset == "Common Earphone (v1)")
-        return std::initializer_list<int>({400,6200,40,80,10,0}).begin();
-    else if(preset == "Apple Earphone")
-        return std::initializer_list<int>({1200,6200,50,90,15,10}).begin();
-    else if(preset == "Monster Earphone")
-        return std::initializer_list<int>({1000,6200,50,90,30,10}).begin();
-    else if(preset == "Moto Earphone")
-        return std::initializer_list<int>({1100,6200,60,100,20,0}).begin();
-    else if(preset == "Philips Earphone")
-        return std::initializer_list<int>({1200,6200,50,100,10,50}).begin();
-    else if(preset == "SHP2000")
-        return std::initializer_list<int>({1200,6200,60,100,0,30}).begin();
-    else if(preset == "SHP9000")
-        return std::initializer_list<int>({1200,6200,40,80,0,30}).begin();
-    else if(preset == "Unknown Type I")
-        return std::initializer_list<int>({1000,6200,60,100,0,0}).begin();
-    else if(preset == "Unknown Type II")
-        return std::initializer_list<int>({1000,6200,60,120,0,0}).begin();
-    else if(preset == "Unknown Type III")
-        return std::initializer_list<int>({1000,6200,80,140,0,0}).begin();
-    else if(preset == "Unknown Type IV")
-        return std::initializer_list<int>({800,6200,80,140,0,0}).begin();
-    return nullptr;
+
+inline const QMap<DYNSYS_UNIT> DYNSYS_LOOKUP_TABLE(){
+    InitializableQMap<DYNSYS_UNIT> table;
+    table << QPair<DYNSYS_UNIT>("Unknown",INT_LIST({0}))
+          << QPair<DYNSYS_UNIT>("Extreme Headphone (v2)",INT_LIST({140,6200,40,60,10,80}))
+          << QPair<DYNSYS_UNIT>("High-end Headphone (v2)",INT_LIST({180,5800,55,80,10,70}))
+          << QPair<DYNSYS_UNIT>("Common Headphone (v2)",INT_LIST({300,5600,60,105,10,50}))
+          << QPair<DYNSYS_UNIT>("Low-end Headphone (v2)",INT_LIST({600,5400,60,105,10,20}))
+          << QPair<DYNSYS_UNIT>("Common Earphone (v2)",INT_LIST({100,5600,40,80,50,50}))
+          << QPair<DYNSYS_UNIT>("Extreme Headphone (v1)",INT_LIST({1200,6200,40,80,0,20}))
+          << QPair<DYNSYS_UNIT>("High-end Headphone (v1)",INT_LIST({1000,6200,40,80,0,10}))
+          << QPair<DYNSYS_UNIT>("Common Headphone (v1)",INT_LIST({800,6200,40,80,10,0}))
+          << QPair<DYNSYS_UNIT>("Common Earphone (v1)",INT_LIST({400,6200,40,80,10,0}))
+          << QPair<DYNSYS_UNIT>("Apple Earphone",INT_LIST({1200,6200,50,90,15,10}))
+          << QPair<DYNSYS_UNIT>("Monster Earphone",INT_LIST({1000,6200,50,90,30,10}))
+          << QPair<DYNSYS_UNIT>("Moto Earphone",INT_LIST({1100,6200,60,100,20,0}))
+          << QPair<DYNSYS_UNIT>("Philips Earphone",INT_LIST({1200,6200,50,100,10,50}))
+          << QPair<DYNSYS_UNIT>("SHP2000",INT_LIST({1200,6200,60,100,0,30}))
+          << QPair<DYNSYS_UNIT>("SHP9000",INT_LIST({1200,6200,40,80,0,30}))
+          << QPair<DYNSYS_UNIT>("Unknown Type I",INT_LIST({1000,6200,60,100,0,0}))
+          << QPair<DYNSYS_UNIT>("Unknown Type II",INT_LIST({1000,6200,60,120,0,0}))
+          << QPair<DYNSYS_UNIT>("Unknown Type III",INT_LIST({1000,6200,80,140,0,0}))
+          << QPair<DYNSYS_UNIT>("Unknown Type IV",INT_LIST({800,6200,80,140,0,0}));
+    return std::move(table);
 }
-inline const int* lookupColmPreset(QString preset){
-    if(preset == "Slight")
-        return std::initializer_list<int>({120,200}).begin();
-    else if(preset == "Level 1")
-        return std::initializer_list<int>({130,275}).begin();
-    else if(preset == "Level 2")
-        return std::initializer_list<int>({140,350}).begin();
-    else if(preset == "Level 3")
-        return std::initializer_list<int>({150,425}).begin();
-    else if(preset == "Level 4")
-        return std::initializer_list<int>({160,500}).begin();
-    else if(preset == "Level 5")
-        return std::initializer_list<int>({170,575}).begin();
-    else if(preset == "Level 6")
-        return std::initializer_list<int>({180,650}).begin();
-    else if(preset == "Level 7")
-        return std::initializer_list<int>({190,725}).begin();
-    else if(preset == "Extreme")
-        return std::initializer_list<int>({200,800}).begin();
-return nullptr;
+
+inline const QMap<COLM_UNIT> COLM_LOOKUP_TABLE(){
+    InitializableQMap<COLM_UNIT> table;
+    table << QPair<COLM_UNIT>("Unknown",INT_LIST({0,0}))
+          << QPair<COLM_UNIT>("Slight",INT_LIST({120,200}))
+          << QPair<COLM_UNIT>("Level 1",INT_LIST({130,275}))
+          << QPair<COLM_UNIT>("Level 2",INT_LIST({140,350}))
+          << QPair<COLM_UNIT>("Level 3",INT_LIST({150,425}))
+          << QPair<COLM_UNIT>("Level 4",INT_LIST({160,500}))
+          << QPair<COLM_UNIT>("Level 5",INT_LIST({170,575}))
+          << QPair<COLM_UNIT>("Level 6",INT_LIST({180,650}))
+          << QPair<COLM_UNIT>("Level 7",INT_LIST({190,725}))
+          << QPair<COLM_UNIT>("Extreme",INT_LIST({200,800}));
+    return std::move(table);
+}
+
+inline const FLOAT_LIST lookupEQPreset(QString preset){
+    auto table = EQ_LOOKUP_TABLE();
+    if(table.contains(preset))
+        return table[preset];
+    else
+        return table["Default"];
+}
+inline const INT_LIST lookupDynsysPreset(QString preset){
+    auto table = DYNSYS_LOOKUP_TABLE();
+    if(table.contains(preset))
+        return table[preset];
+    else
+        return table["Unknown"];
+}
+
+inline const INT_LIST lookupColmPreset(QString preset){
+    auto table = COLM_LOOKUP_TABLE();
+    if(table.contains(preset))
+        return table[preset];
+    else
+        return table["Unknown"];
 }
 
 inline const std::initializer_list<float> defaultEQPreset(){
-    return std::initializer_list<float>({0,0,0,0,0,0,0,0,0,0});
+    return EQ_LOOKUP_TABLE()["Default"];
 }
 }
 #endif // PRESETEXTENSION_H
