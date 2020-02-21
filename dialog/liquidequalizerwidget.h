@@ -55,6 +55,7 @@ class LiquidEqualizerWidget : public QWidget
     void setAnimationDuration(int animationDuration);
 
 signals:
+    void mouseReleased();
     void redrawRequired();
     void bandsUpdated();
     void cancelAnimations();

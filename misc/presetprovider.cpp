@@ -12,21 +12,42 @@
  *
  *  ThePBone <tim.schneeberger(at)outlook.de> (c) 2020
  */
-#ifndef PRESETEXTENSION_H
-#define PRESETEXTENSION_H
-#include <QString>
-#include <QMap>
-#include "initializableqmap.h"
+#include "presetprovider.h"
+#include "common.h"
+namespace PresetProvider {
+const FLOAT_LIST EQ::defaultPreset(){
+    return EQ_LOOKUP_TABLE()["Default"];
+}
 
-#define FLOAT_LIST std::initializer_list<float>
-#define INT_LIST std::initializer_list<int>
+const FLOAT_LIST EQ::lookupPreset(QString preset){
+    auto table = EQ_LOOKUP_TABLE();
+    if(table.contains(preset))
+        return table[preset];
+    else
+        return table["Default"];
+}
 
-#define EQ_UNIT QString,FLOAT_LIST
-#define DYNSYS_UNIT QString,INT_LIST
-#define COLM_UNIT QString,INT_LIST
+const QString EQ::reverseLookup(QVector<float> data){
+    auto table = EQ_LOOKUP_TABLE();
+    for(auto key : table.keys()){
+        QVector<float> row(table[key]);
+        int it = 0;
+        bool different = false;
+        for(auto cur_data : row){
+            bool equal = isApproximatelyEqual<float>(cur_data,data.at(it),0.01);
+            if(!equal){
+                different = true;
+                break;
+            }
+            it++;
+        }
+        if(!different)
+            return key;
+    }
+    return "Custom";
+}
 
-namespace EQ {
-inline const QMap<EQ_UNIT> EQ_LOOKUP_TABLE(){
+const QMap<EQ_UNIT> EQ::EQ_LOOKUP_TABLE(){
     InitializableQMap<EQ_UNIT> table;
     table << QPair<EQ_UNIT>("Default",FLOAT_LIST({0,0,0,0,0,0,0,0,0,0}))
           << QPair<EQ_UNIT>("Pop",FLOAT_LIST({0,0,0,1.25,2.50,5.00,-1.50,-3.00,-3.00,-3.00}))
@@ -34,7 +55,7 @@ inline const QMap<EQ_UNIT> EQ_LOOKUP_TABLE(){
           << QPair<EQ_UNIT>("Jazz",FLOAT_LIST({0,0,2.73,6.00,-6.00,-2.50,2.50,-0.75,-0.75,-0.75}))
           << QPair<EQ_UNIT>("Classic",FLOAT_LIST({0,0,-9.00,0,1.50,0,0,9.00,9.00,9.00}))
           << QPair<EQ_UNIT>("Bass",FLOAT_LIST({11.50,8.50,5.00,2.00,0,0,0,0,0,0}))
-          << QPair<EQ_UNIT>("Clear",FLOAT_LIST({0,0,0,1.25,2.50,5.00,-1.50,-3.00,-3.00,-3.00}))
+          << QPair<EQ_UNIT>("Clear",FLOAT_LIST({3.50,6.50,9.50,6.50,3.50,1.25,5.00,9.00,11.00,9.00}))
           << QPair<EQ_UNIT>("Volume Boost",FLOAT_LIST({12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00}))
           << QPair<EQ_UNIT>("Hip-Hop",FLOAT_LIST({4.50,4.00,1.50,3.00,-1.50,-1.50,1.50,-1.00,1.50,3.00}))
           << QPair<EQ_UNIT>("Dubstep",FLOAT_LIST({12.00,0.50,-2.00,-5.00,-5.00,-4.50,-2.50,0,-3.00,-.050}))
@@ -51,7 +72,7 @@ inline const QMap<EQ_UNIT> EQ_LOOKUP_TABLE(){
     return std::move(table);
 }
 
-inline const QMap<DYNSYS_UNIT> DYNSYS_LOOKUP_TABLE(){
+const QMap<DYNSYS_UNIT> Dynsys::DYNSYS_LOOKUP_TABLE(){
     InitializableQMap<DYNSYS_UNIT> table;
     table << QPair<DYNSYS_UNIT>("Unknown",INT_LIST({0}))
           << QPair<DYNSYS_UNIT>("Extreme Headphone (v2)",INT_LIST({140,6200,40,60,10,80}))
@@ -76,7 +97,36 @@ inline const QMap<DYNSYS_UNIT> DYNSYS_LOOKUP_TABLE(){
     return std::move(table);
 }
 
-inline const QMap<COLM_UNIT> COLM_LOOKUP_TABLE(){
+const INT_LIST Dynsys::lookupPreset(QString preset){
+    auto table = DYNSYS_LOOKUP_TABLE();
+    if(table.contains(preset))
+        return table[preset];
+    else
+        return table["Unknown"];
+}
+
+
+const QString Dynsys::reverseLookup(QVector<int> data){
+    auto table = DYNSYS_LOOKUP_TABLE();
+    for(auto key : table.keys()){
+        QVector<int> row(table[key]);
+        int it = 0;
+        bool different = false;
+        for(auto cur_data : row){
+            bool equal = cur_data == data.at(it);
+            if(!equal){
+                different = true;
+                break;
+            }
+            it++;
+        }
+        if(!different)
+            return key;
+    }
+    return "Custom";
+}
+
+const QMap<COLM_UNIT> Colm::COLM_LOOKUP_TABLE(){
     InitializableQMap<COLM_UNIT> table;
     table << QPair<COLM_UNIT>("Unknown",INT_LIST({0,0}))
           << QPair<COLM_UNIT>("Slight",INT_LIST({120,200}))
@@ -91,31 +141,11 @@ inline const QMap<COLM_UNIT> COLM_LOOKUP_TABLE(){
     return std::move(table);
 }
 
-inline const FLOAT_LIST lookupEQPreset(QString preset){
-    auto table = EQ_LOOKUP_TABLE();
-    if(table.contains(preset))
-        return table[preset];
-    else
-        return table["Default"];
-}
-inline const INT_LIST lookupDynsysPreset(QString preset){
-    auto table = DYNSYS_LOOKUP_TABLE();
-    if(table.contains(preset))
-        return table[preset];
-    else
-        return table["Unknown"];
-}
-
-inline const INT_LIST lookupColmPreset(QString preset){
+const std::initializer_list<int> Colm::lookupPreset(QString preset){
     auto table = COLM_LOOKUP_TABLE();
     if(table.contains(preset))
         return table[preset];
     else
         return table["Unknown"];
 }
-
-inline const std::initializer_list<float> defaultEQPreset(){
-    return EQ_LOOKUP_TABLE()["Default"];
 }
-}
-#endif // PRESETEXTENSION_H

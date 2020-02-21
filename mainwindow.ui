@@ -630,6 +630,11 @@
                      <string>Unknown Type IV</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Custom</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
@@ -1258,6 +1263,11 @@
             <item>
              <property name="text">
               <string>Volume Boost</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Custom</string>
              </property>
             </item>
            </widget>

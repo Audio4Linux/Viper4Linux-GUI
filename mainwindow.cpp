@@ -691,7 +691,7 @@ void MainWindow::LoadConfig(){
     ui->dyn_ycoeff1->setValue(conf->getInt("dynsys_ycoeff1"));
     ui->dyn_ycoeff2->setValue(conf->getInt("dynsys_ycoeff2"));
     ui->dyn_sidegain1->setValue(conf->getInt("dynsys_sidegain1"));
-    ui->dyn_sidegain2->setValue(conf->getInt("dynsys_sidegain1"));
+    ui->dyn_sidegain2->setValue(conf->getInt("dynsys_sidegain2"));
     ui->dyn_bassgain->setValue(conf->getInt("dynsys_bassgain"));
 
     int eq1 = conf->getInt("eq_band1");
@@ -718,8 +718,10 @@ void MainWindow::LoadConfig(){
         it++;
     }
     if(eqReloadRequired)
-        ui->eq_widget->setBands(eq_data);
+        ui->eq_widget->setBands(eq_data,false);
 
+    UpdateEqStringFromWidget();
+    UpdateDynsysStringFromWidget();
     UpdateAllUnitLabels();
 
     QString ir = conf->getString("conv_ir_path",false);
@@ -834,13 +836,18 @@ void MainWindow::ApplyConfig(bool restart){
 
 //---Predefined Presets
 void MainWindow::EqPresetSelectionUpdated(){
-    auto preset = EQ::lookupEQPreset(ui->eqpreset->currentText());
+    if(ui->eqpreset->currentText() == "Custom")
+        return;
+    auto preset = PresetProvider::EQ::lookupPreset(ui->eqpreset->currentText());
     if(preset.size() > 0)SetEQ(preset);
     else ResetEQ();
 }
 void MainWindow::DynsysPresetSelectionUpdated(){
-    const auto data = EQ::lookupDynsysPreset(ui->dynsys_preset->currentText());
-    if(data.size() <= 1)return;
+    if(ui->dynsys_preset->currentText() == "Custom")
+        return;
+    const auto data = PresetProvider::Dynsys::lookupPreset(ui->dynsys_preset->currentText());
+    if(data.size() <= 1)
+        return;
     lockapply=true;
     ui->dyn_xcoeff1->setValue(data.begin()[0]);
     ui->dyn_xcoeff2->setValue(data.begin()[1]);
@@ -853,7 +860,7 @@ void MainWindow::DynsysPresetSelectionUpdated(){
 }
 void MainWindow::ColmPresetSelectionUpdated(){
     QString selection = ui->colmpreset->text();
-    const auto data = EQ::lookupColmPreset(selection);
+    const auto data = PresetProvider::Colm::lookupPreset(selection);
     lockapply=true;
     ui->colmwide->setValue(data.begin()[0]);
     ui->colmdepth->setValue(data.begin()[1]);
@@ -887,10 +894,10 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     }
     else if(obj==ui->gain){
         //AGC
-        if(d < 50) UpdateTooltipLabelUnit(obj,tr("Very Slight (%1)").arg(QString::number(d)),alt==nullptr);
-        else if(d < 100) UpdateTooltipLabelUnit(obj,tr("Slight (%1)").arg(QString::number(d)),alt==nullptr);
-        else if(d < 300) UpdateTooltipLabelUnit(obj,tr("Moderate (%1)").arg(QString::number(d)),alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
+        if(d <= 50) UpdateTooltipLabelUnit(obj,tr("Very Slight (%1)").arg(QString::number(d)),alt==nullptr);
+        else if(d <= 100) UpdateTooltipLabelUnit(obj,tr("Slight (%1)").arg(QString::number(d)),alt==nullptr);
+        else if(d <= 300) UpdateTooltipLabelUnit(obj,tr("Moderate (%1)").arg(QString::number(d)),alt==nullptr);
+        else UpdateTooltipLabelUnit(obj,tr("Extreme (%1)").arg(QString::number( d )),alt==nullptr);
     }
     else if(obj==ui->axmode){
         //AnalogX
@@ -913,7 +920,7 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
 
         UpdateTooltipLabelUnit(obj,
                                QString::number(result, 'f', 2) + "dB "
-                               "(" + QString::number( (d-100)/20 ) + "%)",
+                                                                 "(" + QString::number( (d-100)/20 ) + "%)",
                                alt==nullptr);
     }
     //Diff-Surround
@@ -1017,7 +1024,8 @@ void MainWindow::ResetEQ(){
     QTimer::singleShot(510,this,[this](){
         ui->reset_eq->setEnabled(true);
     });
-    SetEQ(EQ::defaultEQPreset());
+    ui->eqpreset->setCurrentIndex(0);
+    SetEQ(PresetProvider::EQ::defaultPreset());
 }
 void MainWindow::SetIRS(const QString& irs,bool apply){
     if(activeirs != irs) m_irsNeedUpdate = true;
@@ -1027,6 +1035,19 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
     ui->convpath->setCursorPosition(0);
     if(apply)ApplyConfig();
 }
+void MainWindow::UpdateEqStringFromWidget(){
+    QString currentEqPresetName =
+            PresetProvider::EQ::reverseLookup(ui->eq_widget->getBands());
+    ui->eqpreset->setCurrentText(currentEqPresetName);
+}
+void MainWindow::UpdateDynsysStringFromWidget(){
+    QString currentDynsysPresetName =
+            PresetProvider::Dynsys::reverseLookup({ui->dyn_xcoeff1->value(),ui->dyn_xcoeff2->value(),
+                                                   ui->dyn_ycoeff1->value(),ui->dyn_ycoeff2->value(),
+                                                   ui->dyn_sidegain1->value(),ui->dyn_sidegain2->value()});
+    ui->dynsys_preset->setCurrentText(currentDynsysPresetName);
+}
+
 QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
     if(confmap.count() < 1){
@@ -1066,6 +1087,9 @@ void MainWindow::ConnectActions(){
     {ui->vb,ui->clarity,ui->vcure,ui->tubesim,ui->vhp,ui->diff,ui->reverb,ui->enable_eq,ui->enable_comp,ui->noclip,ui->m_gain,
      ui->m_width,ui->m_attack,ui->m_release,ui->vb,ui->clarity,ui->vcure,ui->tubesim,ui->agc,ui->colm,ui->vse,ui->conv,ui->ax,ui->dynsys});
 
+    QList<QWidget*> registerDynsysUpdate(
+    {ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_sidegain1,ui->dyn_sidegain2});
+
     foreach (QWidget* w, registerValueChange)
         connect(w,              SIGNAL(valueChanged(int)),          this,   SLOT(UpdateUnitLabel(int)));
 
@@ -1075,6 +1099,9 @@ void MainWindow::ConnectActions(){
     foreach (QWidget* w, registerClick)
         connect(w,              SIGNAL(clicked()),                  this,   SLOT(OnUpdate()));
 
+    foreach (QWidget* w, registerDynsysUpdate)
+        connect(w,              SIGNAL(sliderReleased()),           this,   SLOT(UpdateDynsysStringFromWidget()));
+
     connect(ui->apply,          SIGNAL(clicked()),                  this,   SLOT(ApplyConfig()));
     connect(ui->disableFX,      SIGNAL(clicked()),                  this,   SLOT(DisableFX()));
     connect(ui->reset_eq,       SIGNAL(clicked()),                  this,   SLOT(ResetEQ()));
@@ -1083,6 +1110,7 @@ void MainWindow::ConnectActions(){
     connect(ui->cpreset,        SIGNAL(clicked()),                  this,   SLOT(DialogHandler()));
     connect(ui->set,            SIGNAL(clicked()),                  this,   SLOT(DialogHandler()));
     connect(ui->eq_widget,      SIGNAL(bandsUpdated()),             this,   SLOT(ApplyConfig()));
+    connect(ui->eq_widget,      SIGNAL(mouseReleased()),            this,   SLOT(UpdateEqStringFromWidget()));
     connect(ui->eqpreset,       SIGNAL(currentIndexChanged(int)),   this,   SLOT(EqPresetSelectionUpdated()));
     connect(ui->dynsys_preset,  SIGNAL(currentIndexChanged(int)),   this,   SLOT(DynsysPresetSelectionUpdated()));
     connect(ui->vbmode,         SIGNAL(valueChanged(int)),          this,   SLOT(OnRelease()));

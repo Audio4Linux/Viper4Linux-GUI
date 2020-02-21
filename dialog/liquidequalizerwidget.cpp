@@ -90,6 +90,7 @@ void LiquidEqualizerWidget::mousePressEvent(QMouseEvent *event){
 void LiquidEqualizerWidget::mouseReleaseEvent(QMouseEvent *event){
     mHoldDown = false;
     emit bandsUpdated();
+    emit mouseReleased();
     repaint();
 }
 void LiquidEqualizerWidget::mouseMoveEvent(QMouseEvent *event){

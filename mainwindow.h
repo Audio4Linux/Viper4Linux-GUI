@@ -34,7 +34,7 @@
 #include "config/appconfigwrapper.h"
 #include "misc/mathfunctions.h"
 #include "misc/loghelper.h"
-#include "misc/presetextension.h"
+#include "misc/presetprovider.h"
 #include "misc/common.h"
 #include "config/dbusproxy.h"
 #include "misc/overlaymsgproxy.h"
@@ -88,6 +88,8 @@ private slots:
     void DialogHandler();
     void updateTrayPresetList();
     void RefreshSpectrumParameters();
+    void UpdateEqStringFromWidget();
+    void UpdateDynsysStringFromWidget();
 private:
     ConfigContainer* conf;
     AppConfigWrapper* m_appwrapper;
@@ -133,19 +135,6 @@ private:
     void ShowDBusError();
     void CheckDBusVersion();
     QVariantMap readConfig();
-
-    template<typename TReal>
-    static bool isApproximatelyEqual(TReal a, TReal b, TReal tolerance = std::numeric_limits<TReal>::epsilon())
-    {
-        TReal diff = std::fabs(a - b);
-        if (diff <= tolerance)
-            return true;
-
-        if (diff < std::fmax(std::fabs(a), std::fabs(b)) * tolerance)
-            return true;
-
-        return false;
-    }
 };
 
 #endif // MAINWINDOW_H

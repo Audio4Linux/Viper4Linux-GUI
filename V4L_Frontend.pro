@@ -65,6 +65,7 @@ SOURCES += \
     misc/converter.cpp \
     misc/loghelper.cpp \
     misc/overlaymsgproxy.cpp \
+    misc/presetprovider.cpp \
     misc/stylehelper.cpp
 
 HEADERS += \
@@ -114,7 +115,7 @@ HEADERS += \
     misc/loghelper.h \
     misc/mathfunctions.h \
     misc/overlaymsgproxy.h \
-    misc/presetextension.h \
+    misc/presetprovider.h \
     misc/stylehelper.h \
     misc/styles/darkstyle.h \
     misc/versioncontainer.h
