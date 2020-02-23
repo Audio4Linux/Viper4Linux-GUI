@@ -143,8 +143,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     else trayIcon->hide();
 
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
-        //conf->setConfigMap(m_dbus->FetchPropertyMap());
-        //LoadConfig(Context::DBus);
+        conf->setConfigMap(m_dbus->FetchPropertyMap());
+        LoadConfig(Context::DBus);
     });
 
     connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
