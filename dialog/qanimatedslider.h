@@ -68,7 +68,8 @@ public:
                By default, this value is set to 300ms.
     */
     void setDuration(int duration);
-
+signals:
+    void valueChangedA(int value);
 private:
     QVariantAnimation* anim;
     int cValue = 0;

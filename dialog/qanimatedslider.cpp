@@ -1,4 +1,5 @@
 #include "qanimatedslider.h"
+#include <QEvent>
 /*
  *  MIT License
 
@@ -28,8 +29,9 @@ QAnimatedSlider::QAnimatedSlider(QWidget *parent)
     : QSlider(parent)
 {
     anim = new QPropertyAnimation(this,"value");
-    connect(this,&QSlider::valueChanged,[this]{
+    connect(this,&QSlider::sliderMoved,[this]{
         cValue = value();
+        emit valueChangedA(cValue);
     });
 }
 
@@ -76,5 +78,6 @@ void QAnimatedSlider::setDuration(int duration)
 {
     mDuration = duration;
 }
+
 
 
