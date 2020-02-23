@@ -5,6 +5,7 @@
 #include "palettedlg.h"
 #include "misc/autostartmanager.h"
 
+#include <QProcess>
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QUrl>
@@ -15,6 +16,7 @@
 
 using namespace std;
 static bool lockslot = false;
+
 SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settings){
@@ -60,11 +62,11 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem* prev){
         int toplevel_index = ui->selector->indexOfTopLevelItem(cur);
         switch(toplevel_index){
-            case -1:
+        case -1:
             if(cur->text(0) == "Design")
-                ui->stackedWidget->setCurrentIndex(5);
-            if(cur->text(0) == "Advanced")
                 ui->stackedWidget->setCurrentIndex(6);
+            if(cur->text(0) == "Advanced")
+                ui->stackedWidget->setCurrentIndex(7);
             break;
         default:
             ui->stackedWidget->setCurrentIndex(toplevel_index);
@@ -196,6 +198,8 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
     });
 
+    refreshDevices();
+
     int bands = appconf->getSpectrumBands();
     int minfreq = appconf->getSpectrumMinFreq();
     int maxfreq = appconf->getSpectrumMaxFreq();
@@ -271,6 +275,28 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         appconf->setSpectrumInput(str);
     });
 
+    auto deviceUpdated = [this](){
+        if(lockslot) return;
+        QString absolute =
+                QFileInfo(appconf->getPath()).absoluteDir().absolutePath();
+        QString devices(pathAppend(absolute,"devices.conf"));
+        if(ui->dev_mode_auto->isChecked()){
+            QFile(devices).remove();
+        }else{
+            if(ui->dev_select->currentData() == "---")
+                return;
+
+            ConfigContainer* devconf = new ConfigContainer();
+            devconf->setConfigMap(ConfigIO::readFile(devices));
+            devconf->setValue("location",ui->dev_select->currentData());
+            ConfigIO::writeFile(devices,devconf->getConfigMap());
+        }
+    };
+
+    connect(ui->dev_reload_viper,&QPushButton::clicked,mainwin,&MainWindow::Restart);
+    connect(ui->dev_mode_auto,&QRadioButton::clicked,this,deviceUpdated);
+    connect(ui->dev_mode_manual,&QRadioButton::clicked,this,deviceUpdated);
+    connect(ui->dev_select,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, deviceUpdated);
 
 #ifndef QT_NO_SYSTEMTRAYICON
     ui->systray_unsupported->hide();
@@ -288,6 +314,65 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
 SettingsDlg::~SettingsDlg(){
     delete ui;
 }
+void SettingsDlg::refreshDevices()
+{
+    lockslot = true;
+    ui->dev_select->clear();
+    QString absolute =
+            QFileInfo(appconf->getPath()).absoluteDir().absolutePath();
+    QFile devices(pathAppend(absolute,"devices.conf"));
+    bool devmode_auto = !devices.exists();
+    ui->dev_mode_auto->setChecked(devmode_auto);
+    ui->dev_mode_manual->setChecked(!devmode_auto);
+
+    QProcess process;
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    env.insert("LC_ALL", "C");
+    process.setProcessEnvironment(env);
+    process.start("sh", QStringList()<<"-c"<<"pactl list sinks | grep \'Name: \' -A1");
+    process.waitForFinished(500);
+
+    ConfigContainer* devconf = new ConfigContainer();
+    devconf->setConfigMap(ConfigIO::readFile(pathAppend(absolute,"devices.conf")));
+    QString out = process.readAllStandardOutput();
+    ui->dev_select->addItem("...","---");
+    for(auto item : out.split("Name:")){
+        item.prepend("Name:");
+        QRegularExpression re("(?<=(Name:)\\s)(?<name>.+)[\\s\\S]+(?<=(Description:)\\s)(?<desc>.+)");
+        QRegularExpressionMatch match = re.match(item, 0, QRegularExpression::PartialPreferCompleteMatch);
+        if(match.hasMatch()){
+            ui->dev_select->addItem(QString("%1 (%2)").arg(match.captured("desc")).arg(match.captured("name")),
+                                    match.captured("name"));
+        }
+    }
+    QString dev_location = devconf->getString("location");
+    if(dev_location.isEmpty())
+        ui->dev_select->setCurrentIndex(0);
+    else{
+        bool notFound = true;
+        for(int i = 0; i < ui->dev_select->count(); i++){
+            if(ui->dev_select->itemData(i) ==
+                    dev_location){
+                notFound = false;
+                ui->dev_select->setCurrentIndex(i);
+                break;
+            }
+        }
+        if(notFound){
+            QString name = QString("Unknown (%1)").arg(dev_location);
+            ui->dev_select->addItem(name,dev_location);
+            ui->dev_select->setCurrentText(name);
+        }
+    }
+    lockslot = false;
+}
+
+void SettingsDlg::setVisible(bool visible)
+{
+    refreshDevices();
+    QWidget::setVisible(visible);
+}
+
 void SettingsDlg::updateInputSinks(){
     lockslot = true;
     ui->sa_input->clear();

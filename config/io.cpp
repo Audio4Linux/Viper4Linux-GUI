@@ -8,16 +8,17 @@
 QString ConfigIO::writeString(QVariantMap map){
     QString ret("");
     for(auto e : map.keys())
-       ret += QString("%1=%2\n").arg(e).arg(map.value(e).toString());
+        ret += QString("%1=%2\n").arg(e).arg(map.value(e).toString());
     return ret;
 }
 void ConfigIO::writeFile(QString path,QVariantMap map,QString prefix){
     std::ofstream myfile(path.toUtf8().constData());
     if (myfile.is_open())
     {
-        myfile << prefix.toUtf8().constData() << std::endl;
+        if(!prefix.isEmpty())
+            myfile << prefix.toUtf8().constData() << std::endl;
         for(auto e : map.keys())
-          myfile << e.toStdString() << "=" << map.value(e).toString().toStdString() << std::endl;
+            myfile << e.toStdString() << "=" << map.value(e).toString().toStdString() << std::endl;
         myfile.close();
     }
 }

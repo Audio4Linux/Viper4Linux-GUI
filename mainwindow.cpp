@@ -1050,11 +1050,22 @@ QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
     if(confmap.count() < 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
-        msg->openError(tr("Viper not properly installed"),
-                       tr("Unable to find a configuration file for viper,\n"
-                          "please make sure that viper has been installed correctly.\n"
+        connect(msg,&OverlayMsgProxy::buttonPressed,[this]{
+            std::filebuf fb;
+            fb.open (m_appwrapper->getPath().toUtf8().constData(),std::ios::out);
+            std::ostream os(&fb);
+            os << default_config;
+            fb.close();
+            conf->setConfigMap(readConfig());
+            LoadConfig();
+            m_irsNeedUpdate = true;
+            ApplyConfig();
+        });
+        msg->openError(tr("Configuration file missing"),
+                       tr("Please make sure that viper has been installed correctly.\n"
                           "If you're sure that your setup is correct, no further actions\n"
                           "are required. This GUI will automatically generate a configuration."));
+
     }
     return confmap;
 }

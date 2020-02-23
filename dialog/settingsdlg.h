@@ -30,6 +30,8 @@ public:
     Ui::settings *ui;
     ~SettingsDlg();
     void updateInputSinks();
+    void refreshDevices();
+    void setVisible(bool visible) override;
 private slots:
         void openPalConfig();
         void github();
