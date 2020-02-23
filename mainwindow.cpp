@@ -818,7 +818,9 @@ void MainWindow::ApplyConfig(bool restart){
     dbus_template.setValue("conv_ir_path",activeirs);
     m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
     if(restart){
-        if(conf->getString("conv_ir_path",false).contains('$') && m_irsNeedUpdate)
+        if(conf->getString("conv_ir_path",false).contains('$') &&
+                conf->getBool("conv_enable",false) &&
+                m_irsNeedUpdate)
             Restart();
         else
             if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS){

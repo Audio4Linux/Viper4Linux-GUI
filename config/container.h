@@ -27,7 +27,7 @@ public:
     QString getString(QString key,bool setToDefaultIfMissing=true);
     int getInt(QString key);
     float getFloat(QString key);
-    bool getBool(QString key);
+    bool getBool(QString key, bool setToDefaultIfMissing=true);
 
     QVariantMap getConfigMap();
     void setConfigMap(QVariantMap newmap);

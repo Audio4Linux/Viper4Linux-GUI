@@ -29,8 +29,12 @@ QAnimatedSlider::QAnimatedSlider(QWidget *parent)
     : QSlider(parent)
 {
     anim = new QPropertyAnimation(this,"value");
-    connect(this,&QSlider::sliderMoved,[this]{
+    connect(this,&QSlider::sliderReleased,[this]{
         cValue = value();
+        emit valueChangedA(cValue);
+    });
+    connect(this,&QSlider::sliderMoved,[this](int position){
+        cValue = position;
         emit valueChangedA(cValue);
     });
 }

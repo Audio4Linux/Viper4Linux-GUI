@@ -39,10 +39,10 @@ float ConfigContainer::getFloat(QString key){
     }
     return getVariant(key).toFloat();
 }
-bool ConfigContainer::getBool(QString key){
+bool ConfigContainer::getBool(QString key, bool setToDefaultIfMissing){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
-        map[key] = false;
+        if(setToDefaultIfMissing)map[key] = false;
         return false;
     }
     return getVariant(key).toBool();
