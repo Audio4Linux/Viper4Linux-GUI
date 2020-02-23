@@ -141,7 +141,7 @@ const QMap<COLM_UNIT> Colm::COLM_LOOKUP_TABLE(){
     return std::move(table);
 }
 
-const std::initializer_list<int> Colm::lookupPreset(QString preset){
+const INT_LIST Colm::lookupPreset(QString preset){
     auto table = COLM_LOOKUP_TABLE();
     if(table.contains(preset))
         return table[preset];

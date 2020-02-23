@@ -143,8 +143,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     else trayIcon->hide();
 
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
-        conf->setConfigMap(m_dbus->FetchPropertyMap());
-        LoadConfig(Context::DBus);
+        //conf->setConfigMap(m_dbus->FetchPropertyMap());
+        //LoadConfig(Context::DBus);
     });
 
     connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
@@ -717,8 +717,10 @@ void MainWindow::LoadConfig(Context ctx){
     if(eqReloadRequired)
         ui->eq_widget->setBands(eq_data,false);
 
-    if(ctx != Context::DBus) UpdateEqStringFromWidget();
-    UpdateDynsysStringFromWidget();
+    if(ctx != Context::DBus){
+        UpdateEqStringFromWidget();
+        UpdateDynsysStringFromWidget();
+    }
     UpdateAllUnitLabels();
 
     QString ir = conf->getString("conv_ir_path",false);
@@ -1012,9 +1014,7 @@ void MainWindow::SetEQ(const QVector<float> data){
     lockapply=true;
     ui->eq_widget->setBands(QVector<float>(data));
     lockapply=false;
-    QTimer::singleShot(510,this,[this](){
-        OnUpdate(true);
-    });
+    OnUpdate(true);
 }
 void MainWindow::ResetEQ(){
     ui->reset_eq->setEnabled(false);
@@ -1067,9 +1067,11 @@ AppConfigWrapper* MainWindow::getACWrapper(){
 
 //---Connect UI-Signals
 void MainWindow::ConnectActions(){    
-    QList<QWidget*> registerValueChange(
-    {ui->convcc,ui->vbfreq,ui->vbgain,ui->vbmode,ui->difflvl,ui->vhplvl,ui->roomsize,ui->roomwidth,ui->roomdamp,
-     ui->wet,ui->dry,ui->colmwide,ui->colmmidimg,ui->colmdepth,ui->vclvl,ui->vcmode,ui->gain,ui->maxgain,ui->maxvol,
+    QList<QWidget*> registerValueChange({ui->vbmode,ui->vcmode});
+
+    QList<QAnimatedSlider*> registerValueAChange(
+    {ui->convcc,ui->vbfreq,ui->vbgain,ui->difflvl,ui->vhplvl,ui->roomsize,ui->roomwidth,ui->roomdamp,
+     ui->wet,ui->dry,ui->colmwide,ui->colmmidimg,ui->colmdepth,ui->vclvl,ui->gain,ui->maxgain,ui->maxvol,
      ui->outputpan,ui->limiter,ui->outvolume,ui->vcurelvl,ui->axmode,ui->barkfreq,ui->barkcon,ui->comprelease,ui->compgain,
      ui->compwidth,ui->comp_ratio,ui->comp_thres,ui->compattack,ui->comprelease,ui->a_adapt,ui->a_crest,ui->a_maxatk,ui->a_maxrel,
      ui->a_kneewidth,ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_bassgain,ui->dyn_sidegain1,ui->dyn_sidegain2});
@@ -1090,6 +1092,9 @@ void MainWindow::ConnectActions(){
 
     foreach (QWidget* w, registerValueChange)
         connect(w,              SIGNAL(valueChanged(int)),          this,   SLOT(UpdateUnitLabel(int)));
+
+    foreach (QWidget* w, registerValueAChange)
+        connect(w,              SIGNAL(valueChangedA(int)),          this,   SLOT(UpdateUnitLabel(int)));
 
     foreach (QWidget* w, registerSliderRelease)
         connect(w,              SIGNAL(sliderReleased()),           this,   SLOT(OnRelease()));

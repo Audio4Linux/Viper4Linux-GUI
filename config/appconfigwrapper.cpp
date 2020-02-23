@@ -127,7 +127,9 @@ void AppConfigWrapper::setTheme(QString thm){
     saveAppConfig();
 }
 QString AppConfigWrapper::getTheme(){
-    return appconf->getString("theme.name");
+    QString name = appconf->getString("theme.name");
+    if(name.isEmpty()) name = "Fusion";
+    return name;
 }
 QString AppConfigWrapper::getIrsPath(){
     QString irs_path = chopFirstLastChar(appconf->getString("convolver.default.irspath",false));

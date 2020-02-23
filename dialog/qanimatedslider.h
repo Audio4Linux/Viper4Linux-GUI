@@ -75,5 +75,6 @@ private:
     int cValue = 0;
     int mDuration = 300;
     QEasingCurve mEasingCurve = QEasingCurve(QEasingCurve::Type::InOutCirc);
+    bool event(QEvent *event) override;
 };
 #endif // QANIMATEDSLIDER_H

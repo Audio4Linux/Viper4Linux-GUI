@@ -20,7 +20,7 @@
 #include "initializableqmap.h"
 
 #define FLOAT_LIST QVector<float>
-#define INT_LIST std::initializer_list<int>
+#define INT_LIST QVector<int>
 
 #define EQ_UNIT QString,FLOAT_LIST
 #define DYNSYS_UNIT QString,INT_LIST

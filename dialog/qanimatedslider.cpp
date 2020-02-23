@@ -1,5 +1,5 @@
 #include "qanimatedslider.h"
-#include <QEvent>
+#include <QKeyEvent>
 /*
  *  MIT License
 
@@ -77,6 +77,29 @@ int QAnimatedSlider::duration() const
 void QAnimatedSlider::setDuration(int duration)
 {
     mDuration = duration;
+}
+
+bool QAnimatedSlider::event(QEvent *ev)
+{
+    ev->ignore();
+    if(ev->type() == QEvent::Type::KeyRelease){
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(ev);
+        switch (keyEvent->key()) {
+        case Qt::Key::Key_Up:
+        case Qt::Key::Key_Down:
+        case Qt::Key::Key_Left:
+        case Qt::Key::Key_Right:
+        case Qt::Key::Key_PageUp:
+        case Qt::Key::Key_PageDown:
+            cValue = value();
+            emit valueChangedA(cValue);
+            return true;
+        default:
+            QSlider::event(ev);
+        }
+
+    }
+    return QSlider::event(ev);
 }
 
 
