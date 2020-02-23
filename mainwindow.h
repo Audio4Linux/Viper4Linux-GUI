@@ -57,7 +57,7 @@ public:
     void SavePresetFile(const QString&);
     AppConfigWrapper* getACWrapper();
     explicit MainWindow(QString exepath,bool traySwitch,bool allowMultipleInst,QWidget *parent = nullptr);
-    void SetEQ(const std::initializer_list<float> data);
+    void SetEQ(const QVector<float> data);
     void SetIRS(const QString& irs,bool apply);
     QString GetExecutablePath();
     void setVisible(bool visible) override;

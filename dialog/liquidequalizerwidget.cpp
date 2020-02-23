@@ -154,9 +154,10 @@ void LiquidEqualizerWidget::paintEvent(QPaintEvent* event){
     QPainterPath frequencyResponse;
     double gain = pow(10,mLevels[0] / 20.0);
 
-    for (int i = 0; i < BANDS_NUM; i++) {
+    for (int i = 0; i < BANDS_NUM - 1; i++) {
         double frequency = 15.625 * pow(2.0,i + 0.65);
-        biquads[i].refreshFilter(i,biquad::HIGH_SHELF, mLevels[i + 1] - mLevels[i],frequency * 2,SAMPLING_RATE,1,true);
+        double diff = mLevels[i + 1] - mLevels[i];
+        biquads[i].refreshFilter(i,biquad::HIGH_SHELF, diff,frequency * 2,SAMPLING_RATE,1,true);
     }
 
     for (int i = 0; i < 128; i++) {
@@ -246,7 +247,8 @@ void LiquidEqualizerWidget::setBand(int i, float value, bool animate, bool manua
     mSelectedBand = i;
     mManual = manual;
     if(animate){
-        anim[i]->stop();
+        if(anim[i] != nullptr)
+            anim[i]->stop();
         anim[i] = new QVariantAnimation(this);
         anim[i]->setDuration(500);
         anim[i]->setEasingCurve(QEasingCurve(QEasingCurve::Type::InOutCirc));

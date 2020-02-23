@@ -1008,7 +1008,7 @@ void MainWindow::UpdateAllUnitLabels(){
 }
 
 //---Helper
-void MainWindow::SetEQ(const std::initializer_list<float> data){
+void MainWindow::SetEQ(const QVector<float> data){
     lockapply=true;
     ui->eq_widget->setBands(QVector<float>(data));
     lockapply=false;

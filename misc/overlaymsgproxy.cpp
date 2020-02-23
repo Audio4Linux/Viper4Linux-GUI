@@ -16,7 +16,7 @@ OverlayMsgProxy::OverlayMsgProxy(QWidget* _obj)
 }
 
 void OverlayMsgProxy::openError(QString title, QString desc, QString close){
-    openBase(title,desc,":/icons/error.svg",close,"#d72828");
+    //TODO: uncomment - openBase(title,desc,":/icons/error.svg",close,"#d72828");
 }
 void OverlayMsgProxy::openNormal(QString title, QString desc, QString color){
     openBase(title,desc,"",tr("Close"),color);
