@@ -516,8 +516,27 @@ void MainWindow::DialogHandler(){
 
         WAF::Animation::sideSlideIn(host, WAF::BottomSide);
     }
-    else if(sender() == ui->cpreset)
+    else if(sender() == ui->cpreset){
+        if(preset_dlg->isVisible()){
+            //Hacky workaround to reliably raise the window on all distros
+            Qt::WindowFlags eFlags = preset_dlg->windowFlags();
+            eFlags |= Qt::WindowStaysOnTopHint;
+            preset_dlg->setWindowFlags(eFlags);
+            preset_dlg->show();
+            eFlags &= ~Qt::WindowStaysOnTopHint;
+            preset_dlg->setWindowFlags(eFlags);
+            preset_dlg->showNormal();
+            preset_dlg->setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+            preset_dlg->raise();
+            preset_dlg->activateWindow();
+            return;
+        }
+
+        preset_dlg->move(x() + (width() - preset_dlg->width()) / 2,
+                     y() + (height() - preset_dlg->height()) / 2);
+
         preset_dlg->show();
+    }
 }
 void MainWindow::OpenLog(){
     log_dlg->show();
