@@ -42,7 +42,7 @@ class LiquidEqualizerWidget : public QWidget
     ~LiquidEqualizerWidget();
     void setBand(int i, float value, bool animate = true, bool manual = false);
     float getBand(int i);
-    void setBands(QVector<float> vector, bool animate = true);
+    void setBands(const QVector<float>& vector, bool animate = true);
     QVector<float> getBands();
 
     bool getGridVisible() const;
@@ -107,7 +107,7 @@ private:
 
     inline float projectY(float dB) {
         float pos = (dB - MIN_DB) / (MAX_DB - MIN_DB);
-        return 1.0 - pos;
+        return 1.0f - pos;
     }
 
     inline float reverseProjectY(float pos) {

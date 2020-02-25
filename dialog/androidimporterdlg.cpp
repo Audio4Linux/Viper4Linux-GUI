@@ -9,13 +9,13 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-
+#include <utility> 
 using namespace std;
 AndroidImporterDlg::AndroidImporterDlg(QString confpath,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::importandroid)
 {
-    m_confpath = confpath;
+    m_confpath = std::move(confpath);
     ui->setupUi(this);
     ui->comboBox->addItem(tr("Official Viper4Android"),0);
     ui->comboBox->addItem(tr("Viper4Android >2.7 by Team DeWitt"),1);

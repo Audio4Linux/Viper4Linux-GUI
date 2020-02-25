@@ -55,9 +55,9 @@ int DBusProxy::GetDriverStatus(PARAM_GET param){
     }
     return -100;
 }
-bool DBusProxy::SubmitPropertyMap(QVariantMap map){
+bool DBusProxy::SubmitPropertyMap(const QVariantMap& map){
     if (m_dbInterface->isValid()) {
-        for(auto e : map.keys()){
+        for(const auto& e : map.keys()){
             m_dbInterface->setProperty(e.toUtf8().constData(),map.value(e));
         }
         return true;
@@ -73,14 +73,14 @@ QVariantMap DBusProxy::FetchPropertyMap(){
         message.setArguments(arguments);
         QDBusConnection connection = QDBusConnection::sessionBus();
         QDBusMessage reply = connection.call(message);
-        if(reply.arguments().size() < 1)
+        if(reply.arguments().empty())
             return QVariantMap();
         return qdbus_cast<QVariantMap>(*(static_cast<QDBusArgument*>((void*)reply.arguments().at(0).data())));
     }
     return QVariantMap();
 }
 
-bool DBusProxy::SetProperty(QString key, QVariant value){
+bool DBusProxy::SetProperty(const QString& key, const QVariant& value){
     if (m_dbInterface->isValid()) {
         m_dbInterface->setProperty(key.toUtf8().constData(),value);
         return true;
@@ -88,7 +88,7 @@ bool DBusProxy::SetProperty(QString key, QVariant value){
     return false;
 }
 
-QVariant DBusProxy::GetProperty(QString key){
+QVariant DBusProxy::GetProperty(const QString& key){
     if (m_dbInterface->isValid())
         return m_dbInterface->property(key.toUtf8().constData());
     return QVariant();

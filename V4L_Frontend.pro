@@ -9,7 +9,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = V4L_Frontend
 TEMPLATE = app
-QMAKE_CXXFLAGS += "-Wno-old-style-cast -Wdouble-promotion"
+QMAKE_CXXFLAGS += "-Wno-old-style-cast -Wno-unused-function"
 
 include(visualization/SpectrumAudioViewer.pri)
 
@@ -125,7 +125,6 @@ HEADERS += \
     misc/overlaymsgproxy.h \
     misc/presetprovider.h \
     misc/stylehelper.h \
-    misc/styles/darkstyle.h \
     misc/versioncontainer.h
 
 FORMS += \

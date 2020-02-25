@@ -176,8 +176,7 @@ QString PresetDlg::toCamelCase(const QString& s)
 
 void PresetDlg::add(){
     if(ui->presetName->text()==""){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Preset Name is empty"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Preset Name is empty"),QMessageBox::Ok);
         return;
     }
     m_mainwin->ApplyConfig(false);
@@ -206,8 +205,7 @@ void PresetDlg::importAndroid(){
 }
 void PresetDlg::exportAndroid(converter::configtype cmode){
     if(ui->files->selectedItems().length() == 0){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
     QString newname;
@@ -225,8 +223,7 @@ void PresetDlg::exportAndroid(converter::configtype cmode){
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         emit presetChanged();
         return;
@@ -262,8 +259,7 @@ void PresetDlg::importLinux(){
 }
 void PresetDlg::exportLinux(){
     if(ui->files->selectedItems().length() == 0){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
 
@@ -280,8 +276,7 @@ void PresetDlg::exportLinux(){
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         emit presetChanged();
         return;
@@ -296,8 +291,7 @@ void PresetDlg::exportLinux(){
 }
 void PresetDlg::remove(){
     if(ui->files->selectedItems().length() == 0){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
@@ -305,8 +299,7 @@ void PresetDlg::remove(){
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         emit presetChanged();
         return;
@@ -318,16 +311,14 @@ void PresetDlg::remove(){
 }
 void PresetDlg::load(){
     if(ui->files->selectedItems().length() == 0){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString path = pathAppend(d.absolutePath(),"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     if(!QFile::exists(fullpath)){
-        QMessageBox::StandardButton msg;
-        msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
         UpdateList();
         emit presetChanged();
         return;
@@ -368,8 +359,7 @@ void PresetDlg::showContextMenu(const QPoint &pos)
             }
             if(selectedAction == action_del) {
                 if(!QFile::exists(fullpath)){
-                    QMessageBox::StandardButton msg;
-                    msg = QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
+                    QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
                     UpdateList();
                     emit presetChanged();
                     return;

@@ -88,9 +88,11 @@ void LiquidEqualizerWidget::setGridVisible(bool gridVisible)
 }
 
 void LiquidEqualizerWidget::mousePressEvent(QMouseEvent *event){
+    Q_UNUSED(event)
     mHoldDown = true;
 }
 void LiquidEqualizerWidget::mouseReleaseEvent(QMouseEvent *event){
+    Q_UNUSED(event)
     mHoldDown = false;
     emit bandsUpdated();
     emit mouseReleased();
@@ -139,6 +141,7 @@ void LiquidEqualizerWidget::keyPressEvent(QKeyEvent *event) {
     mKey_LastMousePos = QCursor::pos();
 }
 void LiquidEqualizerWidget::keyReleaseEvent(QKeyEvent *event){
+    Q_UNUSED(event)
     QPoint point = this->mapFromGlobal(QCursor::pos());
     int index = getIndexUnderMouse(point.x());
 
@@ -148,6 +151,7 @@ void LiquidEqualizerWidget::keyReleaseEvent(QKeyEvent *event){
     }
 }
 void LiquidEqualizerWidget::paintEvent(QPaintEvent* event){
+    Q_UNUSED(event)
     mWidth = this->width() + 1;
     mHeight = this->height() + 1;
 
@@ -274,7 +278,7 @@ float LiquidEqualizerWidget::getBand(int i){
     return mLevels[i];
 }
 
-void LiquidEqualizerWidget::setBands(QVector<float> vector, bool animate){
+void LiquidEqualizerWidget::setBands(const QVector<float>& vector, bool animate){
     int availableBandCount = (vector.count() < BANDS_NUM) ? vector.count() - 1 : BANDS_NUM;;
     for(int i = 0; i < availableBandCount; i++){
         setBand(i,vector.at(i),animate);
@@ -284,7 +288,7 @@ void LiquidEqualizerWidget::setBands(QVector<float> vector, bool animate){
 
 QVector<float> LiquidEqualizerWidget::getBands(){
     QVector<float> vector;
-    for(int i = 0; i < BANDS_NUM; i++)
-        vector.push_back(mLevels[i]);
+    for(float mLevel : mLevels)
+        vector.push_back(mLevel);
     return vector;
 }

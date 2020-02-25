@@ -30,20 +30,20 @@ namespace PresetProvider {
 class EQ {
 public:
     static const FLOAT_LIST defaultPreset();
-    static const FLOAT_LIST lookupPreset(QString preset);
+    static const FLOAT_LIST lookupPreset(const QString& preset);
     static const QMap<EQ_UNIT> EQ_LOOKUP_TABLE();
-    static const QString reverseLookup(QVector<float> data);
+    static const QString reverseLookup(const QVector<float>& data);
 };
 class Dynsys{
     public:
     static const QMap<DYNSYS_UNIT> DYNSYS_LOOKUP_TABLE();
-    static const INT_LIST lookupPreset(QString preset);
-    static const QString reverseLookup(QVector<int> data);
+    static const INT_LIST lookupPreset(const QString& preset);
+    static const QString reverseLookup(const QVector<int>& data);
 };
 class Colm{
     public:
     static const QMap<COLM_UNIT> COLM_LOOKUP_TABLE();
-    static const INT_LIST lookupPreset(QString preset);
+    static const INT_LIST lookupPreset(const QString& preset);
 };
 }
 #endif // PRESETEXTENSION_H

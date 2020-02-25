@@ -7,7 +7,7 @@ SlidingStackedWidget::SlidingStackedWidget(QWidget *parent)
    : QStackedWidget(parent)
 {
 
-   if (parent!=0) {
+   if (parent!=nullptr) {
            m_mainwindow=parent;
        }
        else {
@@ -160,7 +160,7 @@ void SlidingStackedWidget::slideInWgt(QWidget * newwidget, enum t_direction dire
 }
 
 
-void SlidingStackedWidget::animationDoneSlot(void) {
+void SlidingStackedWidget::animationDoneSlot() {
 
    //when ready, call the QStackedWidget slot setCurrentIndex(int)
    setCurrentIndex(m_next);  //this function is inherit from QStackedWidget

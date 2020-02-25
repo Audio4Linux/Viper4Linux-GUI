@@ -9,7 +9,7 @@ AutostartManager::AutostartManager()
 {
 }
 
-void AutostartManager::saveDesktopFile(QString path, QString exepath,
+void AutostartManager::saveDesktopFile(QString path, const QString& exepath,
                                        bool enableAutostartViper){
     ConfigContainer* conf = new ConfigContainer();
     conf->setValue("Exec",QString("%1 --tray%2").arg(exepath).arg(enableAutostartViper ? " --startviper" : ""));
@@ -26,19 +26,20 @@ void AutostartManager::saveDesktopFile(QString path, QString exepath,
     ConfigIO::writeFile(path,conf->getConfigMap(),"[Desktop Entry]");
 }
 
-bool AutostartManager::inspectDesktopFile(QString path, InspectionMode mode){
+bool AutostartManager::inspectDesktopFile(const QString& path, InspectionMode mode){
     ConfigContainer conf;
     switch(mode){
     case UsesViperAutostart:
-        conf.setConfigMap(ConfigIO::readFile(path,false));
+        conf.setConfigMap(ConfigIO::readFile(path));
         return conf.getString("Exec").contains("--startviper");
         break;
     case Exists:
         return QFile::exists(path);
         break;
     }
+    return false;
 }
 
-QString AutostartManager::getAutostartPath(QString filename){
+QString AutostartManager::getAutostartPath(const QString& filename){
     return QDir::homePath() + "/.config/autostart/" + filename;
 }

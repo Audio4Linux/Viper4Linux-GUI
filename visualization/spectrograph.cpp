@@ -241,6 +241,7 @@ void Spectrograph::updateBars()
 }
 
 void Spectrograph::selectBar(int index) {
+    Q_UNUSED(index)
     /*const QPair<qreal, qreal> frequencyRange = barRange(index);
     const QString message = QString("%1 - %2 Hz")
                                 .arg(frequencyRange.first)

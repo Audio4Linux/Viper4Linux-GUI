@@ -5,24 +5,24 @@
 #include <fstream>
 #include <string>
 
-QString ConfigIO::writeString(QVariantMap map){
+QString ConfigIO::writeString(const QVariantMap& map){
     QString ret("");
-    for(auto e : map.keys())
+    for(const auto& e : map.keys())
         ret += QString("%1=%2\n").arg(e).arg(map.value(e).toString());
     return ret;
 }
-void ConfigIO::writeFile(QString path,QVariantMap map,QString prefix){
+void ConfigIO::writeFile(const QString& path,const QVariantMap& map,const QString& prefix){
     std::ofstream myfile(path.toUtf8().constData());
     if (myfile.is_open())
     {
         if(!prefix.isEmpty())
             myfile << prefix.toUtf8().constData() << std::endl;
-        for(auto e : map.keys())
+        for(const auto& e : map.keys())
             myfile << e.toStdString() << "=" << map.value(e).toString().toStdString() << std::endl;
         myfile.close();
     }
 }
-QVariantMap ConfigIO::readFile(QString path,bool allowWarning){
+QVariantMap ConfigIO::readFile(const QString& path){
     QVariantMap map;
 
     std::ifstream cFile(path.toUtf8().constData());

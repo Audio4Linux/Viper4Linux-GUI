@@ -114,7 +114,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         hostLayout->addWidget(sd);
         host->hide();
         host->setAutoFillBackground(true);
-        connect(sd,&StatusDialog::closePressed,this,[host,this](){
+        connect(sd,&StatusDialog::closePressed,this,[host](){
             WAF::Animation::sideSlideOut(host, WAF::BottomSide);
         });
         WAF::Animation::sideSlideIn(host, WAF::BottomSide);
@@ -300,7 +300,7 @@ void MainWindow::RefreshSpectrumParameters(){
     if(m_appwrapper->getSpectrumTheme() == 0)
         m_spectrograph->setTheme(Qt::black,QColor(51,204,201),QColor(255,255,0),m_appwrapper->getSpetrumGrid());
     else
-        m_spectrograph->setTheme(palette().background().color().lighter(),palette().highlight().color(),palette().text().color(),m_appwrapper->getSpetrumGrid());
+        m_spectrograph->setTheme(palette().window().color().lighter(),palette().highlight().color(),palette().text().color(),m_appwrapper->getSpetrumGrid());
 
     m_spectrograph->setParams(bands, minfreq, maxfreq);
     m_audioengine->setNotifyIntervalMs(refresh);
@@ -338,7 +338,7 @@ void MainWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
         });
 
         connect(m_audioengine, static_cast<void (AudioStreamEngine::*)(qint64, qint64, const FrequencySpectrum &)>(&AudioStreamEngine::spectrumChanged),
-                this, [this](qint64 position, qint64 length,const FrequencySpectrum &spectrum){
+                this, [this](qint64, qint64,const FrequencySpectrum &spectrum){
             m_spectrograph->spectrumChanged(spectrum);
         });
     }
@@ -975,8 +975,8 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     }
     //Dynsys
     else if(obj==ui->dyn_bassgain){
-        double scaled = (d-100.0f)/20.0f;
-        double result = (scaled/100.0f + -1.0f) * 80.0f;
+        float scaled = (d-100.0f)/20.0f;
+        float result = (scaled/100.0f + -1.0f) * 80.0f;
 
         UpdateTooltipLabelUnit(obj,
                                QString::number(result, 'f', 2) + "dB "
@@ -1047,7 +1047,7 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     }
     if(!lockapply||obj!=nullptr)OnUpdate(false);
 }
-void MainWindow::UpdateTooltipLabelUnit(QObject* sender,QString text,bool viasignal){
+void MainWindow::UpdateTooltipLabelUnit(QObject* sender,const QString& text,bool viasignal){
     QWidget *w = qobject_cast<QWidget*>(sender);
     w->setToolTip(text);
     if(viasignal)ui->info->setText(text);
@@ -1071,7 +1071,7 @@ void MainWindow::UpdateAllUnitLabels(){
 }
 
 //---Helper
-void MainWindow::SetEQ(const QVector<float> data){
+void MainWindow::SetEQ(const QVector<float>& data){
     lockapply=true;
     ui->eq_widget->setBands(QVector<float>(data));
     lockapply=false;

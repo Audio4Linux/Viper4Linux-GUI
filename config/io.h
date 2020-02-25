@@ -21,9 +21,9 @@
 class ConfigIO
 {
 public:
-    static QString writeString(QVariantMap map);
-    static void writeFile(QString path,QVariantMap map,QString prefix = "");
-    static QVariantMap readFile(QString path,bool allowWarning = true);
+    static QString writeString(const QVariantMap& map);
+    static void writeFile(const QString& path,const QVariantMap& map,const QString& prefix = "");
+    static QVariantMap readFile(const QString& path);
 };
 
 #endif // CONFIGIO_H

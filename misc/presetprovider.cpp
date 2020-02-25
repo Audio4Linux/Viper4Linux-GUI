@@ -19,7 +19,7 @@ const FLOAT_LIST EQ::defaultPreset(){
     return EQ_LOOKUP_TABLE()["Default"];
 }
 
-const FLOAT_LIST EQ::lookupPreset(QString preset){
+const FLOAT_LIST EQ::lookupPreset(const QString& preset){
     auto table = EQ_LOOKUP_TABLE();
     if(table.contains(preset))
         return table[preset];
@@ -27,7 +27,7 @@ const FLOAT_LIST EQ::lookupPreset(QString preset){
         return table["Default"];
 }
 
-const QString EQ::reverseLookup(QVector<float> data){
+const QString EQ::reverseLookup(const QVector<float>& data){
     auto table = EQ_LOOKUP_TABLE();
     for(auto key : table.keys()){
         QVector<float> row(table[key]);
@@ -97,7 +97,7 @@ const QMap<DYNSYS_UNIT> Dynsys::DYNSYS_LOOKUP_TABLE(){
     return std::move(table);
 }
 
-const INT_LIST Dynsys::lookupPreset(QString preset){
+const INT_LIST Dynsys::lookupPreset(const QString& preset){
     auto table = DYNSYS_LOOKUP_TABLE();
     if(table.contains(preset))
         return table[preset];
@@ -106,7 +106,7 @@ const INT_LIST Dynsys::lookupPreset(QString preset){
 }
 
 
-const QString Dynsys::reverseLookup(QVector<int> data){
+const QString Dynsys::reverseLookup(const QVector<int>& data){
     auto table = DYNSYS_LOOKUP_TABLE();
     for(auto key : table.keys()){
         QVector<int> row(table[key]);
@@ -141,7 +141,7 @@ const QMap<COLM_UNIT> Colm::COLM_LOOKUP_TABLE(){
     return std::move(table);
 }
 
-const INT_LIST Colm::lookupPreset(QString preset){
+const INT_LIST Colm::lookupPreset(const QString& preset){
     auto table = COLM_LOOKUP_TABLE();
     if(table.contains(preset))
         return table[preset];

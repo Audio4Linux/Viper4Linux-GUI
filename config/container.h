@@ -22,15 +22,15 @@ class ConfigContainer
 {
 public:
     ConfigContainer();
-    void setValue(QString key,QVariant value);
-    QVariant getVariant(QString key);
-    QString getString(QString key,bool setToDefaultIfMissing=true);
-    int getInt(QString key);
-    float getFloat(QString key);
-    bool getBool(QString key, bool setToDefaultIfMissing=true);
+    void setValue(const QString& key,QVariant value);
+    QVariant getVariant(const QString& key);
+    QString getString(const QString& key,bool setToDefaultIfMissing=true);
+    int getInt(const QString& key);
+    float getFloat(const QString& key);
+    bool getBool(const QString& key, bool setToDefaultIfMissing=true);
 
     QVariantMap getConfigMap();
-    void setConfigMap(QVariantMap newmap);
+    void setConfigMap(const QVariantMap& newmap);
 
 private:
     QVariantMap map = QVariantMap();

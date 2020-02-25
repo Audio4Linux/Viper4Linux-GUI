@@ -38,19 +38,19 @@ public:
 
     void setConv_DefTab(int mode);
     int getConv_DefTab();
-    void setIrsPath(QString npath);
+    void setIrsPath(const QString& npath);
     QString getIrsPath();
-    void setTheme(QString);
+    void setTheme(const QString&);
     QString getTheme();
     void setAutoFxMode(int);
     int getAutoFxMode();
     void setWhiteIcons(bool b);
     bool getWhiteIcons();
-    void setCustompalette(QString s);
+    void setCustompalette(const QString& s);
     QString getCustompalette();
-    void setColorpalette(QString);
+    void setColorpalette(const QString&);
     QString getColorpalette();
-    void setAutoFx(bool autofx);
+    void setAutoFx(bool afx);
     bool getAutoFx();
     ReloadMethod getReloadMethod();
     void setReloadMethod(ReloadMethod mode);
@@ -61,9 +61,9 @@ public:
     bool getMuteOnRestart();
     void setMuteOnRestart(bool on);
     QString getPath();
-    void setPath(QString npath);
+    void setPath(const QString& npath);
     QString getStylesheet();
-    void setStylesheet(QString);
+    void setStylesheet(const QString&);
     void setTrayMode(int);
     int getTrayMode();
     void setSpectrumEnable(bool b);
@@ -78,7 +78,7 @@ public:
     bool getSpetrumGrid();
     int getSpectrumTheme();
     void setSpectrumTheme(int number);
-    void setSpectrumInput(QString npath);
+    void setSpectrumInput(const QString& npath);
     QString getSpectrumInput();
     int getSpectrumRefresh();
     void setSpectrumRefresh(int number);

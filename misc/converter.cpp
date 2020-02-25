@@ -92,7 +92,7 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
                 else if (key == prefix + ".channelpan")conf->setValue("out_pan", att.text());
                 else if (key == prefix + ".colorfulmusic.coeffs"){
                     int count = 0;
-                    for(auto part:att.text().split(";")){
+                    for(const auto& part:att.text().split(";")){
                         int number = part.toInt();
                         if (count == 0)conf->setValue("colm_widening", number);
                         else if (count == 1)conf->setValue("colm_depth", number);
@@ -137,7 +137,7 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
                 else if (key == prefix + ".fidelity.clarity.mode")conf->setValue("vc_mode", att.text());
                 else if (key == prefix + ".fireq.custom"){
                     int count = 0;
-                    for(auto part:att.text().split(";")){
+                    for(const auto& part:att.text().split(";")){
                         int number = (int)(part.toDouble() * 100);
                         if (count == 0)conf->setValue("eq_band1", number);
                         else if (count == 1)conf->setValue("eq_band2", number);
@@ -172,7 +172,7 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
                 else if (key == "65579")conf->setValue("vc_mode", att.text());
                 else if (key == "65552"){
                     int count = 0;
-                    for(auto part:att.text().split(";")){
+                    for(const auto& part:att.text().split(";")){
                         int number = (int)(part.toDouble() * 100);
                         if (count == 0)conf->setValue("eq_band1", number);
                         else if (count == 1)conf->setValue("eq_band2", number);
@@ -223,7 +223,7 @@ conversion_result_t converter::toLinux(const QString& path,configtype cmode){
                 else if (key == "65554;65556"){
                     //For some reason not a semicolon-seperated list (-> depth missing)
                     int count = 0;
-                    for(auto part:att.text().split(";")){
+                    for(const auto& part:att.text().split(";")){
                         int number = part.toInt();
                         if (count == 0)conf->setValue("colm_widening", number);
                         else if (count == 1)conf->setValue("colm_depth", number);
@@ -454,7 +454,7 @@ conversion_result_t converter::toAndroid(const QString& path,configtype cmode){
     result.configuration = doc.toString().toUtf8().constData();
     return result;
 }
-QDomElement converter::generateXmlEntry(QDomDocument* doc,QString type,const QString& name,const QString& value){
+QDomElement converter::generateXmlEntry(QDomDocument* doc,const QString& type,const QString& name,const QString& value){
     QDomElement obj = doc->createElement(type);
     obj.setAttribute("name", name);
     if(type == "boolean"||type=="int")obj.setAttribute("value", value);

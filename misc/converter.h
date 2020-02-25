@@ -35,7 +35,7 @@ public:
     static conversion_result_t toAndroid(const QString&,configtype);
 private:
     static QString boolToQString(bool b);
-    static QDomElement generateXmlEntry(QDomDocument*,QString type,const QString& name,const QString& value);
+    static QDomElement generateXmlEntry(QDomDocument*,const QString& type,const QString& name,const QString& value);
 };
 
 #endif // CONVERTER_H

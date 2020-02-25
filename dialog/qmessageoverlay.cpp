@@ -13,7 +13,7 @@ QMessageOverlay::QMessageOverlay(QWidget* _parent, bool _folowToHeadWidget) :
 	Q_ASSERT_X(_parent, "", Q_FUNC_INFO);
 
 	if (_folowToHeadWidget) {
-		while (_parent->parentWidget() != 0) {
+		while (_parent->parentWidget() != nullptr) {
 			_parent = _parent->parentWidget();
 		}
 		setParent(_parent);
@@ -29,7 +29,7 @@ bool QMessageOverlay::eventFilter(QObject* _object, QEvent* _event)
 		QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
         if (childEvent->child() != this && _object != qobject_cast<QObject*>(parentWidget())) {
 			QWidget* parent = parentWidget();
-			setParent(0);
+			setParent(nullptr);
 			setParent(parent);
 		}
 	}

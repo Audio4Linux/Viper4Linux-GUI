@@ -137,7 +137,7 @@ void FirstLaunchWizard::refreshDevices()
     ui->p2_dev_select->addItem("...","---");
     for(auto item : out.split("Name:")){
         item.prepend("Name:");
-        QRegularExpression re("(?<=(Name:)\\s)(?<name>.+)[\\s\\S]+(?<=(Description:)\\s)(?<desc>.+)");
+        QRegularExpression re(R"((?<=(Name:)\s)(?<name>.+)[\s\S]+(?<=(Description:)\s)(?<desc>.+))");
         QRegularExpressionMatch match = re.match(item, 0, QRegularExpression::PartialPreferCompleteMatch);
         if(match.hasMatch()){
             ui->p2_dev_select->addItem(QString("%1 (%2)").arg(match.captured("desc")).arg(match.captured("name")),

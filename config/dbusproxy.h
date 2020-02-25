@@ -58,6 +58,8 @@ public:
         PARAM_GET_CONVKNLID,
         PARAM_GET_STATUS_END
     } PARAM_GET;
+    static constexpr int E_INVALID_INTF = -100;
+
     DBusProxy();
     bool isValid();
     int CommitProperties(PARAM_GROUP pg);
@@ -65,9 +67,9 @@ public:
     QString GetGstVersion();
     int GetDriverStatus(PARAM_GET param);
     QVariantMap FetchPropertyMap();
-    bool SubmitPropertyMap(QVariantMap map);
-    bool SetProperty(QString key, QVariant value);
-    QVariant GetProperty(QString key);
+    bool SubmitPropertyMap(const QVariantMap& map);
+    bool SetProperty(const QString& key, const QVariant& value);
+    QVariant GetProperty(const QString& key);
 private slots:
     void PropertiesSignalReceived(uint);
 signals:

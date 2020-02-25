@@ -56,8 +56,8 @@ public:
     void LoadPresetFile(const QString&);
     void SavePresetFile(const QString&);
     AppConfigWrapper* getACWrapper();
-    explicit MainWindow(QString exepath,bool traySwitch,bool allowMultipleInst,QWidget *parent = nullptr);
-    void SetEQ(const QVector<float> data);
+    explicit MainWindow(QString exepath,bool statupInTray,bool allowMultipleInst,QWidget *parent = nullptr);
+    void SetEQ(const QVector<float>& data);
     void SetIRS(const QString& irs,bool apply);
     QString GetExecutablePath();
     void setVisible(bool visible) override;
@@ -130,7 +130,7 @@ private:
     void InitializeSpectrum();
     void ToggleSpectrum(bool on,bool ctrl_visibility);
     void createTrayIcon();
-    void UpdateTooltipLabelUnit(QObject* sender,QString text,bool);
+    void UpdateTooltipLabelUnit(QObject* sender,const QString& text,bool);
     void LoadConfig(Context ctx = Context::Application);
     void ConnectActions();
     void ShowDBusError();

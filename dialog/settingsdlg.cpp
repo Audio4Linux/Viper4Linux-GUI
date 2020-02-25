@@ -31,7 +31,7 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
 
     ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
     ui->stackedWidget->setCurrentIndex(0);
-    connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem* prev){
+    connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem*){
         int toplevel_index = ui->selector->indexOfTopLevelItem(cur);
         switch(toplevel_index){
         case -1:
@@ -245,7 +245,7 @@ void SettingsDlg::refreshDevices()
     ui->dev_select->addItem("...","---");
     for(auto item : out.split("Name:")){
         item.prepend("Name:");
-        QRegularExpression re("(?<=(Name:)\\s)(?<name>.+)[\\s\\S]+(?<=(Description:)\\s)(?<desc>.+)");
+        QRegularExpression re(R"((?<=(Name:)\s)(?<name>.+)[\s\S]+(?<=(Description:)\s)(?<desc>.+))");
         QRegularExpressionMatch match = re.match(item, 0, QRegularExpression::PartialPreferCompleteMatch);
         if(match.hasMatch()){
             ui->dev_select->addItem(QString("%1 (%2)").arg(match.captured("desc")).arg(match.captured("name")),
@@ -383,7 +383,7 @@ void SettingsDlg::refreshAll(){
 void SettingsDlg::setVisible(bool visible)
 {
     refreshDevices();
-    QWidget::setVisible(visible);
+    QDialog::setVisible(visible);
 }
 
 void SettingsDlg::updateInputSinks(){

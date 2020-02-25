@@ -31,14 +31,6 @@ static float translate(int value,int leftMin,int leftMax,float rightMin,float ri
     float valueScaled = float(value - leftMin) / float(leftSpan);
     return rightMin + (valueScaled * rightSpan);
 }
-static inline bool is_only_ascii_whitespace( const std::string& str )
-{
-    auto it = str.begin();
-    do {
-        if (it == str.end()) return true;
-    } while (*it >= 0 && *it <= 0x7f && std::isspace(*(it++)));
-    return false;
-}
 
 static inline QString pathAppend(const QString& path1, const QString& path2)
 {

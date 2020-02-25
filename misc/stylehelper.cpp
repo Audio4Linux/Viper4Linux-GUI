@@ -177,7 +177,7 @@ void StyleHelper::setPalette(const QColor& base,const QColor& background,const Q
     palette->setColor(QPalette::HighlightedText, selectiontext);
     qApp->setPalette(*palette);
     QString rgbdisabled = disabled.name();
-    qApp->setStyleSheet("QFrame[frameShape=\"4\"], QFrame[frameShape=\"5\"]{ color: gray; }*::disabled { color: " + rgbdisabled +";}QToolButton::disabled { color: " + rgbdisabled +";}QComboBox::disabled { color: " + rgbdisabled +";}");
+    qApp->setStyleSheet(R"(QFrame[frameShape="4"], QFrame[frameShape="5"]{ color: gray; }*::disabled { color: )" + rgbdisabled +";}QToolButton::disabled { color: " + rgbdisabled +";}QComboBox::disabled { color: " + rgbdisabled +";}");
 }
 void StyleHelper::loadIcons(bool white){
     MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);

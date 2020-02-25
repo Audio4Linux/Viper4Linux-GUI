@@ -8,6 +8,7 @@ class KeyboardFilter : public QObject
 public:
     bool eventFilter(QObject *object, QEvent *event)
     {
+        Q_UNUSED(object)
         return event->type() == QEvent::KeyPress;
     }
 };

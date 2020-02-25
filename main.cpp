@@ -9,7 +9,7 @@
 #include <QSystemTrayIcon>
 #include <QCommandLineParser>
 #include <QDesktopWidget>
-#include <QDebug>
+#include <QScreen>
 #include <string>
 #include <iostream>
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
             Qt::LeftToRight,
             Qt::AlignCenter,
             w.size(),
-            qApp->desktop()->availableGeometry()
+            QGuiApplication::primaryScreen()->geometry()
         )
     );
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);

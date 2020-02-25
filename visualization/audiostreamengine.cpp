@@ -220,6 +220,7 @@ void AudioStreamEngine::audioNotify()
         }
         emit bufferChanged(0, m_dataLength, m_buffer);
     }
+    case QAudio::AudioOutput:
         break;
     }
 }
@@ -357,14 +358,14 @@ bool AudioStreamEngine::selectFormat()
 
         sampleRatesList += m_audioOutputDevice.supportedSampleRates();
         sampleRatesList = sampleRatesList.toSet().toList(); // remove duplicates
-        qSort(sampleRatesList);
+        std::sort(sampleRatesList.begin(),sampleRatesList.end());
         ENGINE_DEBUG << "Engine::initialize frequenciesList" << sampleRatesList;
 
         QList<int> channelsList;
         channelsList += m_audioInputDevice.supportedChannelCounts();
         channelsList += m_audioOutputDevice.supportedChannelCounts();
         channelsList = channelsList.toSet().toList();
-        qSort(channelsList);
+        std::sort(channelsList.begin(),channelsList.end());
         ENGINE_DEBUG << "Engine::initialize channelsList" << channelsList;
 
         QAudioFormat format;

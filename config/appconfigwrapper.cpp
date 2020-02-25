@@ -15,7 +15,7 @@ void AppConfigWrapper::saveAppConfig(){
     ConfigIO::writeFile(file,appconf->getConfigMap());
 }
 void AppConfigWrapper::loadAppConfig(){
-    auto map = ConfigIO::readFile(QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath()),false);
+    auto map = ConfigIO::readFile(QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath()));
     appconf->setConfigMap(map);
 }
 
@@ -40,7 +40,7 @@ void AppConfigWrapper::setGFix(bool f){
 bool AppConfigWrapper::getGFix(){
     return appconf->getBool("apply.fixglava");
 }
-void AppConfigWrapper::setPath(QString npath){
+void AppConfigWrapper::setPath(const QString& npath){
     appconf->setValue("io.configpath",QVariant(QString("\"%1\"").arg(npath)));
     saveAppConfig();
 }
@@ -52,7 +52,7 @@ QString AppConfigWrapper::getPath(){
         return QString("%1/.config/viper4linux/audio.conf").arg(QDir::homePath());
     return path;
 }
-void AppConfigWrapper::setStylesheet(QString s){
+void AppConfigWrapper::setStylesheet(const QString& s){
     appconf->setValue("theme.stylesheet",QVariant(s));
     m_stylehelper->SetStyle();
     emit styleChanged();
@@ -70,7 +70,7 @@ void AppConfigWrapper::setThememode(int mode){
     emit styleChanged();
     saveAppConfig();
 }
-void AppConfigWrapper::setColorpalette(QString s){
+void AppConfigWrapper::setColorpalette(const QString& s){
     appconf->setValue("theme.palette",QVariant(s));
     m_stylehelper->SetStyle();
     emit styleChanged();
@@ -79,7 +79,7 @@ void AppConfigWrapper::setColorpalette(QString s){
 QString AppConfigWrapper::getColorpalette(){
     return appconf->getString("theme.palette");
 }
-void AppConfigWrapper::setCustompalette(QString s){
+void AppConfigWrapper::setCustompalette(const QString& s){
     appconf->setValue("theme.palette.custom",QVariant(s));
     m_stylehelper->SetStyle();
     emit styleChanged();
@@ -111,7 +111,7 @@ void AppConfigWrapper::setReloadMethod(ReloadMethod mode){
     appconf->setValue("apply.method",QVariant((uint)mode));
     saveAppConfig();
 }
-void AppConfigWrapper::setIrsPath(QString npath){
+void AppConfigWrapper::setIrsPath(const QString& npath){
     appconf->setValue("convolver.default.irspath",QVariant(QString("\"%1\"").arg(npath)));
     saveAppConfig();
 }
@@ -122,7 +122,7 @@ void AppConfigWrapper::setConv_DefTab(int mode){
     appconf->setValue("convolver.default.tab",QVariant(mode));
     saveAppConfig();
 }
-void AppConfigWrapper::setTheme(QString thm){
+void AppConfigWrapper::setTheme(const QString& thm){
     appconf->setValue("theme.name",QVariant(thm));
     m_stylehelper->SetStyle();
     emit styleChanged();
@@ -198,7 +198,7 @@ void AppConfigWrapper::setSpectrumTheme(int number){
     emit spectrumChanged();
     saveAppConfig();
 }
-void AppConfigWrapper::setSpectrumInput(QString npath){
+void AppConfigWrapper::setSpectrumInput(const QString& npath){
     appconf->setValue("visualizer.spectrum.device",QVariant(npath));
     emit spectrumReloadRequired();
     saveAppConfig();

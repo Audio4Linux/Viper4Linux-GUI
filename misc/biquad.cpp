@@ -166,6 +166,8 @@ void biquad::refreshFilter(uint32_t id, Type type, double dbGain, double centreF
         A0 = 1.0;
         A2 = 0.0;
         break;
+    case INVALID:
+        break;
     }
 
     internalBiquadCoeffs[0] = B0;
