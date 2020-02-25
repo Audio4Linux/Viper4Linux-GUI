@@ -45,7 +45,9 @@ void AppConfigWrapper::setPath(QString npath){
     saveAppConfig();
 }
 QString AppConfigWrapper::getPath(){
-    QString path = chopFirstLastChar(appconf->getString("io.configpath",true));
+    QString path = "";
+    path = appconf->getString("io.configpath",true);
+    path = chopFirstLastChar(path);
     if(path.length() < 2)
         return QString("%1/.config/viper4linux/audio.conf").arg(QDir::homePath());
     return path;
@@ -128,7 +130,11 @@ void AppConfigWrapper::setTheme(QString thm){
 }
 QString AppConfigWrapper::getTheme(){
     QString name = appconf->getString("theme.name");
-    if(name.isEmpty()) name = "Fusion";
+    if(name.isEmpty()){
+        name = "Fusion";
+        appconf->setValue("theme.name",name);
+        emit styleChanged();
+    }
     return name;
 }
 QString AppConfigWrapper::getIrsPath(){
@@ -226,6 +232,13 @@ void AppConfigWrapper::setEqualizerPermanentHandles(bool b){
 }
 bool AppConfigWrapper::getEqualizerPermanentHandles(){
     return appconf->getBool("equalizer.handle.permanent");
+}
+void AppConfigWrapper::setIntroShown(bool b){
+    appconf->setValue("app.firstlaunch",QVariant(b));
+    saveAppConfig();
+}
+bool AppConfigWrapper::getIntroShown(){
+    return appconf->getBool("app.firstlaunch");
 }
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml network dbus
+QT       += core gui xml network dbus svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = V4L_Frontend
@@ -50,7 +50,9 @@ SOURCES += \
     dbus/clientproxy.cpp \
     dbus/serveradaptor.cpp \
     dialog/androidimporterdlg.cpp \
+    dialog/animatedvipericon.cpp \
     dialog/convolverdlg.cpp \
+    dialog/firstlaunchwizard.cpp \
     dialog/liquidequalizerwidget.cpp \
     dialog/logdlg.cpp \
     dialog/palettedlg.cpp \
@@ -58,6 +60,7 @@ SOURCES += \
     dialog/qanimatedslider.cpp \
     dialog/qmessageoverlay.cpp \
     dialog/settingsdlg.cpp \
+    dialog/slidingstackedwidget.cpp \
     dialog/statusfragment.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -97,7 +100,9 @@ HEADERS += \
     dbus/clientproxy.h \
     dbus/serveradaptor.h \
     dialog/androidimporterdlg.h \
+    dialog/animatedvipericon.h \
     dialog/convolverdlg.h \
+    dialog/firstlaunchwizard.h \
     dialog/liquidequalizerwidget.h \
     dialog/logdlg.h \
     dialog/palettedlg.h \
@@ -105,6 +110,7 @@ HEADERS += \
     dialog/qanimatedslider.h \
     dialog/qmessageoverlay.h \
     dialog/settingsdlg.h \
+    dialog/slidingstackedwidget.h \
     dialog/statusfragment.h \
     mainwindow.h \
     misc/autostartmanager.h \
@@ -124,6 +130,7 @@ HEADERS += \
 
 FORMS += \
     dialog/convolver.ui \
+    dialog/firstlaunchwizard.ui \
     dialog/importandroid.ui \
     dialog/log.ui \
     dialog/palettedlg.ui \

@@ -39,70 +39,80 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTreeWidget" name="selector">
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+      <layout class="QVBoxLayout" name="verticalLayout_18">
+       <property name="topMargin">
+        <number>11</number>
        </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+       <property name="rightMargin">
+        <number>0</number>
        </property>
-       <property name="indentation">
-        <number>20</number>
-       </property>
-       <property name="columnCount">
-        <number>1</number>
-       </property>
-       <column>
-        <property name="text">
-         <string>Category</string>
-        </property>
-       </column>
        <item>
-        <property name="text">
-         <string>General</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Session</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Interface</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Convolver</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Devices</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Spectrum Analyser</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>Design</string>
+        <widget class="QTreeWidget" name="selector">
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Advanced</string>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
-        </item>
+         <property name="indentation">
+          <number>20</number>
+         </property>
+         <property name="columnCount">
+          <number>1</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>Category</string>
+          </property>
+         </column>
+         <item>
+          <property name="text">
+           <string>General</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Session</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Interface</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Convolver</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Devices</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Spectrum Analyser</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Design</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Advanced</string>
+           </property>
+          </item>
+         </item>
+        </widget>
        </item>
-      </widget>
+      </layout>
      </item>
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -278,6 +288,39 @@
             <widget class="QLabel" name="label_4">
              <property name="text">
               <string>Reload method</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="run_first_launch">
+             <property name="minimumSize">
+              <size>
+               <width>170</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Rerun first launch setup</string>
              </property>
             </widget>
            </item>

@@ -7,6 +7,7 @@
 #include "misc/versioncontainer.h"
 #include "dialog/liquidequalizerwidget.h"
 #include "misc/eventfilter.h"
+#include "dialog/firstlaunchwizard.h"
 
 #include <Animation/Animation.h>
 #include <StackedWidgetAnimation/StackedWidgetAnimation.h>
@@ -15,6 +16,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QWhatsThis>
+#include <QGraphicsOpacityEffect>
 #include <QDebug>
 #include <cmath>
 #include <string>
@@ -157,6 +159,51 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         ui->eq_widget->setAlwaysDrawHandles(m_appwrapper->getEqualizerPermanentHandles());
     });
 
+    ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
+
+    if(!m_appwrapper->getIntroShown())
+        LaunchFirstRunSetup();
+    else
+        RunDiagnosticChecks();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+void MainWindow::LaunchFirstRunSetup(){
+    FirstLaunchWizard* wiz = new FirstLaunchWizard(m_appwrapper,this);
+    QHBoxLayout* lbLayout = new QHBoxLayout;
+    QMessageOverlay* lightBox = new QMessageOverlay(this);
+    QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
+    lightBox->setGraphicsEffect(eff);
+    lightBox->setLayout(lbLayout);
+    lightBox->layout()->addWidget(wiz);
+    lightBox->show();
+    QPropertyAnimation *a = new QPropertyAnimation(eff,"opacity");
+    a->setDuration(500);
+    a->setStartValue(0);
+    a->setEndValue(1);
+    a->setEasingCurve(QEasingCurve::InBack);
+    a->start(QPropertyAnimation::DeleteWhenStopped);
+    connect(wiz,&FirstLaunchWizard::wizardFinished,[=]{
+        QPropertyAnimation *b = new QPropertyAnimation(eff,"opacity");
+        b->setDuration(500);
+        b->setStartValue(1);
+        b->setEndValue(0);
+        b->setEasingCurve(QEasingCurve::OutCirc);
+        b->start(QPropertyAnimation::DeleteWhenStopped);
+        connect(b,&QAbstractAnimation::finished, [=](){
+            m_appwrapper->setIntroShown(true);
+            lightBox->hide();
+            settings_dlg->refreshAll();
+            QTimer::singleShot(300,this,[this]{
+               RunDiagnosticChecks();
+            });
+        });
+    });
+}
+void MainWindow::RunDiagnosticChecks(){
     //Check if viper is correctly installed and running
     QFile pidfile("/tmp/viper4linux/pid.tmp");
     QString pid;
@@ -166,7 +213,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
             pid = stream.readLine();
     }
     pidfile.close();
-
     if(system("which viper > /dev/null 2>&1") == 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
@@ -193,14 +239,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         ShowDBusError();
     else
         CheckDBusVersion();
-
-    ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 //Spectrum
 void MainWindow::InitializeSpectrum(){
     m_spectrograph = new Spectrograph(this);
@@ -533,7 +573,7 @@ void MainWindow::DialogHandler(){
         }
 
         preset_dlg->move(x() + (width() - preset_dlg->width()) / 2,
-                     y() + (height() - preset_dlg->height()) / 2);
+                         y() + (height() - preset_dlg->height()) / 2);
 
         preset_dlg->show();
     }
@@ -1070,23 +1110,16 @@ void MainWindow::UpdateDynsysStringFromWidget(){
 QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
     if(confmap.count() < 1){
-        OverlayMsgProxy *msg = new OverlayMsgProxy(this);
-        connect(msg,&OverlayMsgProxy::buttonPressed,[this]{
-            std::filebuf fb;
-            fb.open (m_appwrapper->getPath().toUtf8().constData(),std::ios::out);
-            std::ostream os(&fb);
-            os << default_config;
-            fb.close();
-            conf->setConfigMap(readConfig());
-            LoadConfig();
-            m_irsNeedUpdate = true;
-            ApplyConfig();
-        });
-        msg->openError(tr("Configuration file missing"),
-                       tr("Please make sure that viper has been installed correctly.\n"
-                          "If you're sure that your setup is correct, no further actions\n"
-                          "are required. This GUI will automatically generate a configuration."));
-
+        //No audio.conf found
+        std::filebuf fb;
+        fb.open (m_appwrapper->getPath().toUtf8().constData(),std::ios::out);
+        std::ostream os(&fb);
+        os << default_config;
+        fb.close();
+        conf->setConfigMap(readConfig());
+        LoadConfig();
+        m_irsNeedUpdate = true;
+        ApplyConfig();
     }
     return confmap;
 }

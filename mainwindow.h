@@ -62,6 +62,7 @@ public:
     QString GetExecutablePath();
     void setVisible(bool visible) override;
     void setTrayVisible(bool visible);
+    void LaunchFirstRunSetup();
     ~MainWindow();
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -135,6 +136,7 @@ private:
     void ShowDBusError();
     void CheckDBusVersion();
     QVariantMap readConfig();
+    void RunDiagnosticChecks();
 
     enum class Context{
         DBus,

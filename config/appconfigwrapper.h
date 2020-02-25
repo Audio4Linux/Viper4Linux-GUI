@@ -86,6 +86,8 @@ public:
     void setSpectrumMultiplier(float number);
     void setEqualizerPermanentHandles(bool b);
     bool getEqualizerPermanentHandles();
+    void setIntroShown(bool b);
+    bool getIntroShown();
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();

@@ -75,6 +75,7 @@ void OverlayMsgProxy::openBase(QString title, QString desc, QString icon, QStrin
     });
     lightBox->setLayout(lbLayout);
 }
+
 void OverlayMsgProxy::hide(){
     lightBox->hide();
 }

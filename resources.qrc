@@ -4,9 +4,12 @@
         <file>icons/menu-white.svg</file>
         <file>icons/queue.svg</file>
         <file>icons/queue-white.svg</file>
-        <file>icons/refresh.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/settings-white.svg</file>
         <file>icons/viper.png</file>
+        <file>icons/parts/lower.svg</file>
+        <file>icons/parts/upper.svg</file>
+        <file>icons/parts/viper.svg</file>
+        <file>icons/viper-new.svg</file>
     </qresource>
 </RCC>

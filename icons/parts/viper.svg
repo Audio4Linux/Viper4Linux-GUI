@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="e6v6ttbewig1" viewBox="0 0 48 48" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#e6v6ttbewig3_to {animation: e6v6ttbewig3_to__to 3000ms linear 1 normal forwards}@keyframes e6v6ttbewig3_to__to { 0% {transform: translate(48px,20px);animation-timing-function: cubic-bezier(0.075000,0.820000,0.165000,1)} 23.333333% {transform: translate(48px,48px)} 100% {transform: translate(48px,48px)} }#e6v6ttbewig4_to {animation: e6v6ttbewig4_to__to 3000ms linear 1 normal forwards}@keyframes e6v6ttbewig4_to__to { 0% {transform: translate(0px,28px);animation-timing-function: cubic-bezier(0.075000,0.820000,0.165000,1)} 23.333333% {transform: translate(0px,0px)} 100% {transform: translate(0px,0px)} }]]></style>  <defs id="defs13">
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(46,0,0,46,1,1)" y2="0.9723932281646788" x2="0.9514717198922663" y1="0.059782608695652106" x1="-0.008152173913043487" id="linearGradient5148">
+      <stop id="stop5144" style="stop-color:rgb(0,255,255)" stop-opacity="1" offset="0%"/>
+      <stop id="stop5146" style="stop-color:rgb(165,83,168)" stop-opacity="1" offset="0.86800426"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(46,0,0,46,1,1)" y2="0.9723932281646788" x2="0.9514717198922663" y1="0.059782608695652106" x1="-0.008152173913043487" id="linearGradient834">
+      <stop id="stop830" style="stop-color:rgb(0,255,255)" stop-opacity="1" offset="0%"/>
+      <stop id="stop832" style="stop-color:rgb(165,83,168)" stop-opacity="1" offset="0.7314204"/>
+    </linearGradient>
+    <linearGradient xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" gradientUnits="userSpaceOnUse" y2="25.365499" x2="35.817841" y1="25.365499" x1="8.4388361" id="linearGradient8548" xlink:href="#_lgradient_4"/>
+<linearGradient xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" gradientUnits="userSpaceOnUse" y2="25.365499" x2="35.817841" y1="25.365499" x1="8.4388361" id="linearGradient8549" xlink:href="#_lgradient_3"/>
+    <linearGradient y2="1.0705907" x2="1.0781323" y1="-0.05264641" x1="-0.038038369" gradientTransform="matrix(35.728757,0,0,35.728757,6.1356222,4.6455289)" gradientUnits="userSpaceOnUse" id="linearGradient906" xlink:href="#linearGradient5148"/>
+  </defs>
+  <linearGradient xmlns="http://www.w3.org/2000/svg" id="_lgradient_4" x1="-0.008152173913043487" y1="0.059782608695652106" x2="0.9514717198922663" y2="0.9723932281646788" gradientTransform="matrix(46,0,0,46,1,1)" gradientUnits="userSpaceOnUse">
+    <stop offset="0%" stop-opacity="1" style="stop-color:rgb(0,255,255)" id="stop2"/>
+    <stop offset="98.26086956521739%" stop-opacity="1" style="stop-color:rgb(165,83,168)" id="stop4"/>
+  </linearGradient>
+
+<linearGradient xmlns="http://www.w3.org/2000/svg" id="_lgradient_3" x1="0.9514717198922663" y1="0.9723932281646788" x2="-0.008152173913043487" y2="-0.008152173913043487" gradientTransform="matrix(46,0,0,46,1,1)" gradientUnits="userSpaceOnUse">
+    <stop offset="0%" stop-opacity="1" style="stop-color:rgb(0,255,255)" id="stop2"/>
+    <stop offset="98.26086956521739%" stop-opacity="1" style="stop-color:rgb(165,83,168)" id="stop4"/>
+  </linearGradient><path id="e6v6ttbewig2" d="M12.039000,9.627000C11.733000,9.627000,11.431000,9.792000,11.264000,10.049000C11.097000,10.306000,11.071000,10.648000,11.195000,10.928000C15.205000,19.893000,19.216000,28.860000,23.225000,37.826000C23.369000,38.150000,23.715000,38.374000,24.070000,38.373000C24.425000,38.372000,24.768000,38.149000,24.912000,37.824000C28.878000,28.861000,32.841000,19.897000,36.805000,10.934000L36.805000,10.932000C36.928000,10.652000,36.901000,10.311000,36.734000,10.055000C36.568000,9.798000,36.267000,9.635000,35.961000,9.635000C34.855000,9.636000,33.748000,9.636000,32.643000,9.635000C32.280000,9.635000,31.928000,9.872000,31.789000,10.207000C30.044000,14.432000,28.296000,18.656000,26.549000,22.881000C24.808000,18.654000,23.076000,14.418000,21.318000,10.195000C21.179000,9.861000,20.827000,9.627000,20.465000,9.627000C17.657000,9.628000,14.847000,9.628000,12.039000,9.627000Z" fill="url(#linearGradient906)" fill-rule="evenodd" stroke="none" stroke-width="1"/></svg>

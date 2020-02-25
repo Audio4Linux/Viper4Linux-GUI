@@ -32,6 +32,7 @@ public:
     void updateInputSinks();
     void refreshDevices();
     void setVisible(bool visible) override;
+    void refreshAll();
 private slots:
         void openPalConfig();
         void github();

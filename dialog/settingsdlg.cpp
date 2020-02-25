@@ -23,39 +23,11 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->setupUi(this);
     m_mainwin = mainwin;
 
-    lockslot = true;
     connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
     connect(ui->paletteSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changePalette(const QString&)));
     connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
 
     appconf = mainwin->getACWrapper();
-    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
-
-    ui->path->setText(appconf->getPath());
-    ui->irspath->setText(appconf->getIrsPath());
-    ui->autofx->setChecked(appconf->getAutoFx());
-    ui->muteonrestart->setChecked(appconf->getMuteOnRestart());
-    ui->glavafix->setChecked(appconf->getGFix());
-    ui->reloadmethod->setCurrentIndex((int)appconf->getReloadMethod());
-
-    connect(ui->close, &QPushButton::clicked, this, &SettingsDlg::closeClicked);
-    connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
-    connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
-    connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
-    connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
-    connect(ui->themeSelect, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateTheme()));
-
-    connect(ui->aa_instant, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
-    connect(ui->aa_release, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
-
-    connect(ui->deftab_filesys, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
-    connect(ui->deftab_favorite, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
-
-    connect(ui->glavafix, SIGNAL(clicked()), this, SLOT(updateGLava()));
-    connect(ui->autofx, SIGNAL(clicked()), this, SLOT(updateAutoFX()));
-    connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
-    connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
-    connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
 
     ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
     ui->stackedWidget->setCurrentIndex(0);
@@ -73,43 +45,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         }
     });
     ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
-
-    connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
-        if(lockslot)return;
-        appconf->setReloadMethod((ReloadMethod)ui->reloadmethod->currentIndex());
-    });
-    connect(ui->systray_r_none,&QRadioButton::clicked,this,[this,mainwin](){
-        if(lockslot)return;
-        int mode = 0;
-        if(ui->systray_r_none->isChecked())mode=0;
-        else if(ui->systray_r_showtray->isChecked())mode=1;
-        appconf->setTrayMode(mode);
-        mainwin->setTrayVisible(mode);
-        ui->systray_icon_box->setEnabled(mode);
-    });
-    connect(ui->systray_r_showtray,&QRadioButton::clicked,this,[this,mainwin](){
-        if(lockslot)return;
-        int mode = 0;
-        if(ui->systray_r_none->isChecked())mode=0;
-        else if(ui->systray_r_showtray->isChecked())mode=1;
-        appconf->setTrayMode(mode);
-        mainwin->setTrayVisible(mode);
-        ui->systray_icon_box->setEnabled(mode);
-    });
-    connect(ui->systray_minOnBoot,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
-        if(ui->systray_minOnBoot->isChecked()){
-            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
-                                              ui->systray_autostartViper->isChecked());
-        }
-        else QFile(autostart_path).remove();
-        ui->systray_autostartViper->setEnabled(ui->systray_minOnBoot->isChecked());
-    });
-    connect(ui->systray_autostartViper,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
-        if(ui->systray_minOnBoot->isChecked())
-            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
-                                              ui->systray_autostartViper->isChecked());
-        else QFile(autostart_path).remove();
-    });
 
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
@@ -135,105 +70,16 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
 
     for ( const auto& dev: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
         ui->sa_input->addItem(dev.deviceName());
-
-    QString qvSA(appconf->getSpectrumInput());
-    int indexSA = ui->sa_input->findText(qvSA);
-    if ( indexSA != -1 ) {
-        ui->sa_input->setCurrentIndex(indexSA);
-    }else{
-        int index_fallback = ui->themeSelect->findText("default");
-        if ( index_fallback != -1 )
-            ui->sa_input->setCurrentIndex(index_fallback);
-    }
-
     for ( const auto& i : QStyleFactory::keys() )
         ui->themeSelect->addItem(i);
 
-    QString qvT(appconf->getTheme());
-    int indexT = ui->themeSelect->findText(qvT);
-    if ( indexT != -1 ) {
-        ui->themeSelect->setCurrentIndex(indexT);
-    }else{
-        int index_fallback = ui->themeSelect->findText("Fusion");
-        if ( index_fallback != -1 )
-            ui->themeSelect->setCurrentIndex(index_fallback);
-    }
+    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
-    QVariant qvS(appconf->getStylesheet());
-    int index = ui->styleSelect->findData(qvS);
-    if ( index != -1 )
-        ui->styleSelect->setCurrentIndex(index);
+    refreshAll();
 
-    QVariant qvS2(appconf->getColorpalette());
-    int index2 = ui->paletteSelect->findData(qvS2);
-    if ( index2 != -1 )
-        ui->paletteSelect->setCurrentIndex(index2);
-
-    ui->styleSelect->setEnabled(!appconf->getThememode());
-    ui->paletteConfig->setEnabled(appconf->getThememode() && appconf->getColorpalette()=="custom");
-    ui->paletteSelect->setEnabled(appconf->getThememode());
-
-    ui->uimode_css->setChecked(!appconf->getThememode());//If 0 set true, else false
-    ui->uimode_pal->setChecked(appconf->getThememode());//If 0 set false, else true
-
-    ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
-    ui->aa_release->setChecked(appconf->getAutoFxMode());
-
-    ui->systray_r_none->setChecked(!appconf->getTrayMode());
-    ui->systray_r_showtray->setChecked(appconf->getTrayMode());
-    ui->systray_icon_box->setEnabled(appconf->getTrayMode());
-
-    bool autostart_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Exists);
-    bool autostartviper_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::UsesViperAutostart);
-
-    ui->systray_minOnBoot->setChecked(autostart_enabled);
-    ui->systray_autostartViper->setEnabled(autostart_enabled);
-    ui->systray_autostartViper->setChecked(autostartviper_enabled);
-
-    ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
-    ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
-
-    ui->eq_alwaysdrawhandles->setChecked(appconf->getEqualizerPermanentHandles());
     connect(ui->eq_alwaysdrawhandles,&QCheckBox::clicked,[this](){
         appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
     });
-
-    refreshDevices();
-
-    int bands = appconf->getSpectrumBands();
-    int minfreq = appconf->getSpectrumMinFreq();
-    int maxfreq = appconf->getSpectrumMaxFreq();
-    int refresh = appconf->getSpectrumRefresh();
-    float multiplier = appconf->getSpectrumMultiplier();
-    //Set default values if undefined
-    if(bands == 0) bands = 100;
-    if(maxfreq == 0) maxfreq = 1000;
-    if(refresh == 0) refresh = 10;
-    if(multiplier == 0) multiplier = 0.15;
-
-    //Check boundaries
-    if(bands < 5 ) bands = 5;
-    else if(bands > 300) bands = 300;
-    if(minfreq < 0) minfreq = 0;
-    else if(minfreq > 10000) minfreq = 10000;
-    if(maxfreq < 100) maxfreq = 100;
-    else if(maxfreq > 24000) maxfreq = 24000;
-    if(refresh < 10) refresh = 10;
-    else if(refresh > 500) refresh = 500;
-    if(multiplier < 0.01) multiplier = 0.01;
-    else if(multiplier > 1) multiplier = 1;
-
-    if(maxfreq < minfreq) maxfreq = minfreq + 100;
-    ui->sa_enable->setChecked(appconf->getSpetrumEnable());
-    ui->sa_bands->setValue(bands);
-    ui->sa_minfreq->setValue(minfreq);
-    ui->sa_maxfreq->setValue(maxfreq);
-    ui->sa_grid->setChecked(appconf->getSpetrumGrid());
-    ui->sa_refresh->setValue(refresh);
-    ui->sa_multi->setValue(multiplier);
-
-    ui->sa_theme_default->setChecked(!appconf->getSpectrumTheme());
-    ui->sa_theme_inherit->setChecked(appconf->getSpectrumTheme());
 
     connect(ui->sa_bands,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
         appconf->setSpectrumBands(number);
@@ -275,6 +121,43 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         appconf->setSpectrumInput(str);
     });
 
+    connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
+        if(lockslot)return;
+        appconf->setReloadMethod((ReloadMethod)ui->reloadmethod->currentIndex());
+    });
+    connect(ui->systray_r_none,&QRadioButton::clicked,this,[this,mainwin](){
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->systray_r_none->isChecked())mode=0;
+        else if(ui->systray_r_showtray->isChecked())mode=1;
+        appconf->setTrayMode(mode);
+        mainwin->setTrayVisible(mode);
+        ui->systray_icon_box->setEnabled(mode);
+    });
+    connect(ui->systray_r_showtray,&QRadioButton::clicked,this,[this,mainwin](){
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->systray_r_none->isChecked())mode=0;
+        else if(ui->systray_r_showtray->isChecked())mode=1;
+        appconf->setTrayMode(mode);
+        mainwin->setTrayVisible(mode);
+        ui->systray_icon_box->setEnabled(mode);
+    });
+    connect(ui->systray_minOnBoot,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
+        if(ui->systray_minOnBoot->isChecked()){
+            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
+                                              ui->systray_autostartViper->isChecked());
+        }
+        else QFile(autostart_path).remove();
+        ui->systray_autostartViper->setEnabled(ui->systray_minOnBoot->isChecked());
+    });
+    connect(ui->systray_autostartViper,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
+        if(ui->systray_minOnBoot->isChecked())
+            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
+                                              ui->systray_autostartViper->isChecked());
+        else QFile(autostart_path).remove();
+    });
+
     auto deviceUpdated = [this](){
         if(lockslot) return;
         QString absolute =
@@ -298,6 +181,32 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->dev_mode_manual,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_select,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, deviceUpdated);
 
+    connect(ui->close, &QPushButton::clicked, this, &SettingsDlg::closeClicked);
+    connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
+    connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
+    connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
+    connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
+    connect(ui->themeSelect, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateTheme()));
+
+    connect(ui->aa_instant, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
+    connect(ui->aa_release, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
+
+    connect(ui->deftab_filesys, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
+    connect(ui->deftab_favorite, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
+
+    connect(ui->glavafix, SIGNAL(clicked()), this, SLOT(updateGLava()));
+    connect(ui->autofx, SIGNAL(clicked()), this, SLOT(updateAutoFX()));
+    connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
+    connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
+    connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
+
+    connect(ui->run_first_launch, &QPushButton::clicked, this, [this,mainwin]{
+        emit closeClicked();
+        QTimer::singleShot(500,this,[mainwin]{
+            mainwin->LaunchFirstRunSetup();
+        });
+    });
+
 #ifndef QT_NO_SYSTEMTRAYICON
     ui->systray_unsupported->hide();
 #else
@@ -308,8 +217,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         ui->systray_unsupported->show();
         ui->session->setEnabled(false);
     }
-
-    lockslot = false;
 }
 SettingsDlg::~SettingsDlg(){
     delete ui;
@@ -364,6 +271,112 @@ void SettingsDlg::refreshDevices()
             ui->dev_select->setCurrentText(name);
         }
     }
+    lockslot = false;
+}
+
+void SettingsDlg::refreshAll(){
+    lockslot = true;
+    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
+
+    ui->path->setText(appconf->getPath());
+    ui->irspath->setText(appconf->getIrsPath());
+    ui->autofx->setChecked(appconf->getAutoFx());
+    ui->muteonrestart->setChecked(appconf->getMuteOnRestart());
+    ui->glavafix->setChecked(appconf->getGFix());
+    ui->reloadmethod->setCurrentIndex((int)appconf->getReloadMethod());
+
+    QString qvSA(appconf->getSpectrumInput());
+    int indexSA = ui->sa_input->findText(qvSA);
+    if ( indexSA != -1 ) {
+        ui->sa_input->setCurrentIndex(indexSA);
+    }else{
+        int index_fallback = ui->themeSelect->findText("default");
+        if ( index_fallback != -1 )
+            ui->sa_input->setCurrentIndex(index_fallback);
+    }
+
+    QString qvT(appconf->getTheme());
+    int indexT = ui->themeSelect->findText(qvT);
+    if ( indexT != -1 ) {
+        ui->themeSelect->setCurrentIndex(indexT);
+    }else{
+        int index_fallback = ui->themeSelect->findText("Fusion");
+        if ( index_fallback != -1 )
+            ui->themeSelect->setCurrentIndex(index_fallback);
+    }
+
+    QVariant qvS(appconf->getStylesheet());
+    int index = ui->styleSelect->findData(qvS);
+    if ( index != -1 )
+        ui->styleSelect->setCurrentIndex(index);
+
+    QVariant qvS2(appconf->getColorpalette());
+    int index2 = ui->paletteSelect->findData(qvS2);
+    if ( index2 != -1 )
+        ui->paletteSelect->setCurrentIndex(index2);
+
+    ui->styleSelect->setEnabled(!appconf->getThememode());
+    ui->paletteConfig->setEnabled(appconf->getThememode() && appconf->getColorpalette()=="custom");
+    ui->paletteSelect->setEnabled(appconf->getThememode());
+
+    ui->uimode_css->setChecked(!appconf->getThememode());//If 0 set true, else false
+    ui->uimode_pal->setChecked(appconf->getThememode());//If 0 set false, else true
+
+    ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
+    ui->aa_release->setChecked(appconf->getAutoFxMode());
+
+    ui->systray_r_none->setChecked(!appconf->getTrayMode());
+    ui->systray_r_showtray->setChecked(appconf->getTrayMode());
+    ui->systray_icon_box->setEnabled(appconf->getTrayMode());
+
+    bool autostart_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Exists);
+    bool autostartviper_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::UsesViperAutostart);
+
+    ui->systray_minOnBoot->setChecked(autostart_enabled);
+    ui->systray_autostartViper->setEnabled(autostart_enabled);
+    ui->systray_autostartViper->setChecked(autostartviper_enabled);
+
+    ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
+    ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
+
+    ui->eq_alwaysdrawhandles->setChecked(appconf->getEqualizerPermanentHandles());
+
+    refreshDevices();
+
+    int bands = appconf->getSpectrumBands();
+    int minfreq = appconf->getSpectrumMinFreq();
+    int maxfreq = appconf->getSpectrumMaxFreq();
+    int refresh = appconf->getSpectrumRefresh();
+    float multiplier = appconf->getSpectrumMultiplier();
+    //Set default values if undefined
+    if(bands == 0) bands = 100;
+    if(maxfreq == 0) maxfreq = 1000;
+    if(refresh == 0) refresh = 10;
+    if(multiplier == 0) multiplier = 0.15;
+
+    //Check boundaries
+    if(bands < 5 ) bands = 5;
+    else if(bands > 300) bands = 300;
+    if(minfreq < 0) minfreq = 0;
+    else if(minfreq > 10000) minfreq = 10000;
+    if(maxfreq < 100) maxfreq = 100;
+    else if(maxfreq > 24000) maxfreq = 24000;
+    if(refresh < 10) refresh = 10;
+    else if(refresh > 500) refresh = 500;
+    if(multiplier < 0.01) multiplier = 0.01;
+    else if(multiplier > 1) multiplier = 1;
+
+    if(maxfreq < minfreq) maxfreq = minfreq + 100;
+    ui->sa_enable->setChecked(appconf->getSpetrumEnable());
+    ui->sa_bands->setValue(bands);
+    ui->sa_minfreq->setValue(minfreq);
+    ui->sa_maxfreq->setValue(maxfreq);
+    ui->sa_grid->setChecked(appconf->getSpetrumGrid());
+    ui->sa_refresh->setValue(refresh);
+    ui->sa_multi->setValue(multiplier);
+
+    ui->sa_theme_default->setChecked(!appconf->getSpectrumTheme());
+    ui->sa_theme_inherit->setChecked(appconf->getSpectrumTheme());
     lockslot = false;
 }
 
