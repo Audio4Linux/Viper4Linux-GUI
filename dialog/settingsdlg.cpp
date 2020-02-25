@@ -469,7 +469,7 @@ void SettingsDlg::changeStyle(const QString&){
     appconf->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString());
 }
 void SettingsDlg::github(){
-    QDesktopServices::openUrl(QUrl("https://github.com/ThePBone/Viper4Linux-GUI-Legacy"));
+    QDesktopServices::openUrl(QUrl("https://github.com/Audio4Linux/Viper4Linux-GUI"));
 }
 void SettingsDlg::glava_help(){
     QMessageBox *msgBox = new QMessageBox(this);
