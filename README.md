@@ -4,9 +4,17 @@
 Official UI for Viper4Linux2 [https://github.com/Audio4Linux/Viper4Linux](https://github.com/Audio4Linux/Viper4Linux)
 * Telegram: @ThePBone
 
-### This repo contains the GUI for a newer Viper4Linux version which is not yet finished. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now.
+#### This repo contains the GUI for a newer Viper4Linux version which is not fully yet finished. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now, unless you use Arch Linux.
 
-#### Build from sources
+### Arch
+
+On Arch you can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
+```bash
+yay -S viper4linux-gui-git  
+```
+![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
+
+### Build from sources
 Clone this repository
 
     git clone https://github.com/Audio4Linux/Viper4Linux-GUI
