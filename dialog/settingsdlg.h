@@ -33,21 +33,7 @@ public:
     void refreshDevices();
     void setVisible(bool visible) override;
     void refreshAll();
-private slots:
-        void openPalConfig();
-        void github();
-        void glava_help();
-        void changeStyle(const QString&);
-        void changeThemeMode();
-        void changePalette(const QString&);
-        void updateAutoFX();
-        void updateMuteRestart();
-        void updatePath();
-        void updateIrsPath();
-        void updateGLava();
-        void updateAutoFxMode();
-        void updateCDefTab();
-        void updateTheme();
+
 signals:
         void closeClicked();
 private:

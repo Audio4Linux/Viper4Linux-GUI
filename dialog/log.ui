@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Log Viewer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/icons/viper-new.svg</normaloff>:/icons/viper-new.svg</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="1" column="3">
     <widget class="QPushButton" name="reload">
@@ -68,6 +72,8 @@
   <tabstop>select</tabstop>
   <tabstop>reload</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

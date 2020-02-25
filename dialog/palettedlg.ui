@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Palette Editor</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/icons/viper-new.svg</normaloff>:/icons/viper-new.svg</iconset>
+  </property>
   <widget class="QPushButton" name="base">
    <property name="geometry">
     <rect>
@@ -192,6 +196,8 @@
   <tabstop>reset</tabstop>
   <tabstop>close</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

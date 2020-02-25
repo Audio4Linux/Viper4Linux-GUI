@@ -25,10 +25,6 @@
   <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/viper.png</normaloff>:/icons/viper.png</iconset>
-  </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
@@ -1196,8 +1192,6 @@
   <tabstop>github</tabstop>
   <tabstop>close</tabstop>
  </tabstops>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

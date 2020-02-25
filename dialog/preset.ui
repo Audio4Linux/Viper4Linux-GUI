@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resources.qrc">
-    <normaloff>:/icons/viper.png</normaloff>:/icons/viper.png</iconset>
+    <normaloff>:/icons/viper-new.svg</normaloff>:/icons/viper-new.svg</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <item>

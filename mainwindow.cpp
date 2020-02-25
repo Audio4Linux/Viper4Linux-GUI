@@ -522,7 +522,7 @@ void MainWindow::createTrayIcon()
     trayIcon->setToolTip("Viper4Linux");
     trayIcon->setContextMenu(trayIconMenu);
 
-    trayIcon->setIcon(QIcon(":/icons/viper.png"));
+    trayIcon->setIcon(QIcon(":/icons/viper-new.svg"));
 }
 
 //---Dialogs/Buttons

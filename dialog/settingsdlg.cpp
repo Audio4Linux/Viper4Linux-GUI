@@ -23,12 +23,12 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->setupUi(this);
     m_mainwin = mainwin;
 
-    connect(ui->styleSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changeStyle(const QString&)));
-    connect(ui->paletteSelect,SIGNAL(currentIndexChanged(const QString&)),this,SLOT(changePalette(const QString&)));
-    connect(ui->paletteConfig,SIGNAL(clicked()),this,SLOT(openPalConfig()));
-
     appconf = mainwin->getACWrapper();
+    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
+    /*
+     * Prepare TreeView
+     */
     ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem*){
@@ -46,6 +46,9 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     });
     ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
 
+    /*
+     * Prepare all combooxes
+     */
     ui->styleSelect->addItem("Default","default");
     ui->styleSelect->addItem("Black","amoled");
     ui->styleSelect->addItem("Blue","blue");
@@ -53,79 +56,74 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     ui->styleSelect->addItem("Ubuntu","ubuntu");
     ui->styleSelect->addItem("Visual Studio Dark","vsdark");
     ui->styleSelect->addItem("Visual Studio Light","vslight");
-
     ui->paletteSelect->addItem("Default","default");
     ui->paletteSelect->addItem("Black","black");
     ui->paletteSelect->addItem("Blue","blue");
     ui->paletteSelect->addItem("Dark","dark");
     ui->paletteSelect->addItem("Dark Blue","darkblue");
     ui->paletteSelect->addItem("Dark Green","darkgreen");
-
     ui->paletteSelect->addItem("Honeycomb","honeycomb");
     ui->paletteSelect->addItem("Gray","gray");
     ui->paletteSelect->addItem("Green","green");
     ui->paletteSelect->addItem("Stone","stone");
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
-
-    for ( const auto& dev: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
-        ui->sa_input->addItem(dev.deviceName());
     for ( const auto& i : QStyleFactory::keys() )
         ui->themeSelect->addItem(i);
 
-    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
-
+    /*
+     * Refresh all input fields
+     */
     refreshAll();
 
-    connect(ui->eq_alwaysdrawhandles,&QCheckBox::clicked,[this](){
-        appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
+    /*
+     * Connect all signals for page General
+     */
+    connect(ui->savepath, &QPushButton::clicked, this, [this]{
+        appconf->setPath(ui->path->text());
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
+                                                                       "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
+                                      QMessageBox::Ok|QMessageBox::Cancel);
+        if (reply == QMessageBox::Ok)
+            QApplication::quit();
     });
-
-    connect(ui->sa_bands,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
-        appconf->setSpectrumBands(number);
+    connect(ui->glavafix, &QPushButton::clicked, this, [this]{
+        appconf->setGFix(ui->glavafix->isChecked());
     });
-    connect(ui->sa_minfreq,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
-        appconf->setSpectrumMinFreq(number);
+    connect(ui->muteonrestart, &QCheckBox::clicked, this, [this]{
+        appconf->setMuteOnRestart(ui->muteonrestart->isChecked());
     });
-    connect(ui->sa_maxfreq,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
-        appconf->setSpectrumMaxFreq(number);
+    connect(ui->autofx, &QGroupBox::clicked, this, [this]{
+        appconf->setAutoFx(ui->autofx->isChecked());
     });
-    connect(ui->sa_refresh,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
-        appconf->setSpectrumRefresh(number);
-    });
-    connect(ui->sa_multi,static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),this,[this](double number){
-        appconf->setSpectrumMultiplier(number);
-    });
-    connect(ui->sa_enable,&QGroupBox::clicked,this,[this,mainwin](){
-        appconf->setSpectrumEnable(ui->sa_enable->isChecked());
+    connect(ui->run_first_launch, &QPushButton::clicked, this, [this,mainwin]{
         emit closeClicked();
-        mainwin->ui->set->click();
+        QTimer::singleShot(500,this,[mainwin]{
+            mainwin->LaunchFirstRunSetup();
+        });
     });
-    connect(ui->sa_grid,&QCheckBox::clicked,this,[this](){
-        appconf->setSpectrumGrid(ui->sa_grid->isChecked());
-    });
-    connect(ui->sa_theme_default,&QRadioButton::clicked,this,[this](){
-        int mode = 0;
-        if(ui->sa_theme_default->isChecked())mode=0;
-        else if(ui->sa_theme_inherit->isChecked())mode=1;
-        appconf->setSpectrumTheme(mode);
-    });
-    connect(ui->sa_theme_inherit,&QRadioButton::clicked,this,[this](){
-        int mode = 0;
-        if(ui->sa_theme_default->isChecked())mode=0;
-        else if(ui->sa_theme_inherit->isChecked())mode=1;
-        appconf->setSpectrumTheme(mode);
-    });
-    connect(ui->sa_input,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, [this](const QString& str){
+    auto autofx_mode = [this]{
         if(lockslot)return;
-        appconf->setSpectrumInput(str);
-    });
-
+        int mode = 0;
+        if(ui->aa_instant->isChecked())mode=0;
+        else if(ui->aa_release->isChecked())mode=1;
+        appconf->setAutoFxMode(mode);
+    };
+    connect(ui->aa_instant, &QRadioButton::clicked, this, autofx_mode);
+    connect(ui->aa_release, &QRadioButton::clicked, this, autofx_mode);
     connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
         if(lockslot)return;
         appconf->setReloadMethod((ReloadMethod)ui->reloadmethod->currentIndex());
     });
-    connect(ui->systray_r_none,&QRadioButton::clicked,this,[this,mainwin](){
+    connect(ui->glavafix_help, &QPushButton::clicked, this, [this]{
+        QMessageBox::information(this,tr("Help"),
+                                 tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
+    });
+    /*
+     * Connect all signals for Session
+     */
+    auto systray_sel = [this,mainwin]{
         if(lockslot)return;
         int mode = 0;
         if(ui->systray_r_none->isChecked())mode=0;
@@ -133,31 +131,76 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         appconf->setTrayMode(mode);
         mainwin->setTrayVisible(mode);
         ui->systray_icon_box->setEnabled(mode);
-    });
-    connect(ui->systray_r_showtray,&QRadioButton::clicked,this,[this,mainwin](){
-        if(lockslot)return;
-        int mode = 0;
-        if(ui->systray_r_none->isChecked())mode=0;
-        else if(ui->systray_r_showtray->isChecked())mode=1;
-        appconf->setTrayMode(mode);
-        mainwin->setTrayVisible(mode);
-        ui->systray_icon_box->setEnabled(mode);
-    });
-    connect(ui->systray_minOnBoot,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
+    };
+    connect(ui->systray_r_none,&QRadioButton::clicked,this,systray_sel);
+    connect(ui->systray_r_showtray,&QRadioButton::clicked,this,systray_sel);
+    auto autostart_update = [this,mainwin,autostart_path]{
         if(ui->systray_minOnBoot->isChecked()){
             AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
                                               ui->systray_autostartViper->isChecked());
         }
         else QFile(autostart_path).remove();
         ui->systray_autostartViper->setEnabled(ui->systray_minOnBoot->isChecked());
+    };
+    connect(ui->systray_minOnBoot,&QPushButton::clicked,this,autostart_update);
+    connect(ui->systray_autostartViper,&QPushButton::clicked,this,autostart_update);
+
+
+    auto change_theme_mode = [this]{
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->uimode_css->isChecked())mode=0;
+        else if(ui->uimode_pal->isChecked())mode=1;
+
+        ui->styleSelect->setEnabled(!mode);
+        ui->paletteSelect->setEnabled(mode);
+        ui->paletteConfig->setEnabled(mode && appconf->getColorpalette()=="custom");
+        appconf->setThememode(mode);
+    };
+    connect(ui->uimode_css, &QRadioButton::clicked, this, change_theme_mode);
+    connect(ui->uimode_pal, &QRadioButton::clicked, this, change_theme_mode);
+    connect(ui->themeSelect, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
+            this, [this](const QString&){
+        if(lockslot)return;
+        appconf->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
     });
-    connect(ui->systray_autostartViper,&QPushButton::clicked,this,[this,mainwin,autostart_path](){
-        if(ui->systray_minOnBoot->isChecked())
-            AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
-                                              ui->systray_autostartViper->isChecked());
-        else QFile(autostart_path).remove();
+    connect(ui->styleSelect,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),this,[this]{
+        if(lockslot)return;
+        appconf->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString());
+    });
+    connect(ui->paletteSelect,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),this,[this]{
+        if(lockslot)return;
+        appconf->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString());
+        ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
+    });
+    connect(ui->paletteConfig,&QPushButton::clicked,this,[this]{
+        auto c = new class PaletteEditor(appconf,this);
+        c->setFixedSize(c->geometry().width(),c->geometry().height());
+        c->show();
+    });
+    connect(ui->eq_alwaysdrawhandles,&QCheckBox::clicked,[this](){
+        appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
     });
 
+    /*
+     * Connect all signals for Convolver
+     */
+    auto deftab_mode = [this]{
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->deftab_favorite->isChecked())mode=0;
+        else if(ui->deftab_filesys->isChecked())mode=1;
+        appconf->setConv_DefTab(mode);
+    };
+    connect(ui->deftab_filesys, &QRadioButton::clicked, this, deftab_mode);
+    connect(ui->deftab_favorite, &QRadioButton::clicked, this, deftab_mode);
+    connect(ui->saveirspath, &QPushButton::clicked, this, [this]{
+        appconf->setIrsPath(ui->irspath->text());
+    });
+
+    /*
+     * Connect all signals for Devices
+     */
     auto deviceUpdated = [this](){
         if(lockslot) return;
         QString absolute =
@@ -175,44 +218,76 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
             ConfigIO::writeFile(devices,devconf->getConfigMap());
         }
     };
-
     connect(ui->dev_reload_viper,&QPushButton::clicked,mainwin,&MainWindow::Restart);
     connect(ui->dev_mode_auto,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_mode_manual,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_select,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, deviceUpdated);
 
-    connect(ui->close, &QPushButton::clicked, this, &SettingsDlg::closeClicked);
-    connect(ui->github, SIGNAL(clicked()), this, SLOT(github()));
-    connect(ui->glavafix_help, SIGNAL(clicked()), this, SLOT(glava_help()));
-    connect(ui->uimode_css, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
-    connect(ui->uimode_pal, SIGNAL(clicked()), this, SLOT(changeThemeMode()));
-    connect(ui->themeSelect, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateTheme()));
-
-    connect(ui->aa_instant, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
-    connect(ui->aa_release, SIGNAL(clicked()), this, SLOT(updateAutoFxMode()));
-
-    connect(ui->deftab_filesys, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
-    connect(ui->deftab_favorite, SIGNAL(clicked()), this, SLOT(updateCDefTab()));
-
-    connect(ui->glavafix, SIGNAL(clicked()), this, SLOT(updateGLava()));
-    connect(ui->autofx, SIGNAL(clicked()), this, SLOT(updateAutoFX()));
-    connect(ui->muteonrestart, SIGNAL(clicked()), this, SLOT(updateMuteRestart()));
-    connect(ui->savepath, SIGNAL(clicked()), this, SLOT(updatePath()));
-    connect(ui->saveirspath, SIGNAL(clicked()), this, SLOT(updateIrsPath()));
-
-    connect(ui->run_first_launch, &QPushButton::clicked, this, [this,mainwin]{
+    /*
+     * Connect all signals for SA/ROOT
+     */
+    connect(ui->sa_enable,&QGroupBox::clicked,this,[this,mainwin](){
+        appconf->setSpectrumEnable(ui->sa_enable->isChecked());
         emit closeClicked();
-        QTimer::singleShot(500,this,[mainwin]{
-            mainwin->LaunchFirstRunSetup();
-        });
+        mainwin->ui->set->click();
+    });
+    connect(ui->sa_bands,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumBands(number);
+    });
+    connect(ui->sa_minfreq,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumMinFreq(number);
+    });
+    connect(ui->sa_maxfreq,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumMaxFreq(number);
+    });
+    connect(ui->sa_input,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, [this](const QString& str){
+        if(lockslot)return;
+        appconf->setSpectrumInput(str);
     });
 
+    /*
+     * Connect all signals for SA/Design
+     */
+    connect(ui->sa_grid,&QCheckBox::clicked,this,[this](){
+        appconf->setSpectrumGrid(ui->sa_grid->isChecked());
+    });
+    auto sa_theme_sel = [this]{
+        int mode = 0;
+        if(ui->sa_theme_default->isChecked())mode=0;
+        else if(ui->sa_theme_inherit->isChecked())mode=1;
+        appconf->setSpectrumTheme(mode);
+    };
+    connect(ui->sa_theme_default,&QRadioButton::clicked,this,sa_theme_sel);
+    connect(ui->sa_theme_inherit,&QRadioButton::clicked,this,sa_theme_sel);
+
+    /*
+     * Connect all signals for SA/Advanced
+     */
+    connect(ui->sa_refresh,static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),this,[this](int number){
+        appconf->setSpectrumRefresh(number);
+    });
+    connect(ui->sa_multi,static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),this,[this](double number){
+        appconf->setSpectrumMultiplier(number);
+    });
+
+
+    /*
+     * Connect all signals for Global
+     */
+    connect(ui->close, &QPushButton::clicked, this, &SettingsDlg::closeClicked);
+    connect(ui->github, &QPushButton::clicked, this, []{
+        QDesktopServices::openUrl(QUrl("https://github.com/Audio4Linux/Viper4Linux-GUI"));
+    });
+
+
+    /*
+     * Check for systray availability
+     */
 #ifndef QT_NO_SYSTEMTRAYICON
     ui->systray_unsupported->hide();
 #else
     ui->session->setEnabled(false);
 #endif
-
     if(!QSystemTrayIcon::isSystemTrayAvailable()){
         ui->systray_unsupported->show();
         ui->session->setEnabled(false);
@@ -285,15 +360,7 @@ void SettingsDlg::refreshAll(){
     ui->glavafix->setChecked(appconf->getGFix());
     ui->reloadmethod->setCurrentIndex((int)appconf->getReloadMethod());
 
-    QString qvSA(appconf->getSpectrumInput());
-    int indexSA = ui->sa_input->findText(qvSA);
-    if ( indexSA != -1 ) {
-        ui->sa_input->setCurrentIndex(indexSA);
-    }else{
-        int index_fallback = ui->themeSelect->findText("default");
-        if ( index_fallback != -1 )
-            ui->sa_input->setCurrentIndex(index_fallback);
-    }
+    updateInputSinks();
 
     QString qvT(appconf->getTheme());
     int indexT = ui->themeSelect->findText(qvT);
@@ -403,78 +470,4 @@ void SettingsDlg::updateInputSinks(){
     }
     lockslot = false;
 }
-void SettingsDlg::updateTheme(){
-    if(lockslot)return;
-    appconf->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
-}
-void SettingsDlg::updateAutoFX(){
-    appconf->setAutoFx(ui->autofx->isChecked());
-}
-void SettingsDlg::updateMuteRestart(){
-    appconf->setMuteOnRestart(ui->muteonrestart->isChecked());
-};
-void SettingsDlg::updatePath(){
-    appconf->setPath(ui->path->text());
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
-                                                                   "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
-                                  QMessageBox::Ok|QMessageBox::Cancel);
-    if (reply == QMessageBox::Ok)
-        QApplication::quit();
-}
-void SettingsDlg::updateIrsPath(){
-    appconf->setIrsPath(ui->irspath->text());
-}
-void SettingsDlg::updateGLava(){
-    appconf->setGFix(ui->glavafix->isChecked());
-}
-void SettingsDlg::updateAutoFxMode(){
-    if(lockslot)return;
-    int mode = 0;
-    if(ui->aa_instant->isChecked())mode=0;
-    else if(ui->aa_release->isChecked())mode=1;
-    appconf->setAutoFxMode(mode);
-}
-void SettingsDlg::updateCDefTab(){
-    if(lockslot)return;
-    int mode = 0;
-    if(ui->deftab_favorite->isChecked())mode=0;
-    else if(ui->deftab_filesys->isChecked())mode=1;
-    appconf->setConv_DefTab(mode);
-}
-void SettingsDlg::changeThemeMode(){
-    if(lockslot)return;
 
-    int mode = 0;
-    if(ui->uimode_css->isChecked())mode=0;
-    else if(ui->uimode_pal->isChecked())mode=1;
-
-    ui->styleSelect->setEnabled(!mode);
-    ui->paletteSelect->setEnabled(mode);
-    ui->paletteConfig->setEnabled(mode && appconf->getColorpalette()=="custom");
-    appconf->setThememode(mode);
-}
-void SettingsDlg::changePalette(const QString&){
-    if(lockslot)return;
-    appconf->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString());
-    ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
-}
-void SettingsDlg::openPalConfig(){
-    auto c = new class PaletteEditor(appconf,this);
-    c->setFixedSize(c->geometry().width(),c->geometry().height());
-    c->show();
-}
-void SettingsDlg::changeStyle(const QString&){
-    if(lockslot)return;
-    appconf->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString());
-}
-void SettingsDlg::github(){
-    QDesktopServices::openUrl(QUrl("https://github.com/Audio4Linux/Viper4Linux-GUI"));
-}
-void SettingsDlg::glava_help(){
-    QMessageBox *msgBox = new QMessageBox(this);
-    msgBox->setText(tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
-    msgBox->setStandardButtons(QMessageBox::Ok);
-    msgBox->setDefaultButton(QMessageBox::Ok);
-    msgBox->exec();
-}
