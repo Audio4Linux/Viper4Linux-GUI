@@ -88,6 +88,9 @@ public:
     bool getEqualizerPermanentHandles();
     void setIntroShown(bool b);
     bool getIntroShown();
+    QString getTrayContextMenu();
+    void setTrayContextMenu(const QString &ctx);
+
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();

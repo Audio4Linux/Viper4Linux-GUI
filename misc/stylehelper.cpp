@@ -36,6 +36,7 @@ void StyleHelper::SetStyle(){
             QTextStream ts(&f);
             qApp->setStyleSheet(ts.readAll());
             if(style_sheet=="amoled" || style_sheet=="vsdark"){
+                m_host->settings_dlg->updateButtonStyle(true);
                 QPixmap pix(":/icons/settings-white.svg");
                 QIcon icon(pix);
                 QPixmap pix2(":/icons/queue-white.svg");
@@ -46,6 +47,7 @@ void StyleHelper::SetStyle(){
                 m_host->ui->cpreset->setIcon(icon2);
                 m_host->ui->toolButton->setIcon(icon3);
             }else{
+                m_host->settings_dlg->updateButtonStyle(false);
                 QPixmap pix(":/icons/settings.svg");
                 QIcon icon(pix);
                 QPixmap pix2(":/icons/queue.svg");
@@ -182,6 +184,7 @@ void StyleHelper::setPalette(const QColor& base,const QColor& background,const Q
 void StyleHelper::loadIcons(bool white){
     MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);
     if(white){
+        m_host->settings_dlg->updateButtonStyle(true);
         QPixmap pix(":/icons/settings-white.svg");
         QIcon icon(pix);
         QPixmap pix2(":/icons/queue-white.svg");
@@ -192,6 +195,7 @@ void StyleHelper::loadIcons(bool white){
         m_host->ui->cpreset->setIcon(icon2);
         m_host->ui->toolButton->setIcon(icon3);
     }else{
+        m_host->settings_dlg->updateButtonStyle(false);
         QPixmap pix(":/icons/settings.svg");
         QIcon icon(pix);
         QPixmap pix2(":/icons/queue.svg");

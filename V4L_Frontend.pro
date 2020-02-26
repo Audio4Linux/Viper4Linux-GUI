@@ -58,6 +58,7 @@ SOURCES += \
     dialog/palettedlg.cpp \
     dialog/presetdlg.cpp \
     dialog/qanimatedslider.cpp \
+    dialog/qmenueditor.cpp \
     dialog/qmessageoverlay.cpp \
     dialog/settingsdlg.cpp \
     dialog/slidingstackedwidget.cpp \
@@ -108,6 +109,7 @@ HEADERS += \
     dialog/palettedlg.h \
     dialog/presetdlg.h \
     dialog/qanimatedslider.h \
+    dialog/qmenueditor.h \
     dialog/qmessageoverlay.h \
     dialog/settingsdlg.h \
     dialog/slidingstackedwidget.h \
@@ -131,7 +133,9 @@ FORMS += \
     dialog/convolver.ui \
     dialog/firstlaunchwizard.ui \
     dialog/importandroid.ui \
+    dialog/items/detailitem.ui \
     dialog/log.ui \
+    dialog/menueditor.ui \
     dialog/palettedlg.ui \
     dialog/preset.ui \
     dialog/settings.ui \

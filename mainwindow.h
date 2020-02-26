@@ -64,6 +64,12 @@ public:
     void setTrayVisible(bool visible);
     void LaunchFirstRunSetup();
     ~MainWindow();
+    QMenu* buildAvailableActions();
+    void updateTrayMenu(QMenu *menu);
+    QMenu *buildDefaultActions();
+    QMenu *getTrayContextMenu();
+
+    SettingsDlg *settings_dlg;
 protected:
     void closeEvent(QCloseEvent *event) override;
 public slots:
@@ -102,8 +108,9 @@ private:
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
     QAction *quitAction;
-    QAction *disableAction;
-    QMenu *presetMenu;
+    QAction *tray_disableAction;
+    QMenu *tray_presetMenu;
+    QMenu *tray_convMenu;
 
     QAction *spectrum;
 
@@ -112,7 +119,6 @@ private:
     OverlayMsgProxy *msg_versionmismatch;
 
     ConvolverDlg *conv_dlg;
-    SettingsDlg *settings_dlg;
     PresetDlg *preset_dlg;
     LogDlg *log_dlg;
 
@@ -142,6 +148,8 @@ private:
         DBus,
         Application
     };
+    void initGlobalTrayActions();
+    void updateTrayConvolverList();
 };
 
 #endif // MAINWINDOW_H

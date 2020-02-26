@@ -35,16 +35,23 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         int toplevel_index = ui->selector->indexOfTopLevelItem(cur);
         switch(toplevel_index){
         case -1:
+            if(cur->text(0) == "Context Menu")
+                ui->stackedWidget->setCurrentIndex(5);
             if(cur->text(0) == "Design")
-                ui->stackedWidget->setCurrentIndex(6);
-            if(cur->text(0) == "Advanced")
                 ui->stackedWidget->setCurrentIndex(7);
+            if(cur->text(0) == "Advanced")
+                ui->stackedWidget->setCurrentIndex(8);
+            break;
+        case 5:
+            // -- SA/ROOT
+            ui->stackedWidget->setCurrentIndex(6);
             break;
         default:
             ui->stackedWidget->setCurrentIndex(toplevel_index);
         }
     });
     ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
+    ui->selector->expandItem(ui->selector->findItems("Systray",Qt::MatchFlag::MatchExactly).first());
 
     /*
      * Prepare all combooxes
@@ -131,6 +138,7 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         appconf->setTrayMode(mode);
         mainwin->setTrayVisible(mode);
         ui->systray_icon_box->setEnabled(mode);
+        ui->menu_edit->setEnabled(mode);
     };
     connect(ui->systray_r_none,&QRadioButton::clicked,this,systray_sel);
     connect(ui->systray_r_showtray,&QRadioButton::clicked,this,systray_sel);
@@ -228,6 +236,8 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
      */
     connect(ui->sa_enable,&QGroupBox::clicked,this,[this,mainwin](){
         appconf->setSpectrumEnable(ui->sa_enable->isChecked());
+        ui->spectrum_theme->setEnabled(ui->sa_enable->isChecked());
+        ui->spectrum_advanced->setEnabled(ui->sa_enable->isChecked());
         emit closeClicked();
         mainwin->ui->set->click();
     });
@@ -278,7 +288,20 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->github, &QPushButton::clicked, this, []{
         QDesktopServices::openUrl(QUrl("https://github.com/Audio4Linux/Viper4Linux-GUI"));
     });
-
+    connect(ui->menu_edit,&QMenuEditor::targetChanged,[mainwin,this]{
+        auto menu = ui->menu_edit->exportMenu();
+        mainwin->updateTrayMenu(menu);
+    });
+    connect(ui->menu_edit,&QMenuEditor::resetPressed,[mainwin,this]{
+        QMessageBox::StandardButton reply = QMessageBox::question(this, "Warning", "Do you really want to restore the default layout?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            ui->menu_edit->setTargetMenu(mainwin->buildDefaultActions());
+            auto menu = ui->menu_edit->exportMenu();
+            mainwin->updateTrayMenu(menu);
+        }
+    });
+    ui->menu_edit->setSourceMenu(mainwin->buildAvailableActions());
 
     /*
      * Check for systray availability
@@ -353,6 +376,9 @@ void SettingsDlg::refreshAll(){
     lockslot = true;
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
+    ui->menu_edit->setTargetMenu(m_mainwin->getTrayContextMenu());
+    ui->menu_edit->setIconStyle(appconf->getWhiteIcons());
+
     ui->path->setText(appconf->getPath());
     ui->irspath->setText(appconf->getIrsPath());
     ui->autofx->setChecked(appconf->getAutoFx());
@@ -395,6 +421,7 @@ void SettingsDlg::refreshAll(){
     ui->systray_r_none->setChecked(!appconf->getTrayMode());
     ui->systray_r_showtray->setChecked(appconf->getTrayMode());
     ui->systray_icon_box->setEnabled(appconf->getTrayMode());
+    ui->menu_edit->setEnabled(appconf->getTrayMode());
 
     bool autostart_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Exists);
     bool autostartviper_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::UsesViperAutostart);
@@ -435,6 +462,9 @@ void SettingsDlg::refreshAll(){
 
     if(maxfreq < minfreq) maxfreq = minfreq + 100;
     ui->sa_enable->setChecked(appconf->getSpetrumEnable());
+    ui->spectrum_theme->setEnabled(appconf->getSpetrumEnable());
+    ui->spectrum_advanced->setEnabled(appconf->getSpetrumEnable());
+
     ui->sa_bands->setValue(bands);
     ui->sa_minfreq->setValue(minfreq);
     ui->sa_maxfreq->setValue(maxfreq);
@@ -445,6 +475,11 @@ void SettingsDlg::refreshAll(){
     ui->sa_theme_default->setChecked(!appconf->getSpectrumTheme());
     ui->sa_theme_inherit->setChecked(appconf->getSpectrumTheme());
     lockslot = false;
+}
+
+void SettingsDlg::updateButtonStyle(bool white)
+{
+    ui->menu_edit->setIconStyle(white);
 }
 
 void SettingsDlg::setVisible(bool visible)
@@ -470,4 +505,3 @@ void SettingsDlg::updateInputSinks(){
     }
     lockslot = false;
 }
-

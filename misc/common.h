@@ -15,6 +15,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 #include <QDir>
+#include <QMenu>
 #include <string>
 #include <algorithm>
 #include <cmath>
@@ -48,5 +49,45 @@ static bool isApproximatelyEqual(TReal a, TReal b, TReal tolerance = std::numeri
         return true;
 
     return false;
+}
+
+namespace MenuIO {
+static QString buildString(QMenu* menu){
+    QString out;
+    for(auto action : menu->actions()){
+        if(action->isSeparator())
+            out += "separator;";
+        else if(action->menu())
+            out += action->menu()->property("tag").toString() + ";";
+        else
+            out += action->property("tag").toString() + ";";
+    }
+    return out;
+}
+static QMenu* buildMenu(QMenu* options, QString input){
+    QMenu* out = new QMenu();
+    for(auto item : input.split(";")){
+        if(item == "separator")
+            out->addSeparator();
+        else if(item.startsWith("menu")){
+            for(auto action : options->actions()){
+                if(action->menu())
+                    if(action->menu()->property("tag") == item){
+                        out->addMenu(action->menu());
+                        continue;
+                    }
+            }
+        }
+        else{
+            for(auto action : options->actions()){
+                if(action->property("tag") == item){
+                    out->addAction(action);
+                    continue;
+                }
+            }
+        }
+    }
+    return out;
+}
 }
 #endif // COMMON_H

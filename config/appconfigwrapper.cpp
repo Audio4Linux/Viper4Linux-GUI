@@ -150,6 +150,14 @@ void AppConfigWrapper::setTrayMode(int mode){
     appconf->setValue("session.tray.mode",QVariant(mode));
     saveAppConfig();
 }
+void AppConfigWrapper::setTrayContextMenu(const QString& ctx){
+    appconf->setValue("session.tray.contextmenu",QVariant(ctx));
+    saveAppConfig();
+}
+QString AppConfigWrapper::getTrayContextMenu(){
+    QString name = appconf->getString("session.tray.contextmenu");
+    return name;
+}
 void AppConfigWrapper::setSpectrumEnable(bool b){
     appconf->setValue("visualizer.spectrum.enable",QVariant(b));
     emit spectrumChanged();

@@ -42,7 +42,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     msg_launchfail = new OverlayMsgProxy(this);
     msg_versionmismatch = new OverlayMsgProxy(this);
 
-    disableAction = new QAction();
+    tray_disableAction = new QAction();
     conf = new ConfigContainer();
     m_stylehelper = new StyleHelper(this);
     m_appwrapper = new AppConfigWrapper(m_stylehelper);
@@ -55,9 +55,15 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     conf->setConfigMap(readConfig());
     LoadConfig();
 
+
+
     conv_dlg = new ConvolverDlg(this,this);
-    settings_dlg = new SettingsDlg(this,this);
     preset_dlg = new PresetDlg(this);
+
+    createTrayIcon();
+    initGlobalTrayActions();
+
+    settings_dlg = new SettingsDlg(this,this);
     log_dlg = new LogDlg(this);
 
     //This section checks if another instance is already running and switches to it.
@@ -88,9 +94,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
             }
         }
     }
-
-    createTrayIcon();
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
 
     //Cancel constructor if quitting soon
     if(aboutToQuit) return;
@@ -198,7 +201,7 @@ void MainWindow::LaunchFirstRunSetup(){
             lightBox->hide();
             settings_dlg->refreshAll();
             QTimer::singleShot(300,this,[this]{
-               RunDiagnosticChecks();
+                RunDiagnosticChecks();
             });
         });
     });
@@ -357,6 +360,7 @@ void MainWindow::setVisible(bool visible)
     //Reconnect to dbus to make sure the connection isn't stale
     m_dbus = new DBusProxy();
     updateTrayPresetList();
+    updateTrayConvolverList();
     //Hide all other windows if set to invisible
     if(!visible){
         log_dlg->hide();
@@ -458,8 +462,8 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 void MainWindow::updateTrayPresetList(){
-    if(presetMenu != nullptr){
-        presetMenu->clear();
+    if(tray_presetMenu != nullptr){
+        tray_presetMenu->clear();
         QString absolute = QFileInfo(m_appwrapper->getPath()).absoluteDir().absolutePath();
         QString path = pathAppend(absolute,"presets");
 
@@ -472,7 +476,7 @@ void MainWindow::updateTrayPresetList(){
         if(files.count()<1){
             QAction *noPresets = new QAction("No presets found");
             noPresets->setEnabled(false);
-            presetMenu->addAction(noPresets);
+            tray_presetMenu->addAction(noPresets);
         }
         else{
             for(int i = 0; i < files.count(); i++){
@@ -484,45 +488,193 @@ void MainWindow::updateTrayPresetList(){
                 connect(newEntry,&QAction::triggered,this,[=](){
                     LoadPresetFile(pathAppend(path,QString("%1.conf").arg(files[i])));
                 });
-                presetMenu->addAction(newEntry);
+                tray_presetMenu->addAction(newEntry);
             }
         }
     }
 }
+void MainWindow::updateTrayConvolverList(){
+    if(tray_convMenu != nullptr){
+        tray_convMenu->clear();
+        QString absolute = QFileInfo(m_appwrapper->getPath()).absoluteDir().absolutePath();
+        QString path = pathAppend(absolute,"irs_favorites");
+
+        QDir dir(path);
+        if (!dir.exists())
+            dir.mkpath(".");
+
+        QStringList nameFilter({"*.wav","*.irs"});
+        QStringList files = dir.entryList(nameFilter);
+        if(files.count()<1){
+            QAction *noPresets = new QAction("No impulse responses found");
+            noPresets->setEnabled(false);
+            tray_convMenu->addAction(noPresets);
+        }
+        else{
+            for(int i = 0; i < files.count(); i++){
+                //Add entry
+                QAction *newEntry = new QAction(files[i]);
+                connect(newEntry,&QAction::triggered,this,[=](){
+                    SetIRS(files[i],true);
+                });
+                tray_convMenu->addAction(newEntry);
+            }
+        }
+    }
+}
+
 void MainWindow::createTrayIcon()
 {
-    disableAction = new QAction(tr("&Disable FX"), this);
-    disableAction->setCheckable(true);
-    disableAction->setChecked(!conf->getBool("fx_enable"));
-    connect(disableAction, &QAction::triggered, this, [this](){
-        conf->setValue("fx_enable",!disableAction->isChecked());
-        ui->disableFX->setChecked(disableAction->isChecked());
-        ApplyConfig();
-    });
-    QAction *reloadAction = new QAction(tr("&Reload viper"), this);
-    connect(reloadAction, &QAction::triggered, this, [this](){
-        Restart();
-    });
-
-    presetMenu = new QMenu(tr("&Presets"));
-    connect(preset_dlg,&PresetDlg::presetChanged,this,&MainWindow::updateTrayPresetList);
-
-    quitAction = new QAction(tr("&Quit"), this);
-    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
-
-    trayIconMenu = new QMenu(this);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(disableAction);
-    trayIconMenu->addAction(reloadAction);
-    trayIconMenu->addMenu(presetMenu);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(quitAction);
-
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setToolTip("Viper4Linux");
-    trayIcon->setContextMenu(trayIconMenu);
-
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
     trayIcon->setIcon(QIcon(":/icons/viper-new.svg"));
+}
+
+void MainWindow::updateTrayMenu(QMenu* menu){
+    trayIcon->hide();
+    createTrayIcon();
+    trayIcon->show();
+    trayIconMenu = menu;
+    trayIcon->setContextMenu(trayIconMenu);
+    connect(trayIcon->contextMenu(),&QMenu::aboutToShow,[this]{
+        updateTrayPresetList();
+        updateTrayConvolverList();
+    });
+    m_appwrapper->setTrayContextMenu(MenuIO::buildString(menu));
+}
+QMenu* MainWindow::getTrayContextMenu(){
+    return trayIconMenu;
+}
+void MainWindow::initGlobalTrayActions(){
+    tray_disableAction = new QAction(tr("&Disable FX"), this);
+    tray_disableAction->setProperty("tag","disablefx");
+    tray_disableAction->setCheckable(true);
+    tray_disableAction->setChecked(!conf->getBool("fx_enable"));
+    connect(tray_disableAction, &QAction::triggered, this, [this](){
+        conf->setValue("fx_enable",!tray_disableAction->isChecked());
+        ui->disableFX->setChecked(tray_disableAction->isChecked());
+        ApplyConfig();
+    });
+    tray_presetMenu = new QMenu(tr("&Presets"));
+    tray_presetMenu->setProperty("tag","menu_preset");
+    tray_convMenu = new QMenu(tr("&Convolver Bookmarks"));
+    tray_convMenu->setProperty("tag","menu_convolver");
+    auto init = MenuIO::buildMenu(buildAvailableActions(),m_appwrapper->getTrayContextMenu());
+    if(init->actions().count() < 1)
+        init = buildDefaultActions();
+    updateTrayMenu(init);
+}
+
+QMenu* MainWindow::buildAvailableActions()
+{
+    QAction *reloadAction = new QAction(tr("&Reload Viper"), this);
+    reloadAction->setProperty("tag","reload");
+    connect(reloadAction, &QAction::triggered, this, &MainWindow::Restart);
+
+    QAction* quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+    quitAction->setProperty("tag","quit");
+
+    QMenu* dynsysMenu = new QMenu(tr("Dynamic &System Presets"), this);
+    for(auto preset : PresetProvider::Dynsys::DYNSYS_LOOKUP_TABLE().keys()){
+        QAction *newEntry = new QAction(preset);
+        connect(newEntry,&QAction::triggered,this,[=](){
+            ui->dynsys_preset->setCurrentText(preset);
+            DynsysPresetSelectionUpdated();
+        });
+        dynsysMenu->addAction(newEntry);
+    }
+    dynsysMenu->setProperty("tag","menu_dynsys_preset");
+
+    QMenu* eqMenu = new QMenu(tr("&EQ Presets"), this);
+    for(auto preset : PresetProvider::EQ::EQ_LOOKUP_TABLE().keys()){
+        QAction *newEntry = new QAction(preset);
+        connect(newEntry,&QAction::triggered,this,[=](){
+            if(preset == "Default")
+                ResetEQ();
+            else{
+                ui->eqpreset->setCurrentText(preset);
+                EqPresetSelectionUpdated();
+            }
+        });
+        eqMenu->addAction(newEntry);
+    }
+    eqMenu->setProperty("tag","menu_eq_preset");
+
+    QMenu* colmMenu = new QMenu(tr("C&olorful Music Presets"), this);
+    for(auto preset : PresetProvider::Colm::COLM_LOOKUP_TABLE().keys()){
+        if(preset == "Unknown") continue;
+        QAction *newEntry = new QAction(preset);
+        connect(newEntry,&QAction::triggered,this,[=](){
+            const auto data = PresetProvider::Colm::lookupPreset(preset);
+            lockapply=true;
+            ui->colmwide->setValueA(data.begin()[0]);
+            ui->colmdepth->setValueA(data.begin()[1]);
+            lockapply=false;
+            OnUpdate(true);
+        });
+        colmMenu->addAction(newEntry);
+    }
+    colmMenu->setProperty("tag","menu_colm_preset");
+
+    QMenu* bassModeMenu = new QMenu(tr("ViPER &Bass Mode"), this);
+    QStringList bassModes({"Natural Bass","Pure Bass+","Subwoofer"});
+    for(auto mode : bassModes){
+        QAction *newEntry = new QAction(mode);
+        connect(newEntry,&QAction::triggered,this,[=](){
+            ui->vbmode->setValue(bassModes.indexOf(mode));
+            OnUpdate(true);
+        });
+        bassModeMenu->addAction(newEntry);
+    }
+    bassModeMenu->setProperty("tag","menu_bass_mode");
+
+    QMenu* clarityModeMenu = new QMenu(tr("ViPER C&larity Mode"), this);
+    QStringList clarityModes({"Natural","OZone+","XHiFi"});
+    for(auto mode : clarityModes){
+        QAction *newEntry = new QAction(mode);
+        connect(newEntry,&QAction::triggered,this,[=](){
+            ui->vcmode->setValue(clarityModes.indexOf(mode));
+            OnUpdate(true);
+        });
+        clarityModeMenu->addAction(newEntry);
+    }
+    clarityModeMenu->setProperty("tag","menu_clarity_mode");
+
+    QMenu* menu = new QMenu(this);
+    menu->addAction(tray_disableAction);
+    menu->addAction(reloadAction);
+    menu->addMenu(tray_presetMenu);
+    menu->addSeparator();
+    menu->addMenu(dynsysMenu);
+    menu->addMenu(eqMenu);
+    menu->addMenu(colmMenu);
+    menu->addMenu(tray_convMenu);
+    menu->addSeparator();
+    menu->addMenu(bassModeMenu);
+    menu->addMenu(clarityModeMenu);
+    menu->addSeparator();
+    menu->addAction(quitAction);
+    return menu;
+}
+QMenu* MainWindow::buildDefaultActions()
+{
+    QAction *reloadAction = new QAction(tr("&Reload Viper"), this);
+    reloadAction->setProperty("tag","reload");
+    connect(reloadAction, &QAction::triggered, this, &MainWindow::Restart);
+
+    QAction* quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+    quitAction->setProperty("tag","quit");
+
+    QMenu* menu = new QMenu(this);
+    menu->addAction(tray_disableAction);
+    menu->addAction(reloadAction);
+    menu->addMenu(tray_presetMenu);
+    menu->addSeparator();
+    menu->addAction(quitAction);
+    return menu;
 }
 
 //---Dialogs/Buttons
@@ -601,7 +753,7 @@ void MainWindow::Reset(){
     }
 }
 void MainWindow::DisableFX(){
-    disableAction->setChecked(ui->disableFX->isChecked());
+    tray_disableAction->setChecked(ui->disableFX->isChecked());
     //Apply instantly
     if(!lockapply)ApplyConfig();
 }
@@ -682,7 +834,7 @@ void MainWindow::SaveExternalFile(){
 //---Config IO
 void MainWindow::LoadConfig(Context ctx){
     lockapply=true;
-    disableAction->setChecked(!conf->getBool("fx_enable"));
+    tray_disableAction->setChecked(!conf->getBool("fx_enable"));
     ui->disableFX->setChecked(!conf->getBool("fx_enable"));
     ui->tubesim->setChecked(conf->getBool("tube_enable"));
     ui->colm->setChecked(conf->getBool("colm_enable"));

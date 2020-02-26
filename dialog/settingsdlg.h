@@ -33,7 +33,8 @@ public:
     void refreshDevices();
     void setVisible(bool visible) override;
     void refreshAll();
-
+public slots:
+    void updateButtonStyle(bool white);
 signals:
         void closeClicked();
 private:

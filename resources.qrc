@@ -11,5 +11,15 @@
         <file>icons/parts/upper.svg</file>
         <file>icons/parts/viper.svg</file>
         <file>icons/viper-new.svg</file>
+        <file>icons/arrow-down-white.svg</file>
+        <file>icons/arrow-down.svg</file>
+        <file>icons/arrow-left-double-white.svg</file>
+        <file>icons/arrow-left-double.svg</file>
+        <file>icons/arrow-right-double-white.svg</file>
+        <file>icons/arrow-right-double.svg</file>
+        <file>icons/arrow-up-white.svg</file>
+        <file>icons/arrow-up.svg</file>
+        <file>icons/edit-undo-white.svg</file>
+        <file>icons/edit-undo.svg</file>
     </qresource>
 </RCC>
