@@ -7,7 +7,6 @@
 #include "misc/common.h"
 
 #include <Animation/Animation.h>
-#include <StackedWidgetAnimation/StackedWidgetAnimation.h>
 
 #include <QDir>
 #include <QCloseEvent>

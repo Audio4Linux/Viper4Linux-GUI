@@ -10,7 +10,6 @@
 #include "dialog/firstlaunchwizard.h"
 
 #include <Animation/Animation.h>
-#include <StackedWidgetAnimation/StackedWidgetAnimation.h>
 
 #include <QMenu>
 #include <QMessageBox>

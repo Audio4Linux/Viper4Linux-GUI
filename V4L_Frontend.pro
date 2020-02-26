@@ -36,13 +36,6 @@ SOURCES += \
     3rdparty/WAF/Animation/SideSlide/SideSlideDecorator.cpp \
     3rdparty/WAF/Animation/Slide/SlideAnimator.cpp \
     3rdparty/WAF/Animation/Slide/SlideForegroundDecorator.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetAnimation.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInAnimator.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInDecorator.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideAnimator.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideDecorator.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverAnimator.cpp \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.cpp \
     config/appconfigwrapper.cpp \
     config/container.cpp \
     config/dbusproxy.cpp \
@@ -85,14 +78,6 @@ HEADERS += \
     3rdparty/WAF/Animation/SideSlide/SideSlideDecorator.h \
     3rdparty/WAF/Animation/Slide/SlideAnimator.h \
     3rdparty/WAF/Animation/Slide/SlideForegroundDecorator.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetAnimationPrivate.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInAnimator.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInDecorator.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideAnimator.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideDecorator.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverAnimator.h \
-    3rdparty/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.h \
     3rdparty/WAF/WAF.h \
     config/appconfigwrapper.h \
     config/container.h \
@@ -133,7 +118,6 @@ FORMS += \
     dialog/convolver.ui \
     dialog/firstlaunchwizard.ui \
     dialog/importandroid.ui \
-    dialog/items/detailitem.ui \
     dialog/log.ui \
     dialog/menueditor.ui \
     dialog/palettedlg.ui \
