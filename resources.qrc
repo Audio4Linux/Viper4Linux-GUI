@@ -21,5 +21,6 @@
         <file>icons/arrow-up.svg</file>
         <file>icons/edit-undo-white.svg</file>
         <file>icons/edit-undo.svg</file>
+        <file>viper.png</file>
     </qresource>
 </RCC>

@@ -528,7 +528,7 @@ void MainWindow::createTrayIcon()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setToolTip("Viper4Linux");
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
-    trayIcon->setIcon(QIcon(":/icons/viper-new.svg"));
+    trayIcon->setIcon(QIcon(":/viper.png"));
 }
 
 void MainWindow::updateTrayMenu(QMenu* menu){
