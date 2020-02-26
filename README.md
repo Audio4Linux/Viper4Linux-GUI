@@ -4,7 +4,7 @@
 Official UI for Viper4Linux2 [https://github.com/Audio4Linux/Viper4Linux](https://github.com/Audio4Linux/Viper4Linux)
 * Telegram: @ThePBone
 
-#### This repo contains the GUI for a newer Viper4Linux version which is not fully yet finished. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now, unless you use Arch Linux.
+#### This repo contains the GUI for a newer Viper4Linux version. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now, unless you use Arch Linux.
 
 ### Arch
 
@@ -50,6 +50,18 @@ Terminal=false
 Type=Application
 EOT
 ```
+##### Download Icon
+```bash
+sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/viper.png -q --show-progress
+```
+
 ## Screenshots
 ![GIF](/screenshots/mainwindow.gif)
 ![GIF](/screenshots/eq.gif)
+
+## Credits
+* [Material Icons](https://material.io/tools/icons/)
+* [QSS Stylesheets - GTRONICK (modified by @ThePBone)](https://github.com/GTRONICK/QSS)
+* [Viper4Linux - noahbliss](https://github.com/noahbliss/Viper4Linux)
+### Packages
+* [yochananmarqos - AUR packages](https://github.com/yochananmarqos)
