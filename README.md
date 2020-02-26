@@ -50,3 +50,6 @@ Terminal=false
 Type=Application
 EOT
 ```
+## Screenshots
+![GIF](/screenshots/mainwindow.gif)
+![GIF](/screenshots/eq.gif)
