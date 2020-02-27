@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml network dbus svg
+QT       += core gui xml network dbus svg multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = V4L_Frontend
