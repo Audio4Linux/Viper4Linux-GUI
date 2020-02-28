@@ -15,6 +15,17 @@ yay -S viper4linux-gui-git
 ![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
 
 ### Build from sources
+This GUI requires the following dependencies:
+
+Required Qt version: Qt 5.9 or higher
+
+Required Qt modules: core, gui, xml, dbus, network, svg and multimedia
+
+Dependencies for Debian-based distros:
+```bash
+sudo apt install qtbase5-dev qtmultimedia5-dev libqt5svg5-dev  
+sudo apt install libqt5core5a libqt5dbus5 libqt5gui5 libqt5multimedia5 libqt5svg5 libqt5xml5 libqt5network5
+```
 Clone this repository
 
     git clone https://github.com/Audio4Linux/Viper4Linux-GUI
