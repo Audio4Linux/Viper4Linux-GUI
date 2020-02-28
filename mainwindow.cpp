@@ -622,7 +622,7 @@ QMenu* MainWindow::buildAvailableActions()
     for(auto mode : bassModes){
         QAction *newEntry = new QAction(mode);
         connect(newEntry,&QAction::triggered,this,[=](){
-            ui->vbmode->setValue(bassModes.indexOf(mode));
+            ui->vbmode->setCurrentIndex(bassModes.indexOf(mode));
             OnUpdate(true);
         });
         bassModeMenu->addAction(newEntry);
@@ -634,7 +634,7 @@ QMenu* MainWindow::buildAvailableActions()
     for(auto mode : clarityModes){
         QAction *newEntry = new QAction(mode);
         connect(newEntry,&QAction::triggered,this,[=](){
-            ui->vcmode->setValue(clarityModes.indexOf(mode));
+            ui->vcmode->setCurrentIndex(clarityModes.indexOf(mode));
             OnUpdate(true);
         });
         clarityModeMenu->addAction(newEntry);
@@ -842,10 +842,10 @@ void MainWindow::LoadConfig(Context ctx){
     ui->colmmidimg->setValueA(conf->getInt("colm_midimage"));
     ui->colmwide->setValueA(conf->getInt("colm_widening"));
     ui->clarity->setChecked(conf->getBool("vc_enable"));
-    ui->vcmode->setValue(conf->getInt("vc_mode"));
+    ui->vcmode->setCurrentIndex(conf->getInt("vc_mode"));
     ui->vclvl->setValueA(conf->getInt("vc_level"));
     ui->vb->setChecked(conf->getBool("vb_enable"));
-    ui->vbmode->setValue(conf->getInt("vb_mode"));
+    ui->vbmode->setCurrentIndex(conf->getInt("vb_mode"));
     ui->vbgain->setValueA(conf->getInt("vb_gain"));
     ui->vbfreq->setValueA(conf->getInt("vb_freq"));
     ui->vhp->setChecked(conf->getBool("vhe_enable"));
@@ -952,7 +952,7 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("colm_depth",QVariant(ui->colmdepth->valueA()));
     conf->setValue("colm_midimage",QVariant(ui->colmmidimg->valueA()));
     conf->setValue("vc_enable",QVariant(ui->clarity->isChecked()));
-    conf->setValue("vc_mode",QVariant(ui->vcmode->value()));
+    conf->setValue("vc_mode",QVariant(ui->vcmode->currentIndex()));
     conf->setValue("vc_level",QVariant(ui->vclvl->valueA()));
     conf->setValue("cure_enable",QVariant(ui->vcure->isChecked()));
     conf->setValue("ax_enable",QVariant(ui->ax->isChecked()));
@@ -992,7 +992,7 @@ void MainWindow::ApplyConfig(bool restart){
     conf->setValue("vb_enable",QVariant(ui->vb->isChecked()));
     conf->setValue("vb_freq",QVariant(ui->vbfreq->valueA()));
     conf->setValue("vb_gain",QVariant(ui->vbgain->valueA()));
-    conf->setValue("vb_mode",QVariant(ui->vbmode->value()));
+    conf->setValue("vb_mode",QVariant(ui->vbmode->currentIndex()));
     conf->setValue("fetcomp_enable",QVariant(ui->enable_comp->isChecked()));
     conf->setValue("fetcomp_autoattack",QVariant(ui->m_attack->isChecked()));
     conf->setValue("fetcomp_autogain",QVariant(ui->m_gain->isChecked()));
@@ -1091,7 +1091,7 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     QString post = "";
     if(obj==ui->vbmode){
         //Bass
-        if(d==0) UpdateTooltipLabelUnit(obj,tr("Natural Bass"),alt==nullptr);
+        if(d==0) UpdateTooltipLabelUnit(obj,tr("Natural"),alt==nullptr);
         else if(d==1) UpdateTooltipLabelUnit(obj,tr("Pure Bass+"),alt==nullptr);
         else if(d==2) UpdateTooltipLabelUnit(obj,tr("Subwoofer"),alt==nullptr);
         else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
@@ -1212,13 +1212,13 @@ void MainWindow::UpdateAllUnitLabels(){
      ui->a_maxatk,ui->a_maxrel,ui->a_kneewidth,ui->vcurelvl,ui->axmode,ui->barkcon,ui->barkfreq,ui->convcc,
      ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_sidegain1,ui->dyn_sidegain2,ui->dyn_bassgain});
 
-    QList<QSpinBox*> spinboxesToBeUpdated({ui->vcmode,ui->vbmode});
+    QList<QComboBox*> comboboxesToBeUpdated({ui->vcmode,ui->vbmode});
 
     foreach (auto w, slidersToBeUpdated)
         UpdateUnitLabel(w->valueA(),w);
 
-    foreach (auto w, spinboxesToBeUpdated)
-        UpdateUnitLabel(w->value(),w);
+    foreach (auto w, comboboxesToBeUpdated)
+        UpdateUnitLabel(w->currentIndex(),w);
 }
 
 //---Helper
@@ -1283,7 +1283,7 @@ AppConfigWrapper* MainWindow::getACWrapper(){
 
 //---Connect UI-Signals
 void MainWindow::ConnectActions(){    
-    QList<QWidget*> registerValueChange({ui->vbmode,ui->vcmode});
+    QList<QComboBox*> registerCurrentIndexChange({ui->vbmode,ui->vcmode});
 
     QList<QAnimatedSlider*> registerValueAChange(
     {ui->convcc,ui->vbfreq,ui->vbgain,ui->difflvl,ui->vhplvl,ui->roomsize,ui->roomwidth,ui->roomdamp,
@@ -1306,8 +1306,8 @@ void MainWindow::ConnectActions(){
     QList<QWidget*> registerDynsysUpdate(
     {ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_sidegain1,ui->dyn_sidegain2});
 
-    foreach (QWidget* w, registerValueChange)
-        connect(w,              SIGNAL(valueChanged(int)),          this,   SLOT(UpdateUnitLabel(int)));
+    foreach (QWidget* w, registerCurrentIndexChange)
+        connect(w,              SIGNAL(currentIndexChanged(int)),          this,   SLOT(UpdateUnitLabel(int)));
 
     foreach (QWidget* w, registerValueAChange)
         connect(w,              SIGNAL(valueChangedA(int)),          this,   SLOT(UpdateUnitLabel(int)));
@@ -1332,6 +1332,6 @@ void MainWindow::ConnectActions(){
     connect(ui->eq_widget,      SIGNAL(mouseReleased()),            this,   SLOT(UpdateEqStringFromWidget()));
     connect(ui->eqpreset,       SIGNAL(currentIndexChanged(int)),   this,   SLOT(EqPresetSelectionUpdated()));
     connect(ui->dynsys_preset,  SIGNAL(currentIndexChanged(int)),   this,   SLOT(DynsysPresetSelectionUpdated()));
-    connect(ui->vbmode,         SIGNAL(valueChanged(int)),          this,   SLOT(OnRelease()));
-    connect(ui->vcmode,         SIGNAL(valueChanged(int)),          this,   SLOT(OnRelease()));
+    connect(ui->vbmode,         SIGNAL(currentIndexChanged(int)),   this,   SLOT(OnRelease()));
+    connect(ui->vcmode,         SIGNAL(currentIndexChanged(int)),   this,   SLOT(OnRelease()));
 }

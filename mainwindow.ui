@@ -106,25 +106,22 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="vbmode">
-                     <property name="minimumSize">
-                      <size>
-                       <width>50</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="frame">
-                      <bool>true</bool>
-                     </property>
-                     <property name="maximum">
-                      <number>2</number>
-                     </property>
+                    <widget class="QComboBox" name="vbmode">
+                     <item>
+                      <property name="text">
+                       <string>Natural</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Pure Bass+</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Subwoofer</string>
+                      </property>
+                     </item>
                     </widget>
                    </item>
                   </layout>
@@ -268,22 +265,22 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="vcmode">
-                     <property name="minimumSize">
-                      <size>
-                       <width>50</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="maximum">
-                      <number>2</number>
-                     </property>
+                    <widget class="QComboBox" name="vcmode">
+                     <item>
+                      <property name="text">
+                       <string>Natural</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>OZone+</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>XHiFi</string>
+                      </property>
+                     </item>
                     </widget>
                    </item>
                   </layout>

@@ -212,7 +212,7 @@ void AppConfigWrapper::setSpectrumInput(const QString& npath){
     saveAppConfig();
 }
 QString AppConfigWrapper::getSpectrumInput(){
-    QString in = appconf->getString("visualizer.spectrum.device",false);
+    QString in = appconf->getString("visualizer.spectrum.device",true);
     if(in.length() < 1)
         return QString("viper.monitor");
     return in;
