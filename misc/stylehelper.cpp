@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 #include "config/appconfigwrapper.h"
+#include "phantom/phantomstyle.h"
 
 #include <QTextStream>
 #include <QApplication>
@@ -12,7 +13,11 @@ StyleHelper::StyleHelper(QObject* host){
 void StyleHelper::SetStyle(){
     MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
-    QApplication::setStyle(m_appconf->getTheme());
+    if(m_appconf->getTheme() == "Phantom")
+        QApplication::setStyle(new PhantomStyle);
+    else
+        QApplication::setStyle(m_appconf->getTheme());
+
     QString style_sheet = m_appconf->getStylesheet();
     int theme_mode = m_appconf->getThememode();
     QString color_palette = m_appconf->getColorpalette();
@@ -27,7 +32,6 @@ void StyleHelper::SetStyle(){
         else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
         else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
         else stylepath = ":/default.qss";
-        m_host->ui->vb->setContentsMargins(4,4,4,4);
         QFile f(stylepath);
         if (!f.exists())printf("Unable to set stylesheet, file not found\n");
         else
@@ -62,6 +66,7 @@ void StyleHelper::SetStyle(){
     }else{
         loadIcons(false);
         if(color_palette=="dark"){
+            loadIcons(true);
             QColor background = QColor(53,53,53);
             QColor foreground = Qt::white;
             QColor base = QColor(25,25,25);

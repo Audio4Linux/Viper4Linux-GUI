@@ -9,6 +9,7 @@
 #include "misc/eventfilter.h"
 #include "dialog/firstlaunchwizard.h"
 
+#include <phantomstyle.h>
 #include <Animation/Animation.h>
 
 #include <QMenu>
@@ -53,8 +54,6 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
 
     conf->setConfigMap(readConfig());
     LoadConfig();
-
-
 
     conv_dlg = new ConvolverDlg(this,this);
     preset_dlg = new PresetDlg(this);
@@ -167,6 +166,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         LaunchFirstRunSetup();
     else
         RunDiagnosticChecks();
+
+    //setStyle(new PhantomStyle);
 }
 
 MainWindow::~MainWindow()
@@ -254,12 +255,15 @@ void MainWindow::InitializeSpectrum(){
     else if(refresh > 500) refresh = 500;
     m_audioengine->setNotifyIntervalMs(refresh);
 
-    analysisLayout.reset(new QHBoxLayout());
-    analysisLayout->addWidget(m_spectrograph);
+    analysisLayout.reset(new QFrame());
+    analysisLayout->setFrameShape(QFrame::Shape::StyledPanel);
+    analysisLayout->setLayout(new QHBoxLayout);
+    analysisLayout->layout()->setMargin(0);
+    analysisLayout->layout()->addWidget(m_spectrograph);
     m_spectrograph->hide();
 
     auto buttonbox = ui->centralWidget->layout()->takeAt(ui->centralWidget->layout()->count()-1);
-    ui->centralWidget->layout()->addItem(analysisLayout.data());
+    ui->centralWidget->layout()->addWidget(analysisLayout.data());
     ui->centralWidget->layout()->addItem(buttonbox);
     analysisLayout.take();
 
@@ -299,10 +303,22 @@ void MainWindow::RefreshSpectrumParameters(){
 
     if(maxfreq < minfreq) maxfreq = minfreq + 100;
 
-    if(m_appwrapper->getSpectrumTheme() == 0)
-        m_spectrograph->setTheme(Qt::black,QColor(51,204,201),QColor(255,255,0),m_appwrapper->getSpetrumGrid());
+    QColor outline;
+    if (palette().window().style() == Qt::TexturePattern)
+        outline = QColor(0, 0, 0, 160);
     else
-        m_spectrograph->setTheme(palette().window().color().lighter(),palette().highlight().color(),palette().text().color(),m_appwrapper->getSpetrumGrid());
+        outline = palette().window().color().lighter(140);
+
+    if(m_appwrapper->getSpectrumTheme() == 0)
+        m_spectrograph->setTheme(Qt::black,QColor(51,204,201),QColor(51,204,201).darker(),QColor(255,255,0),m_appwrapper->getSpetrumGrid());
+    else
+        m_spectrograph->setTheme(palette().window().color().lighter(),
+                                 palette().highlight().color(),
+                                 palette().text().color(),
+                                 outline.lighter(108),
+                                 m_appwrapper->getSpetrumGrid());
+
+
 
     m_spectrograph->setParams(bands, minfreq, maxfreq);
     m_audioengine->setNotifyIntervalMs(refresh);

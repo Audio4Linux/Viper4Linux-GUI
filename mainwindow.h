@@ -122,7 +122,7 @@ private:
     PresetDlg *preset_dlg;
     LogDlg *log_dlg;
 
-    QScopedPointer<QHBoxLayout> analysisLayout;
+    QScopedPointer<QFrame> analysisLayout;
     Spectrograph* m_spectrograph;
     AudioStreamEngine* m_audioengine;
 

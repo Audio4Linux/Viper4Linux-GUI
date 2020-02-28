@@ -83,12 +83,13 @@ void Spectrograph::setParams(int numBars, qreal lowFreq, qreal highFreq)
     updateBars();
 }
 
-void Spectrograph::setTheme(QColor background, QColor bar, QColor bar_max, bool grid)
+void Spectrograph::setTheme(QColor background, QColor bar, QColor bar_max, QColor outline, bool grid)
 {
     m_background = background;
     m_bar = bar;
     m_bar_max = bar_max;
     m_grid = grid;
+    m_outline = outline;
 }
 
 void Spectrograph::timerEvent(QTimerEvent *event)
@@ -122,13 +123,16 @@ void Spectrograph::paintEvent(QPaintEvent *event)
     }
 
     // Draw the outline
-    const QColor gridColor = m_bar.darker();
-    QPen gridPen(gridColor);
-    painter.setPen(gridPen);
-    painter.drawLine(rect().topLeft(), rect().topRight());
+    const QColor outlineColor = m_outline;
+    QPen outlinePen(outlineColor);
+    painter.setPen(outlinePen);
+    /*painter.drawLine(rect().topLeft(), rect().topRight());
     painter.drawLine(rect().topRight(), rect().bottomRight());
     painter.drawLine(rect().bottomRight(), rect().bottomLeft());
-    painter.drawLine(rect().bottomLeft(), rect().topLeft());
+    painter.drawLine(rect().bottomLeft(), rect().topLeft());*/
+
+    const QColor gridColor = m_bar.darker();
+    QPen gridPen(gridColor);
 
     QVector<qreal> dashes;
     dashes << 2 << 2;

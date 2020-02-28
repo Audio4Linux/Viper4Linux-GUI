@@ -113,7 +113,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -366,7 +366,13 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="themeSelect"/>
+            <widget class="QComboBox" name="themeSelect">
+             <item>
+              <property name="text">
+               <string>Phantom</string>
+              </property>
+             </item>
+            </widget>
            </item>
           </layout>
          </item>

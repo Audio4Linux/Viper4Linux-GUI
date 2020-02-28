@@ -68,7 +68,7 @@ public:
     ~Spectrograph();
 
     void setParams(int numBars, qreal lowFreq, qreal highFreq);
-    void setTheme(QColor background=Qt::black, QColor bar=QColor(51, 204, 102), QColor bar_max=QColor(255, 255, 0), bool grid=true);
+    void setTheme(QColor background=Qt::black, QColor bar=QColor(51, 204, 102), QColor bar_max=QColor(255, 255, 0), QColor outline=QColor(51, 204, 102).darker(), bool grid=true);
 
     // QObject
     void timerEvent(QTimerEvent *event) override;
@@ -108,6 +108,7 @@ private:
     QColor m_background = Qt::black;
     QColor m_bar        = QColor(51, 204, 102);
     QColor m_bar_max    = QColor(255, 255, 0);
+    QColor m_outline    = QColor(51, 204, 102).darker();
     bool m_grid = true;
 };
 
