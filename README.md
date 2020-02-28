@@ -4,7 +4,7 @@
 Official UI for Viper4Linux2 [https://github.com/Audio4Linux/Viper4Linux](https://github.com/Audio4Linux/Viper4Linux)
 * Telegram: @ThePBone
 
-#### This repo contains the GUI for a newer Viper4Linux version. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now, unless you use Arch Linux.
+#### This repo contains the GUI for a newer Viper4Linux version. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now, unless you use Arch Linux or you know what you're doing.
 
 ### Arch
 
@@ -16,10 +16,8 @@ yay -S viper4linux-gui-git
 
 ### Build from sources
 This GUI requires the following dependencies:
-
-Required Qt version: Qt 5.9 or higher
-
-Required Qt modules: core, gui, xml, dbus, network, svg and multimedia
+* Required Qt version: Qt 5.9 or higher
+* Required Qt modules: core, gui, xml, dbus, network, svg and multimedia
 
 Dependencies for Debian-based distros:
 ```bash
