@@ -97,6 +97,7 @@ private slots:
     void RefreshSpectrumParameters();
     void UpdateEqStringFromWidget();
     void UpdateDynsysStringFromWidget();
+    void UpdateColmStringFromWidget();
 private:
     ConfigContainer* conf;
     AppConfigWrapper* m_appwrapper;

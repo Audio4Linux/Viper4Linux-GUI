@@ -148,4 +148,25 @@ const INT_LIST Colm::lookupPreset(const QString& preset){
     else
         return table["Unknown"];
 }
+
+const QString Colm::reverseLookup(const QVector<int>& data){
+    auto table = COLM_LOOKUP_TABLE();
+    for(auto key : table.keys()){
+        QVector<int> row(table[key]);
+        int it = 0;
+        bool different = false;
+        for(auto cur_data : row){
+            bool equal = cur_data == data.at(it);
+            if(!equal){
+                different = true;
+                break;
+            }
+            it++;
+        }
+        if(!different)
+            return key;
+    }
+    return "...";
+}
+
 }

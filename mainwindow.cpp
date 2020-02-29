@@ -126,17 +126,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     menu->addAction(tr("What's this..."), this,[](){QWhatsThis::enterWhatsThisMode();});
 
     ui->toolButton->setMenu(menu);
-    QMenu *menuC = new QMenu();
-    menuC->addAction(tr("Slight"), this,[this](){ ui->colmpreset->setText(tr("Slight")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 1"), this,[this](){ ui->colmpreset->setText(tr("Level 1")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 2"), this,[this](){ ui->colmpreset->setText(tr("Level 2")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 3"), this,[this](){ ui->colmpreset->setText(tr("Level 3")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 4"), this,[this](){ ui->colmpreset->setText(tr("Level 4")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 5"), this,[this](){ ui->colmpreset->setText(tr("Level 5")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 6"), this,[this](){ ui->colmpreset->setText(tr("Level 6")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Level 7"), this,[this](){ ui->colmpreset->setText(tr("Level 7")); ColmPresetSelectionUpdated();});
-    menuC->addAction(tr("Extreme"), this,[this](){ ui->colmpreset->setText(tr("Extreme")); ColmPresetSelectionUpdated();});
-    ui->colmpreset->setMenu(menuC);
+
     m_stylehelper->SetStyle();
     ui->eq_widget->setAccentColor(palette().highlight().color());
 
@@ -622,12 +612,8 @@ QMenu* MainWindow::buildAvailableActions()
         if(preset == "Unknown") continue;
         QAction *newEntry = new QAction(preset);
         connect(newEntry,&QAction::triggered,this,[=](){
-            const auto data = PresetProvider::Colm::lookupPreset(preset);
-            lockapply=true;
-            ui->colmwide->setValueA(data.begin()[0]);
-            ui->colmdepth->setValueA(data.begin()[1]);
-            lockapply=false;
-            OnUpdate(true);
+            ui->colmpreset->setCurrentText(preset);
+            ColmPresetSelectionUpdated();
         });
         colmMenu->addAction(newEntry);
     }
@@ -946,6 +932,7 @@ void MainWindow::LoadConfig(Context ctx){
     if(ctx != Context::DBus){
         UpdateEqStringFromWidget();
         UpdateDynsysStringFromWidget();
+        UpdateColmStringFromWidget();
     }
     UpdateAllUnitLabels();
 
@@ -1086,8 +1073,11 @@ void MainWindow::DynsysPresetSelectionUpdated(){
     OnUpdate(true);
 }
 void MainWindow::ColmPresetSelectionUpdated(){
-    QString selection = ui->colmpreset->text();
-    const auto data = PresetProvider::Colm::lookupPreset(selection);
+    if(ui->colmpreset->currentText() == "...")
+        return;
+    const auto data = PresetProvider::Colm::lookupPreset(ui->colmpreset->currentText());
+    if(data.size() <= 1)
+        return;
     lockapply=true;
     ui->colmwide->setValueA(data.begin()[0]);
     ui->colmdepth->setValueA(data.begin()[1]);
@@ -1273,6 +1263,11 @@ void MainWindow::UpdateDynsysStringFromWidget(){
                                                    ui->dyn_sidegain1->valueA(),ui->dyn_sidegain2->valueA()});
     ui->dynsys_preset->setCurrentText(currentDynsysPresetName);
 }
+void MainWindow::UpdateColmStringFromWidget(){
+    QString currentColmPresetName =
+            PresetProvider::Colm::reverseLookup({ui->colmwide->valueA(),ui->colmdepth->valueA()});
+    ui->colmpreset->setCurrentText(currentColmPresetName);
+}
 
 QVariantMap MainWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
@@ -1322,6 +1317,9 @@ void MainWindow::ConnectActions(){
     QList<QWidget*> registerDynsysUpdate(
     {ui->dyn_xcoeff1,ui->dyn_xcoeff2,ui->dyn_ycoeff1,ui->dyn_ycoeff2,ui->dyn_sidegain1,ui->dyn_sidegain2});
 
+    QList<QWidget*> registerColmUpdate(
+    {ui->colmwide,ui->colmdepth});
+
     foreach (QWidget* w, registerCurrentIndexChange)
         connect(w,              SIGNAL(currentIndexChanged(int)),          this,   SLOT(UpdateUnitLabel(int)));
 
@@ -1337,6 +1335,9 @@ void MainWindow::ConnectActions(){
     foreach (QWidget* w, registerDynsysUpdate)
         connect(w,              SIGNAL(sliderReleased()),           this,   SLOT(UpdateDynsysStringFromWidget()));
 
+    foreach (QWidget* w, registerColmUpdate)
+        connect(w,              SIGNAL(sliderReleased()),           this,   SLOT(UpdateColmStringFromWidget()));
+
     connect(ui->apply,          SIGNAL(clicked()),                  this,   SLOT(ApplyConfig()));
     connect(ui->disableFX,      SIGNAL(clicked()),                  this,   SLOT(DisableFX()));
     connect(ui->reset_eq,       SIGNAL(clicked()),                  this,   SLOT(ResetEQ()));
@@ -1350,4 +1351,5 @@ void MainWindow::ConnectActions(){
     connect(ui->dynsys_preset,  SIGNAL(currentIndexChanged(int)),   this,   SLOT(DynsysPresetSelectionUpdated()));
     connect(ui->vbmode,         SIGNAL(currentIndexChanged(int)),   this,   SLOT(OnRelease()));
     connect(ui->vcmode,         SIGNAL(currentIndexChanged(int)),   this,   SLOT(OnRelease()));
+    connect(ui->colmpreset,     SIGNAL(currentIndexChanged(int)),   this,   SLOT(ColmPresetSelectionUpdated()));
 }

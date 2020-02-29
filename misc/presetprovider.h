@@ -44,6 +44,7 @@ class Colm{
     public:
     static const QMap<COLM_UNIT> COLM_LOOKUP_TABLE();
     static const INT_LIST lookupPreset(const QString& preset);
+    static const QString reverseLookup(const QVector<int> &data);
 };
 }
 #endif // PRESETEXTENSION_H

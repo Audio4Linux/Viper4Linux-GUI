@@ -137,8 +137,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /usr/bin/
 
 # Set BUILDPATH variable to change the output path
-!isEmpty($$BUILDPATH): target.path = $$BUILDPATH
-!isEmpty($$BUILDPATH): DESTDIR = $$BUILDPATH
+# !isEmpty($$BUILDPATH): target.path = $$BUILDPATH
+# !isEmpty($$BUILDPATH): DESTDIR = $$BUILDPATH
 
 !isEmpty(target.path): INSTALLS += target
 

@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
         )
     );
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
+    w.hide();
     if(!parser.isSet(tray)) w.show();
 
     QApplication::setQuitOnLastWindowClosed( true );
