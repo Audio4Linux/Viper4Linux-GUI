@@ -145,14 +145,16 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     auto autostart_update = [this,mainwin,autostart_path]{
         if(ui->systray_minOnBoot->isChecked()){
             AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
-                                              ui->systray_autostartViper->isChecked());
+                                              ui->systray_autostartViper->isChecked(),
+                                              ui->systray_delay->isChecked());
         }
         else QFile(autostart_path).remove();
         ui->systray_autostartViper->setEnabled(ui->systray_minOnBoot->isChecked());
+        ui->systray_delay->setEnabled(ui->systray_minOnBoot->isChecked());
     };
     connect(ui->systray_minOnBoot,&QPushButton::clicked,this,autostart_update);
     connect(ui->systray_autostartViper,&QPushButton::clicked,this,autostart_update);
-
+    connect(ui->systray_delay,&QPushButton::clicked,this,autostart_update);
 
     auto change_theme_mode = [this]{
         if(lockslot)return;
@@ -425,10 +427,13 @@ void SettingsDlg::refreshAll(){
 
     bool autostart_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Exists);
     bool autostartviper_enabled = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::UsesViperAutostart);
+    bool autostart_delayed = AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Delayed);
 
     ui->systray_minOnBoot->setChecked(autostart_enabled);
     ui->systray_autostartViper->setEnabled(autostart_enabled);
     ui->systray_autostartViper->setChecked(autostartviper_enabled);
+    ui->systray_delay->setEnabled(autostart_enabled);
+    ui->systray_delay->setChecked(autostart_delayed);
 
     ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());

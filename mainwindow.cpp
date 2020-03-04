@@ -155,7 +155,9 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     if(!m_appwrapper->getIntroShown())
         LaunchFirstRunSetup();
     else
-        RunDiagnosticChecks();
+        QTimer::singleShot(300,this,[this]{
+            RunDiagnosticChecks();
+        });
 
     //setStyle(new PhantomStyle);
 }

@@ -113,7 +113,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -803,6 +803,13 @@
                 <widget class="QCheckBox" name="systray_autostartViper">
                  <property name="text">
                   <string>Autostart viper service</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="systray_delay">
+                 <property name="text">
+                  <string>Delay autostart by 5 seconds</string>
                  </property>
                 </widget>
                </item>

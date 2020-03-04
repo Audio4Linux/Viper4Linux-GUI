@@ -10,9 +10,13 @@ AutostartManager::AutostartManager()
 }
 
 void AutostartManager::saveDesktopFile(QString path, const QString& exepath,
-                                       bool enableAutostartViper){
+                                       bool enableAutostartViper, bool delayed){
     ConfigContainer* conf = new ConfigContainer();
-    conf->setValue("Exec",QString("%1 --tray%2").arg(exepath).arg(enableAutostartViper ? " --startviper" : ""));
+    conf->setValue("Exec",QString("%0%1 --tray%2%3")
+                   .arg(delayed ? "sleep 5s && " : "")
+                   .arg(exepath)
+                   .arg(enableAutostartViper ? " --startviper" : "")
+                   .arg(delayed ? " &" : ""));
     conf->setValue("Name","Viper4Linux2-GUI Systray");
     conf->setValue("StartupNotify",false);
     conf->setValue("Terminal",false);
@@ -28,14 +32,14 @@ void AutostartManager::saveDesktopFile(QString path, const QString& exepath,
 
 bool AutostartManager::inspectDesktopFile(const QString& path, InspectionMode mode){
     ConfigContainer conf;
+    conf.setConfigMap(ConfigIO::readFile(path));
     switch(mode){
     case UsesViperAutostart:
-        conf.setConfigMap(ConfigIO::readFile(path));
         return conf.getString("Exec").contains("--startviper");
-        break;
+    case Delayed:
+        return conf.getString("Exec").contains("sleep 5s");
     case Exists:
         return QFile::exists(path);
-        break;
     }
     return false;
 }

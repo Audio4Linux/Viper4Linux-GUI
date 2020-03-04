@@ -93,7 +93,8 @@ FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mai
     auto systray_autostart_radio = [this,autostart_path,mainwin]{
         if(ui->p3_systray_minOnBoot->isChecked()){
             AutostartManager::saveDesktopFile(autostart_path,mainwin->GetExecutablePath(),
-                                              ui->p3_systray_autostartViper->isChecked());
+                                              ui->p3_systray_autostartViper->isChecked(),
+                                              AutostartManager::inspectDesktopFile(autostart_path,AutostartManager::Delayed));
         }
         else QFile(autostart_path).remove();
         ui->p3_systray_autostartViper->setEnabled(ui->p3_systray_minOnBoot->isChecked());

@@ -22,10 +22,11 @@ class AutostartManager
 public:
     typedef enum InspectionMode{
         UsesViperAutostart,
-        Exists
+        Exists,
+        Delayed,
     }InspectionMode;
     AutostartManager();
-    static void saveDesktopFile(QString path, const QString& exepath, bool enableAutostartViper);
+    static void saveDesktopFile(QString path, const QString& exepath, bool enableAutostartViper, bool delayed);
     static bool inspectDesktopFile(const QString& path, InspectionMode mode);
     static QString getAutostartPath(const QString& filename);
 };
