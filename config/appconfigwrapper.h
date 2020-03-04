@@ -90,7 +90,8 @@ public:
     bool getIntroShown();
     QString getTrayContextMenu();
     void setTrayContextMenu(const QString &ctx);
-
+    void setSpectrumShape(int number);
+    int getSpectrumShape();
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();

@@ -83,13 +83,14 @@ void Spectrograph::setParams(int numBars, qreal lowFreq, qreal highFreq)
     updateBars();
 }
 
-void Spectrograph::setTheme(QColor background, QColor bar, QColor bar_max, QColor outline, bool grid)
+void Spectrograph::setTheme(QColor background, QColor bar, QColor bar_max, QColor outline, bool grid, Mode mode)
 {
     m_background = background;
     m_bar = bar;
     m_bar_max = bar_max;
     m_grid = grid;
     m_outline = outline;
+    m_mode = mode;
 }
 
 void Spectrograph::timerEvent(QTimerEvent *event)
@@ -159,12 +160,15 @@ void Spectrograph::paintEvent(QPaintEvent *event)
         }
     }
 
-    QColor m_bar_l = m_bar;
-    m_bar_l.setAlphaF(0.75);
-    m_bar_max.setAlphaF(0.75);
-
     // Draw the bars
     if (numBars) {
+        QColor m_bar_l = m_bar;
+        m_bar_l.setAlphaF(0.75);
+        m_bar_max.setAlphaF(0.75);
+
+        QPainterPath frequencyResponse;
+        painter.setRenderHint(QPainter::RenderHint::Antialiasing,true);
+
         // Calculate width of bars and gaps
         const int widgetWidth = rect().width();
         const int barPlusGapWidth = widgetWidth / numBars;
@@ -187,7 +191,30 @@ void Spectrograph::paintEvent(QPaintEvent *event)
             if (m_bars[i].clipped)
                 color = m_bar_max;
 
-            painter.fillRect(bar, color);
+            if (i == 0) frequencyResponse.moveTo(bar.topLeft().x(),
+                                                 bar.topLeft().y()+1);
+            else frequencyResponse.lineTo(bar.topLeft().x(),
+                                          bar.topLeft().y()+1);
+
+            if(m_mode == Mode::Bars)
+                painter.fillRect(bar, color);
+        }
+
+        if(m_mode == Mode::LineGradient){
+            frequencyResponse.lineTo(width(),height());
+            frequencyResponse.lineTo(0, height());
+            QColor light = m_bar_l;
+            light.setAlpha(60);
+            QLinearGradient gradient(QPoint(width(),0),QPoint(width(),height()));
+            gradient.setColorAt(0.0,m_bar_l);
+            gradient.setColorAt(1.0,light);
+            painter.setBrush(gradient);
+            painter.setPen(QPen(Qt::PenStyle::NoPen));
+            painter.drawPath(frequencyResponse);
+        }
+        if(m_mode == Mode::Line){
+            painter.setPen(QPen(QBrush(m_bar_l),1,Qt::PenStyle::SolidLine,Qt::PenCapStyle::SquareCap));
+            painter.drawPath(frequencyResponse);
         }
     }
 }

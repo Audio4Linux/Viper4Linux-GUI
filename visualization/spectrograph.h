@@ -63,12 +63,19 @@ class Spectrograph : public QWidget
 {
     Q_OBJECT
 
+
 public:
+    typedef enum{
+        Bars,
+        Line,
+        LineGradient
+    }Mode;
+
     explicit Spectrograph(QWidget *parent = 0);
     ~Spectrograph();
 
     void setParams(int numBars, qreal lowFreq, qreal highFreq);
-    void setTheme(QColor background=Qt::black, QColor bar=QColor(51, 204, 102), QColor bar_max=QColor(255, 255, 0), QColor outline=QColor(51, 204, 102).darker(), bool grid=true);
+    void setTheme(QColor background=Qt::black, QColor bar=QColor(51, 204, 102), QColor bar_max=QColor(255, 255, 0), QColor outline=QColor(51, 204, 102).darker(), bool grid=true, Mode mode = Mode::Bars);
 
     // QObject
     void timerEvent(QTimerEvent *event) override;
@@ -110,6 +117,7 @@ private:
     QColor m_bar_max    = QColor(255, 255, 0);
     QColor m_outline    = QColor(51, 204, 102).darker();
     bool m_grid = true;
+    Mode m_mode = Mode::Bars;
 };
 
 #endif // SPECTROGRAPH_H

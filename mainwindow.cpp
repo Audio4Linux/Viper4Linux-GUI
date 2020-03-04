@@ -302,13 +302,19 @@ void MainWindow::RefreshSpectrumParameters(){
         outline = palette().window().color().lighter(140);
 
     if(m_appwrapper->getSpectrumTheme() == 0)
-        m_spectrograph->setTheme(Qt::black,QColor(51,204,201),QColor(51,204,201).darker(),QColor(255,255,0),m_appwrapper->getSpetrumGrid());
+        m_spectrograph->setTheme(Qt::black,
+                                 QColor(51,204,201),
+                                 QColor(51,204,201).darker(),
+                                 QColor(255,255,0),
+                                 m_appwrapper->getSpetrumGrid(),
+                                 (Spectrograph::Mode)m_appwrapper->getSpectrumShape());
     else
         m_spectrograph->setTheme(palette().window().color().lighter(),
                                  palette().highlight().color(),
                                  palette().text().color(),
                                  outline.lighter(108),
-                                 m_appwrapper->getSpetrumGrid());
+                                 m_appwrapper->getSpetrumGrid(),
+                                 (Spectrograph::Mode)m_appwrapper->getSpectrumShape());
 
 
 

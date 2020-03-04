@@ -256,7 +256,10 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         if(lockslot)return;
         appconf->setSpectrumInput(str);
     });
-
+    connect(ui->sa_type,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, [this](const QString&){
+        if(lockslot)return;
+        appconf->setSpectrumShape(ui->sa_type->currentIndex());
+    });
     /*
      * Connect all signals for SA/Design
      */
@@ -470,6 +473,7 @@ void SettingsDlg::refreshAll(){
     ui->spectrum_theme->setEnabled(appconf->getSpetrumEnable());
     ui->spectrum_advanced->setEnabled(appconf->getSpetrumEnable());
 
+    ui->sa_type->setCurrentIndex(appconf->getSpectrumShape());
     ui->sa_bands->setValue(bands);
     ui->sa_minfreq->setValue(minfreq);
     ui->sa_maxfreq->setValue(maxfreq);

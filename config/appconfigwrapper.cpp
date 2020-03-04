@@ -206,6 +206,14 @@ void AppConfigWrapper::setSpectrumTheme(int number){
     emit spectrumChanged();
     saveAppConfig();
 }
+int AppConfigWrapper::getSpectrumShape(){
+    return appconf->getInt("visualizer.spectrum.shape");
+}
+void AppConfigWrapper::setSpectrumShape(int number){
+    appconf->setValue("visualizer.spectrum.shape",QVariant(number));
+    emit spectrumChanged();
+    saveAppConfig();
+}
 void AppConfigWrapper::setSpectrumInput(const QString& npath){
     appconf->setValue("visualizer.spectrum.device",QVariant(npath));
     emit spectrumReloadRequired();
