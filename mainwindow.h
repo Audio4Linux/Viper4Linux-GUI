@@ -151,6 +151,7 @@ private:
     };
     void initGlobalTrayActions();
     void updateTrayConvolverList();
+    void SetSpectrumVisibility(bool v);
 };
 
 #endif // MAINWINDOW_H

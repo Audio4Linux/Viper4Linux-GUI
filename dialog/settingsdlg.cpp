@@ -4,7 +4,9 @@
 #include "ui_mainwindow.h"
 #include "palettedlg.h"
 #include "misc/autostartmanager.h"
+#include "pulseeffectscompatibility.h"
 
+#include <QGraphicsOpacityEffect>
 #include <QProcess>
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -232,7 +234,9 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->dev_mode_auto,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_mode_manual,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_select,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, deviceUpdated);
-
+    connect(ui->dev_pe_compat, &QPushButton::clicked, this, [this]{
+        showPECompatibilityScreen();
+    });
     /*
      * Connect all signals for SA/ROOT
      */
@@ -513,4 +517,35 @@ void SettingsDlg::updateInputSinks(){
             ui->sa_input->setCurrentIndex(index_fallback);
     }
     lockslot = false;
+}
+
+void SettingsDlg::showPECompatibilityScreen(){
+    emit closeClicked();
+    QTimer::singleShot(500,this,[this]{
+        PulseeffectsCompatibility* wiz = new PulseeffectsCompatibility(appconf,m_mainwin);
+        QHBoxLayout* lbLayout = new QHBoxLayout;
+        QMessageOverlay* lightBox = new QMessageOverlay(m_mainwin);
+        QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
+        lightBox->setGraphicsEffect(eff);
+        lightBox->setLayout(lbLayout);
+        lightBox->layout()->addWidget(wiz);
+        lightBox->show();
+        QPropertyAnimation *a = new QPropertyAnimation(eff,"opacity");
+        a->setDuration(500);
+        a->setStartValue(0);
+        a->setEndValue(1);
+        a->setEasingCurve(QEasingCurve::InBack);
+        a->start(QPropertyAnimation::DeleteWhenStopped);
+        connect(wiz,&PulseeffectsCompatibility::wizardFinished,[=]{
+            QPropertyAnimation *b = new QPropertyAnimation(eff,"opacity");
+            b->setDuration(500);
+            b->setStartValue(1);
+            b->setEndValue(0);
+            b->setEasingCurve(QEasingCurve::OutCirc);
+            b->start(QPropertyAnimation::DeleteWhenStopped);
+            connect(b,&QAbstractAnimation::finished, [=](){
+                lightBox->hide();
+            });
+        });
+    });
 }

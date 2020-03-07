@@ -237,6 +237,13 @@ void MainWindow::RunDiagnosticChecks(){
 }
 
 //Spectrum
+void MainWindow::SetSpectrumVisibility(bool v){
+    m_spectrograph->setVisible(v);
+    if(v)
+        this->findChild<QFrame*>("analysisLayout_spectrum")->setFrameShape(QFrame::StyledPanel);
+    else
+        this->findChild<QFrame*>("analysisLayout_spectrum")->setFrameShape(QFrame::NoFrame);
+}
 void MainWindow::InitializeSpectrum(){
     m_spectrograph = new Spectrograph(this);
     m_audioengine = new AudioStreamEngine(this);
@@ -248,16 +255,18 @@ void MainWindow::InitializeSpectrum(){
     m_audioengine->setNotifyIntervalMs(refresh);
 
     analysisLayout.reset(new QFrame());
+    analysisLayout->setObjectName("analysisLayout_spectrum");
     analysisLayout->setFrameShape(QFrame::Shape::StyledPanel);
     analysisLayout->setLayout(new QHBoxLayout);
     analysisLayout->layout()->setMargin(0);
     analysisLayout->layout()->addWidget(m_spectrograph);
-    m_spectrograph->hide();
 
     auto buttonbox = ui->centralWidget->layout()->takeAt(ui->centralWidget->layout()->count()-1);
     ui->centralWidget->layout()->addWidget(analysisLayout.data());
     ui->centralWidget->layout()->addItem(buttonbox);
     analysisLayout.take();
+
+    SetSpectrumVisibility(false);
 
     connect(m_appwrapper,&AppConfigWrapper::spectrumChanged,this,[this]{
         ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
@@ -327,7 +336,7 @@ void MainWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
     if(ctrl_visibility)spectrum->setVisible(on);
     if(on && (!m_spectrograph->isVisible() || !ctrl_visibility)){
         if(ctrl_visibility){
-            m_spectrograph->show();
+            SetSpectrumVisibility(true);
             this->setFixedSize(this->width(),this->height()+m_spectrograph->size().height());
         }
 
@@ -360,7 +369,7 @@ void MainWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
     }
     else if(!on && (m_spectrograph->isVisible() || !ctrl_visibility)){
         if(ctrl_visibility){
-            m_spectrograph->hide();
+            SetSpectrumVisibility(false);
             this->setFixedSize(this->width(),this->height()-m_spectrograph->size().height());
         }
         m_spectrograph->reset();

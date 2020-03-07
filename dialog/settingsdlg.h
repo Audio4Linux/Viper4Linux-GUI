@@ -40,6 +40,7 @@ signals:
 private:
         AppConfigWrapper* appconf;
         MainWindow* m_mainwin;
+        void showPECompatibilityScreen();
 };
 
 #endif // SETTINGS_H

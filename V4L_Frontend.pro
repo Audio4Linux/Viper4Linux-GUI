@@ -51,6 +51,7 @@ SOURCES += \
     dialog/logdlg.cpp \
     dialog/palettedlg.cpp \
     dialog/presetdlg.cpp \
+    dialog/pulseeffectscompatibility.cpp \
     dialog/qanimatedslider.cpp \
     dialog/qmenueditor.cpp \
     dialog/qmessageoverlay.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     dialog/logdlg.h \
     dialog/palettedlg.h \
     dialog/presetdlg.h \
+    dialog/pulseeffectscompatibility.h \
     dialog/qanimatedslider.h \
     dialog/qmenueditor.h \
     dialog/qmessageoverlay.h \
@@ -123,6 +125,7 @@ FORMS += \
     dialog/menueditor.ui \
     dialog/palettedlg.ui \
     dialog/preset.ui \
+    dialog/pulseeffectscompatibility.ui \
     dialog/settings.ui \
     dialog/statusfragment.ui \
     mainwindow.ui
