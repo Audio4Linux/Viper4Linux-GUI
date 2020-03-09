@@ -49,6 +49,9 @@
        <enum>QFrame::Plain</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_19">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -57,6 +60,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="tabhostcontainer">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <property name="leftMargin">
           <number>7</number>
          </property>
@@ -68,7 +74,7 @@
          </property>
          <item>
           <widget class="QStackedWidget" name="tabhost">
-           <widget class="QWidget" name="tabhostPage1" native="true">
+           <widget class="QWidget" name="tabhostPage1">
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <property name="leftMargin">
               <number>0</number>
@@ -417,7 +423,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabhostPage2" native="true">
+           <widget class="QWidget" name="tabhostPage2">
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <property name="leftMargin">
               <number>0</number>
@@ -764,7 +770,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabhostPage3" native="true">
+           <widget class="QWidget" name="tabhostPage3">
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="leftMargin">
               <number>0</number>
@@ -1178,7 +1184,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabhostPage4" native="true">
+           <widget class="QWidget" name="tabhostPage4">
             <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="7,3">
              <property name="spacing">
               <number>15</number>
@@ -1356,7 +1362,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabhostPage5" native="true">
+           <widget class="QWidget" name="tabhostPage5">
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <property name="leftMargin">
               <number>0</number>
@@ -1872,7 +1878,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabhostPage6" native="true">
+           <widget class="QWidget" name="tabhostPage6">
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <property name="leftMargin">
               <number>0</number>
@@ -2147,7 +2153,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabhostPage7" native="true">
+           <widget class="QWidget" name="tabhostPage7">
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <property name="leftMargin">
               <number>0</number>
