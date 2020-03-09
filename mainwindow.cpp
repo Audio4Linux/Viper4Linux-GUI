@@ -141,6 +141,9 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     });
 
     connect(m_appwrapper,&AppConfigWrapper::styleChanged,this,[this](){
+        ui->frame->setStyleSheet(QString("QFrame#frame{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
+        ui->tabhost->setStyleSheet(QString("QWidget#tabhostPage1,QWidget#tabhostPage2,QWidget#tabhostPage3,QWidget#tabhostPage4,QWidget#tabhostPage5,QWidget#tabhostPage6,QWidget#tabhostPage7{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
+        ui->tabbar->redrawTabBar();
         RestartSpectrum();
         ui->eq_widget->setAccentColor(palette().highlight().color());
     });
@@ -159,7 +162,19 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
             RunDiagnosticChecks();
         });
 
-    //setStyle(new PhantomStyle);
+    ui->tabbar->setAnimatePageChange(true);
+    ui->tabbar->setCustomStackWidget(ui->tabhost);
+    ui->tabbar->setDetachCustomStackedWidget(true);
+    ui->tabbar->addPage("Bass/Clarity");
+    ui->tabbar->addPage("Dynamic");
+    ui->tabbar->addPage("Surround");
+    ui->tabbar->addPage("Equalizer");
+    ui->tabbar->addPage("Compressor");
+    ui->tabbar->addPage("Volume");
+    ui->tabbar->addPage("Miscellaneous");
+    ui->frame->setStyleSheet(QString("QFrame#frame{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
+    ui->tabhost->setStyleSheet(QString("QWidget#tabhostPage1,QWidget#tabhostPage2,QWidget#tabhostPage3,QWidget#tabhostPage4,QWidget#tabhostPage5,QWidget#tabhostPage6,QWidget#tabhostPage7{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
+    ui->tabbar->redrawTabBar();
 }
 
 MainWindow::~MainWindow()
@@ -324,8 +339,6 @@ void MainWindow::RefreshSpectrumParameters(){
                                  outline.lighter(108),
                                  m_appwrapper->getSpetrumGrid(),
                                  (Spectrograph::Mode)m_appwrapper->getSpectrumShape());
-
-
 
     m_spectrograph->setParams(bands, minfreq, maxfreq);
     m_audioengine->setNotifyIntervalMs(refresh);

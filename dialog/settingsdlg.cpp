@@ -59,12 +59,8 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
      * Prepare all combooxes
      */
     ui->styleSelect->addItem("Default","default");
-    ui->styleSelect->addItem("Black","amoled");
-    ui->styleSelect->addItem("Blue","blue");
     ui->styleSelect->addItem("MacOS","aqua");
     ui->styleSelect->addItem("Ubuntu","ubuntu");
-    ui->styleSelect->addItem("Visual Studio Dark","vsdark");
-    ui->styleSelect->addItem("Visual Studio Light","vslight");
     ui->paletteSelect->addItem("Default","default");
     ui->paletteSelect->addItem("Black","black");
     ui->paletteSelect->addItem("Blue","blue");

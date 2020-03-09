@@ -113,7 +113,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>3</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -433,7 +433,7 @@
              </property>
              <property name="maximumSize">
               <size>
-               <width>59</width>
+               <width>65</width>
                <height>16777215</height>
               </size>
              </property>
@@ -507,7 +507,7 @@
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>59</width>
+               <width>62</width>
                <height>20</height>
               </size>
              </property>

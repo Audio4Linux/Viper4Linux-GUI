@@ -25,12 +25,8 @@ void StyleHelper::SetStyle(){
     if(theme_mode==0){
         QApplication::setPalette(qApp->style()->standardPalette());
         QString stylepath = "";
-        if (style_sheet=="blue")stylepath = ":darkblue/darkblue/darkblue.qss";
-        else if (style_sheet=="amoled")stylepath = ":amoled/amoled/amoled.qss";
-        else if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
+        if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
         else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
-        else if (style_sheet=="vsdark")stylepath = ":/vsdark/vsdark/vsdark.qss";
-        else if (style_sheet=="vslight")stylepath = ":/vslight/vslight/vslight.qss";
         else stylepath = ":/default.qss";
         QFile f(stylepath);
         if (!f.exists())printf("Unable to set stylesheet, file not found\n");
@@ -75,6 +71,7 @@ void StyleHelper::SetStyle(){
         }
 
     }
+
     emit styleChanged();
 }
 void StyleHelper::setPalette(const ColorStyle& s){
