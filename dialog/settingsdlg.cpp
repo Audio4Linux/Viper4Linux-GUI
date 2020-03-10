@@ -153,7 +153,9 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->systray_minOnBoot,&QPushButton::clicked,this,autostart_update);
     connect(ui->systray_autostartViper,&QPushButton::clicked,this,autostart_update);
     connect(ui->systray_delay,&QPushButton::clicked,this,autostart_update);
-
+    /*
+     * Connect all signals for Interface
+     */
     auto change_theme_mode = [this]{
         if(lockslot)return;
         int mode = 0;
@@ -189,7 +191,19 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->eq_alwaysdrawhandles,&QCheckBox::clicked,[this](){
         appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
     });
-
+    connect(ui->legacytabs,&QCheckBox::clicked,[this](){
+        appconf->setLegacyTabs(ui->legacytabs->isChecked());
+        if(ui->legacytabs->isChecked())
+            m_mainwin->InitializeLegacyTabs();
+        else{
+            QMessageBox::StandardButton reply =
+                    QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
+                                                                           "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
+                                          QMessageBox::Ok|QMessageBox::Cancel);
+            if (reply == QMessageBox::Ok)
+                QApplication::quit();
+        }
+    });
     /*
      * Connect all signals for Convolver
      */
@@ -442,6 +456,7 @@ void SettingsDlg::refreshAll(){
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
 
     ui->eq_alwaysdrawhandles->setChecked(appconf->getEqualizerPermanentHandles());
+    ui->legacytabs->setChecked(appconf->getLegacyTabs());
 
     refreshDevices();
 

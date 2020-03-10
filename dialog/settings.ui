@@ -30,7 +30,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="4,9">
+    <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="4,0">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -44,6 +44,12 @@
        </property>
        <item>
         <widget class="QTreeWidget" name="selector">
+         <property name="minimumSize">
+          <size>
+           <width>190</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="verticalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
@@ -554,20 +560,43 @@
           </layout>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_6">
-           <property name="title">
-            <string>Equalizer</string>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <property name="topMargin">
+            <number>0</number>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_15">
-            <item>
-             <widget class="QCheckBox" name="eq_alwaysdrawhandles">
-              <property name="text">
-               <string>Always display handles</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+           <item>
+            <widget class="QGroupBox" name="groupBox_6">
+             <property name="title">
+              <string>Equalizer</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_15">
+              <item>
+               <widget class="QCheckBox" name="eq_alwaysdrawhandles">
+                <property name="text">
+                 <string>Always display handles</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_8">
+             <property name="title">
+              <string>Tab Container</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_20">
+              <item>
+               <widget class="QCheckBox" name="legacytabs">
+                <property name="text">
+                 <string>Use legacy tabs</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <spacer name="verticalSpacer_2">

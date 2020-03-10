@@ -256,6 +256,13 @@ void AppConfigWrapper::setIntroShown(bool b){
 bool AppConfigWrapper::getIntroShown(){
     return appconf->getBool("app.firstlaunch");
 }
+void AppConfigWrapper::setLegacyTabs(bool b){
+    appconf->setValue("theme.tab.legacy",QVariant(b));
+    saveAppConfig();
+}
+bool AppConfigWrapper::getLegacyTabs(){
+    return appconf->getBool("theme.tab.legacy");
+}
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){
     return QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath());

@@ -70,6 +70,7 @@ public:
     QMenu *getTrayContextMenu();
 
     SettingsDlg *settings_dlg;
+    void InitializeLegacyTabs();
 protected:
     void closeEvent(QCloseEvent *event) override;
 public slots:
@@ -152,6 +153,14 @@ private:
     void initGlobalTrayActions();
     void updateTrayConvolverList();
     void SetSpectrumVisibility(bool v);
+
+    static void replaceTab(QTabWidget* tab, int index, QWidget *page, QString title = ""){
+        if(title.isEmpty()) title = tab->tabText(index);
+        auto toDelete = tab->widget(index);
+        tab->removeTab(index);
+        toDelete->deleteLater();
+        tab->insertTab(index, page, title);
+     }
 };
 
 #endif // MAINWINDOW_H

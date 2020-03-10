@@ -32,6 +32,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     ui->setupUi(this);
     bool aboutToQuit = false;
 
+    ui->tabhost_legacy->hide();
+
     m_exepath = exepath;
     m_startupInTraySwitch = statupInTray;
 
@@ -162,24 +164,41 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
             RunDiagnosticChecks();
         });
 
-    ui->tabbar->setAnimatePageChange(true);
-    ui->tabbar->setCustomStackWidget(ui->tabhost);
-    ui->tabbar->setDetachCustomStackedWidget(true);
-    ui->tabbar->addPage("Bass/Clarity");
-    ui->tabbar->addPage("Dynamic");
-    ui->tabbar->addPage("Surround");
-    ui->tabbar->addPage("Equalizer");
-    ui->tabbar->addPage("Compressor");
-    ui->tabbar->addPage("Volume");
-    ui->tabbar->addPage("Miscellaneous");
-    ui->frame->setStyleSheet(QString("QFrame#frame{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
-    ui->tabhost->setStyleSheet(QString("QWidget#tabhostPage1,QWidget#tabhostPage2,QWidget#tabhostPage3,QWidget#tabhostPage4,QWidget#tabhostPage5,QWidget#tabhostPage6,QWidget#tabhostPage7{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
-    ui->tabbar->redrawTabBar();
+    if(m_appwrapper->getLegacyTabs())
+        InitializeLegacyTabs();
+    else{
+        ui->tabbar->setAnimatePageChange(true);
+        ui->tabbar->setCustomStackWidget(ui->tabhost);
+        ui->tabbar->setDetachCustomStackedWidget(true);
+        ui->tabbar->addPage("Bass/Clarity");
+        ui->tabbar->addPage("Dynamic");
+        ui->tabbar->addPage("Surround");
+        ui->tabbar->addPage("Equalizer");
+        ui->tabbar->addPage("Compressor");
+        ui->tabbar->addPage("Volume");
+        ui->tabbar->addPage("Miscellaneous");
+        ui->frame->setStyleSheet(QString("QFrame#frame{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
+        ui->tabhost->setStyleSheet(QString("QWidget#tabhostPage1,QWidget#tabhostPage2,QWidget#tabhostPage3,QWidget#tabhostPage4,QWidget#tabhostPage5,QWidget#tabhostPage6,QWidget#tabhostPage7{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
+        ui->tabbar->redrawTabBar();
+    }
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+void MainWindow::InitializeLegacyTabs(){
+    if(!ui->frame->isVisible())
+        return;
+
+    ui->frame->hide();
+    ui->tabhost_legacy->show();
+    for(int i = 1; i <= 7; i++){
+        QWidget* w = findChild<QWidget*>(QString("tabhostPage%1").arg(i));
+        replaceTab(ui->tabhost_legacy,i - 1, w);
+        ui->tabhost_legacy->widget(i - 1)->setContentsMargins(9,9,9,9);
+    }
+    ui->tabhost_legacy->setCurrentIndex(0);
 }
 void MainWindow::LaunchFirstRunSetup(){
     FirstLaunchWizard* wiz = new FirstLaunchWizard(m_appwrapper,this);

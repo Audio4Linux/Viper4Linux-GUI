@@ -92,6 +92,8 @@ public:
     void setTrayContextMenu(const QString &ctx);
     void setSpectrumShape(int number);
     int getSpectrumShape();
+    bool getLegacyTabs();
+    void setLegacyTabs(bool b);
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();
