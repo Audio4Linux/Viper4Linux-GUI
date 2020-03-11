@@ -420,6 +420,9 @@ void MainWindow::setVisible(bool visible)
         log_dlg->hide();
         preset_dlg->hide();
     }
+    if(m_dbus->isValid() &&
+            msg_notrunning != nullptr)
+        msg_notrunning->hide();
     QMainWindow::setVisible(visible);
 }
 void MainWindow::closeEvent(QCloseEvent *event)
