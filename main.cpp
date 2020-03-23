@@ -28,16 +28,17 @@ void crash_handled(int fd){
 using namespace std;
 int main(int argc, char *argv[])
 {
+    findyourself_init(argv[0]);
+    char exepath[PATH_MAX];
+    find_yourself(exepath, sizeof(exepath));
+
 #ifdef ENABLE_CRASH_HANDLER
-    EXECUTION_FILENAME = argv[0];
+    EXECUTION_FILENAME = exepath;
     mkdir("/tmp/viper-gui/", S_IRWXU);
     int fd = safe_open_wo_fd("/tmp/viper-gui/crash.dmp");
     airbag_init_fd(fd,crash_handled,EXECUTION_FILENAME);
 #endif
 
-    findyourself_init(argv[0]);
-    char exepath[PATH_MAX];
-    find_yourself(exepath, sizeof(exepath));
 
     QApplication a(argc, argv);
     QCommandLineParser parser;
