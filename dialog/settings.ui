@@ -119,7 +119,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -305,6 +305,19 @@
            <property name="topMargin">
             <number>0</number>
            </property>
+           <item>
+            <widget class="QPushButton" name="crashNow">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Simulate Crash</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <spacer name="horizontalSpacer_6">
              <property name="orientation">

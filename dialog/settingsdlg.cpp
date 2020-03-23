@@ -5,6 +5,7 @@
 #include "palettedlg.h"
 #include "misc/autostartmanager.h"
 #include "pulseeffectscompatibility.h"
+#include "crashhandler/killer.h"
 
 #include <QGraphicsOpacityEffect>
 #include <QProcess>
@@ -27,6 +28,14 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
 
     appconf = mainwin->getACWrapper();
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
+
+    /*
+     * DEBUG
+     */
+    connect(ui->crashNow, &QPushButton::clicked,[]{
+        cause_segfault();
+    });
+
 
     /*
      * Prepare TreeView
