@@ -1330,10 +1330,7 @@ QVariantMap MainWindow::readConfig(){
         std::ostream os(&fb);
         os << default_config;
         fb.close();
-        conf->setConfigMap(readConfig());
-        LoadConfig();
-        m_irsNeedUpdate = true;
-        ApplyConfig();
+        confmap = ConfigIO::readFile(m_appwrapper->getPath());
     }
     return confmap;
 }

@@ -98,7 +98,7 @@ void *  calculateOffset(char * stackFrameString)
     void *     objectFile;
     void *     address;
     void *     offset = NULL;
-    char       symbolString[750] = {'\0'};
+    char       symbolString[1200] = {'\0'};
     char       offsetString[25] = {'\0'};
     int        checkSscanf = EOF;
     int        checkDladdr = 0;

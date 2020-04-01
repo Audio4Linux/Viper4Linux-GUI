@@ -2907,7 +2907,7 @@
          <string>Reset</string>
         </property>
         <property name="icon">
-         <iconset theme="ok">
+         <iconset>
           <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
