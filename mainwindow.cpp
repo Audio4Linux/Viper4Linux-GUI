@@ -485,16 +485,17 @@ void MainWindow::CheckDBusVersion(){
 }
 //Systray
 void MainWindow::raiseWindow(){
-    Qt::WindowFlags eFlags = this->windowFlags();
-    eFlags |= Qt::WindowStaysOnTopHint;
-    this->setWindowFlags(eFlags);
-    this->show();
-    eFlags &= ~Qt::WindowStaysOnTopHint;
-    this->setWindowFlags(eFlags);
-    this->showNormal();
-    this->setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-    this->raise();
-    this->activateWindow();
+    /*
+     * NOTE: Raising the window does not always work!
+     *
+     * KDE users can disable 'Focus Stealing Prevention'
+     * in the Window Behavior section (system settings)
+     * as a workaround.
+     */
+    show();
+    setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    raise();
+    activateWindow();
 }
 void MainWindow::setTrayVisible(bool visible){
     if(visible) trayIcon->show();
