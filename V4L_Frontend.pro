@@ -141,6 +141,8 @@ TRANSLATIONS += translations/lang_en.ts \
 
 INCLUDEPATH += $$PWD/3rdparty/WAF
 
+LIBS += -ldl
+
 unix {
     QMAKE_LFLAGS += -ldl -lutil
     QMAKE_CXXFLAGS += -g
