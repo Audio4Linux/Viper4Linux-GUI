@@ -53,6 +53,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QTimerEvent>
+#include <QPainterPath>
 
 const int NullTimerId = -1;
 const int NullIndex = -1;
