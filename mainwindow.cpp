@@ -105,6 +105,16 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(spectrum);
     menu->addAction(tr("Driver status"), this,[this](){
+        if(m_appwrapper->getLegacyMode()){
+            OverlayMsgProxy* msg = new OverlayMsgProxy(this);
+            msg->openError(tr("Unavailable"),
+                           tr("Legacy Mode does not support this feature.\n"
+                              "Please use the newer Viper4Linux to access\n"
+                              "this dialog."),
+                           tr("Okay"));
+            return;
+        }
+
         if(!m_dbus->isValid()){
             ShowDBusError();
             return;
@@ -250,23 +260,21 @@ void MainWindow::RunDiagnosticChecks(){
                           "are using the lastest version of gst-plugin-viperfx"),
                        tr("Continue anyway"));
     }
-    else if(pidfile.exists() && !m_dbus->isValid() &&
+    else if(!m_appwrapper->getLegacyMode() && pidfile.exists() && !m_dbus->isValid() &&
             system("kill -0 $(cat /tmp/viper4linux/pid.tmp) > /dev/null")==0){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Unsupported version"),
                        tr("Looks like you are using an older version of\n"
                           "gst-plugin-viperfx. Viper appears to be running\n"
-                          "but no DBus interface has been found, so either the\n"
-                          "DBus server was unable to launch and couldn't acquire a busname\n"
-                          "or you're trying to use Viper4Linux-Legacy with the GUI\n"
-                          "for Viper4Linux2. Keep in mind that there is a separate GUI\n"
-                          "for the legacy version of Viper4Linux!\n"
-                          ""),
-                       tr("Continue anyway"));
+                          "but no DBus interface has been found, so the\n"
+                          "DBus server was unable to launch and couldn't acquire a busname.\n"
+                          "Please try to enable 'Legacy Mode' in settings or use\n"
+                          "Viper4Linux-GUI-Legacy instead."),
+                       tr("Continue"));
     }
-    else if(!m_dbus->isValid())
+    else if(!m_appwrapper->getLegacyMode() && !m_dbus->isValid())
         ShowDBusError();
-    else
+    else if(!m_appwrapper->getLegacyMode())
         CheckDBusVersion();
 }
 
@@ -420,7 +428,7 @@ void MainWindow::setVisible(bool visible)
         log_dlg->hide();
         preset_dlg->hide();
     }
-    if(m_dbus->isValid() &&
+    if(!m_appwrapper->getLegacyMode() && m_dbus->isValid() &&
             msg_notrunning != nullptr)
         msg_notrunning->hide();
     QMainWindow::setVisible(visible);
@@ -1080,24 +1088,30 @@ void MainWindow::ApplyConfig(bool restart){
 
     ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
 
-    ConfigContainer dbus_template = *conf;
-    dbus_template.setValue("conv_ir_path",activeirs);
-    m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
-    if(restart){
-        if(conf->getString("conv_ir_path",false).contains('$') &&
-                conf->getBool("conv_enable",false) &&
-                m_irsNeedUpdate)
-            Restart();
-        else
-            if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS){
-                if(!m_dbus->isValid())
-                    ShowDBusError();
-                else
-                    m_dbus->CommitProperties(DBusProxy::PARAM_GROUP_ALL);
-            }
-            else
+    if(!m_appwrapper->getLegacyMode()){
+        ConfigContainer dbus_template = *conf;
+        dbus_template.setValue("conv_ir_path",activeirs);
+        m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
+        if(restart){
+            if(conf->getString("conv_ir_path",false).contains('$') &&
+                    conf->getBool("conv_enable",false) &&
+                    m_irsNeedUpdate)
                 Restart();
-        m_irsNeedUpdate = false;
+            else
+                if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS){
+                    if(!m_dbus->isValid())
+                        ShowDBusError();
+                    else
+                        m_dbus->CommitProperties(DBusProxy::PARAM_GROUP_ALL);
+                }
+                else
+                    Restart();
+            m_irsNeedUpdate = false;
+        }
+    }
+    else if(restart){
+        //Legacy mode
+        Restart();
     }
 }
 

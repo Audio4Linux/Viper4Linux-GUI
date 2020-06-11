@@ -22,11 +22,11 @@ QString ConfigContainer::getString(const QString& key,bool setToDefaultIfMissing
     }
     return getVariant(key).toString();
 }
-int ConfigContainer::getInt(const QString& key){
+int ConfigContainer::getInt(const QString& key, int alternative){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
-        map[key] = 0;
-        return 0;
+        map[key] = alternative;
+        return alternative;
     }
     return getVariant(key).toInt();
 }
@@ -38,11 +38,11 @@ float ConfigContainer::getFloat(const QString& key){
     }
     return getVariant(key).toFloat();
 }
-bool ConfigContainer::getBool(const QString& key, bool setToDefaultIfMissing){
+bool ConfigContainer::getBool(const QString& key, bool setToDefaultIfMissing, bool alternative){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
-        if(setToDefaultIfMissing)map[key] = false;
-        return false;
+        if(setToDefaultIfMissing)map[key] = alternative;
+        return alternative;
     }
     return getVariant(key).toBool();
 }

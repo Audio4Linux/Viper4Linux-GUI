@@ -47,15 +47,15 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         switch(toplevel_index){
         case -1:
             if(cur->text(0) == "Context Menu")
-                ui->stackedWidget->setCurrentIndex(5);
+                ui->stackedWidget->setCurrentIndex(6);
             if(cur->text(0) == "Design")
-                ui->stackedWidget->setCurrentIndex(7);
-            if(cur->text(0) == "Advanced")
                 ui->stackedWidget->setCurrentIndex(8);
+            if(cur->text(0) == "Advanced")
+                ui->stackedWidget->setCurrentIndex(9);
             break;
-        case 5:
+        case 6:
             // -- SA/ROOT
-            ui->stackedWidget->setCurrentIndex(6);
+            ui->stackedWidget->setCurrentIndex(7);
             break;
         default:
             ui->stackedWidget->setCurrentIndex(toplevel_index);
@@ -126,10 +126,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     };
     connect(ui->aa_instant, &QRadioButton::clicked, this, autofx_mode);
     connect(ui->aa_release, &QRadioButton::clicked, this, autofx_mode);
-    connect(ui->reloadmethod,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),this,[this](){
-        if(lockslot)return;
-        appconf->setReloadMethod((ReloadMethod)ui->reloadmethod->currentIndex());
-    });
     connect(ui->glavafix_help, &QPushButton::clicked, this, [this]{
         QMessageBox::information(this,tr("Help"),
                                  tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
@@ -256,6 +252,23 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->dev_pe_compat, &QPushButton::clicked, this, [this]{
         showPECompatibilityScreen();
     });
+
+    /*
+     * Connect all signals for Legacy
+     */
+    ui->legacy_mode_on->setChecked(appconf->getLegacyMode());
+
+    auto legacy_radio = [this]{
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->legacy_mode_off->isChecked())mode=0;
+        else if(ui->legacy_mode_on->isChecked())mode=1;
+        appconf->setLegacyMode(mode);
+    };
+
+    connect(ui->legacy_mode_off,&QRadioButton::clicked,this,legacy_radio);
+    connect(ui->legacy_mode_on,&QRadioButton::clicked,this,legacy_radio);
+
     /*
      * Connect all signals for SA/ROOT
      */
@@ -412,7 +425,6 @@ void SettingsDlg::refreshAll(){
     ui->autofx->setChecked(appconf->getAutoFx());
     ui->muteonrestart->setChecked(appconf->getMuteOnRestart());
     ui->glavafix->setChecked(appconf->getGFix());
-    ui->reloadmethod->setCurrentIndex((int)appconf->getReloadMethod());
 
     updateInputSinks();
 

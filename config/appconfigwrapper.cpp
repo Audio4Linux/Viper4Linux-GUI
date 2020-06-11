@@ -20,7 +20,7 @@ void AppConfigWrapper::loadAppConfig(){
 }
 
 bool AppConfigWrapper::getAutoFx(){
-    return appconf->getBool("apply.auto.enable");
+    return appconf->getBool("apply.auto.enable", true, true);
 }
 void AppConfigWrapper::setAutoFx(bool afx){
     appconf->setValue("apply.auto.enable",QVariant(afx));
@@ -98,7 +98,7 @@ bool AppConfigWrapper::getWhiteIcons(){
     return appconf->getBool("theme.icons.white");
 }
 int AppConfigWrapper::getAutoFxMode(){
-    return appconf->getInt("apply.auto.mode");
+    return appconf->getInt("apply.auto.mode", 1);
 }
 void AppConfigWrapper::setAutoFxMode(int mode){
     appconf->setValue("apply.auto.mode",QVariant(mode));
@@ -199,7 +199,7 @@ bool AppConfigWrapper::getSpetrumGrid(){
     return appconf->getBool("visualizer.spectrum.grid");
 }
 int AppConfigWrapper::getSpectrumTheme(){
-    return appconf->getInt("visualizer.spectrum.theme");
+    return appconf->getInt("visualizer.spectrum.theme", 1);
 }
 void AppConfigWrapper::setSpectrumTheme(int number){
     appconf->setValue("visualizer.spectrum.theme",QVariant(number));
@@ -262,6 +262,13 @@ void AppConfigWrapper::setLegacyTabs(bool b){
 }
 bool AppConfigWrapper::getLegacyTabs(){
     return appconf->getBool("theme.tab.legacy");
+}
+void AppConfigWrapper::setLegacyMode(bool b){
+    appconf->setValue("app.legacymode",QVariant(b));
+    saveAppConfig();
+}
+bool AppConfigWrapper::getLegacyMode(){
+    return appconf->getBool("app.legacymode");
 }
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){

@@ -20,23 +20,28 @@ FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mai
 
     appconf = _appconf;
 
+    ui->stackedWidget->setCurrentIndex(0);
+
     QTimer::singleShot(1000, [&]{
         ui->p1_icon->startAnimation();
     });
+    ui->p1dot5_icon->startAnimation();
     ui->p2_icon->startAnimation();
     ui->p3_icon->startAnimation();
     ui->p4_icon->startAnimation();
-
 
     ui->stackedWidget->setAnimation(QEasingCurve::Type::OutCirc);
     connect(ui->p1_next,&QPushButton::clicked,[&]{
         ui->stackedWidget->slideInIdx(1);
     });
-    connect(ui->p2_next,&QPushButton::clicked,[&]{
+    connect(ui->p1dot5_next,&QPushButton::clicked,[&]{
         ui->stackedWidget->slideInIdx(2);
     });
-    connect(ui->p3_next,&QPushButton::clicked,[&]{
+    connect(ui->p2_next,&QPushButton::clicked,[&]{
         ui->stackedWidget->slideInIdx(3);
+    });
+    connect(ui->p3_next,&QPushButton::clicked,[&]{
+        ui->stackedWidget->slideInIdx(4);
     });
     connect(ui->p4_next,&QPushButton::clicked,[&]{
         emit wizardFinished();
@@ -44,6 +49,19 @@ FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mai
     connect(ui->p4_telegram,&QPushButton::clicked,[&]{
         QDesktopServices::openUrl(QUrl("https://t.me/joinchat/FTKC2A2bolHkFAyO-fuPjw"));
     });
+
+    ui->p1dot5_mode_legacy->setChecked(appconf->getLegacyMode());
+
+    auto legacy_radio = [this]{
+        if(lockslot)return;
+        int mode = 0;
+        if(ui->p1dot5_mode_a4l->isChecked())mode=0;
+        else if(ui->p1dot5_mode_legacy->isChecked())mode=1;
+        appconf->setLegacyMode(mode);
+    };
+
+    connect(ui->p1dot5_mode_a4l,&QRadioButton::clicked,this,legacy_radio);
+    connect(ui->p1dot5_mode_legacy,&QRadioButton::clicked,this,legacy_radio);
 
     auto deviceUpdated = [this](){
         if(lockslot) return;
@@ -63,7 +81,6 @@ FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mai
         }
     };
     refreshDevices();
-
 
     ui->p3_systray_disable->setChecked(!appconf->getTrayMode());
     ui->p3_systray_enable->setChecked(appconf->getTrayMode());

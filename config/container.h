@@ -25,9 +25,9 @@ public:
     void setValue(const QString& key,QVariant value);
     QVariant getVariant(const QString& key);
     QString getString(const QString& key,bool setToDefaultIfMissing=true);
-    int getInt(const QString& key);
+    int getInt(const QString& key, int alternative = 0);
     float getFloat(const QString& key);
-    bool getBool(const QString& key, bool setToDefaultIfMissing=true);
+    bool getBool(const QString& key, bool setToDefaultIfMissing=true, bool alternative=false);
 
     QVariantMap getConfigMap();
     void setConfigMap(const QVariantMap& newmap);
