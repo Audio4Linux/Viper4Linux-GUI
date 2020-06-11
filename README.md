@@ -1,10 +1,16 @@
 # Viper4Linux-GUI
 [![Build Status](https://travis-ci.org/Audio4Linux/Viper4Linux-GUI.svg?branch=master)](https://travis-ci.org/ThePBone/Viper4Linux-GUI) ![GitHub](https://img.shields.io/github/license/Audio4Linux/Viper4Linux-GUI) ![GitHub release](https://img.shields.io/github/release/Audio4Linux/Viper4Linux-GUI)
 
-Official UI for Viper4Linux2 [https://github.com/Audio4Linux/Viper4Linux](https://github.com/Audio4Linux/Viper4Linux)
+Official UI for Viper4Linux [https://github.com/Audio4Linux/Viper4Linux](https://github.com/Audio4Linux/Viper4Linux)
 * Telegram: @ThePBone
+* Supports both Viper4Linux2 and legacy Viper4Linux
 
-#### This repo contains the GUI for a newer Viper4Linux version. Please use [Viper4Linux-GUI Legacy](https://github.com/ThePBone/Viper4Linux-GUI) for now, unless you use Arch Linux or you know what you're doing.
+## Installation
+
+* [Arch](#arch)
+* [Ubuntu PPA](#ubuntu-ppa)
+* [Debian](#debian)
+* [Build from sources](#build-from-sources)
 
 ### Arch
 
@@ -12,11 +18,37 @@ On Arch you can use the [AUR package](https://aur.archlinux.org/packages/viper4l
 ```bash
 yay -S viper4linux-gui-git  
 ```
-![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
+
+Or [this one](https://aur.archlinux.org/packages/viper4linux-gui) to get the latest stable release:
+```bash
+yay -S viper4linux-gui
+```
+
+![AUR version](https://img.shields.io/aur/version/viper4linux-gui?label=aur%20%28stable%29) ![AUR version](https://img.shields.io/aur/version/viper4linux-gui-git?label=aur%20%28git%29)
+
+### Ubuntu (PPA)
+
+Add my PPA repository if you haven't already:
+```bash
+curl -s --compressed "https://thepbone.github.io/PPA-Repository/KEY.gpg" | sudo apt-key add -
+sudo curl -s --compressed -o /etc/apt/sources.list.d/thepbone_ppa.list "https://thepbone.github.io/PPA-Repository/thepbone_ppa.list"
+sudo apt update
+```
+And install the app:
+```bash
+sudo apt install viper4linux-gui
+```
+[View PPA on GitHub](https://github.com/ThePBone/PPA-Repository)
+
+### Debian
+You can find DEB packages [here](https://github.com/Audio4Linux/Viper4Linux-GUI/releases).
+```bash
+sudo dpkg -i <..deb-filename..>
+```
 
 ### Build from sources
 This GUI requires the following dependencies:
-* Required Qt version: Qt 5.9 or higher
+* Required Qt version: Qt 5.9.5 or higher
 * Required Qt modules: core, gui, xml, dbus, network, svg and multimedia
 
 Dependencies for Debian-based distros:
@@ -70,7 +102,8 @@ sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/
 
 ## Credits
 * [Material Icons](https://material.io/tools/icons/)
-* [QSS Stylesheets - GTRONICK (modified by @ThePBone)](https://github.com/GTRONICK/QSS)
-* [Viper4Linux - noahbliss](https://github.com/noahbliss/Viper4Linux)
+* [QSS Stylesheets by GTRONICK (modified by @ThePBone)](https://github.com/GTRONICK/QSS)
+* [Viper4Linux by noahbliss](https://github.com/noahbliss)
+
 ### Packages
-* [yochananmarqos - AUR packages](https://github.com/yochananmarqos)
+* AUR packages managed by [yochananmarqos](https://github.com/yochananmarqos)
