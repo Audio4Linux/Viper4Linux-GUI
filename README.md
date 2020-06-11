@@ -78,9 +78,9 @@ sudo chmod 755 /usr/local/bin/viper-gui
 ```
 ##### Create Menu Entry
 ```bash
-sudo cat <<EOT >> /usr/share/applications/viper-gui2.desktop
+sudo cat <<EOT >> /usr/share/applications/viper-gui.desktop
 [Desktop Entry]
-Name=Viper4Linux Beta
+Name=Viper4Linux
 GenericName=Equalizer
 Comment=User Interface for Viper4Linux
 Keywords=equalizer
@@ -93,7 +93,7 @@ EOT
 ```
 ##### Download Icon
 ```bash
-sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/ThePBone/Viper4Linux-GUI/master/viper.png -q --show-progress
+sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/Audio4Linux/Viper4Linux-GUI/master/viper.png -q --show-progress
 ```
 
 ## Screenshots
