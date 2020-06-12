@@ -1,6 +1,7 @@
 #include "phantomstyle.h"
 #include "phantomcolor.h"
 #include "phantomtweak.h"
+#include <QPainterPath>
 #include <QtCore/qmath.h>
 #include <QtCore/qpoint.h>
 #include <QtCore/qshareddata.h>
