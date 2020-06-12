@@ -34,7 +34,7 @@ Version: $base_version-$TRAVIS_BUILD_NUMBER
 Section: sound
 Priority: optional
 Architecture: amd64
-Depends: qtbase5-dev (>= 5.9.5), libqt5core5a (>= 5.9.5), libqt5widgets5 (>= 5.9.5), libqt5gui5 (>= 5.9.5), libqt5core5a (>= 5.9.5), libgl1-mesa-dev
+Depends: libqt5multimedia5 (>= 5.9.5), libqt5xml5 (>= 5.9.5), libqt5svg5 (>= 5.9.5), qtbase5-dev (>= 5.9.5), libqt5core5a (>= 5.9.5), libqt5widgets5 (>= 5.9.5), libqt5gui5 (>= 5.9.5), libqt5core5a (>= 5.9.5), libgl1-mesa-dev
 Maintainer: ThePBone <tim.schneeberger@gmail.com>
 Description: Official UI for Viper4Linux
 Homepage: https://github.com/Audio4Linux/Viper4Linux-GUI
