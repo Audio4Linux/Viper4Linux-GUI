@@ -18,6 +18,7 @@
 
 #include "liquidequalizerwidget.h"
 #include <QLinearGradient>
+#include <QPainterPath>
 #include <QDebug>
 
 using namespace std;
