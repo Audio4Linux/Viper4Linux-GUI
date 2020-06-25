@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <string>
 #include <iostream>
+#include <unistd.h>
 
 #define FORCE_CRASH_HANDLER
 
@@ -39,23 +40,39 @@ int main(int argc, char *argv[])
     airbag_init_fd(fd,crash_handled,EXECUTION_FILENAME);
 #endif
 
-
     QApplication a(argc, argv);
     QCommandLineParser parser;
     parser.setApplicationDescription("Graphical User Interface for Viper4Linux2");
     parser.addHelpOption();
 
-    QCommandLineOption tray(QStringList() << "t" << "tray", "Start minimized in systray (forced)");
+    QCommandLineOption tray(QStringList() << "t" << "tray", "Start minimized in systray delayed (forced)");
     parser.addOption(tray);
+    QCommandLineOption nowtray(QStringList() << "i" << "instant-tray", "Start minimized in systray instantly (forced)");
+    parser.addOption(nowtray);
     QCommandLineOption sviper(QStringList() << "s" << "startviper", "Start viper on launch");
     parser.addOption(sviper);
     QCommandLineOption minst(QStringList() << "m" << "allow-multiple-instances", "Allow multiple instances of this app");
     parser.addOption(minst);
     parser.process(a);
-    if(parser.isSet(sviper)) system("viper start");
+
+    if(parser.isSet(sviper)){
+        system("viper start");
+        usleep(300);
+    }
+
+    if(parser.isSet(tray)){
+        //Delay startup to make sure that the DE is ready
+        usleep(1000);
+    }
+
+    bool startInTray = parser.isSet(tray) || parser.isSet(nowtray);
 
     QApplication::setQuitOnLastWindowClosed( false );
-    MainWindow w(QString::fromLocal8Bit(exepath),parser.isSet(tray),parser.isSet(minst));
+    MainWindow w(QString::fromLocal8Bit(exepath),
+                 startInTray,
+                 parser.isSet(minst));
+
+    w.setVisible(!startInTray);
     w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setGeometry(
         QStyle::alignedRect(
