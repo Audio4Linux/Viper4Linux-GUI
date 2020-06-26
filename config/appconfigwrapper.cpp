@@ -26,13 +26,6 @@ void AppConfigWrapper::setAutoFx(bool afx){
     appconf->setValue("apply.auto.enable",QVariant(afx));
     saveAppConfig();
 }
-bool AppConfigWrapper::getMuteOnRestart(){
-    return appconf->getBool("apply.mutedreload");
-}
-void AppConfigWrapper::setMuteOnRestart(bool on){
-    appconf->setValue("apply.mutedreload",QVariant(on));
-    saveAppConfig();
-}
 void AppConfigWrapper::setGFix(bool f){
     appconf->setValue("apply.fixglava",QVariant(f));
     saveAppConfig();
@@ -51,24 +44,6 @@ QString AppConfigWrapper::getPath(){
     if(path.length() < 2)
         return QString("%1/.config/viper4linux/audio.conf").arg(QDir::homePath());
     return path;
-}
-void AppConfigWrapper::setStylesheet(const QString& s){
-    appconf->setValue("theme.stylesheet",QVariant(s));
-    m_stylehelper->SetStyle();
-    emit styleChanged();
-    saveAppConfig();
-}
-QString AppConfigWrapper::getStylesheet(){
-    return appconf->getString("theme.stylesheet");
-}
-int AppConfigWrapper::getThememode(){
-    return appconf->getInt("theme.mode");
-}
-void AppConfigWrapper::setThememode(int mode){
-    appconf->setValue("theme.mode",QVariant(mode));
-    m_stylehelper->SetStyle();
-    emit styleChanged();
-    saveAppConfig();
 }
 void AppConfigWrapper::setColorpalette(const QString& s){
     appconf->setValue("theme.palette",QVariant(s));

@@ -54,16 +54,10 @@ public:
     bool getAutoFx();
     ReloadMethod getReloadMethod();
     void setReloadMethod(ReloadMethod mode);
-    int getThememode();
-    void setThememode(int mode);
     bool getGFix();
     void setGFix(bool);
-    bool getMuteOnRestart();
-    void setMuteOnRestart(bool on);
     QString getPath();
     void setPath(const QString& npath);
-    QString getStylesheet();
-    void setStylesheet(const QString&);
     void setTrayMode(int);
     int getTrayMode();
     void setSpectrumEnable(bool b);

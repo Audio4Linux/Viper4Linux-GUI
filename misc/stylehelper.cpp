@@ -18,58 +18,38 @@ void StyleHelper::SetStyle(){
     else
         QApplication::setStyle(m_appconf->getTheme());
 
-    QString style_sheet = m_appconf->getStylesheet();
-    int theme_mode = m_appconf->getThememode();
     QString color_palette = m_appconf->getColorpalette();
 
-    if(theme_mode==0){
-        QApplication::setPalette(qApp->style()->standardPalette());
-        QString stylepath = "";
-        if (style_sheet=="aqua")stylepath = ":/aqua/aqua/aqua.qss";
-        else if (style_sheet=="ubuntu")stylepath = ":/ubuntu/ubuntu/ubuntu.qss";
-        else stylepath = ":/default.qss";
-        QFile f(stylepath);
+    auto palettes = ColorStyleProvider::TABLE();
+    if(color_palette=="custom"){
+        QColor base = QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2));
+        QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));
+        QColor foreground = QColor(loadColor(2,0),loadColor(2,1),loadColor(2,2));
+        QColor selection = QColor(loadColor(3,0),loadColor(3,1),loadColor(3,2));
+        QColor disabled = QColor(loadColor(4,0),loadColor(4,1),loadColor(4,2));
+        QColor selectiontext = QColor(255-loadColor(3,0),255-loadColor(3,1),255-loadColor(3,2));
+        ColorStyle cs = ColorStyle(m_appconf->getWhiteIcons(),
+                                   base,background,foreground,selection,selectiontext,disabled);
+
+        setPalette(cs);
+        loadIcons(m_appconf->getWhiteIcons());
+    }
+    else if(palettes.contains(color_palette)){
+        ColorStyle currentColorStyle = palettes[color_palette];
+        setPalette(currentColorStyle);
+        loadIcons(currentColorStyle.useWhiteIcons);
+    }
+    else{
+        loadIcons(false);
+        QApplication::setPalette(m_host->style()->standardPalette());
+        QFile f(":/default.qss");
         if (!f.exists())printf("Unable to set stylesheet, file not found\n");
         else
         {
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
             qApp->setStyleSheet(ts.readAll());
-            loadIcons(style_sheet=="amoled" || style_sheet=="vsdark");
         }
-    }else{
-        auto palettes = ColorStyleProvider::TABLE();
-        if(color_palette=="custom"){
-            QColor base = QColor(loadColor(0,0),loadColor(0,1),loadColor(0,2));
-            QColor background = QColor(loadColor(1,0),loadColor(1,1),loadColor(1,2));
-            QColor foreground = QColor(loadColor(2,0),loadColor(2,1),loadColor(2,2));
-            QColor selection = QColor(loadColor(3,0),loadColor(3,1),loadColor(3,2));
-            QColor disabled = QColor(loadColor(4,0),loadColor(4,1),loadColor(4,2));
-            QColor selectiontext = QColor(255-loadColor(3,0),255-loadColor(3,1),255-loadColor(3,2));
-            ColorStyle cs = ColorStyle(m_appconf->getWhiteIcons(),
-                                       base,background,foreground,selection,selectiontext,disabled);
-
-            setPalette(cs);
-            loadIcons(m_appconf->getWhiteIcons());
-        }
-        else if(palettes.contains(color_palette)){
-            ColorStyle currentColorStyle = palettes[color_palette];
-            setPalette(currentColorStyle);
-            loadIcons(currentColorStyle.useWhiteIcons);
-        }
-        else{
-            loadIcons(false);
-            QApplication::setPalette(m_host->style()->standardPalette());
-            QFile f(":/default.qss");
-            if (!f.exists())printf("Unable to set stylesheet, file not found\n");
-            else
-            {
-                f.open(QFile::ReadOnly | QFile::Text);
-                QTextStream ts(&f);
-                qApp->setStyleSheet(ts.readAll());
-            }
-        }
-
     }
 
     emit styleChanged();
@@ -91,18 +71,18 @@ void StyleHelper::setPalette(const ColorStyle& s){
     palette->setColor(QPalette::HighlightedText, s.selectiontext);
     qApp->setPalette(*palette);
     qApp->setStyleSheet(QString(R"(QFrame[frameShape="4"], QFrame[frameShape="5"]{
-                            color: gray;
-                        }
-                        *::disabled {
-                        color: %1;
-                        }
-                        QToolButton::disabled{
-                        color: %1;
+                                color: gray;
+                                }
+                                *::disabled {
+                                color: %1;
+                                }
+                                QToolButton::disabled{
+                                color: %1;
 
-                        }
-                        QComboBox::disabled{
-                        color: %1;
-                        })").arg(s.disabled.name()));
+                                }
+                                QComboBox::disabled{
+                                color: %1;
+                                })").arg(s.disabled.name()));
 }
 void StyleHelper::loadIcons(bool white){
     MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);
@@ -135,15 +115,11 @@ int StyleHelper::loadColor(int index,int rgb_index){
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
     QStringList elements = m_appconf->getCustompalette().split(';');
     if(elements.length()<5||elements[index].split(',').size()<3){
-        if(index==0)return 25;
-        else if(index==1)return 53;
+        if(index==0)return 43;
+        else if(index==1)return 29;
         else if(index==2)return 255;
-        else if(index==3){
-            if(rgb_index==0)return 42;
-            else if(rgb_index==1)return 130;
-            else if(rgb_index==2)return 218;
-        }
-        else if(index==4) return 85;
+        else if(index==3)return 190;
+        else if(index==4)return 90;
     }
     QStringList rgb = elements[index].split(',');
     return rgb[rgb_index].toInt();

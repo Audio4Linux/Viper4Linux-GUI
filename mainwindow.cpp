@@ -833,11 +833,9 @@ void MainWindow::OnRelease(){
         ApplyConfig();
 }
 void MainWindow::Restart(){
-    if(m_appwrapper->getMuteOnRestart())system("pactl set-sink-mute 0 1");
     if(m_appwrapper->getGFix())system("killall -r glava");
     system("viper restart");
     if(m_appwrapper->getGFix())system("setsid glava -d >/dev/null 2>&1 &");
-    if(m_appwrapper->getMuteOnRestart())system("pactl set-sink-mute 0 0");
     RestartSpectrum();
 }
 

@@ -30,14 +30,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
     /*
-     * DEBUG
-     */
-    connect(ui->crashNow, &QPushButton::clicked,[]{
-        cause_segfault();
-    });
-
-
-    /*
      * Prepare TreeView
      */
     ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
@@ -67,9 +59,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     /*
      * Prepare all combooxes
      */
-    ui->styleSelect->addItem("Default","default");
-    ui->styleSelect->addItem("MacOS","aqua");
-    ui->styleSelect->addItem("Ubuntu","ubuntu");
     ui->paletteSelect->addItem("Default","default");
     ui->paletteSelect->addItem("Black","black");
     ui->paletteSelect->addItem("Blue","blue");
@@ -104,9 +93,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     });
     connect(ui->glavafix, &QPushButton::clicked, this, [this]{
         appconf->setGFix(ui->glavafix->isChecked());
-    });
-    connect(ui->muteonrestart, &QCheckBox::clicked, this, [this]{
-        appconf->setMuteOnRestart(ui->muteonrestart->isChecked());
     });
     connect(ui->autofx, &QGroupBox::clicked, this, [this]{
         appconf->setAutoFx(ui->autofx->isChecked());
@@ -161,27 +147,11 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     /*
      * Connect all signals for Interface
      */
-    auto change_theme_mode = [this]{
-        if(lockslot)return;
-        int mode = 0;
-        if(ui->uimode_css->isChecked())mode=0;
-        else if(ui->uimode_pal->isChecked())mode=1;
 
-        ui->styleSelect->setEnabled(!mode);
-        ui->paletteSelect->setEnabled(mode);
-        ui->paletteConfig->setEnabled(mode && appconf->getColorpalette()=="custom");
-        appconf->setThememode(mode);
-    };
-    connect(ui->uimode_css, &QRadioButton::clicked, this, change_theme_mode);
-    connect(ui->uimode_pal, &QRadioButton::clicked, this, change_theme_mode);
     connect(ui->themeSelect, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
             this, [this](const QString&){
         if(lockslot)return;
         appconf->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
-    });
-    connect(ui->styleSelect,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),this,[this]{
-        if(lockslot)return;
-        appconf->setStylesheet(ui->styleSelect->itemData(ui->styleSelect->currentIndex()).toString());
     });
     connect(ui->paletteSelect,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),this,[this]{
         if(lockslot)return;
@@ -423,7 +393,6 @@ void SettingsDlg::refreshAll(){
     ui->path->setText(appconf->getPath());
     ui->irspath->setText(appconf->getIrsPath());
     ui->autofx->setChecked(appconf->getAutoFx());
-    ui->muteonrestart->setChecked(appconf->getMuteOnRestart());
     ui->glavafix->setChecked(appconf->getGFix());
 
     updateInputSinks();
@@ -438,22 +407,12 @@ void SettingsDlg::refreshAll(){
             ui->themeSelect->setCurrentIndex(index_fallback);
     }
 
-    QVariant qvS(appconf->getStylesheet());
-    int index = ui->styleSelect->findData(qvS);
-    if ( index != -1 )
-        ui->styleSelect->setCurrentIndex(index);
-
     QVariant qvS2(appconf->getColorpalette());
     int index2 = ui->paletteSelect->findData(qvS2);
     if ( index2 != -1 )
         ui->paletteSelect->setCurrentIndex(index2);
 
-    ui->styleSelect->setEnabled(!appconf->getThememode());
-    ui->paletteConfig->setEnabled(appconf->getThememode() && appconf->getColorpalette()=="custom");
-    ui->paletteSelect->setEnabled(appconf->getThememode());
-
-    ui->uimode_css->setChecked(!appconf->getThememode());//If 0 set true, else false
-    ui->uimode_pal->setChecked(appconf->getThememode());//If 0 set false, else true
+    ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
 
     ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
     ui->aa_release->setChecked(appconf->getAutoFxMode());
