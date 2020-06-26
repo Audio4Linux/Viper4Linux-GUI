@@ -321,6 +321,7 @@ bool AudioStreamEngine::initialize()
             emit bufferChanged(0, 0, m_buffer);
             m_audioInput = new QAudioInput(m_audioInputDevice, m_format, this);
             m_audioInput->setNotifyInterval(NotifyIntervalMs);
+            m_audioInput->setBufferSize(20);
             result = true;
         }
     }
