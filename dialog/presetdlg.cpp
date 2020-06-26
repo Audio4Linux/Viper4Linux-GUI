@@ -37,7 +37,6 @@ PresetDlg::PresetDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->download,SIGNAL(clicked()),SLOT(download()));
     connect(ui->presetName,SIGNAL(textChanged(QString)),this,SLOT(nameChanged(QString)));
     connect(ui->files, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-    connect(ui->camelcase , SIGNAL(clicked()),this, SLOT(reloadRepo()));
     connect(ui->files, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)), this, SLOT(repoIndexChanged()));
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
 
@@ -136,8 +135,7 @@ QString PresetDlg::optimizeName(const QString& s){
     QString author = query[0];
     if(author=="000")author = "noahbliss";
     QString description = query[1].replace("_"," ");
-    if(ui->camelcase->checkState()==Qt::CheckState::Checked)return toCamelCase(description) + " by " + author;
-    else return description + " by " + author;
+    return description + " by " + author;
 }
 void PresetDlg::visitGithub(){
     QDesktopServices::openUrl(QUrl("https://github.com/noahbliss/Viper4Linux-Configs"));
