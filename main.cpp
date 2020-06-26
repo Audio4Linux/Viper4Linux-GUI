@@ -72,7 +72,6 @@ int main(int argc, char *argv[])
                  startInTray,
                  parser.isSet(minst));
 
-    w.setVisible(!startInTray);
     w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setGeometry(
         QStyle::alignedRect(
@@ -83,8 +82,8 @@ int main(int argc, char *argv[])
         )
     );
     w.setWindowFlags(Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint);
-    w.hide();
-    if(!parser.isSet(tray)) w.show();
+    w.show();
+    w.setVisible(!startInTray);
 
     QApplication::setQuitOnLastWindowClosed( true );
     return QApplication::exec();
