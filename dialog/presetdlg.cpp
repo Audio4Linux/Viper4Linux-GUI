@@ -41,6 +41,24 @@ PresetDlg::PresetDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->files, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)), this, SLOT(repoIndexChanged()));
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(indexDownloaded(QNetworkReply*)));
 
+    connect(ui->tabWidget, &QTabWidget::currentChanged, [=](int i){
+        if(i == 1 && ui->repoindex->count() <= 1){
+            QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
+            request.setUrl(url);
+            manager->get(request);
+        }
+    });
+
+    //Placeholder Repoindex
+    QFont font;
+    font.setItalic(true);
+    font.setPointSize(10);
+    QListWidgetItem* placeholder = new QListWidgetItem;
+    placeholder->setFont(font);
+    placeholder->setText(tr("No data received"));
+    placeholder->setFlags(placeholder->flags() & ~Qt::ItemIsEnabled);
+    ui->repoindex->addItem(placeholder);
+
     QMenu *menu = new QMenu();
     menu->addAction(tr("Android Profile"), this,SLOT(importAndroid()));
     menu->addAction(tr("Linux Configuration"), this,SLOT(importLinux()));
@@ -54,10 +72,6 @@ PresetDlg::PresetDlg(MainWindow* mainwin,QWidget *parent) :
 
     menuEx->addAction(tr("Linux Configuration"), this,SLOT(exportLinux()));
     ui->exportBtn->setMenu(menuEx);
-
-    QUrl url("https://api.github.com/repos/noahbliss/Viper4Linux-Configs/contents/");
-    request.setUrl(url);
-    manager->get(request);
 }
 PresetDlg::~PresetDlg()
 {
