@@ -38,12 +38,12 @@ void PaletteEditor::closeWin(){
     this->close();
 }
 void PaletteEditor::Reset(){
-    appconf->setCustompalette("43,43,43;29,29,29;255,255,255;190,190,190;90,90,90");
+    appconf->setCustompalette("40,40,43029,29,29;255,255,255;190,190,190;90,90,90");
 }
 int PaletteEditor::loadColor(int index,int rgb_index){
     QStringList elements = appconf->getCustompalette().split(';');
     if(elements.length()<5||elements[index].split(',').size()<3){
-        if(index==0)return 43;
+        if(index==0)return 40;
         else if(index==1)return 29;
         else if(index==2)return 255;
         else if(index==3)return 190;

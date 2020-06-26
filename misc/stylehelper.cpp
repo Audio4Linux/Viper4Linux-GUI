@@ -115,7 +115,7 @@ int StyleHelper::loadColor(int index,int rgb_index){
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
     QStringList elements = m_appconf->getCustompalette().split(';');
     if(elements.length()<5||elements[index].split(',').size()<3){
-        if(index==0)return 43;
+        if(index==0)return 40;
         else if(index==1)return 29;
         else if(index==2)return 255;
         else if(index==3)return 190;
