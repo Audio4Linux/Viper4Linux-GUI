@@ -56,7 +56,6 @@ const QMap<EQ_UNIT> EQ::EQ_LOOKUP_TABLE(){
           << QPair<EQ_UNIT>("Classic",FLOAT_LIST({0,0,-9.00,0,1.50,0,0,9.00,9.00,9.00}))
           << QPair<EQ_UNIT>("Bass",FLOAT_LIST({11.50,8.50,5.00,2.00,0,0,0,0,0,0}))
           << QPair<EQ_UNIT>("Clear",FLOAT_LIST({3.50,6.50,9.50,6.50,3.50,1.25,5.00,9.00,11.00,9.00}))
-          << QPair<EQ_UNIT>("Volume Boost",FLOAT_LIST({12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00,12.00}))
           << QPair<EQ_UNIT>("Hip-Hop",FLOAT_LIST({4.50,4.00,1.50,3.00,-1.50,-1.50,1.50,-1.00,1.50,3.00}))
           << QPair<EQ_UNIT>("Dubstep",FLOAT_LIST({12.00,0.50,-2.00,-5.00,-5.00,-4.50,-2.50,0,-3.00,-.050}))
           << QPair<EQ_UNIT>("Movie",FLOAT_LIST({3.00,6.00,9.00,7.00,6.00,5.00,6.00,3.50,10.50,8.00}))

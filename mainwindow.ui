@@ -116,6 +116,9 @@
          </property>
          <item>
           <widget class="QStackedWidget" name="tabhost">
+           <property name="currentIndex">
+            <number>3</number>
+           </property>
            <widget class="QWidget" name="tabhostPage1">
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <property name="leftMargin">
@@ -1359,11 +1362,6 @@
                  <item>
                   <property name="text">
                    <string>Vocal Booster</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Volume Boost</string>
                   </property>
                  </item>
                  <item>
