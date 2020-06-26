@@ -14,11 +14,11 @@ QVariant ConfigContainer::getVariant(const QString& key){
     }
     return map.find(key).value();
 }
-QString ConfigContainer::getString(const QString& key,bool setToDefaultIfMissing){
+QString ConfigContainer::getString(const QString& key,bool setToDefaultIfMissing, QString alternative){
     if(!map.contains(key)){
         qWarning().noquote().nospace() << "[W] Requested key '" << key << "' not found";
-        if(setToDefaultIfMissing)map[key] = "";
-        return "";
+        if(setToDefaultIfMissing)map[key] = alternative;
+        return alternative;
     }
     return getVariant(key).toString();
 }

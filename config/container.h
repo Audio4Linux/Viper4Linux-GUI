@@ -24,7 +24,7 @@ public:
     ConfigContainer();
     void setValue(const QString& key,QVariant value);
     QVariant getVariant(const QString& key);
-    QString getString(const QString& key,bool setToDefaultIfMissing=true);
+    QString getString(const QString& key,bool setToDefaultIfMissing=true, QString alternative="");
     int getInt(const QString& key, int alternative = 0);
     float getFloat(const QString& key);
     bool getBool(const QString& key, bool setToDefaultIfMissing=true, bool alternative=false);

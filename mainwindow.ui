@@ -117,7 +117,7 @@
          <item>
           <widget class="QStackedWidget" name="tabhost">
            <property name="currentIndex">
-            <number>3</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="tabhostPage1">
             <layout class="QVBoxLayout" name="verticalLayout_6">
