@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
-    <height>350</height>
+    <width>562</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -26,7 +26,7 @@
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_6">
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="tabPosition">
