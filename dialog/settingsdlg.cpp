@@ -6,6 +6,7 @@
 #include "misc/autostartmanager.h"
 #include "pulseeffectscompatibility.h"
 #include "crashhandler/killer.h"
+#include "misc/GstRegistryHelper.h"
 
 #include <QGraphicsOpacityEffect>
 #include <QProcess>
@@ -39,15 +40,19 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         switch(toplevel_index){
         case -1:
             if(cur->text(0) == "Context Menu")
-                ui->stackedWidget->setCurrentIndex(6);
+                ui->stackedWidget->setCurrentIndex(5);
             if(cur->text(0) == "Design")
-                ui->stackedWidget->setCurrentIndex(8);
+                ui->stackedWidget->setCurrentIndex(7);
             if(cur->text(0) == "Advanced")
-                ui->stackedWidget->setCurrentIndex(9);
+                ui->stackedWidget->setCurrentIndex(8);
+            break;
+        case 5:
+            // -- SA-ROOT
+            ui->stackedWidget->setCurrentIndex(6);
             break;
         case 6:
-            // -- SA/ROOT
-            ui->stackedWidget->setCurrentIndex(7);
+            // -- GST-INFO
+            ui->stackedWidget->setCurrentIndex(9);
             break;
         default:
             ui->stackedWidget->setCurrentIndex(toplevel_index);
@@ -224,22 +229,6 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     });
 
     /*
-     * Connect all signals for Legacy
-     */
-    ui->legacy_mode_on->setChecked(appconf->getLegacyMode());
-
-    auto legacy_radio = [this]{
-        if(lockslot)return;
-        int mode = 0;
-        if(ui->legacy_mode_off->isChecked())mode=0;
-        else if(ui->legacy_mode_on->isChecked())mode=1;
-        appconf->setLegacyMode(mode);
-    };
-
-    connect(ui->legacy_mode_off,&QRadioButton::clicked,this,legacy_radio);
-    connect(ui->legacy_mode_on,&QRadioButton::clicked,this,legacy_radio);
-
-    /*
      * Connect all signals for SA/ROOT
      */
     connect(ui->sa_enable,&QGroupBox::clicked,this,[this,mainwin](){
@@ -385,6 +374,14 @@ void SettingsDlg::refreshDevices()
 
 void SettingsDlg::refreshAll(){
     lockslot = true;
+
+    ui->gst_plg_installed->setText(GstRegistryHelper::IsPluginInstalled() ? "Yes" : "No");
+    ui->gst_plg_mode->setText(GstRegistryHelper::HasDBusSupport() ? "Audio4Linux" : "Legacy");
+    ui->gst_plg_dbus->setText(GstRegistryHelper::HasDBusSupport() ? "Yes" : "No");
+    ui->gst_plg_version->setText(GstRegistryHelper::GetPluginVersion());
+    ui->gst_plg_path->setText(GstRegistryHelper::GetPluginPath());
+    ui->gst_plg_path->setToolTip(GstRegistryHelper::GetPluginPath());
+
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
     ui->menu_edit->setTargetMenu(m_mainwin->getTrayContextMenu());

@@ -8,6 +8,7 @@
 #include "dialog/liquidequalizerwidget.h"
 #include "misc/eventfilter.h"
 #include "dialog/firstlaunchwizard.h"
+#include "misc/GstRegistryHelper.h"
 
 #include <phantomstyle.h>
 #include <Animation/Animation.h>
@@ -105,13 +106,13 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(spectrum);
     menu->addAction(tr("Driver status"), this,[this](){
-        if(m_appwrapper->getLegacyMode()){
+        if(!GstRegistryHelper::HasDBusSupport()){
             OverlayMsgProxy* msg = new OverlayMsgProxy(this);
             msg->openError(tr("Unavailable"),
-                           tr("Legacy Mode does not support this feature.\n"
-                              "Please use the newer Viper4Linux to access\n"
-                              "this dialog."),
-                           tr("Okay"));
+                           tr("Viper4Linux Legacy does not support this feature.\n"
+                              "Please upgrade to a later version of Viper4Linux\n"
+                              "to access this dialog (Audio4Linux version)."),
+                           tr("Go back"));
             return;
         }
 
@@ -243,39 +244,36 @@ void MainWindow::LaunchFirstRunSetup(){
     });
 }
 void MainWindow::RunDiagnosticChecks(){
-    //Check if viper is correctly installed and running
-    QFile pidfile("/tmp/viper4linux/pid.tmp");
-    QString pid;
-    if (pidfile.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QTextStream stream(&pidfile);
-        if (!stream.atEnd())
-            pid = stream.readLine();
-    }
-    pidfile.close();
     if(system("which viper > /dev/null 2>&1") == 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
-                       tr("Unable to find viper executable.\n"
+                       tr("Unable to find the viper executable.\n"
                           "Please make sure viper is installed and you\n"
                           "are using the lastest version of gst-plugin-viperfx"),
                        tr("Continue anyway"));
     }
-    else if(!m_appwrapper->getLegacyMode() && pidfile.exists() && !m_dbus->isValid() &&
-            system("kill -0 $(cat /tmp/viper4linux/pid.tmp) > /dev/null")==0){
+    else if(!GstRegistryHelper::IsPluginInstalled()){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
-        msg->openError(tr("Unsupported version"),
-                       tr("Looks like you are using an older version of\n"
-                          "gst-plugin-viperfx. Viper appears to be running\n"
-                          "but no DBus interface has been found, so the\n"
-                          "DBus server was unable to launch and couldn't acquire a busname.\n"
-                          "Please try to enable 'Legacy Mode' in settings or use\n"
-                          "Viper4Linux-GUI-Legacy instead."),
-                       tr("Continue"));
+        msg->openError(tr("Missing component"),
+                       tr("Unable to find the GStreamer viperfx plugin.\n"
+                          "Make sure you installed Viper4Linux correctly\n"
+                          "and double-check the README instructions.\n"
+                          "You can also run 'gst-inspect-1.0 viperfx'\n"
+                          "to check if the plugin was correctly installed."),
+                       tr("Try again"));
+
+        connect(msg,&OverlayMsgProxy::buttonPressed,[this](){
+            QTimer::singleShot(300,this,[this](){
+                gst_update_registry();
+                RunDiagnosticChecks();
+            });
+        });
+
     }
-    else if(!m_appwrapper->getLegacyMode() && !m_dbus->isValid())
-        ShowDBusError();
-    else if(!m_appwrapper->getLegacyMode())
-        CheckDBusVersion();
+    else if(GstRegistryHelper::HasDBusSupport() && !m_dbus->isValid()){
+        qWarning() << "[W] Viper DBus IPC is inactive. Attempting to launch service using viper.sh";
+        Restart();
+    }
 }
 
 //Spectrum
@@ -423,14 +421,17 @@ void MainWindow::setVisible(bool visible)
     m_dbus = new DBusProxy();
     updateTrayPresetList();
     updateTrayConvolverList();
+
     //Hide all other windows if set to invisible
     if(!visible){
         log_dlg->hide();
         preset_dlg->hide();
     }
-    if(!m_appwrapper->getLegacyMode() && m_dbus->isValid() &&
+
+    if(GstRegistryHelper::HasDBusSupport() && m_dbus->isValid() &&
             msg_notrunning != nullptr)
         msg_notrunning->hide();
+
     QMainWindow::setVisible(visible);
 }
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -450,9 +451,9 @@ void MainWindow::ShowDBusError(){
     if(msg_notrunning != nullptr)
         msg_notrunning->hide();
     msg_notrunning = new OverlayMsgProxy(this);
-    msg_notrunning->openError(tr("Viper not running"),
-                              tr("Unable to connect to DBus interface.\n"
-                                 "Please make sure viper is running and you are\n"
+    msg_notrunning->openError(tr("Viper inactive"),
+                              tr("Unable to connect to the DBus interface.\n"
+                                 "Please make sure viper is active and you are\n"
                                  "using the lastest version of gst-plugin-viperfx"),
                               tr("Launch viper"));
     connect(msg_notrunning,&OverlayMsgProxy::buttonPressed,[this](){
@@ -475,22 +476,7 @@ void MainWindow::ShowDBusError(){
         }
     });
 }
-void MainWindow::CheckDBusVersion(){
-    VersionContainer currentPluginVersion(m_dbus->GetVersion());
-    VersionContainer minimumPluginVersion(QString(MINIMUM_PLUGIN_VERSION));
-    if(currentPluginVersion < minimumPluginVersion){
-        if(msg_versionmismatch != nullptr)
-            msg_versionmismatch->hide();
-        msg_versionmismatch = new OverlayMsgProxy(this);
-        msg_versionmismatch->openError(tr("Version unsupported"),
-                                       tr("This app requires a different version\n"
-                                          "of gst-plugin-viperfx to function correctly.\n"
-                                          "Consider to update gst-plugin-viperfx and/or\n"
-                                          "this GUI in order to ensure full functionality.\n"
-                                          "Current version: %1, Required version: >=%2").arg(currentPluginVersion).arg(MINIMUM_PLUGIN_VERSION),
-                                       tr("Close"));
-    }
-}
+
 //Systray
 void MainWindow::raiseWindow(){
     /*
@@ -1086,7 +1072,7 @@ void MainWindow::ApplyConfig(bool restart){
 
     ConfigIO::writeFile(m_appwrapper->getPath(),conf->getConfigMap());
 
-    if(!m_appwrapper->getLegacyMode()){
+    if(GstRegistryHelper::HasDBusSupport()){
         ConfigContainer dbus_template = *conf;
         dbus_template.setValue("conv_ir_path",activeirs);
         m_dbus->SubmitPropertyMap(dbus_template.getConfigMap());
@@ -1097,8 +1083,10 @@ void MainWindow::ApplyConfig(bool restart){
                 Restart();
             else
                 if(m_appwrapper->getReloadMethod() == ReloadMethod::DIRECT_DBUS){
-                    if(!m_dbus->isValid())
-                        ShowDBusError();
+                    if(!m_dbus->isValid()){
+                        qWarning() << "Viper DBus IPC is inactive. Attempting to launch service using viper.sh";
+                        Restart();
+                    }
                     else
                         m_dbus->CommitProperties(DBusProxy::PARAM_GROUP_ALL);
                 }

@@ -88,8 +88,6 @@ public:
     int getSpectrumShape();
     bool getLegacyTabs();
     void setLegacyTabs(bool b);
-    void setLegacyMode(bool b);
-    bool getLegacyMode();
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();

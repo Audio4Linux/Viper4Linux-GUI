@@ -26,6 +26,11 @@ public:
     {
     }
 
+    VersionContainer( const char* val )
+    {
+        VersionContainer(QString::fromLocal8Bit(val));
+    }
+
     VersionContainer( const QString val )
     {
         QStringList list = val.split('.');

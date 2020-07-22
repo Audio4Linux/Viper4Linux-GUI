@@ -10,6 +10,8 @@
 #include <iostream>
 #include <unistd.h>
 
+#include <gst/gst.h>
+
 #define FORCE_CRASH_HANDLER
 
 #if defined(Q_OS_UNIX) && defined(QT_NO_DEBUG) || defined(FORCE_CRASH_HANDLER)
@@ -39,6 +41,8 @@ int main(int argc, char *argv[])
     int fd = safe_open_wo_fd("/tmp/viper-gui/crash.dmp");
     airbag_init_fd(fd,crash_handled,EXECUTION_FILENAME);
 #endif
+
+    gst_init(&argc, &argv);
 
     QApplication a(argc, argv);
     QCommandLineParser parser;

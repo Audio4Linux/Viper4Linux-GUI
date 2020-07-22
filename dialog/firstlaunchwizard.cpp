@@ -2,6 +2,7 @@
 #include "ui_firstlaunchwizard.h"
 #include "misc/common.h"
 #include "misc/autostartmanager.h"
+#include "misc/GstRegistryHelper.h"
 #include "mainwindow.h"
 
 #include <QTimer>
@@ -11,6 +12,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QProcess>
+#include <QMessageBox>
 
 FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mainwin, QWidget *parent) :
     QWidget(parent),
@@ -25,43 +27,62 @@ FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mai
     QTimer::singleShot(1000, [&]{
         ui->p1_icon->startAnimation();
     });
-    ui->p1dot5_icon->startAnimation();
     ui->p2_icon->startAnimation();
+    ui->pm_icon->startAnimation();
+    ui->pl_icon->startAnimation();
     ui->p3_icon->startAnimation();
     ui->p4_icon->startAnimation();
 
     ui->stackedWidget->setAnimation(QEasingCurve::Type::OutCirc);
+
     connect(ui->p1_next,&QPushButton::clicked,[&]{
-        ui->stackedWidget->slideInIdx(1);
-    });
-    connect(ui->p1dot5_next,&QPushButton::clicked,[&]{
-        ui->stackedWidget->slideInIdx(2);
+        if(!GstRegistryHelper::IsPluginInstalled()){
+            ui->stackedWidget->slideInIdx(1);
+        }
+        else if(!GstRegistryHelper::HasDBusSupport()){
+            ui->stackedWidget->slideInIdx(2);
+        }
+        else{
+            ui->stackedWidget->slideInIdx(3);
+        }
     });
     connect(ui->p2_next,&QPushButton::clicked,[&]{
-        ui->stackedWidget->slideInIdx(3);
+        ui->stackedWidget->slideInIdx(4);
     });
     connect(ui->p3_next,&QPushButton::clicked,[&]{
-        ui->stackedWidget->slideInIdx(4);
+        ui->stackedWidget->slideInIdx(5);
     });
     connect(ui->p4_next,&QPushButton::clicked,[&]{
         emit wizardFinished();
     });
-    connect(ui->p4_telegram,&QPushButton::clicked,[&]{
+
+    auto openTelegram = []{
         QDesktopServices::openUrl(QUrl("https://t.me/joinchat/FTKC2A2bolHkFAyO-fuPjw"));
-    });
-
-    ui->p1dot5_mode_legacy->setChecked(appconf->getLegacyMode());
-
-    auto legacy_radio = [this]{
-        if(lockslot)return;
-        int mode = 0;
-        if(ui->p1dot5_mode_a4l->isChecked())mode=0;
-        else if(ui->p1dot5_mode_legacy->isChecked())mode=1;
-        appconf->setLegacyMode(mode);
     };
+    connect(ui->p4_telegram,&QPushButton::clicked, openTelegram);
 
-    connect(ui->p1dot5_mode_a4l,&QRadioButton::clicked,this,legacy_radio);
-    connect(ui->p1dot5_mode_legacy,&QRadioButton::clicked,this,legacy_radio);
+    connect(ui->pm_telegram,&QPushButton::clicked, openTelegram);
+    connect(ui->pm_readme,&QPushButton::clicked, []{
+        QDesktopServices::openUrl(QUrl("https://github.com/Audio4Linux/Viper4Linux"));
+    });
+    connect(ui->pm_next,&QPushButton::clicked, [this]{
+        gst_update_registry();
+        if(GstRegistryHelper::IsPluginInstalled()){
+            if(!GstRegistryHelper::HasDBusSupport())
+                ui->stackedWidget->slideInIdx(2);
+            else
+                ui->stackedWidget->slideInIdx(3);
+        }
+        else{
+            QMessageBox::warning(this, "Error", "Still no luck. No GStreamer plugin named 'viperfx' has been found!");
+        }
+    });
+    connect(ui->pl_next,&QPushButton::clicked, [this]{
+        ui->stackedWidget->slideInIdx(3);
+    });
+    connect(ui->pl_help,&QPushButton::clicked, []{
+        QDesktopServices::openUrl(QUrl("https://gist.github.com/ThePBone/93da516635cdbc01759c10d2e5abb7ea"));
+    });
 
     auto deviceUpdated = [this](){
         if(lockslot) return;

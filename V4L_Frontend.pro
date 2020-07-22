@@ -109,6 +109,7 @@ HEADERS += \
     dialog/slidingstackedwidget.h \
     dialog/statusfragment.h \
     mainwindow.h \
+    misc/GstRegistryHelper.h \
     misc/autostartmanager.h \
     misc/biquad.h \
     misc/common.h \
@@ -164,3 +165,7 @@ DISTFILES += \
 RESOURCES += \
     resources.qrc \
     styles/styles.qrc
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += gstreamer-1.0 gstreamer-plugins-bad-1.0
+unix: PKGCONFIG += libpulse
