@@ -11,7 +11,7 @@ env:
   - secure: MUZVB76DqKEtZB38CIM9qN6SnxCKeHWAIxcWBrHlsNfx3Cz0dfAWb0xCUX9v/yuupnoR9MKzppt0G02GCjtypS9VzZ6s0Xm1oYjA4OhLSAREJ+fqL8aYxh2G34k2ZLitMRAiZzlycGgOwltKXb8vX18UtKyY+9ml0tkvzN9Mv/7NyNYMPP5+ZJKLnXwoN5ygNQa2gq07zW80KkpJzlYQUaWtwcyEZyL2INBEt6zh5R/MMagH3apTHnaB2Y9ZMrfpH52VghEvZ0LoZlB/5UeXLgkByF8i9jJsALwAk185iufQkXGErAgLXWobdBvWrIXZVUT5I5nrgNdQjpuYOHGvkwa0V8aLWD2US975IGP6PY0aZDsRQ3dKvJRCM4bukqGXKkuFsBt9pH8ZtfUsfff4gkQLDe+VAiuaU810bG2uua1JrwTLDInxFXISkd5h2ZZeJ4QvA5mGhOKEI2CuQCB3nYHKQXPzFsC4uaTe7F/2fYOctlxvgLZ8Wxpi0yvBa1vMoQfPZplh+jJMwa139MqVRjoqhWJQvtLHCfr+iWlUlBbGu1QBgqseCpIb4BIrsAM2/KG090X3nEjXaIN79gjI7a8P/wXGni5lHOLG3WHIeYD4CiVhpcrhKcKaQHsUk1fRmc9yj/WIH2a3Sr/vX3de4vD680nX5p3njQvL/PzDKQQ=
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get install lftp gstreamer-1.0 libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev gstreamer1.0-plugins-bad
+- sudo apt-get install lftp gstreamer-1.0 libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev
 - sudo apt-get install qtbase5-dev libqt5svg5-dev qt5-default qttools5-dev-tools qtmultimedia5-dev 
 script:
 - qmake V4L_Frontend.pro
