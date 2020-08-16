@@ -2,7 +2,15 @@
 
 void LogHelper::writeLog(const QString& log,int mode){
     //Mode: 0-Log+Stdout 1-Log 2-Stdout
-    QFile f("/tmp/viper4linux/ui.log");
+    QString path;
+
+#ifndef VIPER_PLUGINMODE
+    path = "/tmp/viper4linux/ui.log";
+#else
+    path = "/tmp/gsteffectmanager/viper_ui.log";
+#endif
+
+    QFile f(path);
     QString o = "[" + QTime::currentTime().toString() + "] " + log;
 
     if(mode==0||mode==1){
@@ -23,8 +31,15 @@ void LogHelper::writeLogF(const QString& log,const QString& _path){
     f.close();
 }
 void LogHelper::clearLog(){
-    QFile file ("/tmp/viper4linux/ui.log");
-    if(file.exists())file.remove();
-    QFile file2 ("/tmp/viper4linux/ui_viper.log");
-    if(file2.exists())file2.remove();
+    QString path;
+
+#ifndef VIPER_PLUGINMODE
+    path = "/tmp/viper4linux/ui.log";
+#else
+    path = "/tmp/gsteffectmanager/viper_ui.log";
+#endif
+
+    QFile file (path);
+    if(file.exists())
+        file.remove();
 }

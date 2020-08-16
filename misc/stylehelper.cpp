@@ -1,6 +1,6 @@
 #include "stylehelper.h"
-#include "ui_mainwindow.h"
-#include "mainwindow.h"
+#include "ui_viper_window.h"
+#include "viper_window.h"
 #include "config/appconfigwrapper.h"
 #include "phantom/phantomstyle.h"
 
@@ -11,7 +11,7 @@ StyleHelper::StyleHelper(QObject* host){
     m_objhost = host;
 }
 void StyleHelper::SetStyle(){
-    MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);
+    ViperWindow* m_host = qobject_cast<ViperWindow*>(m_objhost);
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
     if(m_appconf->getTheme() == "Phantom")
         QApplication::setStyle(new PhantomStyle);
@@ -85,7 +85,7 @@ void StyleHelper::setPalette(const ColorStyle& s){
                                 })").arg(s.disabled.name()));
 }
 void StyleHelper::loadIcons(bool white){
-    MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);
+    ViperWindow* m_host = qobject_cast<ViperWindow*>(m_objhost);
     if(white){
         m_host->settings_dlg->updateButtonStyle(true);
         QPixmap pix(":/icons/settings-white.svg");
@@ -111,7 +111,7 @@ void StyleHelper::loadIcons(bool white){
     }
 }
 int StyleHelper::loadColor(int index,int rgb_index){
-    MainWindow* m_host = qobject_cast<MainWindow*>(m_objhost);
+    ViperWindow* m_host = qobject_cast<ViperWindow*>(m_objhost);
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
     QStringList elements = m_appconf->getCustompalette().split(';');
     if(elements.length()<5||elements[index].split(',').size()<3){

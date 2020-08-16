@@ -1,7 +1,7 @@
 #include "convolverdlg.h"
 #include "ui_convolver.h"
 #include "misc/loghelper.h"
-#include "mainwindow.h"
+#include "viper_window.h"
 
 #include <QDir>
 #include <QCloseEvent>
@@ -12,7 +12,7 @@
 
 static bool lockupdate = false;
 using namespace std;
-ConvolverDlg::ConvolverDlg(MainWindow* mainwin,QWidget *parent) :
+ConvolverDlg::ConvolverDlg(ViperWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Convolver)
 {

@@ -2,7 +2,7 @@
 #include "ui_pulseeffectscompatibility.h"
 #include "misc/common.h"
 #include "misc/autostartmanager.h"
-#include "mainwindow.h"
+#include "viper_window.h"
 
 #include <QTimer>
 #include <QEasingCurve>
@@ -13,7 +13,7 @@
 #include <QMessageBox>
 #include <QProcess>
 
-PulseeffectsCompatibility::PulseeffectsCompatibility(AppConfigWrapper* _appconf, MainWindow* mainwin, QWidget *parent) :
+PulseeffectsCompatibility::PulseeffectsCompatibility(AppConfigWrapper* _appconf, ViperWindow* mainwin, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PulseeffectsCompatibility)
 {

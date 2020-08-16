@@ -14,7 +14,7 @@
    <string>Log Viewer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources.qrc">
+   <iconset resource="../v4l_frontend_resources.qrc">
     <normaloff>:/icons/viper-new.svg</normaloff>:/icons/viper-new.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -73,7 +73,7 @@
   <tabstop>reload</tabstop>
  </tabstops>
  <resources>
-  <include location="../resources.qrc"/>
+  <include location="../v4l_frontend_resources.qrc"/>
  </resources>
  <connections/>
 </ui>

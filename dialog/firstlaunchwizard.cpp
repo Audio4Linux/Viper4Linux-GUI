@@ -3,7 +3,7 @@
 #include "misc/common.h"
 #include "misc/autostartmanager.h"
 #include "misc/GstRegistryHelper.h"
-#include "mainwindow.h"
+#include "viper_window.h"
 
 #include <QTimer>
 #include <QEasingCurve>
@@ -14,7 +14,7 @@
 #include <QProcess>
 #include <QMessageBox>
 
-FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, MainWindow* mainwin, QWidget *parent) :
+FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, ViperWindow* mainwin, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FirstLaunchWizard)
 {

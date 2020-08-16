@@ -16,7 +16,7 @@
 #define CONVOLVER_H
 
 #include <QDialog>
-class MainWindow;
+class ViperWindow;
 
 namespace Ui {
 class Convolver;
@@ -27,7 +27,7 @@ class ConvolverDlg : public QDialog
     Q_OBJECT
 
 public:
-    explicit ConvolverDlg(MainWindow* mainwin,QWidget *parent = nullptr);
+    explicit ConvolverDlg(ViperWindow* mainwin,QWidget *parent = nullptr);
     ~ConvolverDlg();
 private slots:
     void reject();
@@ -44,7 +44,7 @@ signals:
     void closePressed();
 private:
     Ui::Convolver *ui;
-    MainWindow* m_mainwin;
+    ViperWindow* m_mainwin;
     QString configpath = "";
 };
 

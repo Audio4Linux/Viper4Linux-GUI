@@ -1,17 +1,22 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "viper_window.h"
+#include "ui_viper_window.h"
+
 #include "dialog/statusfragment.h"
 #include "misc/overlaymsgproxy.h"
-#include "dbus/serveradaptor.h"
-#include "dbus/clientproxy.h"
+
 #include "misc/versioncontainer.h"
 #include "dialog/liquidequalizerwidget.h"
 #include "misc/eventfilter.h"
+
+#ifndef VIPER_PLUGINMODE
+#include "dbus/serveradaptor.h"
+#include "dbus/clientproxy.h"
 #include "dialog/firstlaunchwizard.h"
+#endif
 #include "misc/GstRegistryHelper.h"
 
 #include <phantomstyle.h>
-#include <Animation/Animation.h>
+#include "3rdparty/WAF/Animation/Animation.h"
 
 #include <QMenu>
 #include <QMessageBox>
@@ -26,26 +31,33 @@
 
 using namespace std;
 
-MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleInst, QWidget *parent) :
+ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleInst, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::ViperWindow)
 {
     ui->setupUi(this);
     bool aboutToQuit = false;
 
-    ui->tabhost_legacy->hide();
-
-    m_exepath = exepath;
-    m_startupInTraySwitch = statupInTray;
-
     LogHelper::clearLog();
     LogHelper::writeLog("UI launched...");
 
-    msg_notrunning = new OverlayMsgProxy(this);
-    msg_launchfail = new OverlayMsgProxy(this);
-    msg_versionmismatch = new OverlayMsgProxy(this);
+    ui->tabhost_legacy->hide();
+
+#ifndef VIPER_PLUGINMODE
+    m_exepath = exepath;
+    m_startupInTraySwitch = statupInTray;
 
     tray_disableAction = new QAction();
+
+    msg_launchfail = new OverlayMsgProxy(this);
+    msg_versionmismatch = new OverlayMsgProxy(this);
+#else
+    Q_UNUSED(exepath);
+    Q_UNUSED(statupInTray);
+    Q_UNUSED(allowMultipleInst);
+#endif
+    msg_notrunning = new OverlayMsgProxy(this);
+
     conf = new ConfigContainer();
     m_stylehelper = new StyleHelper(this);
     m_appwrapper = new AppConfigWrapper(m_stylehelper);
@@ -53,7 +65,9 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
 
     m_appwrapper->loadAppConfig();
 
+#ifndef VIPER_PLUGINMODE
     InitializeSpectrum();
+#endif
 
     conf->setConfigMap(readConfig());
     LoadConfig();
@@ -61,12 +75,15 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     conv_dlg = new ConvolverDlg(this,this);
     preset_dlg = new PresetDlg(this);
 
+#ifndef VIPER_PLUGINMODE
     createTrayIcon();
     initGlobalTrayActions();
+#endif
 
     settings_dlg = new SettingsDlg(this,this);
     log_dlg = new LogDlg(this);
 
+#ifndef VIPER_PLUGINMODE
     //This section checks if another instance is already running and switches to it.
     new GuiAdaptor(this);
     QDBusConnection connection = QDBusConnection::sessionBus();
@@ -95,16 +112,21 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
             }
         }
     }
+#endif
 
     //Cancel constructor if quitting soon
     if(aboutToQuit) return;
 
     QMenu *menu = new QMenu();
+
+#ifndef VIPER_PLUGINMODE
     spectrum = new QAction("Reload spectrum",this);
-    connect(spectrum,&QAction::triggered,this,&MainWindow::RestartSpectrum);
+    connect(spectrum,&QAction::triggered,this,&ViperWindow::RestartSpectrum);
 
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
     menu->addAction(spectrum);
+#endif
+
     menu->addAction(tr("Driver status"), this,[this](){
         if(!GstRegistryHelper::HasDBusSupport()){
             OverlayMsgProxy* msg = new OverlayMsgProxy(this);
@@ -135,8 +157,10 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     });
     menu->addAction(tr("Load from file"), this,SLOT(LoadExternalFile()));
     menu->addAction(tr("Save to file"), this,SLOT(SaveExternalFile()));
+#ifndef VIPER_PLUGINMODE
     menu->addAction(tr("View logs"), this,SLOT(OpenLog()));
-    menu->addAction(tr("What's this..."), this,[](){QWhatsThis::enterWhatsThisMode();});
+#endif
+    menu->addAction(tr("Context help"), this,[](){QWhatsThis::enterWhatsThisMode();});
 
     ui->toolButton->setMenu(menu);
 
@@ -145,8 +169,10 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
 
     ConnectActions();
 
+#ifndef VIPER_PLUGINMODE
     if(m_appwrapper->getTrayMode() || m_startupInTraySwitch) trayIcon->show();
     else trayIcon->hide();
+#endif
 
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
         conf->setConfigMap(m_dbus->FetchPropertyMap());
@@ -157,7 +183,9 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         ui->frame->setStyleSheet(QString("QFrame#frame{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
         ui->tabhost->setStyleSheet(QString("QWidget#tabhostPage1,QWidget#tabhostPage2,QWidget#tabhostPage3,QWidget#tabhostPage4,QWidget#tabhostPage5,QWidget#tabhostPage6,QWidget#tabhostPage7{background-color: %1;}").arg(qApp->palette().window().color().lighter().name()));
         ui->tabbar->redrawTabBar();
+#ifndef VIPER_PLUGINMODE
         RestartSpectrum();
+#endif
         ui->eq_widget->setAccentColor(palette().highlight().color());
     });
 
@@ -166,6 +194,8 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         ui->eq_widget->setAlwaysDrawHandles(m_appwrapper->getEqualizerPermanentHandles());
     });
 
+
+#ifndef VIPER_PLUGINMODE
     ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
 
     if(!m_appwrapper->getIntroShown())
@@ -174,6 +204,7 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
         QTimer::singleShot(300,this,[this]{
             RunDiagnosticChecks();
         });
+#endif
 
     if(m_appwrapper->getLegacyTabs())
         InitializeLegacyTabs();
@@ -194,11 +225,12 @@ MainWindow::MainWindow(QString exepath, bool statupInTray, bool allowMultipleIns
     }
 }
 
-MainWindow::~MainWindow()
+ViperWindow::~ViperWindow()
 {
     delete ui;
 }
-void MainWindow::InitializeLegacyTabs(){
+
+void ViperWindow::InitializeLegacyTabs(){
     if(!ui->frame->isVisible())
         return;
 
@@ -211,7 +243,9 @@ void MainWindow::InitializeLegacyTabs(){
     }
     ui->tabhost_legacy->setCurrentIndex(0);
 }
-void MainWindow::LaunchFirstRunSetup(){
+
+#ifndef VIPER_PLUGINMODE
+void ViperWindow::LaunchFirstRunSetup(){
     FirstLaunchWizard* wiz = new FirstLaunchWizard(m_appwrapper,this);
     QHBoxLayout* lbLayout = new QHBoxLayout;
     QMessageOverlay* lightBox = new QMessageOverlay(this);
@@ -243,7 +277,8 @@ void MainWindow::LaunchFirstRunSetup(){
         });
     });
 }
-void MainWindow::RunDiagnosticChecks(){
+void ViperWindow::RunDiagnosticChecks(){
+
     if(system("which viper > /dev/null 2>&1") == 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
@@ -275,16 +310,17 @@ void MainWindow::RunDiagnosticChecks(){
         Restart();
     }
 }
-
+#endif
 //Spectrum
-void MainWindow::SetSpectrumVisibility(bool v){
+#ifndef VIPER_PLUGINMODE
+void ViperWindow::SetSpectrumVisibility(bool v){
     m_spectrograph->setVisible(v);
     if(v)
         this->findChild<QFrame*>("analysisLayout_spectrum")->setFrameShape(QFrame::StyledPanel);
     else
         this->findChild<QFrame*>("analysisLayout_spectrum")->setFrameShape(QFrame::NoFrame);
 }
-void MainWindow::InitializeSpectrum(){
+void ViperWindow::InitializeSpectrum(){
     m_spectrograph = new Spectrograph(this);
     m_audioengine = new AudioStreamEngine(this);
 
@@ -311,14 +347,14 @@ void MainWindow::InitializeSpectrum(){
     connect(m_appwrapper,&AppConfigWrapper::spectrumChanged,this,[this]{
         ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
     });
-    connect(m_appwrapper,&AppConfigWrapper::spectrumReloadRequired,this,&MainWindow::RestartSpectrum);
+    connect(m_appwrapper,&AppConfigWrapper::spectrumReloadRequired,this,&ViperWindow::RestartSpectrum);
 }
 
-void MainWindow::RestartSpectrum(){
+void ViperWindow::RestartSpectrum(){
     ToggleSpectrum(false,false);
     ToggleSpectrum(m_appwrapper->getSpetrumEnable(),false);
 }
-void MainWindow::RefreshSpectrumParameters(){
+void ViperWindow::RefreshSpectrumParameters(){
     int bands = m_appwrapper->getSpectrumBands();
     int minfreq = m_appwrapper->getSpectrumMinFreq();
     int maxfreq = m_appwrapper->getSpectrumMaxFreq();
@@ -369,7 +405,8 @@ void MainWindow::RefreshSpectrumParameters(){
     m_audioengine->setNotifyIntervalMs(refresh);
     m_audioengine->setMultiplier(multiplier);
 }
-void MainWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
+void ViperWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
+
     RefreshSpectrumParameters();
     if(ctrl_visibility)spectrum->setVisible(on);
     if(on && (!m_spectrograph->isVisible() || !ctrl_visibility)){
@@ -414,13 +451,17 @@ void MainWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
         m_audioengine->reset();
     }
 }
+#endif
 //Overrides
-void MainWindow::setVisible(bool visible)
+void ViperWindow::setVisible(bool visible)
 {
     //Reconnect to dbus to make sure the connection isn't stale
     m_dbus = new DBusProxy();
+
+#ifndef VIPER_PLUGINMODE
     updateTrayPresetList();
     updateTrayConvolverList();
+#endif
 
     //Hide all other windows if set to invisible
     if(!visible){
@@ -428,26 +469,32 @@ void MainWindow::setVisible(bool visible)
         preset_dlg->hide();
     }
 
+#ifndef VIPER_PLUGINMODE
     if(GstRegistryHelper::HasDBusSupport() && m_dbus->isValid() &&
             msg_notrunning != nullptr)
         msg_notrunning->hide();
+#endif
 
     QMainWindow::setVisible(visible);
 }
-void MainWindow::closeEvent(QCloseEvent *event)
+void ViperWindow::closeEvent(QCloseEvent *event)
 {
 #ifdef Q_OS_OSX
     if (!event->spontaneous() || !isVisible()) {
         return;
     }
 #endif
+#ifndef VIPER_PLUGINMODE
     if (trayIcon->isVisible()) {
         hide();
         event->ignore();
     }
+#endif
 }
+
 //DBus
-void MainWindow::ShowDBusError(){
+void ViperWindow::ShowDBusError(){
+#ifndef VIPER_PLUGINMODE
     if(msg_notrunning != nullptr)
         msg_notrunning->hide();
     msg_notrunning = new OverlayMsgProxy(this);
@@ -475,10 +522,21 @@ void MainWindow::ShowDBusError(){
             });
         }
     });
+#else
+    if(msg_notrunning != nullptr)
+        msg_notrunning->hide();
+    msg_notrunning = new OverlayMsgProxy(this);
+    msg_notrunning->openError(tr("Service not found"),
+                              tr("Unable to connect to the DBus interface.\n"
+                                 "Please make sure viper is active and you are\n"
+                                 "using the lastest version of gst-plugin-viperfx"),
+                              tr("Continue"));
+#endif
 }
 
 //Systray
-void MainWindow::raiseWindow(){
+#ifndef VIPER_PLUGINMODE
+void ViperWindow::raiseWindow(){    
     /*
      * NOTE: Raising the window does not always work!
      *
@@ -491,11 +549,11 @@ void MainWindow::raiseWindow(){
     raise();
     activateWindow();
 }
-void MainWindow::setTrayVisible(bool visible){
+void ViperWindow::setTrayVisible(bool visible){  
     if(visible) trayIcon->show();
     else trayIcon->hide();
 }
-void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+void ViperWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
     case QSystemTrayIcon::Trigger:
@@ -513,7 +571,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
         ;
     }
 }
-void MainWindow::updateTrayPresetList(){
+void ViperWindow::updateTrayPresetList(){
     if(tray_presetMenu != nullptr){
         tray_presetMenu->clear();
         QString absolute = QFileInfo(m_appwrapper->getPath()).absoluteDir().absolutePath();
@@ -545,7 +603,7 @@ void MainWindow::updateTrayPresetList(){
         }
     }
 }
-void MainWindow::updateTrayConvolverList(){
+void ViperWindow::updateTrayConvolverList(){
     if(tray_convMenu != nullptr){
         tray_convMenu->clear();
         QString absolute = QFileInfo(m_appwrapper->getPath()).absoluteDir().absolutePath();
@@ -575,15 +633,16 @@ void MainWindow::updateTrayConvolverList(){
     }
 }
 
-void MainWindow::createTrayIcon()
-{
+void ViperWindow::createTrayIcon()
+{    
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setToolTip("Viper4Linux");
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &ViperWindow::iconActivated);
     trayIcon->setIcon(QIcon(":/viper.png"));
 }
 
-void MainWindow::updateTrayMenu(QMenu* menu){
+void ViperWindow::updateTrayMenu(QMenu* menu){
+
     trayIcon->hide();
     createTrayIcon();
     trayIcon->show();
@@ -594,11 +653,12 @@ void MainWindow::updateTrayMenu(QMenu* menu){
         updateTrayConvolverList();
     });
     m_appwrapper->setTrayContextMenu(MenuIO::buildString(menu));
+
 }
-QMenu* MainWindow::getTrayContextMenu(){
+QMenu* ViperWindow::getTrayContextMenu(){
     return trayIconMenu;
 }
-void MainWindow::initGlobalTrayActions(){
+void ViperWindow::initGlobalTrayActions(){
     tray_disableAction = new QAction(tr("&Disable FX"), this);
     tray_disableAction->setProperty("tag","disablefx");
     tray_disableAction->setCheckable(true);
@@ -617,12 +677,11 @@ void MainWindow::initGlobalTrayActions(){
         init = buildDefaultActions();
     updateTrayMenu(init);
 }
-
-QMenu* MainWindow::buildAvailableActions()
+QMenu* ViperWindow::buildAvailableActions()
 {
     QAction *reloadAction = new QAction(tr("&Reload Viper"), this);
     reloadAction->setProperty("tag","reload");
-    connect(reloadAction, &QAction::triggered, this, &MainWindow::Restart);
+    connect(reloadAction, &QAction::triggered, this, &ViperWindow::Restart);
 
     QAction* quitAction = new QAction(tr("&Quit"), this);
     connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
@@ -706,11 +765,11 @@ QMenu* MainWindow::buildAvailableActions()
     menu->addAction(quitAction);
     return menu;
 }
-QMenu* MainWindow::buildDefaultActions()
+QMenu* ViperWindow::buildDefaultActions()
 {
     QAction *reloadAction = new QAction(tr("&Reload Viper"), this);
     reloadAction->setProperty("tag","reload");
-    connect(reloadAction, &QAction::triggered, this, &MainWindow::Restart);
+    connect(reloadAction, &QAction::triggered, this, &ViperWindow::Restart);
 
     QAction* quitAction = new QAction(tr("&Quit"), this);
     connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
@@ -724,9 +783,10 @@ QMenu* MainWindow::buildDefaultActions()
     menu->addAction(quitAction);
     return menu;
 }
+#endif
 
 //---Dialogs/Buttons
-void MainWindow::DialogHandler(){
+void ViperWindow::DialogHandler(){
     if(sender() == ui->conv_select){
         QWidget* host = new QWidget(this);
         host->setProperty("menu", false);
@@ -778,11 +838,11 @@ void MainWindow::DialogHandler(){
         preset_dlg->show();
     }
 }
-void MainWindow::OpenLog(){
+void ViperWindow::OpenLog(){
     log_dlg->show();
     log_dlg->updateLog();
 }
-void MainWindow::Reset(){
+void ViperWindow::Reset(){
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this,tr("Reset Configuration"),tr("Are you sure?"),
                                   QMessageBox::Yes|QMessageBox::No);
@@ -800,33 +860,39 @@ void MainWindow::Reset(){
         ApplyConfig();
     }
 }
-void MainWindow::DisableFX(){
+void ViperWindow::DisableFX(){
+#ifndef VIPER_PLUGINMODE
     tray_disableAction->setChecked(ui->disableFX->isChecked());
+#endif
     //Apply instantly
     if(!lockapply)ApplyConfig();
 }
 
 //---Reloader
-void MainWindow::OnUpdate(bool ignoremode){
+void ViperWindow::OnUpdate(bool ignoremode){
     //Will be called when slider has been moved, dynsys/eq preset set or spinbox changed
     if((m_appwrapper->getAutoFx() &&
         (ignoremode||m_appwrapper->getAutoFxMode()==0)) && !lockapply)
         ApplyConfig();
 }
-void MainWindow::OnRelease(){
+void ViperWindow::OnRelease(){
     if((m_appwrapper->getAutoFx() &&
         m_appwrapper->getAutoFxMode()==1) && !lockapply)
         ApplyConfig();
 }
-void MainWindow::Restart(){
+void ViperWindow::Restart(){
+#ifndef VIPER_PLUGINMODE
     if(m_appwrapper->getGFix())system("killall -r glava");
     system("viper restart");
     if(m_appwrapper->getGFix())system("setsid glava -d >/dev/null 2>&1 &");
     RestartSpectrum();
+#else
+    qCritical() << "ViperGUI: RESTART requested";
+#endif
 }
 
 //---User preset management
-void MainWindow::LoadPresetFile(const QString& filename){
+void ViperWindow::LoadPresetFile(const QString& filename){
     const QString& src = filename;
     const QString dest = m_appwrapper->getPath();
     if (QFile::exists(dest))QFile::remove(dest);
@@ -839,7 +905,7 @@ void MainWindow::LoadPresetFile(const QString& filename){
 
     ApplyConfig();
 }
-void MainWindow::SavePresetFile(const QString& filename){
+void ViperWindow::SavePresetFile(const QString& filename){
     const QString src = m_appwrapper->getPath();
     const QString& dest = filename;
     if (QFile::exists(dest))QFile::remove(dest);
@@ -847,7 +913,7 @@ void MainWindow::SavePresetFile(const QString& filename){
     QFile::copy(src,dest);
     LogHelper::writeLog("Saving to " + filename+ " (main/savepreset)");
 }
-void MainWindow::LoadExternalFile(){
+void ViperWindow::LoadExternalFile(){
     QString filename = QFileDialog::getOpenFileName(this,tr("Load custom audio.conf"),"","*.conf");
     if(filename=="")return;
     const QString& src = filename;
@@ -862,7 +928,7 @@ void MainWindow::LoadExternalFile(){
 
     ApplyConfig();
 }
-void MainWindow::SaveExternalFile(){
+void ViperWindow::SaveExternalFile(){
     QString filename = QFileDialog::getSaveFileName(this,tr("Save current audio.conf"),"","*.conf");
     if(filename=="")return;
     QFileInfo fi(filename);
@@ -878,9 +944,11 @@ void MainWindow::SaveExternalFile(){
 }
 
 //---Config IO
-void MainWindow::LoadConfig(Context ctx){
+void ViperWindow::LoadConfig(Context ctx){
     lockapply=true;
+#ifndef VIPER_PLUGINMODE
     tray_disableAction->setChecked(!conf->getBool("fx_enable"));
+#endif
     ui->disableFX->setChecked(!conf->getBool("fx_enable"));
     ui->tubesim->setChecked(conf->getBool("tube_enable"));
     ui->colm->setChecked(conf->getBool("colm_enable"));
@@ -992,7 +1060,7 @@ void MainWindow::LoadConfig(Context ctx){
     }
     lockapply=false;
 }
-void MainWindow::ApplyConfig(bool restart){
+void ViperWindow::ApplyConfig(bool restart){
     conf->setValue("fx_enable",QVariant(!ui->disableFX->isChecked()));
     conf->setValue("tube_enable",QVariant(ui->tubesim->isChecked()));
     conf->setValue("colm_enable",QVariant(ui->colm->isChecked()));
@@ -1102,14 +1170,14 @@ void MainWindow::ApplyConfig(bool restart){
 }
 
 //---Predefined Presets
-void MainWindow::EqPresetSelectionUpdated(){
+void ViperWindow::EqPresetSelectionUpdated(){
     if(ui->eqpreset->currentText() == "Custom")
         return;
     auto preset = PresetProvider::EQ::lookupPreset(ui->eqpreset->currentText());
     if(preset.size() > 0)SetEQ(preset);
     else ResetEQ();
 }
-void MainWindow::DynsysPresetSelectionUpdated(){
+void ViperWindow::DynsysPresetSelectionUpdated(){
     if(ui->dynsys_preset->currentText() == "Custom")
         return;
     const auto data = PresetProvider::Dynsys::lookupPreset(ui->dynsys_preset->currentText());
@@ -1125,7 +1193,7 @@ void MainWindow::DynsysPresetSelectionUpdated(){
     lockapply=false;
     OnUpdate(true);
 }
-void MainWindow::ColmPresetSelectionUpdated(){
+void ViperWindow::ColmPresetSelectionUpdated(){
     if(ui->colmpreset->currentText() == "...")
         return;
     const auto data = PresetProvider::Colm::lookupPreset(ui->colmpreset->currentText());
@@ -1139,7 +1207,7 @@ void MainWindow::ColmPresetSelectionUpdated(){
 }
 
 //--Status
-void MainWindow::UpdateUnitLabel(int d,QObject *alt){
+void ViperWindow::UpdateUnitLabel(int d,QObject *alt){
     if(lockapply&&alt==nullptr)return;//Skip if lockapply-flag is set (when setting presets, ...)
     QObject* obj;
 
@@ -1257,12 +1325,12 @@ void MainWindow::UpdateUnitLabel(int d,QObject *alt){
     }
     if(!lockapply||obj!=nullptr)OnUpdate(false);
 }
-void MainWindow::UpdateTooltipLabelUnit(QObject* sender,const QString& text,bool viasignal){
+void ViperWindow::UpdateTooltipLabelUnit(QObject* sender,const QString& text,bool viasignal){
     QWidget *w = qobject_cast<QWidget*>(sender);
     w->setToolTip(text);
     if(viasignal)ui->info->setText(text);
 }
-void MainWindow::UpdateAllUnitLabels(){
+void ViperWindow::UpdateAllUnitLabels(){
     QList<QAnimatedSlider*> slidersToBeUpdated(
     {ui->colmwide,ui->colmdepth,ui->colmmidimg,ui->vclvl,ui->vbfreq,
      ui->vbgain,ui->vhplvl,ui->difflvl,ui->roomsize,ui->roomwidth,ui->roomdamp,ui->wet,ui->dry,
@@ -1281,13 +1349,13 @@ void MainWindow::UpdateAllUnitLabels(){
 }
 
 //---Helper
-void MainWindow::SetEQ(const QVector<float>& data){
+void ViperWindow::SetEQ(const QVector<float>& data){
     lockapply=true;
     ui->eq_widget->setBands(QVector<float>(data));
     lockapply=false;
     OnUpdate(true);
 }
-void MainWindow::ResetEQ(){
+void ViperWindow::ResetEQ(){
     ui->reset_eq->setEnabled(false);
     QTimer::singleShot(510,this,[this](){
         ui->reset_eq->setEnabled(true);
@@ -1295,7 +1363,7 @@ void MainWindow::ResetEQ(){
     ui->eqpreset->setCurrentIndex(0);
     SetEQ(PresetProvider::EQ::defaultPreset());
 }
-void MainWindow::SetIRS(const QString& irs,bool apply){
+void ViperWindow::SetIRS(const QString& irs,bool apply){
     if(activeirs != irs) m_irsNeedUpdate = true;
     activeirs = irs;
     QFileInfo irsInfo(irs);
@@ -1303,26 +1371,26 @@ void MainWindow::SetIRS(const QString& irs,bool apply){
     ui->convpath->setCursorPosition(0);
     if(apply)ApplyConfig();
 }
-void MainWindow::UpdateEqStringFromWidget(){
+void ViperWindow::UpdateEqStringFromWidget(){
     QString currentEqPresetName =
             PresetProvider::EQ::reverseLookup(ui->eq_widget->getBands());
 
     ui->eqpreset->setCurrentText(currentEqPresetName);
 }
-void MainWindow::UpdateDynsysStringFromWidget(){
+void ViperWindow::UpdateDynsysStringFromWidget(){
     QString currentDynsysPresetName =
             PresetProvider::Dynsys::reverseLookup({ui->dyn_xcoeff1->valueA(),ui->dyn_xcoeff2->valueA(),
                                                    ui->dyn_ycoeff1->valueA(),ui->dyn_ycoeff2->valueA(),
                                                    ui->dyn_sidegain1->valueA(),ui->dyn_sidegain2->valueA()});
     ui->dynsys_preset->setCurrentText(currentDynsysPresetName);
 }
-void MainWindow::UpdateColmStringFromWidget(){
+void ViperWindow::UpdateColmStringFromWidget(){
     QString currentColmPresetName =
             PresetProvider::Colm::reverseLookup({ui->colmwide->valueA(),ui->colmdepth->valueA()});
     ui->colmpreset->setCurrentText(currentColmPresetName);
 }
 
-QVariantMap MainWindow::readConfig(){
+QVariantMap ViperWindow::readConfig(){
     QVariantMap confmap = ConfigIO::readFile(m_appwrapper->getPath());
     if(confmap.count() < 1){
         //No audio.conf found
@@ -1335,15 +1403,19 @@ QVariantMap MainWindow::readConfig(){
     }
     return confmap;
 }
-QString MainWindow::GetExecutablePath(){
+
+#ifndef VIPER_PLUGINMODE
+QString ViperWindow::GetExecutablePath(){
     return m_exepath;
 }
-AppConfigWrapper* MainWindow::getACWrapper(){
+#endif
+
+AppConfigWrapper* ViperWindow::getACWrapper(){
     return m_appwrapper;
 }
 
 //---Connect UI-Signals
-void MainWindow::ConnectActions(){    
+void ViperWindow::ConnectActions(){
     QList<QComboBox*> registerCurrentIndexChange({ui->vbmode,ui->vcmode});
 
     QList<QAnimatedSlider*> registerValueAChange(

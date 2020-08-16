@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "viper_window.h"
 #include "misc/findbinary.h"
 
 #include <QApplication>
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     bool startInTray = parser.isSet(tray) || parser.isSet(nowtray);
 
     QApplication::setQuitOnLastWindowClosed( false );
-    MainWindow w(QString::fromLocal8Bit(exepath),
+    ViperWindow w(QString::fromLocal8Bit(exepath),
                  startInTray,
                  parser.isSet(minst));
 

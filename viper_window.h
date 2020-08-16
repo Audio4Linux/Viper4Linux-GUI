@@ -12,15 +12,18 @@
  *
  *  ThePBone <tim.schneeberger(at)outlook.de> (c) 2020
  */
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef VIPERWINDOW_H
+#define VIPERWINDOW_H
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QCloseEvent>
+#include <QFrame>
 
+#ifndef VIPER_PLUGINMODE
 #include "visualization/audiostreamengine.h"
 #include "visualization/spectrograph.h"
+#endif
 
 #include "config/io.h"
 #include "config/container.h"
@@ -44,43 +47,58 @@
 
 using namespace std;
 namespace Ui {
-class MainWindow;
+class ViperWindow;
 }
 
-class MainWindow : public QMainWindow
+class ViperWindow : public QMainWindow
 {
     Q_OBJECT
     enum class Context;
 public:
-    Ui::MainWindow *ui;
+    Ui::ViperWindow *ui;
+    explicit ViperWindow(QString exepath = "",
+                         bool statupInTray = false,
+                         bool allowMultipleInst = false,
+                         QWidget *parent = nullptr);
+    ~ViperWindow();
+
     void LoadPresetFile(const QString&);
     void SavePresetFile(const QString&);
     AppConfigWrapper* getACWrapper();
-    explicit MainWindow(QString exepath,bool statupInTray,bool allowMultipleInst,QWidget *parent = nullptr);
     void SetEQ(const QVector<float>& data);
     void SetIRS(const QString& irs,bool apply);
-    QString GetExecutablePath();
+    void InitializeLegacyTabs();
+
     void setVisible(bool visible) override;
-    void setTrayVisible(bool visible);
-    void LaunchFirstRunSetup();
-    ~MainWindow();
+
     QMenu* buildAvailableActions();
-    void updateTrayMenu(QMenu *menu);
     QMenu *buildDefaultActions();
+
+#ifndef VIPER_PLUGINMODE
     QMenu *getTrayContextMenu();
+    void updateTrayMenu(QMenu *menu);
+    void setTrayVisible(bool visible);
+
+    QString GetExecutablePath();
+    void LaunchFirstRunSetup();
+#endif
 
     SettingsDlg *settings_dlg;
-    void InitializeLegacyTabs();
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 public slots:
-    void RestartSpectrum();
     void Reset();
     void Restart();
-    void raiseWindow();
+
     void ColmPresetSelectionUpdated();
     void ApplyConfig(bool restart=true);
+
+#ifndef VIPER_PLUGINMODE
+    void RestartSpectrum();
+    void raiseWindow();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+#endif
 private slots:
     void DisableFX();
     void OnUpdate(bool = true);
@@ -94,18 +112,26 @@ private slots:
     void SaveExternalFile();
     void OpenLog();
     void DialogHandler();
-    void updateTrayPresetList();
-    void RefreshSpectrumParameters();
     void UpdateEqStringFromWidget();
     void UpdateDynsysStringFromWidget();
     void UpdateColmStringFromWidget();
+
+#ifndef VIPER_PLUGINMODE
+    void RefreshSpectrumParameters();
+    void updateTrayPresetList();
+#endif
 private:
     ConfigContainer* conf;
     AppConfigWrapper* m_appwrapper;
     StyleHelper* m_stylehelper;
     DBusProxy* m_dbus;
-    QString m_exepath;
 
+    ConvolverDlg *conv_dlg;
+    PresetDlg *preset_dlg;
+    LogDlg *log_dlg;
+
+#ifndef VIPER_PLUGINMODE
+    QString m_exepath;
     bool m_startupInTraySwitch;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -113,20 +139,16 @@ private:
     QAction *tray_disableAction;
     QMenu *tray_presetMenu;
     QMenu *tray_convMenu;
-
-    QAction *spectrum;
-
-    OverlayMsgProxy *msg_notrunning;
     OverlayMsgProxy *msg_launchfail;
     OverlayMsgProxy *msg_versionmismatch;
 
-    ConvolverDlg *conv_dlg;
-    PresetDlg *preset_dlg;
-    LogDlg *log_dlg;
+    QAction *spectrum;
 
     QScopedPointer<QFrame> analysisLayout;
     Spectrograph* m_spectrograph;
     AudioStreamEngine* m_audioengine;
+#endif
+    OverlayMsgProxy *msg_notrunning;
 
     bool m_irsNeedUpdate = false;
     bool settingsdlg_enabled=true;
@@ -135,24 +157,32 @@ private:
     bool lockapply = false;
     QString activeirs = "";
 
+#ifndef VIPER_PLUGINMODE
     void InitializeSpectrum();
     void ToggleSpectrum(bool on,bool ctrl_visibility);
+    void SetSpectrumVisibility(bool v);
+
     void createTrayIcon();
+    void initGlobalTrayActions();
+    void updateTrayConvolverList();
+
+    void CheckDBusVersion();
+    void RunDiagnosticChecks();
+#endif
+
+    void ShowDBusError();
     void UpdateTooltipLabelUnit(QObject* sender,const QString& text,bool);
     void LoadConfig(Context ctx = Context::Application);
     void ConnectActions();
-    void ShowDBusError();
-    void CheckDBusVersion();
+
     QVariantMap readConfig();
-    void RunDiagnosticChecks();
+
 
     enum class Context{
         DBus,
         Application
     };
-    void initGlobalTrayActions();
-    void updateTrayConvolverList();
-    void SetSpectrumVisibility(bool v);
+
 
     static void replaceTab(QTabWidget* tab, int index, QWidget *page, QString title = ""){
         if(title.isEmpty()) title = tab->tabText(index);
@@ -163,4 +193,4 @@ private:
      }
 };
 
-#endif // MAINWINDOW_H
+#endif // VIPERWINDOW_H

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "config/appconfigwrapper.h"
 
-class MainWindow;
+class ViperWindow;
 
 namespace Ui {
 class PulseeffectsCompatibility;
@@ -15,7 +15,7 @@ class PulseeffectsCompatibility : public QWidget
     Q_OBJECT
 
 public:
-    explicit PulseeffectsCompatibility(AppConfigWrapper* _appconf, MainWindow*,QWidget *parent = nullptr);
+    explicit PulseeffectsCompatibility(AppConfigWrapper* _appconf, ViperWindow*,QWidget *parent = nullptr);
     ~PulseeffectsCompatibility();
 
 signals:

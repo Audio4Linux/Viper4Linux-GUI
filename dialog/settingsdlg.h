@@ -19,14 +19,14 @@
 #include "ui_settings.h"
 #include "config/appconfigwrapper.h"
 
-class MainWindow;
+class ViperWindow;
 
 class SettingsDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    SettingsDlg(MainWindow* mainwin, QWidget *parent = nullptr);
+    SettingsDlg(ViperWindow* mainwin, QWidget *parent = nullptr);
     Ui::settings *ui;
     ~SettingsDlg();
     void updateInputSinks();
@@ -36,11 +36,11 @@ public:
 public slots:
     void updateButtonStyle(bool white);
 signals:
-        void closeClicked();
+    void closeClicked();
 private:
-        AppConfigWrapper* appconf;
-        MainWindow* m_mainwin;
-        void showPECompatibilityScreen();
+    AppConfigWrapper* appconf;
+    ViperWindow* m_mainwin;
+    void showPECompatibilityScreen();
 };
 
 #endif // SETTINGS_H

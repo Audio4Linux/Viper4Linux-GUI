@@ -1,11 +1,13 @@
 #include "settingsdlg.h"
 #include "ui_settings.h"
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "viper_window.h"
+#include "ui_viper_window.h"
 #include "palettedlg.h"
 #include "misc/autostartmanager.h"
+#ifndef VIPER_PLUGINMODE
 #include "pulseeffectscompatibility.h"
 #include "crashhandler/killer.h"
+#endif
 #include "misc/GstRegistryHelper.h"
 
 #include <QGraphicsOpacityEffect>
@@ -21,7 +23,7 @@
 using namespace std;
 static bool lockslot = false;
 
-SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
+SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::settings){
     ui->setupUi(this);
@@ -30,11 +32,28 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     appconf = mainwin->getACWrapper();
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
+#ifdef VIPER_PLUGINMODE
+    for(int i = 0; i < ui->selector->topLevelItemCount(); i++){
+        auto item = ui->selector->topLevelItem(i);
+        if(item->text(0) == "Devices" ||
+           item->text(0) == "General" ||
+           item->text(0) == "Systray" ||
+           item->text(0) == "Spectrum Analyser")
+            item->setHidden(true);
+    }
+#endif
+
     /*
      * Prepare TreeView
      */
+#ifdef VIPER_PLUGINMODE
+    ui->selector->setCurrentItem(ui->selector->findItems("Interface",Qt::MatchFlag::MatchExactly).first());
+    ui->stackedWidget->setCurrentIndex(1);
+#else
     ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
     ui->stackedWidget->setCurrentIndex(0);
+#endif
+
     connect(ui->selector,static_cast<void (QTreeWidget::*)(QTreeWidgetItem*,QTreeWidgetItem*)>(&QTreeWidget::currentItemChanged),this,[this](QTreeWidgetItem* cur, QTreeWidgetItem*){
         int toplevel_index = ui->selector->indexOfTopLevelItem(cur);
         switch(toplevel_index){
@@ -58,9 +77,10 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
             ui->stackedWidget->setCurrentIndex(toplevel_index);
         }
     });
+#ifndef VIPER_PLUGINMODE
     ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
     ui->selector->expandItem(ui->selector->findItems("Systray",Qt::MatchFlag::MatchExactly).first());
-
+#endif
     /*
      * Prepare all combooxes
      */
@@ -87,6 +107,7 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     /*
      * Connect all signals for page General
      */
+#ifndef VIPER_PLUGINMODE
     connect(ui->savepath, &QPushButton::clicked, this, [this]{
         appconf->setPath(ui->path->text());
         QMessageBox::StandardButton reply;
@@ -121,6 +142,8 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         QMessageBox::information(this,tr("Help"),
                                  tr("This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.\nThis prevents GLava to switch to another audio sink, while V4L is restarting."));
     });
+#endif
+#ifndef VIPER_PLUGINMODE
     /*
      * Connect all signals for Session
      */
@@ -149,6 +172,8 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->systray_minOnBoot,&QPushButton::clicked,this,autostart_update);
     connect(ui->systray_autostartViper,&QPushButton::clicked,this,autostart_update);
     connect(ui->systray_delay,&QPushButton::clicked,this,autostart_update);
+#endif
+
     /*
      * Connect all signals for Interface
      */
@@ -203,6 +228,7 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     /*
      * Connect all signals for Devices
      */
+#ifndef VIPER_PLUGINMODE
     auto deviceUpdated = [this](){
         if(lockslot) return;
         QString absolute =
@@ -220,14 +246,15 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
             ConfigIO::writeFile(devices,devconf->getConfigMap());
         }
     };
-    connect(ui->dev_reload_viper,&QPushButton::clicked,mainwin,&MainWindow::Restart);
+    connect(ui->dev_reload_viper,&QPushButton::clicked,mainwin,&ViperWindow::Restart);
     connect(ui->dev_mode_auto,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_mode_manual,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_select,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, deviceUpdated);
     connect(ui->dev_pe_compat, &QPushButton::clicked, this, [this]{
         showPECompatibilityScreen();
     });
-
+#endif
+#ifndef VIPER_PLUGINMODE
     /*
      * Connect all signals for SA/ROOT
      */
@@ -279,7 +306,7 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->sa_multi,static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),this,[this](double number){
         appconf->setSpectrumMultiplier(number);
     });
-
+#endif
 
     /*
      * Connect all signals for Global
@@ -288,13 +315,15 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
     connect(ui->github, &QPushButton::clicked, this, []{
         QDesktopServices::openUrl(QUrl("https://github.com/Audio4Linux/Viper4Linux-GUI"));
     });
+
+#ifndef VIPER_PLUGINMODE
     connect(ui->menu_edit,&QMenuEditor::targetChanged,[mainwin,this]{
         auto menu = ui->menu_edit->exportMenu();
         mainwin->updateTrayMenu(menu);
     });
     connect(ui->menu_edit,&QMenuEditor::resetPressed,[mainwin,this]{
         QMessageBox::StandardButton reply = QMessageBox::question(this, "Warning", "Do you really want to restore the default layout?",
-                                      QMessageBox::Yes|QMessageBox::No);
+                                                                  QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
             ui->menu_edit->setTargetMenu(mainwin->buildDefaultActions());
             auto menu = ui->menu_edit->exportMenu();
@@ -315,12 +344,14 @@ SettingsDlg::SettingsDlg(MainWindow* mainwin,QWidget *parent) :
         ui->systray_unsupported->show();
         ui->session->setEnabled(false);
     }
+#endif
 }
 SettingsDlg::~SettingsDlg(){
     delete ui;
 }
 void SettingsDlg::refreshDevices()
 {
+#ifndef VIPER_PLUGINMODE
     lockslot = true;
     ui->dev_select->clear();
     QString absolute =
@@ -370,6 +401,7 @@ void SettingsDlg::refreshDevices()
         }
     }
     lockslot = false;
+#endif
 }
 
 void SettingsDlg::refreshAll(){
@@ -382,17 +414,19 @@ void SettingsDlg::refreshAll(){
     ui->gst_plg_path->setText(GstRegistryHelper::GetPluginPath());
     ui->gst_plg_path->setToolTip(GstRegistryHelper::GetPluginPath());
 
+#ifndef VIPER_PLUGINMODE
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
     ui->menu_edit->setTargetMenu(m_mainwin->getTrayContextMenu());
     ui->menu_edit->setIconStyle(appconf->getWhiteIcons());
 
     ui->path->setText(appconf->getPath());
-    ui->irspath->setText(appconf->getIrsPath());
     ui->autofx->setChecked(appconf->getAutoFx());
     ui->glavafix->setChecked(appconf->getGFix());
 
     updateInputSinks();
+#endif
+    ui->irspath->setText(appconf->getIrsPath());
 
     QString qvT(appconf->getTheme());
     int indexT = ui->themeSelect->findText(qvT);
@@ -411,6 +445,7 @@ void SettingsDlg::refreshAll(){
 
     ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
 
+#ifndef VIPER_PLUGINMODE
     ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
     ui->aa_release->setChecked(appconf->getAutoFxMode());
 
@@ -428,6 +463,7 @@ void SettingsDlg::refreshAll(){
     ui->systray_autostartViper->setChecked(autostartviper_enabled);
     ui->systray_delay->setEnabled(autostart_enabled);
     ui->systray_delay->setChecked(autostart_delayed);
+#endif
 
     ui->deftab_favorite->setChecked(!appconf->getConv_DefTab());
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
@@ -435,6 +471,7 @@ void SettingsDlg::refreshAll(){
     ui->eq_alwaysdrawhandles->setChecked(appconf->getEqualizerPermanentHandles());
     ui->legacytabs->setChecked(appconf->getLegacyTabs());
 
+#ifndef VIPER_PLUGINMODE
     refreshDevices();
 
     int bands = appconf->getSpectrumBands();
@@ -475,21 +512,29 @@ void SettingsDlg::refreshAll(){
 
     ui->sa_theme_default->setChecked(!appconf->getSpectrumTheme());
     ui->sa_theme_inherit->setChecked(appconf->getSpectrumTheme());
+#endif
     lockslot = false;
 }
 
 void SettingsDlg::updateButtonStyle(bool white)
 {
+#ifndef VIPER_PLUGINMODE
     ui->menu_edit->setIconStyle(white);
+#else
+    Q_UNUSED(white);
+#endif
 }
 
 void SettingsDlg::setVisible(bool visible)
 {
+#ifndef VIPER_PLUGINMODE
     refreshDevices();
+#endif
     QDialog::setVisible(visible);
 }
 
 void SettingsDlg::updateInputSinks(){
+#ifndef VIPER_PLUGINMODE
     lockslot = true;
     ui->sa_input->clear();
     for ( const auto& dev: QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
@@ -505,9 +550,11 @@ void SettingsDlg::updateInputSinks(){
             ui->sa_input->setCurrentIndex(index_fallback);
     }
     lockslot = false;
+#endif
 }
 
 void SettingsDlg::showPECompatibilityScreen(){
+#ifndef VIPER_PLUGINMODE
     emit closeClicked();
     QTimer::singleShot(500,this,[this]{
         PulseeffectsCompatibility* wiz = new PulseeffectsCompatibility(appconf,m_mainwin);
@@ -536,4 +583,5 @@ void SettingsDlg::showPECompatibilityScreen(){
             });
         });
     });
+#endif
 }

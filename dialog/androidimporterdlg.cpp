@@ -1,7 +1,7 @@
 #include "androidimporterdlg.h"
 #include "ui_importandroid.h"
 #include "misc/converter.h"
-#include "mainwindow.h"
+#include "viper_window.h"
 #include "misc/loghelper.h"
 
 #include <QFileDialog>

@@ -1,12 +1,12 @@
 #include "presetdlg.h"
 #include "ui_preset.h"
-#include "mainwindow.h"
+#include "viper_window.h"
 #include "misc/converter.h"
 #include "androidimporterdlg.h"
 #include "misc/loghelper.h"
 #include "misc/common.h"
 
-#include <Animation/Animation.h>
+#include "3rdparty/WAF/Animation/Animation.h"
 
 #include <QDir>
 #include <QCloseEvent>
@@ -21,7 +21,7 @@
 #include <QJsonObject>
 #include <QDesktopServices>
 
-PresetDlg::PresetDlg(MainWindow* mainwin,QWidget *parent) :
+PresetDlg::PresetDlg(ViperWindow* mainwin,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Preset)
 {

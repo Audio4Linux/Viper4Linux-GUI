@@ -20,7 +20,7 @@
 #include "misc/converter.h"
 #include "config/appconfigwrapper.h"
 
-class MainWindow;
+class ViperWindow;
 
 namespace Ui {
 class Preset;
@@ -31,7 +31,7 @@ class PresetDlg : public QDialog
     Q_OBJECT
 
 public:
-    explicit PresetDlg(MainWindow *mainwin,QWidget *parent = nullptr);
+    explicit PresetDlg(ViperWindow *mainwin,QWidget *parent = nullptr);
     void UpdateList();
     ~PresetDlg();
 private slots:
@@ -55,7 +55,7 @@ private slots:
 
 private:
     Ui::Preset *ui;
-    MainWindow* m_mainwin;
+    ViperWindow* m_mainwin;
     AppConfigWrapper *appconf;
     QStringList irs;
     QString optimizeName(const QString& s);
