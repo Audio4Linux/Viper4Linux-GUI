@@ -9,6 +9,8 @@
 #include <string>
 #include <iostream>
 #include <unistd.h>
+#include <clocale>
+#include <QLocale>
 
 #include <gst/gst.h>
 
@@ -69,6 +71,9 @@ int main(int argc, char *argv[])
         usleep(1000);
     }
 
+    QLocale::setDefault(QLocale::c());
+    std::setlocale(LC_NUMERIC, "C");
+    
     bool startInTray = parser.isSet(tray) || parser.isSet(nowtray);
 
     QApplication::setQuitOnLastWindowClosed( false );
