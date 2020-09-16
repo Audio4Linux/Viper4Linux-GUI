@@ -66,8 +66,8 @@ PresetDlg::PresetDlg(ViperWindow* mainwin,QWidget *parent) :
     QMenu *menuEx = new QMenu();
 
     QMenu *exportSubA = menuEx->addMenu(tr("Android Profile"));
-    exportSubA->addAction(tr("Official V4A (<2.5.0.5)"),this,[this]{exportAndroid(converter::officialV4A);});
-    exportSubA->addAction(tr("V4A by Team DeWitt (>2.7)"),this,[this]{exportAndroid(converter::teamDeWittV4A);});
+    exportSubA->addAction(tr("V4A <2.6"),this,[this]{exportAndroid(converter::officialV4A);});
+    exportSubA->addAction(tr("V4A >2.7"),this,[this]{exportAndroid(converter::teamDeWittV4A);});
 
     menuEx->addAction(tr("Linux Configuration"), this,SLOT(exportLinux()));
     ui->exportBtn->setMenu(menuEx);
@@ -146,8 +146,12 @@ void PresetDlg::reject()
 }
 void PresetDlg::UpdateList(){
     ui->files->clear();
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
     QString path = pathAppend(absolute,"presets");
 
     QDir dir(path);
@@ -191,8 +195,12 @@ void PresetDlg::add(){
         return;
     }
     m_mainwin->ApplyConfig(false);
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
     QString path = pathAppend(absolute,"presets");
     m_mainwin->SavePresetFile(path + "/" + ui->presetName->text() + ".conf");
     ui->presetName->text() = "";
@@ -200,7 +208,11 @@ void PresetDlg::add(){
     emit presetChanged();
 }
 void PresetDlg::importAndroid(){
+#ifdef VIPER_PLUGINMODE
+    AndroidImporterDlg* ia = new AndroidImporterDlg(m_mainwin->getLegacyPath(),this);
+#else
     AndroidImporterDlg* ia = new AndroidImporterDlg(m_mainwin->getACWrapper()->getPath(),this);
+#endif
     QWidget* host = new QWidget(this);
     host->setProperty("menu", false);
     QVBoxLayout* hostLayout = new QVBoxLayout(host);
@@ -228,8 +240,12 @@ void PresetDlg::exportAndroid(converter::configtype cmode){
     QString ext = fi.suffix();
     if(ext!="xml")filename.append(".xml");
 
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
     QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
@@ -257,8 +273,12 @@ void PresetDlg::importLinux(){
     if(filename=="")return;
 
     QFileInfo fileInfo(filename);
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
     QString path = pathAppend(absolute,"presets");
 
     const QString& src = filename;
@@ -281,8 +301,12 @@ void PresetDlg::exportLinux(){
     if(ext!="conf")filename.append(".conf");
 
     QFileInfo fileInfo(filename);
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
     QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
@@ -305,8 +329,13 @@ void PresetDlg::remove(){
         QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
-    QString path = pathAppend(d.absolutePath(),"presets");
+    QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
+    QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     QFile file (fullpath);
     if(!QFile::exists(fullpath)){
@@ -325,8 +354,13 @@ void PresetDlg::load(){
         QMessageBox::warning(this, tr("Error"), tr("Nothing selected"),QMessageBox::Ok);
         return;
     }
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
-    QString path = pathAppend(d.absolutePath(),"presets");
+    QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
+    QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(ui->files->selectedItems().first()->text() + ".conf");
     if(!QFile::exists(fullpath)){
         QMessageBox::warning(this, tr("Error"), tr("Selected File doesn't exist"),QMessageBox::Ok);
@@ -337,9 +371,14 @@ void PresetDlg::load(){
     m_mainwin->LoadPresetFile(fullpath);
 }
 void PresetDlg::nameChanged(const QString& name){
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
-    QString path = pathAppend(d.absolutePath(),"presets");
-    if(QFile::exists(path + "/" + name + ".conf"))ui->add->setText(tr("Overwrite"));
+    QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
+    if(QFile::exists(pathAppend(absolute,"presets") + "/" + name + ".conf"))
+        ui->add->setText(tr("Overwrite"));
     else ui->add->setText(tr("Save"));
 }
 void PresetDlg::showContextMenu(const QPoint &pos)
@@ -350,10 +389,14 @@ void PresetDlg::showContextMenu(const QPoint &pos)
     QAction* action_del = menu.addAction(tr("Delete"));
     QListWidgetItem* pointedItem = ui->files->itemAt(pos);
     if(!pointedItem)return;
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
-    QString path = pathAppend(d.absolutePath(),"presets");
+    QString absolute=d.absolutePath();
+#else
+    QString absolute = m_mainwin->getLegacyPath();
+#endif
+    QString path = pathAppend(absolute,"presets");
     QString fullpath = QDir(path).filePath(pointedItem->text() + ".conf");
-
 
     QAction* selectedAction;
     if(pointedItem){
@@ -404,8 +447,14 @@ void PresetDlg::performIRSDownload(QNetworkReply* reply){
         QStringList irsMatches = irs.filter(fileName); //Query for IRS Name
         QFileInfo fileInfo2(irsMatches.first());
         QString name=fileInfo2.baseName().replace("%20","");
-        QFileInfo filepath(appconf->getPath());
-        QFile *file = new QFile(filepath.absolutePath()+"/"+name+".irs");
+
+#ifndef VIPER_PLUGINMODE
+        QDir d = QFileInfo(appconf->getPath()).absoluteDir();
+        QString absolute=d.absolutePath();
+#else
+        QString absolute = m_mainwin->getLegacyPath();
+#endif
+        QFile *file = new QFile(absolute+"/"+name+".irs");
         if(file->open(QFile::Append))
         {
             file->write(reply->readAll());
@@ -436,8 +485,14 @@ void PresetDlg::performDownload(QNetworkReply* reply){
 
         QString name = ui->repoindex->currentItem()->text();
         QString url = ui->repoindex->currentItem()->data(Qt::UserRole).toString();
-        QFileInfo filepath(appconf->getPath());
-        QFile *file = new QFile(filepath.absolutePath()+"/presets/"+name+".conf");
+
+#ifndef VIPER_PLUGINMODE
+        QDir d = QFileInfo(appconf->getPath()).absoluteDir();
+        QString absolute=d.absolutePath();
+#else
+        QString absolute = m_mainwin->getLegacyPath();
+#endif
+        QFile *file = new QFile(absolute+"/presets/"+name+".conf");
         if(file->open(QFile::Append))
         {
             file->write(reply->readAll());

@@ -80,7 +80,7 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
 #ifndef VIPER_PLUGINMODE
     ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
     ui->selector->expandItem(ui->selector->findItems("Systray",Qt::MatchFlag::MatchExactly).first());
-#endif
+
     /*
      * Prepare all combooxes
      */
@@ -96,6 +96,11 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     ui->paletteSelect->addItem("Stone","stone");
     ui->paletteSelect->addItem("White","white");
     ui->paletteSelect->addItem("Custom","custom");
+#else
+    /* Remove palette selection */
+    ui->design_lay->removeRow(1);
+#endif
+
     for ( const auto& i : QStyleFactory::keys() )
         ui->themeSelect->addItem(i);
 
@@ -183,6 +188,7 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
         if(lockslot)return;
         appconf->setTheme(ui->themeSelect->itemText(ui->themeSelect->currentIndex()).toUtf8().constData());
     });
+#ifndef VIPER_PLUGINMODE
     connect(ui->paletteSelect,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),this,[this]{
         if(lockslot)return;
         appconf->setColorpalette(ui->paletteSelect->itemData(ui->paletteSelect->currentIndex()).toString());
@@ -193,22 +199,11 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
         c->setFixedSize(c->geometry().width(),c->geometry().height());
         c->show();
     });
+#endif
     connect(ui->eq_alwaysdrawhandles,&QCheckBox::clicked,[this](){
         appconf->setEqualizerPermanentHandles(ui->eq_alwaysdrawhandles->isChecked());
     });
-    connect(ui->legacytabs,&QCheckBox::clicked,[this](){
-        appconf->setLegacyTabs(ui->legacytabs->isChecked());
-        if(ui->legacytabs->isChecked())
-            m_mainwin->InitializeLegacyTabs();
-        else{
-            QMessageBox::StandardButton reply =
-                    QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
-                                                                           "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
-                                          QMessageBox::Ok|QMessageBox::Cancel);
-            if (reply == QMessageBox::Ok)
-                QApplication::quit();
-        }
-    });
+
     /*
      * Connect all signals for Convolver
      */
@@ -250,9 +245,6 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     connect(ui->dev_mode_auto,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_mode_manual,&QRadioButton::clicked,this,deviceUpdated);
     connect(ui->dev_select,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), this, deviceUpdated);
-    connect(ui->dev_pe_compat, &QPushButton::clicked, this, [this]{
-        showPECompatibilityScreen();
-    });
 #endif
 #ifndef VIPER_PLUGINMODE
     /*
@@ -438,6 +430,7 @@ void SettingsDlg::refreshAll(){
             ui->themeSelect->setCurrentIndex(index_fallback);
     }
 
+#ifndef VIPER_PLUGINMODE
     QVariant qvS2(appconf->getColorpalette());
     int index2 = ui->paletteSelect->findData(qvS2);
     if ( index2 != -1 )
@@ -445,7 +438,6 @@ void SettingsDlg::refreshAll(){
 
     ui->paletteConfig->setEnabled(appconf->getColorpalette()=="custom");
 
-#ifndef VIPER_PLUGINMODE
     ui->aa_instant->setChecked(!appconf->getAutoFxMode());//same here..
     ui->aa_release->setChecked(appconf->getAutoFxMode());
 
@@ -469,7 +461,6 @@ void SettingsDlg::refreshAll(){
     ui->deftab_filesys->setChecked(appconf->getConv_DefTab());
 
     ui->eq_alwaysdrawhandles->setChecked(appconf->getEqualizerPermanentHandles());
-    ui->legacytabs->setChecked(appconf->getLegacyTabs());
 
 #ifndef VIPER_PLUGINMODE
     refreshDevices();

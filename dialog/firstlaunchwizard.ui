@@ -38,7 +38,7 @@
    <item>
     <widget class="SlidingStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="page_1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -62,7 +62,7 @@
             <x>360</x>
             <y>200</y>
             <width>80</width>
-            <height>23</height>
+            <height>26</height>
            </rect>
           </property>
           <property name="palette">
@@ -122,6 +122,15 @@
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>169</red>
+                <green>183</green>
+                <blue>198</blue>
+               </color>
+              </brush>
+             </colorrole>
             </active>
             <inactive>
              <colorrole role="WindowText">
@@ -178,6 +187,15 @@
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>169</red>
+                <green>183</green>
+                <blue>198</blue>
+               </color>
+              </brush>
+             </colorrole>
             </inactive>
             <disabled>
              <colorrole role="WindowText">
@@ -231,6 +249,15 @@
                 <red>0</red>
                 <green>0</green>
                 <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>169</red>
+                <green>183</green>
+                <blue>198</blue>
                </color>
               </brush>
              </colorrole>
@@ -342,6 +369,15 @@ QPushButton:disabled{
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
             </active>
             <inactive>
              <colorrole role="WindowText">
@@ -371,6 +407,15 @@ QPushButton:disabled{
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
             </inactive>
             <disabled>
              <colorrole role="WindowText">
@@ -394,6 +439,15 @@ QPushButton:disabled{
              <colorrole role="ButtonText">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
@@ -464,6 +518,15 @@ color: white</string>
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
             </active>
             <inactive>
              <colorrole role="WindowText">
@@ -493,6 +556,15 @@ color: white</string>
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
             </inactive>
             <disabled>
              <colorrole role="WindowText">
@@ -516,6 +588,15 @@ color: white</string>
              <colorrole role="ButtonText">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
@@ -584,6 +665,15 @@ However, before you can begin playing around with Viper4Linux, we'll need to mak
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -613,6 +703,15 @@ However, before you can begin playing around with Viper4Linux, we'll need to mak
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -636,6 +735,15 @@ However, before you can begin playing around with Viper4Linux, we'll need to mak
           <colorrole role="ButtonText">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -693,6 +801,15 @@ color: white</string>
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -716,6 +833,15 @@ color: white</string>
           <colorrole role="ButtonText">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -751,6 +877,15 @@ color: white</string>
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </disabled>
         </palette>
        </property>
@@ -776,7 +911,7 @@ You can also run 'gst-inspect-1.0 viperfx' to check if the plugin was correctly 
          <x>450</x>
          <y>200</y>
          <width>80</width>
-         <height>23</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="palette">
@@ -836,6 +971,15 @@ You can also run 'gst-inspect-1.0 viperfx' to check if the plugin was correctly 
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -892,6 +1036,15 @@ You can also run 'gst-inspect-1.0 viperfx' to check if the plugin was correctly 
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -945,6 +1098,15 @@ You can also run 'gst-inspect-1.0 viperfx' to check if the plugin was correctly 
              <red>0</red>
              <green>0</green>
              <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
             </color>
            </brush>
           </colorrole>
@@ -1036,7 +1198,7 @@ QPushButton:disabled{
          <x>339</x>
          <y>200</y>
          <width>101</width>
-         <height>23</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="palette">
@@ -1096,6 +1258,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -1152,6 +1323,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1205,6 +1385,15 @@ QPushButton:disabled{
              <red>0</red>
              <green>0</green>
              <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
             </color>
            </brush>
           </colorrole>
@@ -1283,7 +1472,7 @@ QPushButton:disabled{
          <x>180</x>
          <y>200</y>
          <width>151</width>
-         <height>23</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="palette">
@@ -1343,6 +1532,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -1399,6 +1597,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1452,6 +1659,15 @@ QPushButton:disabled{
              <red>0</red>
              <green>0</green>
              <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
             </color>
            </brush>
           </colorrole>
@@ -1531,7 +1747,7 @@ QPushButton:disabled{
         <rect>
          <x>180</x>
          <y>10</y>
-         <width>171</width>
+         <width>331</width>
          <height>61</height>
         </rect>
        </property>
@@ -1559,6 +1775,15 @@ QPushButton:disabled{
           <colorrole role="ButtonText">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -1594,6 +1819,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1623,6 +1857,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </disabled>
         </palette>
        </property>
@@ -1632,7 +1875,7 @@ font-weight: bold;
 color: white</string>
        </property>
        <property name="text">
-        <string>Hold on!</string>
+        <string>Old version detected</string>
        </property>
       </widget>
       <widget class="QLabel" name="pl_desc">
@@ -1674,6 +1917,15 @@ color: white</string>
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -1703,6 +1955,15 @@ color: white</string>
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1726,6 +1987,15 @@ color: white</string>
           <colorrole role="ButtonText">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -1769,7 +2039,7 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
          <x>399</x>
          <y>200</y>
          <width>131</width>
-         <height>23</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="palette">
@@ -1829,6 +2099,15 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -1885,6 +2164,15 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1938,6 +2226,15 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
              <red>0</red>
              <green>0</green>
              <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
             </color>
            </brush>
           </colorrole>
@@ -2016,7 +2313,7 @@ QPushButton:disabled{
          <x>260</x>
          <y>200</y>
          <width>131</width>
-         <height>23</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="palette">
@@ -2076,6 +2373,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -2132,6 +2438,15 @@ QPushButton:disabled{
             </color>
            </brush>
           </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -2185,6 +2500,15 @@ QPushButton:disabled{
              <red>0</red>
              <green>0</green>
              <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="NoBrush">
+            <color alpha="128">
+             <red>169</red>
+             <green>183</green>
+             <blue>198</blue>
             </color>
            </brush>
           </colorrole>
@@ -2274,7 +2598,7 @@ QPushButton:disabled{
           <x>360</x>
           <y>200</y>
           <width>80</width>
-          <height>23</height>
+          <height>26</height>
          </rect>
         </property>
         <property name="palette">
@@ -2334,6 +2658,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -2390,6 +2723,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -2443,6 +2785,15 @@ QPushButton:disabled{
               <red>0</red>
               <green>0</green>
               <blue>0</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
              </color>
             </brush>
            </colorrole>
@@ -2554,6 +2905,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -2583,6 +2943,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -2606,6 +2975,15 @@ QPushButton:disabled{
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -2787,6 +3165,15 @@ color: white</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </active>
              <inactive>
               <colorrole role="WindowText">
@@ -2924,6 +3311,15 @@ color: white</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </inactive>
              <disabled>
               <colorrole role="WindowText">
@@ -3058,6 +3454,15 @@ color: white</string>
                  <red>0</red>
                  <green>0</green>
                  <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -3216,6 +3621,15 @@ font-size: 14px;</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </active>
              <inactive>
               <colorrole role="WindowText">
@@ -3353,6 +3767,15 @@ font-size: 14px;</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </inactive>
              <disabled>
               <colorrole role="WindowText">
@@ -3487,6 +3910,15 @@ font-size: 14px;</string>
                  <red>0</red>
                  <green>0</green>
                  <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -3657,6 +4089,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -3791,6 +4232,15 @@ font-size: 14px;</string>
               <red>0</red>
               <green>0</green>
               <blue>0</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
              </color>
             </brush>
            </colorrole>
@@ -3931,6 +4381,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </disabled>
          </palette>
         </property>
@@ -3966,7 +4425,7 @@ font-size: 14px;</string>
           <x>360</x>
           <y>200</y>
           <width>80</width>
-          <height>23</height>
+          <height>26</height>
          </rect>
         </property>
         <property name="palette">
@@ -4026,6 +4485,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -4082,6 +4550,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -4135,6 +4612,15 @@ font-size: 14px;</string>
               <red>0</red>
               <green>0</green>
               <blue>0</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
              </color>
             </brush>
            </colorrole>
@@ -4246,6 +4732,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -4275,6 +4770,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -4298,6 +4802,15 @@ QPushButton:disabled{
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -4479,6 +4992,15 @@ color: white</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </active>
              <inactive>
               <colorrole role="WindowText">
@@ -4616,6 +5138,15 @@ color: white</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </inactive>
              <disabled>
               <colorrole role="WindowText">
@@ -4750,6 +5281,15 @@ color: white</string>
                  <red>0</red>
                  <green>0</green>
                  <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -4905,6 +5445,15 @@ font-size: 14px;</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </active>
              <inactive>
               <colorrole role="WindowText">
@@ -5039,6 +5588,15 @@ font-size: 14px;</string>
                  <red>0</red>
                  <green>0</green>
                  <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -5179,6 +5737,15 @@ font-size: 14px;</string>
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
              </disabled>
             </palette>
            </property>
@@ -5235,6 +5802,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -5264,6 +5840,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -5287,6 +5872,15 @@ font-size: 14px;</string>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -5446,6 +6040,15 @@ font-size: 14px;
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>221</blue>
+                </color>
+               </brush>
+              </colorrole>
              </active>
              <inactive>
               <colorrole role="WindowText">
@@ -5583,6 +6186,15 @@ font-size: 14px;
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>221</blue>
+                </color>
+               </brush>
+              </colorrole>
              </inactive>
              <disabled>
               <colorrole role="WindowText">
@@ -5717,6 +6329,15 @@ font-size: 14px;
                  <red>0</red>
                  <green>0</green>
                  <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>221</blue>
                 </color>
                </brush>
               </colorrole>
@@ -5872,6 +6493,15 @@ font-size: 14px;
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>221</blue>
+                </color>
+               </brush>
+              </colorrole>
              </active>
              <inactive>
               <colorrole role="WindowText">
@@ -6006,6 +6636,15 @@ font-size: 14px;
                  <red>0</red>
                  <green>0</green>
                  <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>221</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6146,6 +6785,15 @@ font-size: 14px;
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="PlaceholderText">
+               <brush brushstyle="NoBrush">
+                <color alpha="128">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>221</blue>
+                </color>
+               </brush>
+              </colorrole>
              </disabled>
             </palette>
            </property>
@@ -6178,7 +6826,7 @@ font-size: 14px;
           <x>360</x>
           <y>200</y>
           <width>80</width>
-          <height>23</height>
+          <height>26</height>
          </rect>
         </property>
         <property name="palette">
@@ -6238,6 +6886,15 @@ font-size: 14px;
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -6294,6 +6951,15 @@ font-size: 14px;
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -6347,6 +7013,15 @@ font-size: 14px;
               <red>0</red>
               <green>0</green>
               <blue>0</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
              </color>
             </brush>
            </colorrole>
@@ -6458,6 +7133,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -6487,6 +7171,15 @@ QPushButton:disabled{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -6510,6 +7203,15 @@ QPushButton:disabled{
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -6580,6 +7282,15 @@ color: white</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -6603,6 +7314,15 @@ color: white</string>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -6638,6 +7358,15 @@ color: white</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </disabled>
          </palette>
         </property>
@@ -6661,7 +7390,7 @@ font-size: 14px;</string>
           <x>269</x>
           <y>200</y>
           <width>81</width>
-          <height>23</height>
+          <height>26</height>
          </rect>
         </property>
         <property name="palette">
@@ -6721,6 +7450,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -6777,6 +7515,15 @@ font-size: 14px;</string>
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
+             </color>
+            </brush>
+           </colorrole>
           </inactive>
           <disabled>
            <colorrole role="WindowText">
@@ -6830,6 +7577,15 @@ font-size: 14px;</string>
               <red>0</red>
               <green>0</green>
               <blue>0</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="NoBrush">
+             <color alpha="128">
+              <red>169</red>
+              <green>183</green>
+              <blue>198</blue>
              </color>
             </brush>
            </colorrole>

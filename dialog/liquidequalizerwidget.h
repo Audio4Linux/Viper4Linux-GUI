@@ -78,6 +78,7 @@ private:
     QPainter mControlBarKnob;
     biquad   biquads[BANDS_NUM] = {};
     float    mLevels[BANDS_NUM] = {};
+    float    mRealLevels[BANDS_NUM] = {};
     int      mHeight = 0;
     int      mWidth = 0;
     int      mSelectedBand = 0;

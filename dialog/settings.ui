@@ -124,7 +124,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -327,7 +327,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_22">
             <item>
-             <layout class="QFormLayout" name="formLayout_2">
+             <layout class="QFormLayout" name="design_lay">
               <property name="horizontalSpacing">
                <number>30</number>
               </property>
@@ -437,22 +437,6 @@
                <widget class="QCheckBox" name="eq_alwaysdrawhandles">
                 <property name="text">
                  <string>Always display handles</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_8">
-             <property name="title">
-              <string>Tab Container</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_20">
-              <item>
-               <widget class="QCheckBox" name="legacytabs">
-                <property name="text">
-                 <string>Use legacy tabs</string>
                 </property>
                </widget>
               </item>
@@ -613,25 +597,6 @@
            <property name="topMargin">
             <number>0</number>
            </property>
-           <item>
-            <widget class="QPushButton" name="dev_pe_compat">
-             <property name="minimumSize">
-              <size>
-               <width>179</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PulseEffects Compatibility</string>
-             </property>
-            </widget>
-           </item>
            <item>
             <spacer name="horizontalSpacer_3">
              <property name="orientation">

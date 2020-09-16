@@ -23,6 +23,8 @@
 #ifndef VIPER_PLUGINMODE
 #include "visualization/audiostreamengine.h"
 #include "visualization/spectrograph.h"
+#else
+#include <CustomInterfaceBase.h>
 #endif
 
 #include "config/io.h"
@@ -39,8 +41,10 @@
 #include "misc/loghelper.h"
 #include "misc/presetprovider.h"
 #include "misc/common.h"
-#include "config/dbusproxy.h"
 #include "misc/overlaymsgproxy.h"
+#ifndef VIPER_PLUGINMODE
+#include "config/dbusproxy.h"
+#endif
 
 //Minimum required version of gst-plugin-viperfx
 #define MINIMUM_PLUGIN_VERSION "2.0.0"
@@ -50,16 +54,28 @@ namespace Ui {
 class ViperWindow;
 }
 
-class ViperWindow : public QMainWindow
+#ifdef VIPER_PLUGINMODE
+class FilterElement;
+class ViperWindow : public CustomInterfaceBase
+        #else
+class ViperWindow : public QWidget
+        #endif
 {
     Q_OBJECT
     enum class Context;
 public:
     Ui::ViperWindow *ui;
+#ifndef VIPER_PLUGINMODE
     explicit ViperWindow(QString exepath = "",
                          bool statupInTray = false,
                          bool allowMultipleInst = false,
                          QWidget *parent = nullptr);
+#else
+    Q_INVOKABLE explicit ViperWindow(FilterElement* element,
+                                     int revision,
+                                     QString working_dir,
+                                     QWidget *parent = nullptr);
+#endif
     ~ViperWindow();
 
     void LoadPresetFile(const QString&);
@@ -67,14 +83,15 @@ public:
     AppConfigWrapper* getACWrapper();
     void SetEQ(const QVector<float>& data);
     void SetIRS(const QString& irs,bool apply);
-    void InitializeLegacyTabs();
 
     void setVisible(bool visible) override;
+
+    void setPopupButtonEnabled(bool b);
 
     QMenu* buildAvailableActions();
     QMenu *buildDefaultActions();
 
-#ifndef VIPER_PLUGINMODE
+#ifndef VIPER_PLUGINMODE   
     QMenu *getTrayContextMenu();
     void updateTrayMenu(QMenu *menu);
     void setTrayVisible(bool visible);
@@ -85,16 +102,25 @@ public:
 
     SettingsDlg *settings_dlg;
 
+    void loadConfigFromContainer(ConfigContainer c);
+#ifdef VIPER_PLUGINMODE
+    QString getLegacyPath();
+#endif
+
+signals:
+    void popupButtonPressed();
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 public slots:
     void Reset();
-    void Restart();
 
     void ColmPresetSelectionUpdated();
     void ApplyConfig(bool restart=true);
 
 #ifndef VIPER_PLUGINMODE
+    void Restart();
+
     void RestartSpectrum();
     void raiseWindow();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -120,12 +146,19 @@ private slots:
     void RefreshSpectrumParameters();
     void updateTrayPresetList();
 #endif
-private:
+
+signals:
+    void changesApplied();
+
+protected:
     ConfigContainer* conf;
+
+private:
     AppConfigWrapper* m_appwrapper;
     StyleHelper* m_stylehelper;
+#ifndef VIPER_PLUGINMODE
     DBusProxy* m_dbus;
-
+#endif
     ConvolverDlg *conv_dlg;
     PresetDlg *preset_dlg;
     LogDlg *log_dlg;
@@ -150,7 +183,6 @@ private:
 #endif
     OverlayMsgProxy *msg_notrunning;
 
-    bool m_irsNeedUpdate = false;
     bool settingsdlg_enabled=true;
     bool presetdlg_enabled=true;
     bool logdlg_enabled=true;
@@ -175,7 +207,7 @@ private:
     void LoadConfig(Context ctx = Context::Application);
     void ConnectActions();
 
-    QVariantMap readConfig();
+    QVariantMap readConfig(const QString& path = "");
 
 
     enum class Context{
@@ -190,7 +222,7 @@ private:
         tab->removeTab(index);
         toDelete->deleteLater();
         tab->insertTab(index, page, title);
-     }
+    }
 };
 
 #endif // VIPERWINDOW_H

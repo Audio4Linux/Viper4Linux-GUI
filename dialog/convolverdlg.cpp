@@ -20,13 +20,17 @@ ConvolverDlg::ConvolverDlg(ViperWindow* mainwin,QWidget *parent) :
     m_mainwin = mainwin;
     AppConfigWrapper* appconf = mainwin->getACWrapper();
 
+    ui->path->setText(appconf->getIrsPath());
+
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(appconf->getPath()).absoluteDir();
     QString absolute=d.absolutePath();
     configpath = QDir::cleanPath(absolute + QDir::separator());
 
-    ui->path->setText(appconf->getIrsPath());
-
     QDir irs_fav(QDir::cleanPath(configpath + QDir::separator() + "irs_favorites"));
+#else
+    QDir irs_fav(QDir::cleanPath(mainwin->getLegacyPath() + QDir::separator() + "irs_favorites"));
+#endif
     if (!irs_fav.exists())
         irs_fav.mkpath(".");
 

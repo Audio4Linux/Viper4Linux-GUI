@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
     bool startInTray = parser.isSet(tray) || parser.isSet(nowtray);
 
     QApplication::setQuitOnLastWindowClosed( false );
+    QApplication::setStyle("Fusion");
     ViperWindow w(QString::fromLocal8Bit(exepath),
                  startInTray,
                  parser.isSet(minst));

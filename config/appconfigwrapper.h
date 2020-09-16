@@ -31,10 +31,10 @@ class AppConfigWrapper : public QObject
 {
     Q_OBJECT
 public:
-    AppConfigWrapper(StyleHelper* stylehelper);
+    AppConfigWrapper(StyleHelper* stylehelper, QString _working_dir_plgmode = "");
     void saveAppConfig();
     void loadAppConfig();
-    static QString getAppConfigFilePath();
+    QString getAppConfigFilePath();
 
     void setConv_DefTab(int mode);
     int getConv_DefTab();
@@ -42,22 +42,31 @@ public:
     QString getIrsPath();
     void setTheme(const QString&);
     QString getTheme();
-    void setAutoFxMode(int);
-    int getAutoFxMode();
+
     void setWhiteIcons(bool b);
     bool getWhiteIcons();
     void setCustompalette(const QString& s);
     QString getCustompalette();
     void setColorpalette(const QString&);
     QString getColorpalette();
-    void setAutoFx(bool afx);
+    void setEqualizerPermanentHandles(bool b);
+    bool getEqualizerPermanentHandles();
+
+
+    int getAutoFxMode();
     bool getAutoFx();
+
+#ifndef VIPER_PLUGINMODE
+    void setAutoFxMode(int);
+    void setAutoFx(bool afx);
+
+    void setPath(const QString& npath);
+    QString getPath();
+
     ReloadMethod getReloadMethod();
     void setReloadMethod(ReloadMethod mode);
     bool getGFix();
     void setGFix(bool);
-    QString getPath();
-    void setPath(const QString& npath);
     void setTrayMode(int);
     int getTrayMode();
     void setSpectrumEnable(bool b);
@@ -78,16 +87,13 @@ public:
     void setSpectrumRefresh(int number);
     float getSpectrumMultiplier();
     void setSpectrumMultiplier(float number);
-    void setEqualizerPermanentHandles(bool b);
-    bool getEqualizerPermanentHandles();
     void setIntroShown(bool b);
     bool getIntroShown();
     QString getTrayContextMenu();
     void setTrayContextMenu(const QString &ctx);
     void setSpectrumShape(int number);
     int getSpectrumShape();
-    bool getLegacyTabs();
-    void setLegacyTabs(bool b);
+#endif
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();
@@ -96,6 +102,7 @@ signals:
 private:
     ConfigContainer* appconf;
     StyleHelper*     m_stylehelper;
+    QString          working_dir_plgmode;
 };
 
 inline QString chopFirstLastChar(QString i){

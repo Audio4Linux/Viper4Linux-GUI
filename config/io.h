@@ -24,6 +24,7 @@ public:
     static QString writeString(const QVariantMap& map);
     static void writeFile(const QString& path,const QVariantMap& map,const QString& prefix = "");
     static QVariantMap readFile(const QString& path);
+    static QVariantMap readString(const QString& str);
 };
 
 #endif // CONFIGIO_H

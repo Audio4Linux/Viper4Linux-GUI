@@ -17,8 +17,8 @@ AndroidImporterDlg::AndroidImporterDlg(QString confpath,QWidget *parent) :
 {
     m_confpath = std::move(confpath);
     ui->setupUi(this);
-    ui->comboBox->addItem(tr("Official Viper4Android"),0);
-    ui->comboBox->addItem(tr("Viper4Android >2.7 by Team DeWitt"),1);
+    ui->comboBox->addItem(tr("V4A <2.6"),0);
+    ui->comboBox->addItem(tr("V4A >2.7"),1);
     connect(ui->pushButton,SIGNAL(clicked()),SLOT(import()));
 }
 
@@ -50,9 +50,13 @@ void AndroidImporterDlg::import(){
         msginfotext += response.notices;
     }
 
+#ifndef VIPER_PLUGINMODE
     QDir d = QFileInfo(m_confpath).absoluteDir();
     QString absolute=d.absolutePath();
     QString path = pathAppend(absolute,"presets");
+#else
+    QString path = pathAppend(m_confpath,"presets");
+#endif
 
     QString text = ui->lineEdit->text();
     if (!text.isEmpty()) {

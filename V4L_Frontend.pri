@@ -1,11 +1,15 @@
-QT       += core gui xml network dbus svg multimedia
+QT       += core gui xml network svg
+!contains(DEFINES, VIPER_PLUGINMODE) {
+    QT       += dbus multimedia
+}
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 include($$PWD/phantom/phantom.pri)
 
 
 contains(DEFINES, VIPER_PLUGINMODE) {
-    #include($$PWD/../WAF/WAF.pri)
+    include($$PWD/../ViperIntegrationHelper.pri)
     include($$PWD/../FlatTabWidget/FlatTabWidget.pri)
 }
 else {
@@ -17,7 +21,6 @@ else {
 SOURCES += \
     $$PWD/config/appconfigwrapper.cpp \
     $$PWD/config/container.cpp \
-    $$PWD/config/dbusproxy.cpp \
     $$PWD/config/io.cpp \
     $$PWD/dialog/androidimporterdlg.cpp \
     $$PWD/dialog/animatedvipericon.cpp \
@@ -31,7 +34,6 @@ SOURCES += \
     $$PWD/dialog/qmessageoverlay.cpp \
     $$PWD/dialog/settingsdlg.cpp \
     $$PWD/dialog/slidingstackedwidget.cpp \
-    $$PWD/dialog/statusfragment.cpp \
     $$PWD/misc/autostartmanager.cpp \
     $$PWD/misc/biquad.cpp \
     $$PWD/misc/converter.cpp \
@@ -44,7 +46,6 @@ SOURCES += \
 HEADERS += \
     $$PWD/config/appconfigwrapper.h \
     $$PWD/config/container.h \
-    $$PWD/config/dbusproxy.h \
     $$PWD/config/io.h \
     $$PWD/dialog/androidimporterdlg.h \
     $$PWD/dialog/animatedvipericon.h \
@@ -58,7 +59,6 @@ HEADERS += \
     $$PWD/dialog/qmessageoverlay.h \
     $$PWD/dialog/settingsdlg.h \
     $$PWD/dialog/slidingstackedwidget.h \
-    $$PWD/dialog/statusfragment.h \
     $$PWD/misc/GstRegistryHelper.h \
     $$PWD/misc/autostartmanager.h \
     $$PWD/misc/biquad.h \
@@ -82,7 +82,6 @@ FORMS += \
     $$PWD/dialog/palettedlg.ui \
     $$PWD/dialog/preset.ui \
     $$PWD/dialog/settings.ui \
-    $$PWD/dialog/statusfragment.ui \
     $$PWD/viper_window.ui
 
 !contains(DEFINES, VIPER_PLUGINMODE) {
@@ -92,6 +91,8 @@ FORMS += \
         $$PWD/dialog/firstlaunchwizard.cpp \
         $$PWD/dbus/clientproxy.cpp \
         $$PWD/dbus/serveradaptor.cpp \
+        $$PWD/config/dbusproxy.cpp \
+        $$PWD/dialog/statusfragment.cpp
 
     HEADERS += \
         $$PWD/crashhandler/airbag.h \
@@ -103,10 +104,13 @@ FORMS += \
         $$PWD/dialog/firstlaunchwizard.h \
         $$PWD/dbus/clientproxy.h \
         $$PWD/dbus/serveradaptor.h \
+        $$PWD/config/dbusproxy.h \
+        $$PWD/dialog/statusfragment.h
 
     FORMS += \
         $$PWD/dialog/pulseeffectscompatibility.ui \
-        $$PWD/dialog/firstlaunchwizard.ui
+        $$PWD/dialog/firstlaunchwizard.ui \
+        $$PWD/dialog/statusfragment.ui
 }
 
 TRANSLATIONS += $$PWD/translations/lang_en.ts \

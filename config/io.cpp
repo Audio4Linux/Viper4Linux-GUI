@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <fstream>
+#include <sstream>
 #include <string>
 
 QString ConfigIO::writeString(const QVariantMap& map){
@@ -56,5 +57,39 @@ QVariantMap ConfigIO::readFile(const QString& path){
         cFile.close();
     }
 
+    return map;
+}
+
+QVariantMap ConfigIO::readString(const QString &str)
+{
+    QVariantMap map;
+
+    std::string line;
+    std::stringstream ss(str.toStdString());
+
+    while(std::getline(ss,line,'\n')){
+        if(QString::fromStdString(line).trimmed()[0] == '#' ||
+                QString::fromStdString(line).trimmed()[0] == '[' || line.empty()) continue; //Skip commented lines
+        auto delimiterInlineComment = line.find('#'); //Look for config properties mixed up with comments
+        auto extractedProperty = line.substr(0, delimiterInlineComment);
+        auto delimiterPos = extractedProperty.find('=');
+        auto name = extractedProperty.substr(0, delimiterPos);
+        auto value = extractedProperty.substr(delimiterPos + 1);
+        QString qname = QString::fromStdString(name).trimmed();
+        QString qvalue = QString::fromStdString(value).trimmed();
+
+        QRegExp re("\\d*");
+        QRegExp re_float("[+-]?([0-9]*[.])?[0-9]+");
+        if(qvalue=="true")
+            map[qname] = QVariant(true);
+        else if(qvalue=="false")
+            map[qname] = QVariant(false);
+        else if (re.exactMatch(qvalue))
+            map[qname] = QVariant(qvalue.toInt());
+        else if (re_float.exactMatch(qvalue))
+            map[qname] = QVariant(qvalue.toFloat());
+        else
+            map[qname] = QVariant(qvalue);
+    }
     return map;
 }

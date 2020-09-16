@@ -5,23 +5,28 @@
 
 using namespace std;
 
-AppConfigWrapper::AppConfigWrapper(StyleHelper* stylehelper)
+AppConfigWrapper::AppConfigWrapper(StyleHelper* stylehelper, QString _working_dir_plgmode)
+    : m_stylehelper(stylehelper), working_dir_plgmode(_working_dir_plgmode)
 {
     appconf = new ConfigContainer();
-    m_stylehelper = stylehelper;
 }
 void AppConfigWrapper::saveAppConfig(){
-    auto file = QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath());
-    ConfigIO::writeFile(file,appconf->getConfigMap());
+    ConfigIO::writeFile(getAppConfigFilePath(), appconf->getConfigMap());
 }
 void AppConfigWrapper::loadAppConfig(){
-    auto map = ConfigIO::readFile(QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath()));
+    auto map = ConfigIO::readFile(getAppConfigFilePath());
     appconf->setConfigMap(map);
 }
 
 bool AppConfigWrapper::getAutoFx(){
+#ifdef VIPER_PLUGINMODE
+    return true;
+#else
     return appconf->getBool("apply.auto.enable", true, true);
+#endif
 }
+
+#ifndef VIPER_PLUGINMODE
 void AppConfigWrapper::setAutoFx(bool afx){
     appconf->setValue("apply.auto.enable",QVariant(afx));
     saveAppConfig();
@@ -37,6 +42,7 @@ void AppConfigWrapper::setPath(const QString& npath){
     appconf->setValue("io.configpath",QVariant(QString("\"%1\"").arg(npath)));
     saveAppConfig();
 }
+
 QString AppConfigWrapper::getPath(){
     QString path = "";
     path = appconf->getString("io.configpath",true);
@@ -45,6 +51,7 @@ QString AppConfigWrapper::getPath(){
         return QString("%1/.config/viper4linux/audio.conf").arg(QDir::homePath());
     return path;
 }
+#endif
 void AppConfigWrapper::setColorpalette(const QString& s){
     appconf->setValue("theme.palette",QVariant(s));
     m_stylehelper->SetStyle();
@@ -63,6 +70,7 @@ void AppConfigWrapper::setCustompalette(const QString& s){
 QString AppConfigWrapper::getCustompalette(){
     return appconf->getString("theme.palette.custom");
 }
+
 void AppConfigWrapper::setWhiteIcons(bool b){
     appconf->setValue("theme.icons.white",QVariant(b));
     m_stylehelper->SetStyle();
@@ -73,8 +81,13 @@ bool AppConfigWrapper::getWhiteIcons(){
     return appconf->getBool("theme.icons.white");
 }
 int AppConfigWrapper::getAutoFxMode(){
+#ifdef VIPER_PLUGINMODE
+    return 0;
+#else
     return appconf->getInt("apply.auto.mode", 1);
+#endif
 }
+#ifndef VIPER_PLUGINMODE
 void AppConfigWrapper::setAutoFxMode(int mode){
     appconf->setValue("apply.auto.mode",QVariant(mode));
     saveAppConfig();
@@ -86,6 +99,7 @@ void AppConfigWrapper::setReloadMethod(ReloadMethod mode){
     appconf->setValue("apply.method",QVariant((uint)mode));
     saveAppConfig();
 }
+#endif
 void AppConfigWrapper::setIrsPath(const QString& npath){
     appconf->setValue("convolver.default.irspath",QVariant(QString("\"%1\"").arg(npath)));
     saveAppConfig();
@@ -118,6 +132,7 @@ QString AppConfigWrapper::getIrsPath(){
         return QString("%1/IRS").arg(QDir::homePath());
     return irs_path;
 }
+#ifndef VIPER_PLUGINMODE
 int AppConfigWrapper::getTrayMode(){
     return appconf->getInt("session.tray.mode");
 }
@@ -213,6 +228,7 @@ void AppConfigWrapper::setSpectrumMultiplier(float number){
     emit spectrumChanged();
     saveAppConfig();
 }
+#endif
 void AppConfigWrapper::setEqualizerPermanentHandles(bool b){
     appconf->setValue("equalizer.handle.permanent",QVariant(b));
     emit eqChanged();
@@ -221,6 +237,7 @@ void AppConfigWrapper::setEqualizerPermanentHandles(bool b){
 bool AppConfigWrapper::getEqualizerPermanentHandles(){
     return appconf->getBool("equalizer.handle.permanent");
 }
+#ifndef VIPER_PLUGINMODE
 void AppConfigWrapper::setIntroShown(bool b){
     appconf->setValue("app.firstlaunch",QVariant(b));
     saveAppConfig();
@@ -228,14 +245,14 @@ void AppConfigWrapper::setIntroShown(bool b){
 bool AppConfigWrapper::getIntroShown(){
     return appconf->getBool("app.firstlaunch");
 }
-void AppConfigWrapper::setLegacyTabs(bool b){
-    appconf->setValue("theme.tab.legacy",QVariant(b));
-    saveAppConfig();
-}
-bool AppConfigWrapper::getLegacyTabs(){
-    return appconf->getBool("theme.tab.legacy");
-}
+#endif
+
 //--------
 QString AppConfigWrapper::getAppConfigFilePath(){
+#ifdef VIPER_PLUGINMODE
+    QString str = QString("%1/ui.conf").arg(working_dir_plgmode);
+    return str;
+#else
     return QString("%1/.config/viper4linux/ui.2.conf").arg(QDir::homePath());
+#endif
 }

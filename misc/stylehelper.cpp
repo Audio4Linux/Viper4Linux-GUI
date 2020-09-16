@@ -6,17 +6,30 @@
 
 #include <QTextStream>
 #include <QApplication>
+#include <QStyleFactory>
 
-StyleHelper::StyleHelper(QObject* host){
+#ifndef VIPER_PLUGINMODE
+#define SET_STYLE(x) QApplication::setStyle(new x)
+#define SET_STYLE_S(x) QApplication::setStyle(x)
+#define SET_PALETTE(x) QApplication::setPalette(x)
+#define SET_STYLESHEET(x) qApp->setStyleSheet(x)
+#else
+#define SET_STYLE(x) m_host->setStyle(new x)
+#define SET_STYLE_S(x) m_host->setStyle(QStyleFactory::create(x))
+#define SET_PALETTE(x) m_host->setPalette(x)
+#define SET_STYLESHEET(x) m_host->setStyleSheet(x)
+#endif
+
+StyleHelper::StyleHelper(QWidget* host){
     m_objhost = host;
 }
 void StyleHelper::SetStyle(){
     ViperWindow* m_host = qobject_cast<ViperWindow*>(m_objhost);
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
     if(m_appconf->getTheme() == "Phantom")
-        QApplication::setStyle(new PhantomStyle);
+        SET_STYLE(PhantomStyle);
     else
-        QApplication::setStyle(m_appconf->getTheme());
+        SET_STYLE_S(m_appconf->getTheme());
 
     QString color_palette = m_appconf->getColorpalette();
 
@@ -41,20 +54,22 @@ void StyleHelper::SetStyle(){
     }
     else{
         loadIcons(false);
-        QApplication::setPalette(m_host->style()->standardPalette());
+        SET_PALETTE(m_host->style()->standardPalette());
         QFile f(":/default.qss");
         if (!f.exists())printf("Unable to set stylesheet, file not found\n");
         else
         {
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
-            qApp->setStyleSheet(ts.readAll());
+            SET_STYLESHEET(ts.readAll());
         }
     }
 
     emit styleChanged();
 }
 void StyleHelper::setPalette(const ColorStyle& s){
+    ViperWindow* m_host = qobject_cast<ViperWindow*>(m_objhost);
+
     QPalette *palette = new QPalette();
     palette->setColor(QPalette::Window, s.background);
     palette->setColor(QPalette::WindowText, s.foreground);
@@ -69,8 +84,8 @@ void StyleHelper::setPalette(const ColorStyle& s){
     palette->setColor(QPalette::Link, QColor(42, 130, 218));
     palette->setColor(QPalette::Highlight, s.selection);
     palette->setColor(QPalette::HighlightedText, s.selectiontext);
-    qApp->setPalette(*palette);
-    qApp->setStyleSheet(QString(R"(QFrame[frameShape="4"], QFrame[frameShape="5"]{
+    SET_PALETTE(*palette);
+    SET_STYLESHEET(QString(R"(QFrame[frameShape="4"], QFrame[frameShape="5"]{
                                 color: gray;
                                 }
                                 *::disabled {
@@ -124,3 +139,8 @@ int StyleHelper::loadColor(int index,int rgb_index){
     QStringList rgb = elements[index].split(',');
     return rgb[rgb_index].toInt();
 }
+
+#undef SET_STYLE
+#undef SET_STYLE_S
+#undef SET_PALETTE
+#undef SET_STYLESHEET

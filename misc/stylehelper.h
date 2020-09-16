@@ -25,7 +25,7 @@ class StyleHelper : public QObject
     Q_OBJECT
 public:
 
-    StyleHelper(QObject* host);
+    StyleHelper(QWidget* host);
     void SetStyle();
     void loadIcons(bool white);
     int loadColor(int index,int rgb_index);

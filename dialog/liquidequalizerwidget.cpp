@@ -251,6 +251,8 @@ void LiquidEqualizerWidget::paintEvent(QPaintEvent* event){
 void LiquidEqualizerWidget::setBand(int i, float value, bool animate, bool manual) {
     mSelectedBand = i;
     mManual = manual;
+    mRealLevels[i] = value;
+
     if(animate){
         if(anim[i] != nullptr)
             anim[i]->stop();
@@ -276,7 +278,7 @@ void LiquidEqualizerWidget::setBand(int i, float value, bool animate, bool manua
 }
 
 float LiquidEqualizerWidget::getBand(int i){
-    return mLevels[i];
+    return mRealLevels[i];
 }
 
 void LiquidEqualizerWidget::setBands(const QVector<float>& vector, bool animate){
@@ -289,7 +291,7 @@ void LiquidEqualizerWidget::setBands(const QVector<float>& vector, bool animate)
 
 QVector<float> LiquidEqualizerWidget::getBands(){
     QVector<float> vector;
-    for(float mLevel : mLevels)
+    for(float mLevel : mRealLevels)
         vector.push_back(mLevel);
     return vector;
 }
