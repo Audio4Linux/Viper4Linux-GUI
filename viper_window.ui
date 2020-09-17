@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>625</width>
-    <height>370</height>
+    <height>386</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,12 +34,12 @@
     <number>7</number>
    </property>
    <property name="bottomMargin">
-    <number>7</number>
+    <number>9</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="host_layout">
      <property name="spacing">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="leftMargin">
       <number>0</number>
@@ -63,6 +63,9 @@
          <number>9</number>
         </property>
         <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -90,10 +93,6 @@
            <widget class="QPushButton" name="popupButton">
             <property name="text">
              <string>Popup</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../resources.qrc">
-              <normaloff>:/resources/icon/checkout.svg</normaloff>:/resources/icon/checkout.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -2832,6 +2831,9 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="buttonbox">
+       <property name="spacing">
+        <number>5</number>
+       </property>
        <item>
         <widget class="QPushButton" name="cpreset">
          <property name="minimumSize">
@@ -3064,7 +3066,6 @@
   <tabstop>apply</tabstop>
  </tabstops>
  <resources>
-  <include location="../../resources.qrc"/>
   <include location="v4l_frontend_resources.qrc"/>
  </resources>
  <connections/>

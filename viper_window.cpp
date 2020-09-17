@@ -51,8 +51,11 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
     /* Attach animation parent to the topmost widget */
     this->setProperty("animation_filter", true);
     this->layout()->setMargin(0);
+
+    ui->popupButton->setIcon(QPixmap(":/resources/icon/checkout.svg"));
 #else
     ui->popupButton->hide();
+
 
     m_exepath = exepath;
     m_startupInTraySwitch = statupInTray;
