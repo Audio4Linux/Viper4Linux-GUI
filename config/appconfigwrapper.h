@@ -93,7 +93,10 @@ public:
     void setTrayContextMenu(const QString &ctx);
     void setSpectrumShape(int number);
     int getSpectrumShape();
+    void setSyncDisabled(bool b);
+    bool getSyncDisabled();
 #endif
+
 signals:
     void spectrumChanged();
     void spectrumReloadRequired();

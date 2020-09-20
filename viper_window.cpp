@@ -119,7 +119,7 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
                 LogHelper::writeLog("Critical: Unable to connect to other DBus instance. Continuing anyway...");
             else{
                 QDBusPendingReply<> msg = m_dbInterface->raiseWindow();
-                if(msg.isError() || msg.isValid()){
+                if(msg.isError() || !msg.isValid()){
                     LogHelper::writeLog("Critical: Other DBus instance returned invalid or error message. Continuing anyway...");
                 }
                 else{
@@ -193,6 +193,9 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
     else trayIcon->hide();
 
     connect(m_dbus, &DBusProxy::propertiesCommitted, this, [this](){
+        if(m_appwrapper->getSyncDisabled())
+            return;
+
         conf->setConfigMap(m_dbus->FetchPropertyMap());
         LoadConfig(Context::DBus);
     });

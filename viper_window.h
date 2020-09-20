@@ -151,6 +151,7 @@ signals:
     void changesApplied();
 
 protected:
+    void LoadConfig(Context ctx = Context::Application);
     ConfigContainer* conf;
 
 private:
@@ -204,7 +205,6 @@ private:
 
     void ShowDBusError();
     void UpdateTooltipLabelUnit(QObject* sender,const QString& text,bool);
-    void LoadConfig(Context ctx = Context::Application);
     void ConnectActions();
 
     QVariantMap readConfig(const QString& path = "");

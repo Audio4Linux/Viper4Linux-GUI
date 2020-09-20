@@ -32,6 +32,9 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     appconf = mainwin->getACWrapper();
     QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
+    /* Hide troubleshooting section for now */
+    ui->dt_box->hide();
+
 #ifdef VIPER_PLUGINMODE
     for(int i = 0; i < ui->selector->topLevelItemCount(); i++){
         auto item = ui->selector->topLevelItem(i);
@@ -124,6 +127,9 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     });
     connect(ui->glavafix, &QPushButton::clicked, this, [this]{
         appconf->setGFix(ui->glavafix->isChecked());
+    });
+    connect(ui->dt_disable_sync, &QPushButton::clicked, this, [this]{
+        appconf->setSyncDisabled(ui->dt_disable_sync->isChecked());
     });
     connect(ui->autofx, &QGroupBox::clicked, this, [this]{
         appconf->setAutoFx(ui->autofx->isChecked());
@@ -415,6 +421,7 @@ void SettingsDlg::refreshAll(){
     ui->path->setText(appconf->getPath());
     ui->autofx->setChecked(appconf->getAutoFx());
     ui->glavafix->setChecked(appconf->getGFix());
+    ui->dt_disable_sync->setChecked(appconf->getSyncDisabled());
 
     updateInputSinks();
 #endif

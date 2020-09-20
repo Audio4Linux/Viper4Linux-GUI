@@ -124,7 +124,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>3</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="general">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -265,6 +265,25 @@
              <string>Instant</string>
             </property>
            </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="dt_box">
+           <property name="title">
+            <string>Driver Troubleshooting</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_20">
+            <item>
+             <widget class="QCheckBox" name="dt_disable_sync">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not enable unless absolutely neccessary!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It may cause unintended sideeffects and should solely be used for troubleshooting your GStreamer installation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="text">
+               <string>Disable property synchronization</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>

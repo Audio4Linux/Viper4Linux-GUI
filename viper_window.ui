@@ -39,7 +39,7 @@
    <item>
     <layout class="QVBoxLayout" name="host_layout">
      <property name="spacing">
-      <number>0</number>
+      <number>5</number>
      </property>
      <property name="leftMargin">
       <number>0</number>

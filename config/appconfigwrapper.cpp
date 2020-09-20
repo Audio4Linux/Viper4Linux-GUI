@@ -99,6 +99,13 @@ void AppConfigWrapper::setReloadMethod(ReloadMethod mode){
     appconf->setValue("apply.method",QVariant((uint)mode));
     saveAppConfig();
 }
+bool AppConfigWrapper::getSyncDisabled(){
+    return appconf->getBool("driver.propsync", true, false);
+}
+void AppConfigWrapper::setSyncDisabled(bool b){
+    appconf->setValue("driver.propsync",QVariant(b));
+    saveAppConfig();
+}
 #endif
 void AppConfigWrapper::setIrsPath(const QString& npath){
     appconf->setValue("convolver.default.irspath",QVariant(QString("\"%1\"").arg(npath)));
