@@ -23,25 +23,12 @@
 #ifndef VIPER_PLUGINMODE
 #include "visualization/audiostreamengine.h"
 #include "visualization/spectrograph.h"
-#else
-#include <CustomInterfaceBase.h>
 #endif
 
-#include "config/io.h"
-#include "config/container.h"
-#include "dialog/settingsdlg.h"
-#include "dialog/presetdlg.h"
-#include "ui_settings.h"
-#include "dialog/convolverdlg.h"
-#include "misc/converter.h"
-#include "dialog/logdlg.h"
-#include "misc/stylehelper.h"
-#include "config/appconfigwrapper.h"
-#include "misc/mathfunctions.h"
-#include "misc/loghelper.h"
-#include "misc/presetprovider.h"
 #include "misc/common.h"
-#include "misc/overlaymsgproxy.h"
+#include "config/container.h"
+#include "config/io.h"
+
 #ifndef VIPER_PLUGINMODE
 #include "config/dbusproxy.h"
 #endif
@@ -54,12 +41,16 @@ namespace Ui {
 class ViperWindow;
 }
 
-#ifdef VIPER_PLUGINMODE
-class FilterElement;
-class ViperWindow : public CustomInterfaceBase
-        #else
+class AppConfigWrapper;
+class ConfigContainer;
+class OverlayMsgProxy;
+class SettingsDlg;
+class ConvolverDlg;
+class PresetDlg;
+class LogDlg;
+class StyleHelper;
+
 class ViperWindow : public QWidget
-        #endif
 {
     Q_OBJECT
     enum class Context;
@@ -71,9 +62,7 @@ public:
                          bool allowMultipleInst = false,
                          QWidget *parent = nullptr);
 #else
-    Q_INVOKABLE explicit ViperWindow(FilterElement* element,
-                                     int revision,
-                                     QString working_dir,
+    Q_INVOKABLE explicit ViperWindow(QString working_dir,
                                      QWidget *parent = nullptr);
 #endif
     ~ViperWindow();
@@ -90,6 +79,9 @@ public:
 
     QMenu* buildAvailableActions();
     QMenu *buildDefaultActions();
+
+    void LoadConfig(Context ctx = Context::Application);
+    ConfigContainer* conf;
 
 #ifndef VIPER_PLUGINMODE   
     QMenu *getTrayContextMenu();
@@ -151,8 +143,6 @@ signals:
     void changesApplied();
 
 protected:
-    void LoadConfig(Context ctx = Context::Application);
-    ConfigContainer* conf;
 
 private:
     AppConfigWrapper* m_appwrapper;

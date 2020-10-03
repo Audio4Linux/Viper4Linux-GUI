@@ -6,6 +6,18 @@
 #include "misc/versioncontainer.h"
 #include "dialog/liquidequalizerwidget.h"
 #include "misc/eventfilter.h"
+#include "dialog/logdlg.h"
+#include "misc/stylehelper.h"
+#include "config/appconfigwrapper.h"
+#include "misc/mathfunctions.h"
+#include "misc/loghelper.h"
+#include "misc/presetprovider.h"
+#include "config/io.h"
+#include "config/container.h"
+#include "dialog/settingsdlg.h"
+#include "dialog/presetdlg.h"
+#include "dialog/convolverdlg.h"
+#include "misc/converter.h"
 
 #ifndef VIPER_PLUGINMODE
 #include "dbus/serveradaptor.h"
@@ -31,14 +43,17 @@
 
 using namespace std;
 #ifdef VIPER_PLUGINMODE
-ViperWindow::ViperWindow(FilterElement* element, int revision, QString working_dir, QWidget *parent) :
-    CustomInterfaceBase(element, revision, working_dir, parent),
+ViperWindow::ViperWindow(QString working_dir, QWidget *parent) :
+    QWidget(parent),
     #else
 ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleInst, QWidget *parent) :
     QWidget(parent),
     #endif
     ui(new Ui::ViperWindow)
 {
+    Q_INIT_RESOURCE(v4l_frontend_resources);
+    Q_INIT_RESOURCE(v4l_frontend_styles);
+
     ui->setupUi(this);
     bool aboutToQuit = false;
 
@@ -74,7 +89,7 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
     m_dbus = new DBusProxy();
     m_appwrapper = new AppConfigWrapper(m_stylehelper);
 #else
-    m_appwrapper = new AppConfigWrapper(m_stylehelper, getWorkingDirectory());
+    m_appwrapper = new AppConfigWrapper(m_stylehelper, working_dir);
 #endif
     m_appwrapper->loadAppConfig();
 

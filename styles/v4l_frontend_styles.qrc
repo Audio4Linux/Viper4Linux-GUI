@@ -13,7 +13,6 @@
     </qresource>
     <qresource prefix="/">
         <file>default.qss</file>
-        <file>../icons/error.svg</file>
         <file>overlay.qss</file>
     </qresource>
     <qresource prefix="/vsdark"/>

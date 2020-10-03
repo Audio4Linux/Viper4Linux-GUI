@@ -2,6 +2,7 @@
 #include "ui_convolver.h"
 #include "misc/loghelper.h"
 #include "viper_window.h"
+#include "config/appconfigwrapper.h"
 
 #include <QDir>
 #include <QCloseEvent>

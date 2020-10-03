@@ -6,15 +6,10 @@ QT       += core gui xml network svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 include($$PWD/phantom/phantom.pri)
+include($$PWD/dialog/FlatTabWidget/FlatTabWidget.pri)
 
-
-contains(DEFINES, VIPER_PLUGINMODE) {
-    include($$PWD/../ViperIntegrationHelper.pri)
-    include($$PWD/../FlatTabWidget/FlatTabWidget.pri)
-}
-else {
+!contains(DEFINES, VIPER_PLUGINMODE) {
     include($$PWD/3rdparty/WAF/WAF.pri)
-    include($$PWD/dialog/FlatTabWidget/FlatTabWidget.pri)
     include($$PWD/visualization/SpectrumAudioViewer.pri)
 }
 

@@ -3,6 +3,7 @@
 #include "viper_window.h"
 #include "config/appconfigwrapper.h"
 #include "phantom/phantomstyle.h"
+#include "dialog/settingsdlg.h"
 
 #include <QTextStream>
 #include <QApplication>
