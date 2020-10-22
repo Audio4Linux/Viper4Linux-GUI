@@ -2,6 +2,7 @@
 #include "ui_palettedlg.h"
 
 #include <QColorDialog>
+#include <config/appconfigwrapper.h>
 
 PaletteEditor::PaletteEditor(AppConfigWrapper *_appconf, QWidget *parent) :
     QDialog(parent),

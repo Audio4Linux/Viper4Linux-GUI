@@ -18,28 +18,39 @@
 #include "dialog/presetdlg.h"
 #include "dialog/convolverdlg.h"
 #include "misc/converter.h"
+#include "misc/common.h"
+#include "config/container.h"
+#include "config/io.h"
 
 #ifndef VIPER_PLUGINMODE
 #include "dbus/serveradaptor.h"
 #include "dbus/clientproxy.h"
 #include "dialog/firstlaunchwizard.h"
 #include "dialog/statusfragment.h"
+#include <phantomstyle.h>
 #endif
 #include "misc/GstRegistryHelper.h"
 
-#include <phantomstyle.h>
+
 #include "3rdparty/WAF/Animation/Animation.h"
 
+#include <QTimer>
 #include <QMenu>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QWhatsThis>
+#include <QSystemTrayIcon>
+#include <QCloseEvent>
+#include <QFrame>
 #include <QGraphicsOpacityEffect>
 #include <QDebug>
 #include <cmath>
 #include <string>
 #include <sstream>
 #include <fstream>
+
+#include <dialog/qmessageoverlay.h>
+
 
 using namespace std;
 #ifdef VIPER_PLUGINMODE

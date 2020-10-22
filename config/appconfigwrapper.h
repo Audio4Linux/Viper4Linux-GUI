@@ -16,11 +16,11 @@
 #define APPCONFIGWRAPPER_H
 
 #include <QObject>
-#include "misc/stylehelper.h"
-#include "container.h"
-#include "io.h"
 
 using namespace std;
+
+class StyleHelper;
+class ConfigContainer;
 
 typedef enum class ReloadMethod{
     DIRECT_DBUS,

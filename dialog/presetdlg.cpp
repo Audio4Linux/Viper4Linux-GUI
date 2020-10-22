@@ -5,6 +5,7 @@
 #include "androidimporterdlg.h"
 #include "misc/loghelper.h"
 #include "misc/common.h"
+#include "config/appconfigwrapper.h"
 
 #include "3rdparty/WAF/Animation/Animation.h"
 
@@ -20,6 +21,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDesktopServices>
+
 
 PresetDlg::PresetDlg(ViperWindow* mainwin,QWidget *parent) :
     QDialog(parent),

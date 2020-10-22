@@ -5,10 +5,10 @@ QT       += core gui xml network svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-include($$PWD/phantom/phantom.pri)
 include($$PWD/dialog/FlatTabWidget/FlatTabWidget.pri)
 
 !contains(DEFINES, VIPER_PLUGINMODE) {
+    include($$PWD/phantom/phantom.pri)
     include($$PWD/3rdparty/WAF/WAF.pri)
     include($$PWD/visualization/SpectrumAudioViewer.pri)
 }
@@ -25,11 +25,10 @@ SOURCES += \
     $$PWD/dialog/palettedlg.cpp \
     $$PWD/dialog/presetdlg.cpp \
     $$PWD/dialog/qanimatedslider.cpp \
-    $$PWD/dialog/qmenueditor.cpp \
+                $$PWD/dialog/qmenueditor.cpp \
     $$PWD/dialog/qmessageoverlay.cpp \
     $$PWD/dialog/settingsdlg.cpp \
     $$PWD/dialog/slidingstackedwidget.cpp \
-    $$PWD/misc/autostartmanager.cpp \
     $$PWD/misc/biquad.cpp \
     $$PWD/misc/converter.cpp \
     $$PWD/misc/loghelper.cpp \
@@ -50,12 +49,10 @@ HEADERS += \
     $$PWD/dialog/palettedlg.h \
     $$PWD/dialog/presetdlg.h \
     $$PWD/dialog/qanimatedslider.h \
-    $$PWD/dialog/qmenueditor.h \
+        $$PWD/dialog/qmenueditor.h \
     $$PWD/dialog/qmessageoverlay.h \
     $$PWD/dialog/settingsdlg.h \
     $$PWD/dialog/slidingstackedwidget.h \
-    $$PWD/misc/GstRegistryHelper.h \
-    $$PWD/misc/autostartmanager.h \
     $$PWD/misc/biquad.h \
     $$PWD/misc/common.h \
     $$PWD/misc/converter.h \
@@ -87,7 +84,8 @@ FORMS += \
         $$PWD/dbus/clientproxy.cpp \
         $$PWD/dbus/serveradaptor.cpp \
         $$PWD/config/dbusproxy.cpp \
-        $$PWD/dialog/statusfragment.cpp
+        $$PWD/dialog/statusfragment.cpp \
+        $$PWD/misc/autostartmanager.cpp \
 
     HEADERS += \
         $$PWD/crashhandler/airbag.h \
@@ -100,7 +98,9 @@ FORMS += \
         $$PWD/dbus/clientproxy.h \
         $$PWD/dbus/serveradaptor.h \
         $$PWD/config/dbusproxy.h \
-        $$PWD/dialog/statusfragment.h
+        $$PWD/dialog/statusfragment.h \
+        $$PWD/misc/GstRegistryHelper.h \
+        $$PWD/misc/autostartmanager.h
 
     FORMS += \
         $$PWD/dialog/pulseeffectscompatibility.ui \

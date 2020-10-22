@@ -2,8 +2,8 @@
 #define WIDGET_H
 
 #include <QPropertyAnimation>
-#include <QSvgWidget>
 #include <QParallelAnimationGroup>
+#include <QSvgWidget>
 
 class AnimatedViperIcon : public QWidget
 {

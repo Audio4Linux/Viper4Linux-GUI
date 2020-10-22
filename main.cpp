@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <clocale>
 #include <QLocale>
+#include <QStyle>
 
 #include <gst/gst.h>
 

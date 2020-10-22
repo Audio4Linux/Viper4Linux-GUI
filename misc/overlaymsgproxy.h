@@ -17,7 +17,8 @@
 
 #include <QObject>
 #include <QPushButton>
-#include "dialog/qmessageoverlay.h"
+
+class QMessageOverlay;
 
 class OverlayMsgProxy : public QObject
 {

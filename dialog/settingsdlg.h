@@ -16,10 +16,13 @@
 #define SETTINGS_H
 
 #include <QDialog>
-#include "ui_settings.h"
-#include "config/appconfigwrapper.h"
 
 class ViperWindow;
+class AppConfigWrapper;
+
+namespace Ui {
+class settings;
+}
 
 class SettingsDlg : public QDialog
 {

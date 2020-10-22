@@ -14,6 +14,9 @@
 #include <QProcess>
 #include <QMessageBox>
 
+#include <config/container.h>
+#include <config/io.h>
+
 FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, ViperWindow* mainwin, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FirstLaunchWizard)

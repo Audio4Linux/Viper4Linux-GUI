@@ -2,7 +2,7 @@
 #include "ui_viper_window.h"
 #include "viper_window.h"
 #include "config/appconfigwrapper.h"
-#include "phantom/phantomstyle.h"
+
 #include "dialog/settingsdlg.h"
 
 #include <QTextStream>
@@ -10,6 +10,7 @@
 #include <QStyleFactory>
 
 #ifndef VIPER_PLUGINMODE
+#include "phantom/phantomstyle.h"
 #define SET_STYLE(x) QApplication::setStyle(new x)
 #define SET_STYLE_S(x) QApplication::setStyle(x)
 #define SET_PALETTE(x) QApplication::setPalette(x)
@@ -27,9 +28,11 @@ StyleHelper::StyleHelper(QWidget* host){
 void StyleHelper::SetStyle(){
     ViperWindow* m_host = qobject_cast<ViperWindow*>(m_objhost);
     AppConfigWrapper* m_appconf = m_host->getACWrapper();
+#ifndef VIPER_PLUGINMODE
     if(m_appconf->getTheme() == "Phantom")
         SET_STYLE(PhantomStyle);
     else
+#endif
         SET_STYLE_S(m_appconf->getTheme());
 
     QString color_palette = m_appconf->getColorpalette();

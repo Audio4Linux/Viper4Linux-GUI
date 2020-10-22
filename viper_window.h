@@ -15,19 +15,15 @@
 #ifndef VIPERWINDOW_H
 #define VIPERWINDOW_H
 
+#include <QFrame>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <QCloseEvent>
-#include <QFrame>
+#include "misc/common.h"
 
 #ifndef VIPER_PLUGINMODE
 #include "visualization/audiostreamengine.h"
 #include "visualization/spectrograph.h"
 #endif
-
-#include "misc/common.h"
-#include "config/container.h"
-#include "config/io.h"
 
 #ifndef VIPER_PLUGINMODE
 #include "config/dbusproxy.h"

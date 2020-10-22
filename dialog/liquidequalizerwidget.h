@@ -25,10 +25,9 @@
 
 #include <QWidget>
 #include <QPainter>
-#include <QPaintEvent>
-#include <QTimer>
-#include <QVariantAnimation>
 #include "misc/biquad.h"
+
+class QVariantAnimation;
 
 class LiquidEqualizerWidget : public QWidget
 {

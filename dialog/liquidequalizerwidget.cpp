@@ -21,6 +21,11 @@
 #include <QPainterPath>
 #include <QDebug>
 
+#include <QPainter>
+#include <QPaintEvent>
+#include <QTimer>
+#include <QVariantAnimation>
+
 using namespace std;
 
 LiquidEqualizerWidget::LiquidEqualizerWidget(QWidget *parent)

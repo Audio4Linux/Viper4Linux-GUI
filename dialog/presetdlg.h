@@ -18,7 +18,8 @@
 #include <QDialog>
 #include <QNetworkReply>
 #include "misc/converter.h"
-#include "config/appconfigwrapper.h"
+
+class AppConfigWrapper;
 
 class ViperWindow;
 

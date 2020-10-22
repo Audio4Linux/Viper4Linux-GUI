@@ -13,6 +13,9 @@
 #include <QMessageBox>
 #include <QProcess>
 
+#include <config/io.h>
+#include <config/container.h>
+
 PulseeffectsCompatibility::PulseeffectsCompatibility(AppConfigWrapper* _appconf, ViperWindow* mainwin, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PulseeffectsCompatibility)

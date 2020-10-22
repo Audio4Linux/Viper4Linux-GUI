@@ -16,11 +16,12 @@
 #define PALETTE_H
 
 #include <QDialog>
-#include <config/appconfigwrapper.h>
 
 namespace Ui {
 class palette;
 }
+
+class AppConfigWrapper;
 
 class PaletteEditor : public QDialog
 {

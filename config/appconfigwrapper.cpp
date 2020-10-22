@@ -3,6 +3,10 @@
 #include <QDir>
 #include <QDebug>
 
+#include "misc/stylehelper.h"
+#include "container.h"
+#include "io.h"
+
 using namespace std;
 
 AppConfigWrapper::AppConfigWrapper(StyleHelper* stylehelper, QString _working_dir_plgmode)

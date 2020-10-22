@@ -6,9 +6,11 @@
 #include "misc/autostartmanager.h"
 #ifndef VIPER_PLUGINMODE
 #include "pulseeffectscompatibility.h"
+#include "qmessageoverlay.h"
 #include "crashhandler/killer.h"
 #endif
 #include "misc/GstRegistryHelper.h"
+#include "config/appconfigwrapper.h"
 
 #include <QGraphicsOpacityEffect>
 #include <QProcess>
@@ -19,6 +21,10 @@
 #include <QDebug>
 #include <QStyleFactory>
 #include <QSystemTrayIcon>
+#include <qtimer.h>
+
+#include <config/container.h>
+#include <config/io.h>
 
 using namespace std;
 static bool lockslot = false;
@@ -30,7 +36,6 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     m_mainwin = mainwin;
 
     appconf = mainwin->getACWrapper();
-    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 
     /* Hide troubleshooting section for now */
     ui->dt_box->hide();
@@ -44,6 +49,10 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
            item->text(0) == "Spectrum Analyser")
             item->setHidden(true);
     }
+
+#else
+    ui->themeSelect->addItem("Phantom");
+    QString autostart_path = AutostartManager::getAutostartPath("viper-gui.desktop");
 #endif
 
     /*
