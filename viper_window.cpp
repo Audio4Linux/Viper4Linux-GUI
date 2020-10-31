@@ -462,7 +462,8 @@ void ViperWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
     if(on && (!m_spectrograph->isVisible() || !ctrl_visibility)){
         if(ctrl_visibility){
             SetSpectrumVisibility(true);
-            this->setFixedSize(this->width(),this->height()+m_spectrograph->size().height());
+            this->setGeometry(this->x(), this->y(), this->width(),this->height()+m_spectrograph->size().height());
+            //this->setFixedSize(this->width(),this->height()+m_spectrograph->size().height());
         }
 
         QAudioDeviceInfo in;
@@ -495,7 +496,9 @@ void ViperWindow::ToggleSpectrum(bool on,bool ctrl_visibility){
     else if(!on && (m_spectrograph->isVisible() || !ctrl_visibility)){
         if(ctrl_visibility){
             SetSpectrumVisibility(false);
-            this->setFixedSize(this->width(),this->height()-m_spectrograph->size().height());
+            this->setGeometry(this->x(), this->y(), this->width(),this->height()-m_spectrograph->size().height());
+
+            //this->setFixedSize(this->width(),this->height()-m_spectrograph->size().height());
         }
         m_spectrograph->reset();
         m_audioengine->reset();

@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
                  startInTray,
                  parser.isSet(minst));
 
-    w.setFixedSize(w.geometry().width(),w.geometry().height());
+   // w.setFixedSize(w.geometry().width(),w.geometry().height());
     w.setGeometry(
         QStyle::alignedRect(
             Qt::LeftToRight,
