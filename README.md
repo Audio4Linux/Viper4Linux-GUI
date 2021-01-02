@@ -65,7 +65,7 @@ Clone this repository
 Compile sources
 
     cd Viper4Linux-GUI
-    qmake
+    qmake V4L_Frontend.pro
     make
     
 ```bash
