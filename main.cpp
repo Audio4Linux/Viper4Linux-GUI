@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     gst_init(&argc, &argv);
 
     QApplication a(argc, argv);
+    QApplication::setFallbackSessionManagementEnabled(false);
     QCommandLineParser parser;
     parser.setApplicationDescription("Graphical User Interface for Viper4Linux2");
     parser.addHelpOption();

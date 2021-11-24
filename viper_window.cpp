@@ -327,7 +327,6 @@ void ViperWindow::LaunchFirstRunSetup(){
     });
 }
 void ViperWindow::RunDiagnosticChecks(){
-
     if(system("which viper > /dev/null 2>&1") == 1){
         OverlayMsgProxy *msg = new OverlayMsgProxy(this);
         msg->openError(tr("Viper not installed"),
