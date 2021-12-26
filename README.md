@@ -12,6 +12,9 @@ Official UI for Viper4Linux [https://github.com/Audio4Linux/Viper4Linux](https:/
 * [Debian](#debian)
 * [Build from sources](#build-from-sources)
 
+**IMPORTANT:** Make sure to install the Viper4Linux driver and CLI first. It is not included with this GUI: <https://github.com/Audio4Linux/Viper4Linux>
+
+
 ### Arch
 
 On Arch you can use the [AUR package](https://aur.archlinux.org/packages/viper4linux-gui-git/) (using git) provided by yochananmarqos:
