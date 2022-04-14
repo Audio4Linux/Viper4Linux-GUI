@@ -91,6 +91,7 @@ Comment=User Interface for Viper4Linux
 Keywords=equalizer
 Categories=AudioVideo;Audio;
 Exec=viper-gui
+Icon=viper-gui
 StartupNotify=false
 Terminal=false
 Type=Application
