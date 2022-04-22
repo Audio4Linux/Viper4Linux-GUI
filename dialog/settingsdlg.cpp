@@ -5,7 +5,6 @@
 #include "palettedlg.h"
 #include "misc/autostartmanager.h"
 #ifndef VIPER_PLUGINMODE
-#include "pulseeffectscompatibility.h"
 #include "qmessageoverlay.h"
 #include "crashhandler/killer.h"
 #endif
@@ -62,7 +61,7 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     ui->selector->setCurrentItem(ui->selector->findItems("Interface",Qt::MatchFlag::MatchExactly).first());
     ui->stackedWidget->setCurrentIndex(1);
 #else
-    ui->selector->setCurrentItem(ui->selector->findItems("General",Qt::MatchFlag::MatchExactly).first());
+    ui->selector->setCurrentItem(ui->selector->findItems(tr("General"),Qt::MatchFlag::MatchExactly).first());
     ui->stackedWidget->setCurrentIndex(0);
 #endif
 
@@ -70,11 +69,11 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
         int toplevel_index = ui->selector->indexOfTopLevelItem(cur);
         switch(toplevel_index){
         case -1:
-            if(cur->text(0) == "Context Menu")
+            if(cur->text(0) == tr("Context Menu"))
                 ui->stackedWidget->setCurrentIndex(5);
-            if(cur->text(0) == "Design")
+            if(cur->text(0) == tr("Design"))
                 ui->stackedWidget->setCurrentIndex(7);
-            if(cur->text(0) == "Advanced")
+            if(cur->text(0) == tr("Advanced"))
                 ui->stackedWidget->setCurrentIndex(8);
             break;
         case 5:
@@ -90,24 +89,30 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
         }
     });
 #ifndef VIPER_PLUGINMODE
-    ui->selector->expandItem(ui->selector->findItems("Spectrum Analyser",Qt::MatchFlag::MatchExactly).first());
-    ui->selector->expandItem(ui->selector->findItems("Systray",Qt::MatchFlag::MatchExactly).first());
+    ui->selector->expandItem(ui->selector->findItems(tr("Spectrum Analyser"),Qt::MatchFlag::MatchExactly).first());
+    ui->selector->expandItem(ui->selector->findItems(tr("Systray"),Qt::MatchFlag::MatchExactly).first());
 
     /*
      * Prepare all combooxes
      */
-    ui->paletteSelect->addItem("Default","default");
-    ui->paletteSelect->addItem("Black","black");
-    ui->paletteSelect->addItem("Blue","blue");
-    ui->paletteSelect->addItem("Dark Blue","darkblue");
-    ui->paletteSelect->addItem("Dark Green","darkgreen");
-    ui->paletteSelect->addItem("Gray","gray");
-    ui->paletteSelect->addItem("Green","green");
-    ui->paletteSelect->addItem("Honeycomb","honeycomb");
-    ui->paletteSelect->addItem("Pitch Black","pitchblack");
-    ui->paletteSelect->addItem("Stone","stone");
-    ui->paletteSelect->addItem("White","white");
-    ui->paletteSelect->addItem("Custom","custom");
+    ui->paletteSelect->addItem(tr("Default"),"default");
+    ui->paletteSelect->addItem(tr("Black"),"black");
+    ui->paletteSelect->addItem(tr("Blue"),"blue");
+    ui->paletteSelect->addItem(tr("Dark Blue"),"darkblue");
+    ui->paletteSelect->addItem(tr("Dark Green"),"darkgreen");
+    ui->paletteSelect->addItem(tr("Gray"),"gray");
+    ui->paletteSelect->addItem(tr("Green"),"green");
+    ui->paletteSelect->addItem(tr("Honeycomb"),"honeycomb");
+    ui->paletteSelect->addItem(tr("Pitch Black"),"pitchblack");
+    ui->paletteSelect->addItem(tr("Stone"),"stone");
+    ui->paletteSelect->addItem(tr("White"),"white");
+    ui->paletteSelect->addItem(tr("Custom"),"custom");
+
+    ui->languageSelect->addItem("English", "en");
+    ui->languageSelect->addItem("German", "de");
+    ui->languageSelect->addItem("Simplified Chinese", "zh_CN");
+    ui->languageSelect->addItem("Traditional Chinese (Hong Kong)", "zh_HK");
+
 #else
     /* Remove palette selection */
     ui->design_lay->removeRow(1);
@@ -124,16 +129,11 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
     /*
      * Connect all signals for page General
      */
-#ifndef VIPER_PLUGINMODE
-    connect(ui->savepath, &QPushButton::clicked, this, [this]{
-        appconf->setPath(ui->path->text());
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, tr("Restart required"), tr("Please restart this application to make sure all changes are applied correctly.\n"
-                                                                       "Press 'OK' to quit or 'Cancel' if you want to continue without a restart."),
-                                      QMessageBox::Ok|QMessageBox::Cancel);
-        if (reply == QMessageBox::Ok)
-            QApplication::quit();
+    connect(ui->languageSelect,static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentTextChanged),this,[this]{
+        appconf->setLanguage(ui->languageSelect->itemData(ui->languageSelect->currentIndex()).toString());
     });
+
+#ifndef VIPER_PLUGINMODE
     connect(ui->glavafix, &QPushButton::clicked, this, [this]{
         appconf->setGFix(ui->glavafix->isChecked());
     });
@@ -329,7 +329,7 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
         mainwin->updateTrayMenu(menu);
     });
     connect(ui->menu_edit,&QMenuEditor::resetPressed,[mainwin,this]{
-        QMessageBox::StandardButton reply = QMessageBox::question(this, "Warning", "Do you really want to restore the default layout?",
+        QMessageBox::StandardButton reply = QMessageBox::question(this,tr("Warning"), tr("Do you really want to restore the default layout?"),
                                                                   QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
             ui->menu_edit->setTargetMenu(mainwin->buildDefaultActions());
@@ -402,7 +402,7 @@ void SettingsDlg::refreshDevices()
             }
         }
         if(notFound){
-            QString name = QString("Unknown (%1)").arg(dev_location);
+            QString name = QString(tr("Unknown (%1)")).arg(dev_location);
             ui->dev_select->addItem(name,dev_location);
             ui->dev_select->setCurrentText(name);
         }
@@ -414,9 +414,9 @@ void SettingsDlg::refreshDevices()
 void SettingsDlg::refreshAll(){
     lockslot = true;
 
-    ui->gst_plg_installed->setText(GstRegistryHelper::IsPluginInstalled() ? "Yes" : "No");
+    ui->gst_plg_installed->setText(GstRegistryHelper::IsPluginInstalled() ? tr("Yes") : tr("No"));
     ui->gst_plg_mode->setText(GstRegistryHelper::HasDBusSupport() ? "Audio4Linux" : "Legacy");
-    ui->gst_plg_dbus->setText(GstRegistryHelper::HasDBusSupport() ? "Yes" : "No");
+    ui->gst_plg_dbus->setText(GstRegistryHelper::HasDBusSupport() ? tr("Yes") : tr("No"));
     ui->gst_plg_version->setText(GstRegistryHelper::GetPluginVersion());
     ui->gst_plg_path->setText(GstRegistryHelper::GetPluginPath());
     ui->gst_plg_path->setToolTip(GstRegistryHelper::GetPluginPath());
@@ -427,10 +427,14 @@ void SettingsDlg::refreshAll(){
     ui->menu_edit->setTargetMenu(m_mainwin->getTrayContextMenu());
     ui->menu_edit->setIconStyle(appconf->getWhiteIcons());
 
-    ui->path->setText(appconf->getPath());
     ui->autofx->setChecked(appconf->getAutoFx());
     ui->glavafix->setChecked(appconf->getGFix());
     ui->dt_disable_sync->setChecked(appconf->getSyncDisabled());
+
+    QVariant qvLang(appconf->getLanguage());
+    int indexLang = ui->languageSelect->findData(qvLang);
+    if ( indexLang != -1 )
+        ui->languageSelect->setCurrentIndex(indexLang);
 
     updateInputSinks();
 #endif
@@ -560,35 +564,3 @@ void SettingsDlg::updateInputSinks(){
 #endif
 }
 
-void SettingsDlg::showPECompatibilityScreen(){
-#ifndef VIPER_PLUGINMODE
-    emit closeClicked();
-    QTimer::singleShot(500,this,[this]{
-        PulseeffectsCompatibility* wiz = new PulseeffectsCompatibility(appconf,m_mainwin);
-        QHBoxLayout* lbLayout = new QHBoxLayout;
-        QMessageOverlay* lightBox = new QMessageOverlay(m_mainwin);
-        QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect();
-        lightBox->setGraphicsEffect(eff);
-        lightBox->setLayout(lbLayout);
-        lightBox->layout()->addWidget(wiz);
-        lightBox->show();
-        QPropertyAnimation *a = new QPropertyAnimation(eff,"opacity");
-        a->setDuration(500);
-        a->setStartValue(0);
-        a->setEndValue(1);
-        a->setEasingCurve(QEasingCurve::InBack);
-        a->start(QPropertyAnimation::DeleteWhenStopped);
-        connect(wiz,&PulseeffectsCompatibility::wizardFinished,[=]{
-            QPropertyAnimation *b = new QPropertyAnimation(eff,"opacity");
-            b->setDuration(500);
-            b->setStartValue(1);
-            b->setEndValue(0);
-            b->setEasingCurve(QEasingCurve::OutCirc);
-            b->start(QPropertyAnimation::DeleteWhenStopped);
-            connect(b,&QAbstractAnimation::finished, [=](){
-                lightBox->hide();
-            });
-        });
-    });
-#endif
-}

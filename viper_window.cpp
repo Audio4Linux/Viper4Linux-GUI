@@ -164,7 +164,7 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
     QMenu *menu = new QMenu();
 
 #ifndef VIPER_PLUGINMODE
-    spectrum = new QAction("Reload spectrum",this);
+    spectrum = new QAction(tr("Reload spectrum"),this);
     connect(spectrum,&QAction::triggered,this,&ViperWindow::RestartSpectrum);
 
     menu->addAction(tr("Reload viper"), this,SLOT(Restart()));
@@ -245,6 +245,15 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
         ui->eq_widget->setAlwaysDrawHandles(m_appwrapper->getEqualizerPermanentHandles());
     });
 
+    connect(m_appwrapper, &AppConfigWrapper::languageChanged, this, [this](){
+        auto result = QMessageBox::information(this, "Warning", "Please restart this application to apply the updated language settings. Press 'Yes' to quit now.",
+                                 QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::Cancel);
+        if(result == QMessageBox::StandardButton::Yes)
+        {
+            this->close();
+            exit(0);
+        }
+    });
 
 #ifndef VIPER_PLUGINMODE
     ToggleSpectrum(m_appwrapper->getSpetrumEnable(),true);
@@ -260,13 +269,13 @@ ViperWindow::ViperWindow(QString exepath, bool statupInTray, bool allowMultipleI
     ui->tabbar->setAnimatePageChange(true);
     ui->tabbar->setCustomStackWidget(ui->tabhost);
     ui->tabbar->setDetachCustomStackedWidget(true);
-    ui->tabbar->addPage("Bass/Clarity");
-    ui->tabbar->addPage("Dynamic");
-    ui->tabbar->addPage("Surround");
-    ui->tabbar->addPage("Equalizer");
-    ui->tabbar->addPage("Compressor");
-    ui->tabbar->addPage("Volume");
-    ui->tabbar->addPage("Miscellaneous");
+    ui->tabbar->addPage(tr("Bass/Clarity"));
+    ui->tabbar->addPage(tr("Dynamic"));
+    ui->tabbar->addPage(tr("Surround"));
+    ui->tabbar->addPage(tr("Equalizer"));
+    ui->tabbar->addPage(tr("Compressor"));
+    ui->tabbar->addPage(tr("Volume"));
+    ui->tabbar->addPage(tr("Miscellaneous"));
     ui->frame->setStyleSheet(QString("QFrame#frame{background-color: %1;}").arg(this->palette().window().color().lighter().name()));
     ui->tabhost->setStyleSheet(QString("QWidget#tabhostPage1,QWidget#tabhostPage2,QWidget#tabhostPage3,QWidget#tabhostPage4,QWidget#tabhostPage5,QWidget#tabhostPage6,QWidget#tabhostPage7{background-color: %1;}").arg(this->palette().window().color().lighter().name()));
     ui->tabbar->redrawTabBar();
@@ -760,7 +769,7 @@ QMenu* ViperWindow::buildAvailableActions()
     for(auto preset : PresetProvider::EQ::EQ_LOOKUP_TABLE().keys()){
         QAction *newEntry = new QAction(preset);
         connect(newEntry,&QAction::triggered,this,[=](){
-            if(preset == "Default")
+            if(preset == tr("Default"))
                 ResetEQ();
             else{
                 ui->eqpreset->setCurrentText(preset);
@@ -773,7 +782,7 @@ QMenu* ViperWindow::buildAvailableActions()
 
     QMenu* colmMenu = new QMenu(tr("C&olorful Music Presets"), this);
     for(auto preset : PresetProvider::Colm::COLM_LOOKUP_TABLE().keys()){
-        if(preset == "Unknown") continue;
+        if(preset == tr("Unknown")) continue;
         QAction *newEntry = new QAction(preset);
         connect(newEntry,&QAction::triggered,this,[=](){
             ui->colmpreset->setCurrentText(preset);
@@ -784,7 +793,7 @@ QMenu* ViperWindow::buildAvailableActions()
     colmMenu->setProperty("tag","menu_colm_preset");
 
     QMenu* bassModeMenu = new QMenu(tr("ViPER &Bass Mode"), this);
-    QStringList bassModes({"Natural Bass","Pure Bass+","Subwoofer"});
+    QStringList bassModes({tr("Natural Bass"),tr("Pure Bass+"),tr("Subwoofer")});
     for(auto mode : bassModes){
         QAction *newEntry = new QAction(mode);
         connect(newEntry,&QAction::triggered,this,[=](){
@@ -796,7 +805,7 @@ QMenu* ViperWindow::buildAvailableActions()
     bassModeMenu->setProperty("tag","menu_bass_mode");
 
     QMenu* clarityModeMenu = new QMenu(tr("ViPER C&larity Mode"), this);
-    QStringList clarityModes({"Natural","OZone+","XHiFi"});
+    QStringList clarityModes({tr("Natural"),tr("OZone+"),tr("XHiFi")});
     for(auto mode : clarityModes){
         QAction *newEntry = new QAction(mode);
         connect(newEntry,&QAction::triggered,this,[=](){
@@ -1249,14 +1258,14 @@ void ViperWindow::ApplyConfig(bool restart){
 
 //---Predefined Presets
 void ViperWindow::EqPresetSelectionUpdated(){
-    if(ui->eqpreset->currentText() == "Custom")
+    if(ui->eqpreset->currentText() == tr("Custom"))
         return;
     auto preset = PresetProvider::EQ::lookupPreset(ui->eqpreset->currentText());
     if(preset.size() > 0)SetEQ(preset);
     else ResetEQ();
 }
 void ViperWindow::DynsysPresetSelectionUpdated(){
-    if(ui->dynsys_preset->currentText() == "Custom")
+    if(ui->dynsys_preset->currentText() == tr("Custom"))
         return;
     const auto data = PresetProvider::Dynsys::lookupPreset(ui->dynsys_preset->currentText());
     if(data.size() <= 1)
@@ -1317,15 +1326,8 @@ void ViperWindow::UpdateUnitLabel(int d,QObject *alt){
         else if(d <= 300) UpdateTooltipLabelUnit(obj,tr("Moderate (%1)").arg(QString::number(d)),alt==nullptr);
         else UpdateTooltipLabelUnit(obj,tr("Extreme (%1)").arg(QString::number( d )),alt==nullptr);
     }
-    else if(obj==ui->axmode){
-        //AnalogX
-        if(d==0) UpdateTooltipLabelUnit(obj,tr("Slight"),alt==nullptr);
-        else if(d==1) UpdateTooltipLabelUnit(obj,tr("Moderate"),alt==nullptr);
-        else if(d==2) UpdateTooltipLabelUnit(obj,tr("Extreme"),alt==nullptr);
-        else UpdateTooltipLabelUnit(obj,tr("Mode %1").arg(QString::number( d )),alt==nullptr);
-    }
-    else if(obj==ui->vcurelvl){
-        //Cure+
+    else if(obj==ui->axmode || obj==ui->vcurelvl){
+        //AnalogX //Cure+
         if(d==0) UpdateTooltipLabelUnit(obj,tr("Slight"),alt==nullptr);
         else if(d==1) UpdateTooltipLabelUnit(obj,tr("Moderate"),alt==nullptr);
         else if(d==2) UpdateTooltipLabelUnit(obj,tr("Extreme"),alt==nullptr);

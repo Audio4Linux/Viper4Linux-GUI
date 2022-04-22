@@ -18,6 +18,7 @@
 #include <QFrame>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QTranslator>
 #include "misc/common.h"
 
 #ifndef VIPER_PLUGINMODE

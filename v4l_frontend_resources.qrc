@@ -23,5 +23,9 @@
         <file>icons/edit-undo.svg</file>
         <file>viper.png</file>
         <file>icons/error.svg</file>
+        <file>translations/lang_de.qm</file>
+        <file>translations/lang_en.qm</file>
+        <file>translations/lang_zh_CN.qm</file>
+        <file>translations/lang_zh_HK.qm</file>
     </qresource>
 </RCC>

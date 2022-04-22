@@ -43,7 +43,6 @@ signals:
 private:
     AppConfigWrapper* appconf;
     ViperWindow* m_mainwin;
-    void showPECompatibilityScreen();
 };
 
 #endif // SETTINGS_H
