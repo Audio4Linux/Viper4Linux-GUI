@@ -79,7 +79,6 @@ FORMS += \
 !contains(DEFINES, VIPER_PLUGINMODE) {
     SOURCES += \
         $$PWD/crashhandler/airbag.c \
-        $$PWD/dialog/pulseeffectscompatibility.cpp \
         $$PWD/dialog/firstlaunchwizard.cpp \
         $$PWD/dbus/clientproxy.cpp \
         $$PWD/dbus/serveradaptor.cpp \
@@ -92,7 +91,6 @@ FORMS += \
         $$PWD/crashhandler/killer.h \
         $$PWD/crashhandler/safecall.h \
         $$PWD/crashhandler/stacktrace.h \
-        $$PWD/dialog/pulseeffectscompatibility.h \
         $$PWD/misc/findbinary.h \
         $$PWD/dialog/firstlaunchwizard.h \
         $$PWD/dbus/clientproxy.h \
@@ -103,13 +101,14 @@ FORMS += \
         $$PWD/misc/autostartmanager.h
 
     FORMS += \
-        $$PWD/dialog/pulseeffectscompatibility.ui \
         $$PWD/dialog/firstlaunchwizard.ui \
         $$PWD/dialog/statusfragment.ui
 }
 
 TRANSLATIONS += $$PWD/translations/lang_en.ts \
-                $$PWD/translations/lang_de.ts
+                $$PWD/translations/lang_de.ts \
+                $$PWD/translations/lang_zh_CN.ts \
+                $$PWD/translations/lang_zh_HK.ts
 
 RESOURCES += \
     $$PWD/styles/v4l_frontend_styles.qrc \

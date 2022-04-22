@@ -77,7 +77,7 @@ FirstLaunchWizard::FirstLaunchWizard(AppConfigWrapper* _appconf, ViperWindow* ma
                 ui->stackedWidget->slideInIdx(3);
         }
         else{
-            QMessageBox::warning(this, "Error", "Still no luck. No GStreamer plugin named 'viperfx' has been found!");
+            QMessageBox::warning(this, tr("Error"), tr("Still no luck. No GStreamer plugin named 'viperfx' has been found!"));
         }
     });
     connect(ui->pl_next,&QPushButton::clicked, [this]{
@@ -200,7 +200,7 @@ void FirstLaunchWizard::refreshDevices()
             }
         }
         if(notFound){
-            QString name = QString("Unknown (%1)").arg(dev_location);
+            QString name = QString(tr("Unknown (%1)")).arg(dev_location);
             ui->p2_dev_select->addItem(name,dev_location);
             ui->p2_dev_select->setCurrentText(name);
         }

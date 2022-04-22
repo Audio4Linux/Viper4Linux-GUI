@@ -31,7 +31,7 @@ class AppConfigWrapper : public QObject
 {
     Q_OBJECT
 public:
-    AppConfigWrapper(StyleHelper* stylehelper, QString _working_dir_plgmode = "");
+    AppConfigWrapper(StyleHelper* stylehelper=nullptr, QString _working_dir_plgmode = "");
     void saveAppConfig();
     void loadAppConfig();
     QString getAppConfigFilePath();
@@ -42,6 +42,8 @@ public:
     QString getIrsPath();
     void setTheme(const QString&);
     QString getTheme();
+    void setLanguage(const QString&);
+    QString getLanguage();
 
     void setWhiteIcons(bool b);
     bool getWhiteIcons();
@@ -102,6 +104,7 @@ signals:
     void spectrumReloadRequired();
     void styleChanged();
     void eqChanged();
+    void languageChanged();
 private:
     ConfigContainer* appconf;
     StyleHelper*     m_stylehelper;

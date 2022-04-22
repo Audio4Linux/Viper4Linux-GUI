@@ -32,7 +32,7 @@ void LogDlg::updateLog(){
     QString path;
 
 #ifndef VIPER_PLUGINMODE
-    if(ui->select->currentText()=="GST Plugin") path = "/tmp/viper4linux/viper.log";
+    if(ui->select->currentIndex() == 0) path = "/tmp/viper4linux/viper.log";
     else path = "/tmp/viper4linux/ui.log";
 #else
     path = "/tmp/gsteffectmanager/viper_ui.log";

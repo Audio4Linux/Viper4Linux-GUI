@@ -6,38 +6,38 @@
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="20"/>
         <source>V4A &lt;2.6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="21"/>
         <source>V4A &gt;2.7</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="32"/>
         <source>Missing Input</source>
-        <translation type="unfinished">Fehlende Eingabe</translation>
+        <translation>Fehlende Eingabe</translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="32"/>
         <source>Name is not set</source>
-        <translation type="unfinished">Name ist leer</translation>
+        <translation>Name ist leer</translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="35"/>
         <source>Import Viper4Android config file (xml)</source>
-        <translation type="unfinished">Importiere Viper4Android Konfigdatei (xml)</translation>
+        <translation>Importiere Viper4Android Konfigurationsdatei (xml)</translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="41"/>
         <source>Syntax Error</source>
-        <translation type="unfinished">Syntaxfehler</translation>
+        <translation>Syntaxfehler</translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="47"/>
         <source>Successfully converted!
 </source>
-        <translation type="unfinished">Erfolgreich konvertiert!
+        <translation>Erfolgreich konvertiert!
 </translation>
     </message>
     <message>
@@ -45,14 +45,14 @@
         <source>
 Notices:
 </source>
-        <translation type="unfinished">
+        <translation>
 Hinweise:
 </translation>
     </message>
     <message>
         <location filename="../dialog/androidimporterdlg.cpp" line="75"/>
         <source>Import</source>
-        <translation type="unfinished">Importieren</translation>
+        <translation>Importieren</translation>
     </message>
 </context>
 <context>
@@ -60,15 +60,7 @@ Hinweise:
     <message>
         <location filename="../visualization/audiostreamengine.cpp" line="329"/>
         <source>No common input / output format found</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CategoryFragment</name>
-    <message>
-        <location filename="../../../ui/dialogs/CategoryFragment.ui" line="20"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine bekannten Eingabe-/Ausgabeformate gefunden</translation>
     </message>
 </context>
 <context>
@@ -97,12 +89,12 @@ Hinweise:
         <location filename="../dialog/convolver.ui" line="99"/>
         <location filename="../dialog/convolver.ui" line="200"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../dialog/convolver.ui" line="109"/>
         <source>Local</source>
-        <translation type="unfinished">Lokal</translation>
+        <translation>Lokal</translation>
     </message>
     <message>
         <source>Filesystem</source>
@@ -151,130 +143,39 @@ Hinweise:
 <context>
     <name>ConvolverDlg</name>
     <message>
-        <location filename="../dialog/convolverdlg.cpp" line="75"/>
+        <location filename="../dialog/convolverdlg.cpp" line="76"/>
         <source>No IRS files found</source>
-        <translation type="unfinished">Keine IRS Dateien gefunden</translation>
+        <translation>Keine IRS Dateien gefunden</translation>
     </message>
     <message>
-        <location filename="../dialog/convolverdlg.cpp" line="96"/>
+        <location filename="../dialog/convolverdlg.cpp" line="97"/>
         <source>Nothing here yet...</source>
-        <translation type="unfinished">Hier ist noch nichts...</translation>
+        <translation>Hier ist noch nichts...</translation>
     </message>
     <message>
-        <location filename="../dialog/convolverdlg.cpp" line="101"/>
+        <location filename="../dialog/convolverdlg.cpp" line="102"/>
         <source>Add some IRS files in the &apos;filesystem&apos; tab</source>
-        <translation type="unfinished">Füge zuerst einige IRS Dateien hinzu</translation>
-    </message>
-    <message>
-        <location filename="../dialog/convolverdlg.cpp" line="111"/>
-        <source>Rename</source>
-        <translation type="unfinished">Umbenennen</translation>
+        <translation>Füge zuerst einige IRS Dateien hinzu</translation>
     </message>
     <message>
         <location filename="../dialog/convolverdlg.cpp" line="112"/>
+        <source>Rename</source>
+        <translation>Umbenennen</translation>
+    </message>
+    <message>
+        <location filename="../dialog/convolverdlg.cpp" line="113"/>
         <source>New Name</source>
-        <translation type="unfinished">Neuer Name</translation>
+        <translation>Neuer Name</translation>
     </message>
     <message>
-        <location filename="../dialog/convolverdlg.cpp" line="123"/>
+        <location filename="../dialog/convolverdlg.cpp" line="124"/>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../dialog/convolverdlg.cpp" line="123"/>
+        <location filename="../dialog/convolverdlg.cpp" line="124"/>
         <source>Selected File doesn&apos;t exist</source>
-        <translation type="unfinished">Ausgewählte Datei existiert nicht</translation>
-    </message>
-</context>
-<context>
-    <name>ExpandableItemPanel</name>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="20"/>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="56"/>
-        <source>ViperFX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="82"/>
-        <source>Installed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="225"/>
-        <source>View all packages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="239"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="265"/>
-        <source>Linux port of Viper</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/ExpandableItemPanel.ui" line="287"/>
-        <source>Custom UI included</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FilterSelectionDialog</name>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="26"/>
-        <source>Add new element</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="60"/>
-        <source>Discover</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="205"/>
-        <source>Failed to fetch contents from GitHub</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="247"/>
-        <source>Retry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="291"/>
-        <source>Local plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="306"/>
-        <source>Filter by name or description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="321"/>
-        <source> Show mono plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="328"/>
-        <source> Show unsupported plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="351"/>
-        <source>Reset search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/FilterSelectionDialog.ui" line="364"/>
-        <source>Categories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Datei existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -282,170 +183,171 @@ Hinweise:
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="303"/>
-        <location filename="../dialog/firstlaunchwizard.ui" line="2515"/>
-        <location filename="../dialog/firstlaunchwizard.ui" line="4207"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="131"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="765"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="2194"/>
         <source>Next &gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="412"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="149"/>
         <source>Welcome!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="533"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="179"/>
         <source>Thank you for installing this app!
 However, before you can begin playing around with Viper4Linux, we&apos;ll need to make some adjustments in order to ensure the best possible experience with Viper.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="654"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="209"/>
         <source>Missing module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="762"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="226"/>
         <source>Unable to find the GStreamer viperfx plugin.
 Make sure you installed Viper4Linux correctly and double-check the README instructions.
 You can also run &apos;gst-inspect-1.0 viperfx&apos; to check if the plugin was correctly installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="1017"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="309"/>
         <source>Try again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="1277"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="397"/>
         <source>View Readme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="1524"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="472"/>
         <source>Get Help on Telegram</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="1635"/>
-        <source>Hold on!</source>
+        <location filename="../dialog/firstlaunchwizard.ui" line="492"/>
+        <source>Old version detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="1743"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="509"/>
         <source>It looks like you installed the legacy version of the Viper4Linux GStreamer plugin driver.
 While this GUI is still backward-compatible, I recommend you to upgrade to the Audio4Linux version in order to make use of all new features and optimizations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="2010"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="604"/>
         <source>Continue anyway &gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="2257"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="679"/>
         <source>How to upgrade?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="2624"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="783"/>
         <source>Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="3072"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="1231"/>
         <source>Auto-detect output device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="3501"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="1660"/>
         <source>Manually select device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="3942"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="2101"/>
         <source>Viper</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="3947"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="2106"/>
         <source>Bluez</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="4316"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="2212"/>
         <source>Systray Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="4764"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="2660"/>
         <source>Disable systray mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="5190"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="3086"/>
         <source>Show icon in traybar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="5306"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="3111"/>
         <source>Advanced options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="5731"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="3536"/>
         <source>Start minimized on boot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="6157"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="3962"/>
         <source>Autostart viper service as well</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="6419"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="4052"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="6528"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="4070"/>
         <source>That&apos;s it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="6649"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="4100"/>
         <source>You&apos;re good to go! You can change any choice you just made in the settings section. Check it out for further customization options. Visit our Telegram community for support and updates!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialog/firstlaunchwizard.ui" line="6902"/>
+        <location filename="../dialog/firstlaunchwizard.ui" line="4181"/>
         <source>Telegram</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialog/firstlaunchwizard.cpp" line="80"/>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <location filename="../dialog/firstlaunchwizard.cpp" line="80"/>
+        <source>Still no luck. No GStreamer plugin named &apos;viperfx&apos; has been found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialog/firstlaunchwizard.cpp" line="203"/>
+        <source>Unknown (%1)</source>
+        <translation>Unbekannt (%1)</translation>
     </message>
 </context>
 <context>
     <name>FlatTabWidget</name>
     <message>
-        <location filename="../../FlatTabWidget/flattabwidget.ui" line="14"/>
         <location filename="../dialog/FlatTabWidget/flattabwidget.ui" line="14"/>
         <source>FlatTabWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LinkPanel</name>
-    <message>
-        <location filename="../../../ui/widgets/discover/LinkPanel.ui" line="26"/>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/LinkPanel.ui" line="89"/>
-        <source>View all installed plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -453,7 +355,7 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     <message>
         <location filename="../dialog/logdlg.cpp" line="43"/>
         <source>&lt;Failed to open &apos;%1&apos;&gt;</source>
-        <translation type="unfinished">&lt;Konnte &apos;%1&apos; nicht öffnen&gt;</translation>
+        <translation>&lt;Konnte &apos;%1&apos; nicht öffnen&gt;</translation>
     </message>
 </context>
 <context>
@@ -799,88 +701,18 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
         <translation type="vanished">Stärke </translation>
     </message>
     <message>
-        <location filename="../../../ui/MainWindow.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/MainWindow.ui" line="66"/>
-        <source>Load state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/MainWindow.ui" line="73"/>
-        <source>Dump state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/MainWindow.ui" line="80"/>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
-    </message>
-    <message>
-        <location filename="../../../ui/MainWindow.ui" line="87"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/MainWindow.ui" line="199"/>
-        <source>No plugin selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Löschen</translation>
     </message>
 </context>
 <context>
     <name>OverlayMsgProxy</name>
     <message>
         <location filename="../misc/overlaymsgproxy.cpp" line="22"/>
-        <location filename="../misc/overlaymsgproxy.h" line="27"/>
         <location filename="../misc/overlaymsgproxy.h" line="28"/>
+        <location filename="../misc/overlaymsgproxy.h" line="29"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
-    </message>
-</context>
-<context>
-    <name>PackageListDiscover</name>
-    <message>
-        <location filename="../../../ui/dialogs/discover/PackageListDiscover.ui" line="26"/>
-        <source>Available packages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/dialogs/discover/PackageListDiscover.ui" line="104"/>
-        <source>Don&apos;t forget to restart this app after installing a new plugin!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PackageTextView</name>
-    <message>
-        <location filename="../../../ui/widgets/discover/PackageTextView.ui" line="14"/>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/PackageTextView.ui" line="44"/>
-        <source>Arch (AUR)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/PackageTextView.ui" line="67"/>
-        <source>yay -S gst-plugin-viperfx</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PanelCarousel</name>
-    <message>
-        <location filename="../../../ui/widgets/discover/PanelCarousel.ui" line="14"/>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../ui/widgets/discover/PanelCarousel.ui" line="48"/>
-        <source>Featured</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -1034,197 +866,150 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
 <context>
     <name>PresetDlg</name>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="57"/>
+        <location filename="../dialog/presetdlg.cpp" line="59"/>
         <source>No data received</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Daten erhalten</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="62"/>
-        <location filename="../dialog/presetdlg.cpp" line="68"/>
-        <source>Android Profile</source>
-        <translation type="unfinished">Android Profil</translation>
-    </message>
-    <message>
-        <location filename="../dialog/presetdlg.cpp" line="63"/>
-        <location filename="../dialog/presetdlg.cpp" line="72"/>
-        <source>Linux Configuration</source>
-        <translation type="unfinished">Linux Profil</translation>
-    </message>
-    <message>
-        <location filename="../dialog/presetdlg.cpp" line="69"/>
-        <source>V4A &lt;2.6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../dialog/presetdlg.cpp" line="64"/>
         <location filename="../dialog/presetdlg.cpp" line="70"/>
+        <source>Android Profile</source>
+        <translation>Android Profil</translation>
+    </message>
+    <message>
+        <location filename="../dialog/presetdlg.cpp" line="65"/>
+        <location filename="../dialog/presetdlg.cpp" line="74"/>
+        <source>Linux Configuration</source>
+        <translation>Linux Profil</translation>
+    </message>
+    <message>
+        <location filename="../dialog/presetdlg.cpp" line="71"/>
+        <source>V4A &lt;2.6</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../dialog/presetdlg.cpp" line="72"/>
         <source>V4A &gt;2.7</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="170"/>
+        <location filename="../dialog/presetdlg.cpp" line="172"/>
         <source>No presets saved</source>
-        <translation type="unfinished">Keine Voreinstellungen gespeichert</translation>
+        <translation>Keine Voreinstellungen gespeichert</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="194"/>
-        <location filename="../dialog/presetdlg.cpp" line="231"/>
-        <location filename="../dialog/presetdlg.cpp" line="253"/>
-        <location filename="../dialog/presetdlg.cpp" line="293"/>
-        <location filename="../dialog/presetdlg.cpp" line="314"/>
-        <location filename="../dialog/presetdlg.cpp" line="329"/>
-        <location filename="../dialog/presetdlg.cpp" line="342"/>
-        <location filename="../dialog/presetdlg.cpp" line="354"/>
-        <location filename="../dialog/presetdlg.cpp" line="366"/>
-        <location filename="../dialog/presetdlg.cpp" line="416"/>
+        <location filename="../dialog/presetdlg.cpp" line="196"/>
+        <location filename="../dialog/presetdlg.cpp" line="233"/>
+        <location filename="../dialog/presetdlg.cpp" line="255"/>
+        <location filename="../dialog/presetdlg.cpp" line="295"/>
+        <location filename="../dialog/presetdlg.cpp" line="316"/>
+        <location filename="../dialog/presetdlg.cpp" line="331"/>
+        <location filename="../dialog/presetdlg.cpp" line="344"/>
+        <location filename="../dialog/presetdlg.cpp" line="356"/>
+        <location filename="../dialog/presetdlg.cpp" line="368"/>
+        <location filename="../dialog/presetdlg.cpp" line="418"/>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="194"/>
+        <location filename="../dialog/presetdlg.cpp" line="196"/>
         <source>Preset Name is empty</source>
-        <translation type="unfinished">Name ist leer</translation>
+        <translation>Name ist leer</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="231"/>
-        <location filename="../dialog/presetdlg.cpp" line="293"/>
-        <location filename="../dialog/presetdlg.cpp" line="329"/>
-        <location filename="../dialog/presetdlg.cpp" line="354"/>
+        <location filename="../dialog/presetdlg.cpp" line="233"/>
+        <location filename="../dialog/presetdlg.cpp" line="295"/>
+        <location filename="../dialog/presetdlg.cpp" line="331"/>
+        <location filename="../dialog/presetdlg.cpp" line="356"/>
         <source>Nothing selected</source>
-        <translation type="unfinished">Nichts ausgewählt</translation>
+        <translation>Nichts ausgewählt</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="237"/>
+        <location filename="../dialog/presetdlg.cpp" line="239"/>
         <source>Save XML</source>
-        <translation type="unfinished">XML speichern</translation>
+        <translation>XML speichern</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="253"/>
-        <location filename="../dialog/presetdlg.cpp" line="314"/>
-        <location filename="../dialog/presetdlg.cpp" line="342"/>
-        <location filename="../dialog/presetdlg.cpp" line="366"/>
-        <location filename="../dialog/presetdlg.cpp" line="416"/>
+        <location filename="../dialog/presetdlg.cpp" line="255"/>
+        <location filename="../dialog/presetdlg.cpp" line="316"/>
+        <location filename="../dialog/presetdlg.cpp" line="344"/>
+        <location filename="../dialog/presetdlg.cpp" line="368"/>
+        <location filename="../dialog/presetdlg.cpp" line="418"/>
         <source>Selected File doesn&apos;t exist</source>
-        <translation type="unfinished">Ausgewählte Datei existiert nicht</translation>
+        <translation>Ausgewählte Datei existiert nicht</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="272"/>
+        <location filename="../dialog/presetdlg.cpp" line="274"/>
         <source>Load custom audio.conf</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefinierte audio.conf laden</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="297"/>
+        <location filename="../dialog/presetdlg.cpp" line="299"/>
         <source>Save audio.conf</source>
-        <translation type="unfinished">audio.conf speichern</translation>
+        <translation>audio.conf speichern</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="381"/>
+        <location filename="../dialog/presetdlg.cpp" line="383"/>
         <source>Overwrite</source>
-        <translation type="unfinished">Überschreiben</translation>
+        <translation>Überschreiben</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="382"/>
+        <location filename="../dialog/presetdlg.cpp" line="384"/>
         <source>Save</source>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="388"/>
-        <location filename="../dialog/presetdlg.cpp" line="407"/>
+        <location filename="../dialog/presetdlg.cpp" line="390"/>
+        <location filename="../dialog/presetdlg.cpp" line="409"/>
         <source>Rename</source>
-        <translation type="unfinished">Umbenennen</translation>
+        <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="389"/>
+        <location filename="../dialog/presetdlg.cpp" line="391"/>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="408"/>
+        <location filename="../dialog/presetdlg.cpp" line="410"/>
         <source>New Name</source>
-        <translation type="unfinished">Neuer Name</translation>
+        <translation>Neuer Name</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="435"/>
-        <location filename="../dialog/presetdlg.cpp" line="440"/>
-        <location filename="../dialog/presetdlg.cpp" line="474"/>
-        <location filename="../dialog/presetdlg.cpp" line="480"/>
+        <location filename="../dialog/presetdlg.cpp" line="437"/>
+        <location filename="../dialog/presetdlg.cpp" line="442"/>
+        <location filename="../dialog/presetdlg.cpp" line="476"/>
+        <location filename="../dialog/presetdlg.cpp" line="482"/>
         <source>Error: %1</source>
-        <translation type="unfinished">Fehler: %1</translation>
+        <translation>Fehler: %1</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="443"/>
-        <location filename="../dialog/presetdlg.cpp" line="483"/>
+        <location filename="../dialog/presetdlg.cpp" line="445"/>
+        <location filename="../dialog/presetdlg.cpp" line="485"/>
         <source>HTTP-Response %1</source>
-        <translation type="unfinished">HTTP-Antwort: %1</translation>
+        <translation>HTTP-Antwort: %1</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="465"/>
-        <location filename="../dialog/presetdlg.cpp" line="510"/>
+        <location filename="../dialog/presetdlg.cpp" line="467"/>
+        <location filename="../dialog/presetdlg.cpp" line="512"/>
         <source>Download finished</source>
-        <translation type="unfinished">Heruntergeladen</translation>
+        <translation>Heruntergeladen</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="505"/>
+        <location filename="../dialog/presetdlg.cpp" line="507"/>
         <source>Downloading IRS...</source>
-        <translation type="unfinished">Lädt IRS herunter...</translation>
+        <translation>Lädt IRS herunter...</translation>
     </message>
     <message>
-        <location filename="../dialog/presetdlg.cpp" line="524"/>
+        <location filename="../dialog/presetdlg.cpp" line="526"/>
         <source>Downloading Config...</source>
-        <translation type="unfinished">Lädt audio.conf herunter...</translation>
+        <translation>Lädt audio.conf herunter...</translation>
     </message>
 </context>
 <context>
     <name>PulseeffectsCompatibility</name>
     <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="20"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="131"/>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="770"/>
-        <source>Next &gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="149"/>
-        <source>Select your headphones</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="166"/>
-        <source>In order to use PulseEffects along with Viper, you&apos;ll need to perform a few adjustements. Please choose the desired output sink, your headphones or speaker are connected to. Make sure you haven&apos;t selected &apos;PulseEffects_*&apos; as your output device location.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="681"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="788"/>
-        <source>PulseEffects configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="805"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;1. Start PulseEffects and open the settings menu. Then switch to the &apos;Pulseaudio&apos; tab and select the speaker icon.&lt;/p&gt;&lt;p&gt;2. Disable the &apos;Use default&apos; button and select the same output device/sink you chose for Viper just now.&lt;/p&gt;&lt;p&gt;3. You might need to restart PulseEffects for the changes to take effect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="898"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="916"/>
-        <source>Done!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/pulseeffectscompatibility.ui" line="933"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PulseEffects and Viper should now be set up correctly!&lt;/p&gt;&lt;p&gt;Keep in mind that you will have to restart Viper after launching/terminating PulseEffects (and the other way around).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Schließen</translation>
     </message>
 </context>
 <context>
@@ -1272,481 +1057,390 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
         <source>Error: Unknown config type</source>
         <translation>Fehler: Unbekannter Konfig-Typ</translation>
     </message>
-</context>
-<context>
-    <name>QtBoolEdit</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="233"/>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="243"/>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="268"/>
-        <source>True</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="52"/>
+        <source>Default</source>
+        <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="243"/>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="268"/>
-        <source>False</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="53"/>
+        <source>Pop</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtBoolPropertyManager</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="1695"/>
-        <source>True</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="54"/>
+        <source>Rock</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="1696"/>
-        <source>False</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="55"/>
+        <source>Jazz</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtCharEdit</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qteditorfactory.cpp" line="1700"/>
-        <source>Clear Char</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="56"/>
+        <source>Classic</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtColorEditWidget</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qteditorfactory.cpp" line="2314"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="57"/>
+        <source>Bass</source>
+        <translation>Bass</translation>
     </message>
-</context>
-<context>
-    <name>QtColorPropertyManager</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6421"/>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="58"/>
+        <source>Clear</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6429"/>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="59"/>
+        <source>Hip-Hop</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6437"/>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="60"/>
+        <source>Dubstep</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6445"/>
-        <source>Alpha</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="61"/>
+        <source>Movie</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="58"/>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="62"/>
+        <source>Metal</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="60"/>
-        <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="63"/>
+        <source>Vocal Booster</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="62"/>
-        <source>Cross</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="64"/>
+        <source>Hardstyle</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="64"/>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="65"/>
+        <source>Acoustic</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="66"/>
-        <source>IBeam</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="66"/>
+        <source>R&amp;B</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="68"/>
-        <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="67"/>
+        <source>Electronic</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="70"/>
-        <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="68"/>
+        <source>Deep Bass</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="72"/>
-        <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="69"/>
+        <source>Beats</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="74"/>
-        <source>Size Slash</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="70"/>
+        <source>Soft Bass</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="76"/>
-        <source>Size All</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="76"/>
+        <location filename="../misc/presetprovider.cpp" line="130"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="78"/>
-        <source>Blank</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="77"/>
+        <source>Extreme Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="80"/>
-        <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="78"/>
+        <source>High-end Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="82"/>
-        <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="79"/>
+        <source>Common Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="84"/>
-        <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="80"/>
+        <source>Low-end Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="86"/>
-        <source>Forbidden</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="81"/>
+        <source>Common Earphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="88"/>
-        <source>Open Hand</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="82"/>
+        <source>Extreme Headphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="90"/>
-        <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="83"/>
+        <source>High-end Headphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="92"/>
-        <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="84"/>
+        <source>Common Headphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="94"/>
-        <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="85"/>
+        <source>Common Earphone (v1)</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtFontEditWidget</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qteditorfactory.cpp" line="2523"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="86"/>
+        <source>Apple Earphone</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qteditorfactory.cpp" line="2543"/>
-        <source>Select Font</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="87"/>
+        <source>Monster Earphone</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6095"/>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="88"/>
+        <source>Moto Earphone</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6108"/>
-        <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="89"/>
+        <source>Philips Earphone</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6116"/>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="90"/>
+        <source>SHP2000</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6123"/>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="91"/>
+        <source>SHP9000</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6130"/>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="92"/>
+        <source>Unknown Type I</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6137"/>
-        <source>Strikeout</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="93"/>
+        <source>Unknown Type II</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="6144"/>
-        <source>Kerning</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="94"/>
+        <source>Unknown Type III</source>
+        <translation></translation>
     </message>
-</context>
-<context>
-    <name>QtFractionPropertyManager</name>
     <message>
-        <location filename="../../../properties/QtFractionPropertyManager.cpp" line="121"/>
-        <source>%1/%2</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="95"/>
+        <source>Unknown Type IV</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../../properties/QtFractionPropertyManager.cpp" line="161"/>
-        <source>Numerator</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="131"/>
+        <source>Slight</source>
+        <translation>Leicht</translation>
     </message>
     <message>
-        <location filename="../../../properties/QtFractionPropertyManager.cpp" line="169"/>
-        <source>Denominator</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="132"/>
+        <source>Level 1</source>
+        <translation>Stärke 1</translation>
     </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="328"/>
-        <source>Clear Shortcut</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="133"/>
+        <source>Level 2</source>
+        <translation>Stärke 2</translation>
     </message>
-</context>
-<context>
-    <name>QtLocalePropertyManager</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="2610"/>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="134"/>
+        <source>Level 3</source>
+        <translation>Stärke 3</translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="2663"/>
-        <source>Language</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="135"/>
+        <source>Level 4</source>
+        <translation>Stärke 4</translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="2671"/>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="136"/>
+        <source>Level 5</source>
+        <translation>Stärke 5</translation>
     </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3081"/>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="137"/>
+        <source>Level 6</source>
+        <translation>Stärke 6</translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3152"/>
-        <source>X</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="138"/>
+        <source>Level 7</source>
+        <translation>Stärke 7</translation>
     </message>
     <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3160"/>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="2841"/>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="2878"/>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="2885"/>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="187"/>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertybrowserutils.cpp" line="214"/>
-        <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtRectFPropertyManager</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4586"/>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4742"/>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4750"/>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4758"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4767"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtRectPropertyManager</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4156"/>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4276"/>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4283"/>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4290"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="4298"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtSizeFPropertyManager</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3764"/>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3894"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3903"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5607"/>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5608"/>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5609"/>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5654"/>
-        <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5663"/>
-        <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5672"/>
-        <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="5680"/>
-        <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePropertyManager</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3400"/>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3496"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qtpropertymanager.cpp" line="3504"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtTreePropertyBrowser</name>
-    <message>
-        <location filename="../../QtPropertyBrowser/qttreepropertybrowser.cpp" line="478"/>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../QtPropertyBrowser/qttreepropertybrowser.cpp" line="479"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
+        <location filename="../misc/presetprovider.cpp" line="139"/>
+        <source>Extreme</source>
+        <translation>Extrem</translation>
     </message>
 </context>
 <context>
     <name>SettingsDlg</name>
     <message>
-        <location filename="../dialog/settingsdlg.cpp" line="119"/>
-        <source>Restart required</source>
-        <translation type="unfinished">Neustart nötig</translation>
+        <location filename="../dialog/settingsdlg.cpp" line="64"/>
+        <source>General</source>
+        <translation>Allgemein</translation>
     </message>
     <message>
-        <location filename="../dialog/settingsdlg.cpp" line="119"/>
+        <location filename="../dialog/settingsdlg.cpp" line="72"/>
+        <source>Context Menu</source>
+        <translation>Kontextmenü</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="74"/>
+        <source>Design</source>
+        <translation>Design</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="76"/>
+        <source>Advanced</source>
+        <translation>Erweitert</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="92"/>
+        <source>Spectrum Analyser</source>
+        <translation>Spektrum-Analyzer</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="93"/>
+        <source>Systray</source>
+        <translation>Systemleiste</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="98"/>
+        <source>Default</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="99"/>
+        <source>Black</source>
+        <translation>Schwarz</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="100"/>
+        <source>Blue</source>
+        <translation>Blau</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="101"/>
+        <source>Dark Blue</source>
+        <translation>Dunkelblau</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="102"/>
+        <source>Dark Green</source>
+        <translation>Dunkelgrün</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="103"/>
+        <source>Gray</source>
+        <translation>Grau</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="104"/>
+        <source>Green</source>
+        <translation>Grün</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="105"/>
+        <source>Honeycomb</source>
+        <translation>Honigwabe</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="106"/>
+        <source>Pitch Black</source>
+        <translation>Stockdunkel</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="107"/>
+        <source>Stone</source>
+        <translation>Stein</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="108"/>
+        <source>White</source>
+        <translation>Weiß</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="109"/>
+        <source>Custom</source>
+        <translation>Benutzerdefiniert</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="130"/>
+        <source>Restart required</source>
+        <translation>Neustart nötig</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="130"/>
         <source>Please restart this application to make sure all changes are applied correctly.
 Press &apos;OK&apos; to quit or &apos;Cancel&apos; if you want to continue without a restart.</source>
-        <translation type="unfinished">Bitte starten Sie dieses Programm neu um sicher zu stellen, dass alle Änderungen korrekt übernommen wurden.
+        <translation>Bitte starten Sie dieses Programm neu um sicher zu stellen, dass alle Änderungen korrekt übernommen wurden.
 Drücke &apos;OK&apos; um das Programm zu verlassen oder &apos;Abbrechen&apos; um ohne Neustart fortzufahren.</translation>
     </message>
     <message>
-        <location filename="../dialog/settingsdlg.cpp" line="147"/>
+        <location filename="../dialog/settingsdlg.cpp" line="161"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../dialog/settingsdlg.cpp" line="148"/>
+        <location filename="../dialog/settingsdlg.cpp" line="162"/>
         <source>This fix kills GLava (desktop visualizer) and restarts it after a new config has been applied.
 This prevents GLava to switch to another audio sink, while V4L is restarting.</source>
-        <translation type="unfinished">Dieser Fix startet GLava neu währenddessen V4L neustartet.
+        <translation>Dieser Fix startet GLava neu währenddessen V4L neustartet.
 Dadurch wird verhindert, dass GLava zu einem anderen Sink umschaltet.</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="331"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="331"/>
+        <source>Do you really want to restore the default layout?</source>
+        <translation>Willst Du wirklich das standardmäßige Layout wiederherstellen?</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="404"/>
+        <source>Unknown (%1)</source>
+        <translation>Unbekannt (%1)</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="416"/>
+        <location filename="../dialog/settingsdlg.cpp" line="418"/>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settingsdlg.cpp" line="416"/>
+        <location filename="../dialog/settingsdlg.cpp" line="418"/>
+        <source>No</source>
+        <translation>Nein</translation>
     </message>
 </context>
 <context>
@@ -1831,963 +1525,1035 @@ Bitte stelle sicher, dass Viper läuft und dass Sie die letzte Version von gst-p
     <message>
         <location filename="../viper_window.ui" line="26"/>
         <source>Viper4Linux GUI</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="117"/>
+        <location filename="../viper_window.ui" line="95"/>
+        <source>Popup</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="159"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Bass/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles bass of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Mode:&lt;/span&gt; Natural, Pure bass+ and Sub-woofer.&lt;br/&gt;Natural bass is like V4A XHiFi’s Lo Contour. Purebass+ gives clean bass. Sub-woofer gives huge bass.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Frequency&lt;/span&gt;: Adjust bass frequency. Recommended at least 60Hz for both modes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Boost&lt;/span&gt;: Volume of ViPER Bass. Recommended at least 6dB for Natural, at least 8dB for Pure bass+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="120"/>
-        <location filename="../viper_window.ui" line="1252"/>
+        <location filename="../viper_window.ui" line="162"/>
+        <location filename="../viper_window.ui" line="1310"/>
         <source>Bass</source>
-        <translation type="unfinished">Bass</translation>
+        <translation>Bass</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="140"/>
+        <location filename="../viper_window.ui" line="182"/>
         <source>Bass Mode</source>
-        <translation type="unfinished">Bassmodus</translation>
+        <translation>Bassmodus</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="163"/>
-        <location filename="../viper_window.ui" line="322"/>
-        <location filename="../viper_window.cpp" line="1246"/>
-        <location filename="../viper_window.cpp" line="1253"/>
+        <location filename="../viper_window.ui" line="205"/>
+        <location filename="../viper_window.ui" line="364"/>
+        <location filename="../viper_window.cpp" line="799"/>
+        <location filename="../viper_window.cpp" line="1301"/>
+        <location filename="../viper_window.cpp" line="1308"/>
         <source>Natural</source>
-        <translation type="unfinished">Natural</translation>
+        <translation>Natural</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="168"/>
-        <location filename="../viper_window.cpp" line="1247"/>
+        <location filename="../viper_window.ui" line="210"/>
+        <location filename="../viper_window.cpp" line="787"/>
+        <location filename="../viper_window.cpp" line="1302"/>
         <source>Pure Bass+</source>
-        <translation type="unfinished">Purer Bass+</translation>
+        <translation>Purer Bass+</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="173"/>
-        <location filename="../viper_window.cpp" line="1248"/>
+        <location filename="../viper_window.ui" line="215"/>
+        <location filename="../viper_window.cpp" line="787"/>
+        <location filename="../viper_window.cpp" line="1303"/>
         <source>Subwoofer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="185"/>
-        <location filename="../viper_window.ui" line="473"/>
+        <location filename="../viper_window.ui" line="227"/>
+        <location filename="../viper_window.ui" line="518"/>
         <source>Bass Gain</source>
-        <translation type="unfinished">Bassverstärkung</translation>
+        <translation>Bassverstärkung</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="214"/>
+        <location filename="../viper_window.ui" line="256"/>
         <source>Bass Freq</source>
-        <translation type="unfinished">Bassfrequency</translation>
+        <translation>Bassfrequency</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="246"/>
+        <location filename="../viper_window.ui" line="288"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Tube Simulator (6N1J)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This option defines whether to enable the tube simulator effect. Viper&apos;s tube simulator uses a simplified mathematical simulation of tube effect.&lt;/p&gt;&lt;p&gt;If turned on, it will significantly reduce high-frequency odd harmonic distortions, while increases even-order harmonic distortions of tube simulator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="249"/>
+        <location filename="../viper_window.ui" line="291"/>
         <source>Tube Simulator</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="276"/>
+        <location filename="../viper_window.ui" line="318"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Clarity/Fidelity Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It’s a substitution for XHiFi’s Audio Reconstruction. It handles the clarity of the sound.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Mode:&lt;/span&gt; Natural, OZone+ and XHiFi offers three different types of clarity.&lt;br/&gt;Natural has high vocal and treble. OZone+ offers clean clarity. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clarity Strength:&lt;/span&gt; Volume of ViPER Clarity. Recommended at least 3.5dB for Natural, at least 8dB for OZone+, at least 2dB for XHiFi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="279"/>
+        <location filename="../viper_window.ui" line="321"/>
         <source>Clarity</source>
-        <translation type="unfinished">Höhen</translation>
+        <translation>Höhen</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="299"/>
+        <location filename="../viper_window.ui" line="341"/>
         <source>Clarity Mode</source>
-        <translation type="unfinished">Höhenmodus</translation>
+        <translation>Höhenmodus</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="327"/>
-        <location filename="../viper_window.cpp" line="1254"/>
+        <location filename="../viper_window.ui" line="369"/>
+        <location filename="../viper_window.cpp" line="799"/>
+        <location filename="../viper_window.cpp" line="1309"/>
         <source>OZone+</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="332"/>
-        <location filename="../viper_window.cpp" line="1255"/>
+        <location filename="../viper_window.ui" line="374"/>
+        <location filename="../viper_window.cpp" line="799"/>
+        <location filename="../viper_window.cpp" line="1310"/>
         <source>XHiFi</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="344"/>
+        <location filename="../viper_window.ui" line="386"/>
         <source>Clarity Level</source>
-        <translation type="unfinished">Höhenverstärkung</translation>
+        <translation>Höhenverstärkung</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="376"/>
+        <location filename="../viper_window.ui" line="418"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;ViPER Cure+/Auditory System Protection&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Protects auditory system.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Binaural Level: &lt;/span&gt;Strength of Binaural protection. Recommended Moderate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="379"/>
+        <location filename="../viper_window.ui" line="421"/>
         <source>Viper Cure+</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="391"/>
-        <location filename="../viper_window.ui" line="828"/>
-        <location filename="../viper_window.ui" line="904"/>
+        <location filename="../viper_window.ui" line="433"/>
+        <location filename="../viper_window.ui" line="886"/>
+        <location filename="../viper_window.ui" line="962"/>
         <source>Level</source>
-        <translation type="unfinished">Stärke</translation>
+        <translation>Stärke</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="456"/>
+        <location filename="../viper_window.ui" line="498"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Dynamic System&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It handles the dynamic range of the sound. In other words, the bass, treble, and limiting.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets:&lt;/span&gt; This value defines the headset type connected to the audio jack. If you cannot get the right device for good bass tone, then select Common Earphone. Common Earphone is a common choice.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bass Gain:&lt;/span&gt; This value defines the average dynamic bass, the greater, the stronger bass. Recommended 33%.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="459"/>
+        <location filename="../viper_window.ui" line="501"/>
         <source>Dynamic System</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="493"/>
+        <location filename="../viper_window.ui" line="538"/>
         <source>X Coeff 1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="510"/>
+        <location filename="../viper_window.ui" line="555"/>
         <source>X Coeff 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="530"/>
+        <location filename="../viper_window.ui" line="575"/>
         <source>Side Gain 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="547"/>
-        <source>Side Gain 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="584"/>
-        <location filename="../viper_window.ui" line="2352"/>
-        <source>Presets</source>
-        <translation type="unfinished">Voreinstellungen</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="592"/>
-        <location filename="../viper_window.ui" line="2360"/>
-        <location filename="../viper_window.ui" line="2714"/>
-        <location filename="../viper_window.ui" line="2843"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
+        <source>Side Gain 2</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="597"/>
-        <source>Extreme Headphone (v2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="602"/>
-        <source>High-end Headphone (v2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="607"/>
-        <source>Common Headphone (v2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="612"/>
-        <source>Low-end Headphone (v2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="617"/>
-        <source>Common Earphone (v2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="622"/>
-        <source>Extreme Headphone (v1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="627"/>
-        <source>High-end Headphone (v1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="632"/>
-        <source>Common Headphone (v1)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../viper_window.ui" line="629"/>
+        <location filename="../viper_window.ui" line="2410"/>
+        <source>Presets</source>
+        <translation>Voreinstellungen</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="637"/>
-        <source>Common Earphone (v1)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../viper_window.ui" line="2418"/>
+        <location filename="../viper_window.ui" line="2772"/>
+        <source>...</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="642"/>
-        <source>Apple Earphone</source>
-        <translation type="unfinished"></translation>
+        <source>Extreme Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="647"/>
-        <source>Monster Earphone</source>
-        <translation type="unfinished"></translation>
+        <source>High-end Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="652"/>
-        <source>Moto Earphone</source>
-        <translation type="unfinished"></translation>
+        <source>Common Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="657"/>
-        <source>Philips Earphone</source>
-        <translation type="unfinished"></translation>
+        <source>Low-end Headphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="662"/>
-        <source>SHP2000</source>
-        <translation type="unfinished"></translation>
+        <source>Common Earphone (v2)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="667"/>
-        <source>SHP9000</source>
-        <translation type="unfinished"></translation>
+        <source>Extreme Headphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="672"/>
-        <source>Unknown Type I</source>
-        <translation type="unfinished"></translation>
+        <source>High-end Headphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="677"/>
-        <source>Unknown Type II</source>
-        <translation type="unfinished"></translation>
+        <source>Common Headphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="682"/>
-        <source>Unknown Type III</source>
-        <translation type="unfinished"></translation>
+        <source>Common Earphone (v1)</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="687"/>
-        <source>Unknown Type IV</source>
-        <translation type="unfinished"></translation>
+        <source>Apple Earphone</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="692"/>
-        <location filename="../viper_window.ui" line="1337"/>
+        <source>Monster Earphone</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="697"/>
+        <source>Moto Earphone</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="702"/>
+        <source>Philips Earphone</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="707"/>
+        <source>SHP2000</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="712"/>
+        <source>SHP9000</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="717"/>
+        <source>Unknown Type I</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="722"/>
+        <source>Unknown Type II</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="727"/>
+        <source>Unknown Type III</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="732"/>
+        <source>Unknown Type IV</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="737"/>
+        <location filename="../viper_window.ui" line="1395"/>
+        <location filename="../viper_window.cpp" line="1252"/>
+        <location filename="../viper_window.cpp" line="1259"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefiniert</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="718"/>
+        <location filename="../viper_window.ui" line="763"/>
         <source>Y Coeff 1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="741"/>
+        <location filename="../viper_window.ui" line="786"/>
         <source>Y Coeff 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="811"/>
+        <location filename="../viper_window.ui" line="869"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Headphone Surround+&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Virtual Headphone Surround effect&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Level: &lt;/span&gt;Strength of VHS+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="814"/>
+        <location filename="../viper_window.ui" line="872"/>
         <source>Headphone Engine</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="884"/>
+        <location filename="../viper_window.ui" line="942"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Differential Surround&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Also known as Haas effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Delay Time: &lt;/span&gt;This value defines the delay(gap) between left and right. The greater, the wider the sound&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="887"/>
+        <location filename="../viper_window.ui" line="945"/>
         <source>Differential Surround</source>
-        <translation type="unfinished">Differentialer Surround</translation>
+        <translation>Differentialer Surround</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="967"/>
+        <location filename="../viper_window.ui" line="1025"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reverbation&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It uses mathematical methods to simulate the environmental feeling sensation. For example, a song can be felt playing inside the auditorium, living room, bathroom, and so on.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Size:&lt;/span&gt; This value defines the virtual environment area size. The larger the value, the sound is wider and more echoes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Width: &lt;/span&gt;This value defines the width of the room above, in meters. Assumed that the above room size is 100 square meters, here to set a width of 14 meters, then the length of the room will be 7.14 m. Therefore, the room size and width defines the aspect ratio of the virtual environment. The larger the value, the sound coming from both sides will felt more apparent.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Damping Factor:&lt;/span&gt; This value defines the humidity of air in the above virtual environment; the moisture vapor in the air will easily absorb the echoes. So the bigger this value, the fewer echoes heard.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wet Signal:&lt;/span&gt; This value defines the volume of the simulated environment effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dry Signal: &lt;/span&gt;This value defines the volume of the original sound.&lt;/p&gt;&lt;p&gt;For environments with low air humidity such as living room, auditorium, and other indoor environments, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​from 0 to 20, the reverb signal values ​​20 to 50, the proportion of the original signal to take value of about 50.&lt;br/&gt;For environments with high air humidity such as bathroom and other indoor environments that contains a lot of moisture, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​of 50 to 100, the reverb signal values ​​40 to 80, the proportion of the original signal value of about 50.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="970"/>
+        <location filename="../viper_window.ui" line="1028"/>
         <source>Reverb</source>
-        <translation type="unfinished">Hall</translation>
+        <translation>Hall</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="996"/>
+        <location filename="../viper_window.ui" line="1054"/>
         <source>Room Size</source>
-        <translation type="unfinished">Raumgröße</translation>
+        <translation>Raumgröße</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1031"/>
+        <location filename="../viper_window.ui" line="1089"/>
         <source>Room Width</source>
-        <translation type="unfinished">Raumweite</translation>
+        <translation>Raumweite</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1066"/>
+        <location filename="../viper_window.ui" line="1124"/>
         <source>Room Damp</source>
-        <translation type="unfinished">Raumdämpfung</translation>
+        <translation>Raumdämpfung</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1106"/>
+        <location filename="../viper_window.ui" line="1164"/>
         <source>Wet Signal</source>
-        <translation type="unfinished">Effektsignal (wet)</translation>
+        <translation>Effektsignal (wet)</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1113"/>
+        <location filename="../viper_window.ui" line="1171"/>
         <source>Dry Signal</source>
-        <translation type="unfinished">Direktsignal (dry)</translation>
+        <translation>Direktsignal (dry)</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1228"/>
+        <location filename="../viper_window.ui" line="1286"/>
         <source>Enable EQ</source>
-        <translation type="unfinished">EQ einschalten</translation>
+        <translation>EQ einschalten</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1242"/>
+        <location filename="../viper_window.ui" line="1300"/>
         <source>Presets...</source>
-        <translation type="unfinished">Voreinstellungen...</translation>
+        <translation>Voreinstellungen...</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1247"/>
+        <location filename="../viper_window.ui" line="1305"/>
         <source>Acoustic</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1257"/>
+        <location filename="../viper_window.ui" line="1315"/>
         <source>Beats</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1262"/>
+        <location filename="../viper_window.ui" line="1320"/>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1267"/>
+        <location filename="../viper_window.ui" line="1325"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1272"/>
+        <location filename="../viper_window.ui" line="1330"/>
         <source>Deep Bass</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1277"/>
+        <location filename="../viper_window.ui" line="1335"/>
         <source>Dubstep</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1282"/>
+        <location filename="../viper_window.ui" line="1340"/>
         <source>Electronic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1287"/>
-        <source>Hardstyle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1292"/>
-        <source>Hip-Hop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1297"/>
-        <source>Jazz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1302"/>
-        <source>Metal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1307"/>
-        <source>Movie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1312"/>
-        <source>Pop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1317"/>
-        <source>R&amp;B</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1322"/>
-        <source>Rock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1327"/>
-        <source>Soft Bass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1332"/>
-        <source>Vocal Booster</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1345"/>
-        <location filename="../viper_window.ui" line="2905"/>
+        <source>Hardstyle</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1350"/>
+        <source>Hip-Hop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1355"/>
+        <source>Jazz</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1360"/>
+        <source>Metal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1365"/>
+        <source>Movie</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1370"/>
+        <source>Pop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1375"/>
+        <source>R&amp;B</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1380"/>
+        <source>Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1385"/>
+        <source>Soft Bass</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1390"/>
+        <source>Vocal Booster</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1403"/>
+        <location filename="../viper_window.ui" line="2972"/>
         <source>Reset</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1397"/>
+        <location filename="../viper_window.ui" line="1455"/>
         <source>Enable Compressor</source>
-        <translation type="unfinished">Kompressor einschalten</translation>
+        <translation>Kompressor einschalten</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1404"/>
+        <location filename="../viper_window.ui" line="1462"/>
         <source>Prevent Clipping</source>
-        <translation type="unfinished">Clipping verhindern</translation>
+        <translation>Clipping verhindern</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1443"/>
+        <location filename="../viper_window.ui" line="1501"/>
         <source>Ratio</source>
-        <translation type="unfinished">Rate</translation>
+        <translation>Rate</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1475"/>
+        <location filename="../viper_window.ui" line="1533"/>
         <source>Threshold</source>
-        <translation type="unfinished">Betriebsschwelle</translation>
+        <translation>Betriebsschwelle</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1498"/>
+        <location filename="../viper_window.ui" line="1556"/>
         <source>Manual Attack</source>
-        <translation type="unfinished">Manuelle Angriffsebene</translation>
+        <translation>Manuelle Angriffsebene</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1547"/>
+        <location filename="../viper_window.ui" line="1605"/>
         <source>Manual Release</source>
-        <translation type="unfinished">Manuelle Freigabe</translation>
+        <translation>Manuelle Freigabe</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1610"/>
+        <location filename="../viper_window.ui" line="1668"/>
         <source>Manual Gain</source>
-        <translation type="unfinished">Manuelle Verstärkung</translation>
+        <translation>Manuelle Verstärkung</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1656"/>
+        <location filename="../viper_window.ui" line="1714"/>
         <source>Manual Knee Width</source>
-        <translation type="unfinished">Manuelle Flexion</translation>
+        <translation>Manuelle Flexion</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1728"/>
+        <location filename="../viper_window.ui" line="1786"/>
         <source>Automatic Mode (if enabled)</source>
-        <translation type="unfinished">Automatik (falls aktiviert)</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1740"/>
-        <source>Knee Width Multi</source>
-        <translation type="unfinished">Wendepunkt</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1769"/>
-        <source>Max Attack</source>
-        <translation type="unfinished">Max Angriff</translation>
+        <translation>Automatik (falls aktiviert)</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1798"/>
-        <source>Max Release</source>
-        <translation type="unfinished">Max Freigabe</translation>
+        <source>Knee Width Multi</source>
+        <translation>Wendepunkt</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1827"/>
-        <source>Adapt</source>
-        <translation type="unfinished">Adapt</translation>
+        <source>Max Attack</source>
+        <translation>Max Angriff</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1856"/>
-        <source>Crest</source>
-        <translation type="unfinished">Crest</translation>
+        <source>Max Release</source>
+        <translation>Max Freigabe</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1927"/>
+        <location filename="../viper_window.ui" line="1885"/>
+        <source>Adapt</source>
+        <translation>Adapt</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1914"/>
+        <source>Crest</source>
+        <translation>Crest</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="1985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Playback/Auto Gain Control&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gain Ratio: &lt;/span&gt;Gain Ratio is the speed of amplification or attenuation, the stronger, the faster the speed and the higher the final volume, the weaker, the slower the speed, the closer to the original volume. Recommended medium.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Gain: &lt;/span&gt;When the volume of the note is too small, to uplevel the sound, there may be very large magnification. The higher the value, the louder the volume. But too large will also amplify the noise within the song. Recommended 4 times.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Max Output: &lt;/span&gt;This value defines the maximum volume of the PlaybackAGC sound in decibel value, the greater the value the greater the volume, 0 dB is the maximum. In order to make the sound softer recommended -1.9 dB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="1930"/>
+        <location filename="../viper_window.ui" line="1988"/>
         <source>Auto Gain Control</source>
-        <translation type="unfinished">Automatische Lautstärkeregelung</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1942"/>
-        <source>Gain Ratio</source>
-        <translation type="unfinished">Verstärkungsrate</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="1971"/>
-        <source>Max Volume</source>
-        <translation type="unfinished">Max Lautstärke</translation>
+        <translation>Automatische Lautstärkeregelung</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="2000"/>
-        <source>Max Gain</source>
-        <translation type="unfinished">Max Verstärkung</translation>
+        <source>Gain Ratio</source>
+        <translation>Verstärkungsrate</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="2029"/>
+        <source>Max Volume</source>
+        <translation>Max Lautstärke</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="2058"/>
+        <source>Max Gain</source>
+        <translation>Max Verstärkung</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="2116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Master Gate/Limiter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to dynamically control the audio volume, to amplify or to attenuate.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Volume:&lt;/span&gt; This value defines the main output volume. Its something like a volume control.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Channel Pan:&lt;/span&gt; Output gain ratio for left and right channel.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Limit Threshold:&lt;/span&gt; This value defines the limits of waveform amplitude by the limiter, 0 dB is the maximum value. The smaller the value, the easier to experience audio frequency compression (the smaller the volume), will lose sound details, but can effectively control the final output volume. Recommended 0 dB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2061"/>
+        <location filename="../viper_window.ui" line="2119"/>
         <source>Master Volume</source>
-        <translation type="unfinished">Masterlautstärke</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="2073"/>
-        <source>Output Volume</source>
-        <translation type="unfinished">Ausgangslautstärke</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="2102"/>
-        <source>Output Pan</source>
-        <translation type="unfinished">L/R-Balance</translation>
+        <translation>Masterlautstärke</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="2131"/>
-        <source>Limiter Threshold</source>
-        <translation type="unfinished">Begrenzerschwelle</translation>
+        <source>Output Volume</source>
+        <translation>Ausgangslautstärke</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2202"/>
+        <location filename="../viper_window.ui" line="2160"/>
+        <source>Output Pan</source>
+        <translation>L/R-Balance</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="2189"/>
+        <source>Limiter Threshold</source>
+        <translation>Begrenzerschwelle</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="2260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Field Surround/Colorful Music&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It is mainly used to create sound field surround effects. The sound field can be understood as a mono field or stereo field.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Presets/Strength: &lt;/span&gt;This value defines the strength of the field surround effects. The stronger, the stereo effect will be more obvious, the sound will come from left and right sides.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Mid Image Strength:&lt;/span&gt; This value defines the central vocal intensity. More strongman sound more clear, the weaker, the more ethereal sound.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2205"/>
-        <source>Colorful Music</source>
-        <translation type="unfinished">Feldsurround</translation>
-    </message>
-    <message>
-        <location filename="../viper_window.ui" line="2228"/>
-        <source>Mid-Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../viper_window.ui" line="2263"/>
+        <source>Colorful Music</source>
+        <translation>Feldsurround</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="2286"/>
+        <source>Mid-Image</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.ui" line="2321"/>
         <source>Widening</source>
-        <translation type="unfinished">Weitung</translation>
+        <translation>Weitung</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2298"/>
+        <location filename="../viper_window.ui" line="2356"/>
         <source>Depth</source>
-        <translation type="unfinished">Tiefe</translation>
+        <translation>Tiefe</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2365"/>
-        <location filename="../viper_window.cpp" line="1267"/>
-        <location filename="../viper_window.cpp" line="1274"/>
+        <location filename="../viper_window.ui" line="2423"/>
+        <location filename="../viper_window.cpp" line="1322"/>
         <source>Slight</source>
-        <translation type="unfinished">Leicht</translation>
+        <translation>Leicht</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2370"/>
+        <location filename="../viper_window.ui" line="2428"/>
         <source>Level 1</source>
-        <translation type="unfinished">Stärke 1</translation>
+        <translation>Stärke 1</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2375"/>
+        <location filename="../viper_window.ui" line="2433"/>
         <source>Level 2</source>
-        <translation type="unfinished">Stärke 2</translation>
+        <translation>Stärke 2</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2380"/>
+        <location filename="../viper_window.ui" line="2438"/>
         <source>Level 3</source>
-        <translation type="unfinished">Stärke 3</translation>
+        <translation>Stärke 3</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2385"/>
+        <location filename="../viper_window.ui" line="2443"/>
         <source>Level 4</source>
-        <translation type="unfinished">Stärke 4</translation>
+        <translation>Stärke 4</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2390"/>
+        <location filename="../viper_window.ui" line="2448"/>
         <source>Level 5</source>
-        <translation type="unfinished">Stärke 5</translation>
+        <translation>Stärke 5</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2395"/>
+        <location filename="../viper_window.ui" line="2453"/>
         <source>Level 6</source>
-        <translation type="unfinished">Stärke 6</translation>
+        <translation>Stärke 6</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2400"/>
+        <location filename="../viper_window.ui" line="2458"/>
         <source>Level 7</source>
-        <translation type="unfinished">Stärke 7</translation>
+        <translation>Stärke 7</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2405"/>
-        <location filename="../viper_window.cpp" line="1269"/>
-        <location filename="../viper_window.cpp" line="1276"/>
+        <location filename="../viper_window.ui" line="2463"/>
+        <location filename="../viper_window.cpp" line="1324"/>
         <source>Extreme</source>
-        <translation type="unfinished">Extrem</translation>
+        <translation>Extrem</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2424"/>
+        <location filename="../viper_window.ui" line="2482"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;AnalogX&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It simulates the sound signature of pure class A amplifier, giving you richer and warmer sound.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2427"/>
+        <location filename="../viper_window.ui" line="2485"/>
         <source>Analog X</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2465"/>
+        <location filename="../viper_window.ui" line="2523"/>
         <source>Strength</source>
-        <translation type="unfinished">Stärke</translation>
+        <translation>Stärke</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2541"/>
+        <location filename="../viper_window.ui" line="2599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Spectrum Extension&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Makes your music sound lossless with enhanced high frequencies. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2544"/>
+        <location filename="../viper_window.ui" line="2602"/>
         <source>Spectrum Extend</source>
-        <translation type="unfinished">Spektrumerweiterung</translation>
+        <translation>Spektrumerweiterung</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2565"/>
+        <location filename="../viper_window.ui" line="2623"/>
         <source>Ref. Bark Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2600"/>
+        <location filename="../viper_window.ui" line="2658"/>
         <source>Bark Recontruct Lvl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2644"/>
+        <location filename="../viper_window.ui" line="2702"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Convolver&lt;/span&gt;&lt;/p&gt;&lt;p&gt;When an impulse response (IR) sample is loaded, music will show the same characteristics of the loaded sample, for example, equalizer, surround, reverberation, tube, etc.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Impulse Response: &lt;/span&gt;Select and load IR samples.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cross Channel:&lt;/span&gt; Brings audio in front of you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2647"/>
+        <location filename="../viper_window.ui" line="2705"/>
         <source>Convolver</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2668"/>
+        <location filename="../viper_window.ui" line="2726"/>
         <source>Impulse Response</source>
-        <translation type="unfinished">Impulsantwort</translation>
+        <translation>Impulsantwort</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2728"/>
+        <location filename="../viper_window.ui" line="2786"/>
         <source>Cross-Channel</source>
-        <translation type="unfinished">Crosskanal</translation>
+        <translation>Crosskanal</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2785"/>
+        <location filename="../viper_window.ui" line="2846"/>
         <source>Custom Presets</source>
-        <translation type="unfinished">Benutzerdefinierte Voreinstellungen</translation>
+        <translation>Benutzerdefinierte Voreinstellungen</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2788"/>
+        <location filename="../viper_window.ui" line="2849"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Custom Presets&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Manage custom presets and download configs by other users&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2814"/>
+        <location filename="../viper_window.ui" line="2875"/>
         <source>Settings</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2820"/>
+        <location filename="../viper_window.ui" line="2881"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Settings&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Configure this User Interface&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2840"/>
+        <location filename="../viper_window.ui" line="2907"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Other&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Load and save the currently active config, reload viper and enable context help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2866"/>
+        <location filename="../viper_window.ui" line="2933"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Master Power&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This option defines whether to enable V4L sound effects, also known as main switch.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2869"/>
+        <location filename="../viper_window.ui" line="2936"/>
         <source>Disable FX</source>
-        <translation type="unfinished">FX ausschalten</translation>
+        <translation>FX ausschalten</translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2902"/>
+        <location filename="../viper_window.ui" line="2969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reset&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Resets all properties to default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2916"/>
+        <location filename="../viper_window.ui" line="2979"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Apply&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Applies current configuration and reloads viper.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.ui" line="2919"/>
+        <location filename="../viper_window.ui" line="2982"/>
         <source>Apply</source>
-        <translation type="unfinished">Übernehmen</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="135"/>
+        <location filename="../viper_window.cpp" line="167"/>
+        <source>Reload spectrum</source>
+        <translation>Sprektrum neuladen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="170"/>
         <source>Reload viper</source>
-        <translation type="unfinished">Viper neuladen</translation>
+        <translation>Viper neuladen</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="138"/>
+        <location filename="../viper_window.cpp" line="173"/>
         <source>Driver status</source>
-        <translation type="unfinished">Treiberstatus</translation>
+        <translation>Treiberstatus</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="141"/>
+        <location filename="../viper_window.cpp" line="176"/>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="142"/>
+        <location filename="../viper_window.cpp" line="177"/>
         <source>Viper4Linux Legacy does not support this feature.
 Please upgrade to a later version of Viper4Linux
 to access this dialog (Audio4Linux version).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="145"/>
+        <location filename="../viper_window.cpp" line="180"/>
         <source>Go back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="168"/>
+        <location filename="../viper_window.cpp" line="203"/>
         <source>Load from file</source>
-        <translation type="unfinished">Lade von Datei</translation>
+        <translation>Lade von Datei</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="169"/>
+        <location filename="../viper_window.cpp" line="204"/>
         <source>Save to file</source>
-        <translation type="unfinished">Zu Datei speichern</translation>
+        <translation>Zu Datei speichern</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="171"/>
+        <location filename="../viper_window.cpp" line="206"/>
         <source>View logs</source>
-        <translation type="unfinished">Logs anzeigen</translation>
+        <translation>Logs anzeigen</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="173"/>
+        <location filename="../viper_window.cpp" line="208"/>
         <source>Context help</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontexthilfe</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="286"/>
+        <location filename="../viper_window.cpp" line="263"/>
+        <source>Bass/Clarity</source>
+        <translation>Bass/Höhen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="264"/>
+        <source>Dynamic</source>
+        <translation>Dynamik</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="265"/>
+        <source>Surround</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="266"/>
+        <source>Equalizer</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="267"/>
+        <source>Compressor</source>
+        <translation>Kompressor</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="268"/>
+        <source>Volume</source>
+        <translation>Lautstärke</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="269"/>
+        <source>Miscellaneous</source>
+        <translation>Sonstiges</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="332"/>
         <source>Viper not installed</source>
-        <translation type="unfinished"></translation>
+        <translation>Viper nicht installiert</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="287"/>
+        <location filename="../viper_window.cpp" line="333"/>
         <source>Unable to find the viper executable.
 Please make sure viper is installed and you
 are using the lastest version of gst-plugin-viperfx</source>
-        <translation type="unfinished"></translation>
+        <translation>Viper konnte nicht gefunden werden.
+Stelle sicher, dass Viper installiert ist, und die
+neueste Version von gst-plugin-viperfx installiert ist.</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="290"/>
-        <location filename="../viper_window.cpp" line="519"/>
+        <location filename="../viper_window.cpp" line="336"/>
+        <location filename="../viper_window.cpp" line="574"/>
         <source>Continue anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Trotzdem fortfahren</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="294"/>
+        <location filename="../viper_window.cpp" line="340"/>
         <source>Missing component</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende Komponente</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="295"/>
+        <location filename="../viper_window.cpp" line="341"/>
         <source>Unable to find the GStreamer viperfx plugin.
 Make sure you installed Viper4Linux correctly
 and double-check the README instructions.
 You can also run &apos;gst-inspect-1.0 viperfx&apos;
 to check if the plugin was correctly installed.</source>
-        <translation type="unfinished"></translation>
+        <translation>GStreamer viperfx plugin nicht gefunden.
+Stelle sicher, dass Viper4Linux korrekt installiert ist,
+und lese Dir nochmals die Anweisungen in der README
+durch. Du kannst auch &apos;gst-inspect-1.0 viperfx&apos; ausführen,
+um zu prüfen, ob das Plugin korrekt installiert wurde.</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="300"/>
+        <location filename="../viper_window.cpp" line="346"/>
         <source>Try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Nochmal versuchen</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="504"/>
+        <location filename="../viper_window.cpp" line="559"/>
         <source>Viper inactive</source>
-        <translation type="unfinished"></translation>
+        <translation>Viper inaktiv</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="505"/>
-        <location filename="../viper_window.cpp" line="533"/>
+        <location filename="../viper_window.cpp" line="560"/>
+        <location filename="../viper_window.cpp" line="588"/>
         <source>Unable to connect to the DBus interface.
 Please make sure viper is active and you are
 using the lastest version of gst-plugin-viperfx</source>
-        <translation type="unfinished"></translation>
+        <translation>Es konnte keine Verbindung zur DBus-Schnittstelle
+aufgebaut werden. Stelle sicher, dass Viper aktiv ist und
+die neueste Version von gst-plugin-viperfx installiert ist.</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="508"/>
+        <location filename="../viper_window.cpp" line="563"/>
         <source>Launch viper</source>
-        <translation type="unfinished"></translation>
+        <translation>Viper starten</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="515"/>
+        <location filename="../viper_window.cpp" line="570"/>
         <source>Failed to launch viper</source>
-        <translation type="unfinished"></translation>
+        <translation>Viper konnte nicht gestartet werden</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="516"/>
+        <location filename="../viper_window.cpp" line="571"/>
         <source>viper.sh has returned a non-null exit code.
 Please make sure viper is correctly installed
 and try to restart it manually</source>
-        <translation type="unfinished"></translation>
+        <translation>viper.sh gab einen Fehlercode zurück.
+Stelle sicher, dass Viper korrekt installiert ist,
+und versuche es manuell zu starten (viper start).</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="532"/>
+        <location filename="../viper_window.cpp" line="587"/>
         <source>Service not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Service nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="536"/>
+        <location filename="../viper_window.cpp" line="591"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="665"/>
+        <location filename="../viper_window.cpp" line="720"/>
         <source>&amp;Disable FX</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;FX deaktivieren</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="674"/>
+        <location filename="../viper_window.cpp" line="729"/>
         <source>&amp;Presets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.cpp" line="676"/>
-        <source>&amp;Convolver Bookmarks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.cpp" line="685"/>
-        <location filename="../viper_window.cpp" line="773"/>
-        <source>&amp;Reload Viper</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.cpp" line="689"/>
-        <location filename="../viper_window.cpp" line="777"/>
-        <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.cpp" line="693"/>
-        <source>Dynamic &amp;System Presets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.cpp" line="704"/>
-        <source>&amp;EQ Presets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../viper_window.cpp" line="719"/>
-        <source>C&amp;olorful Music Presets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Voreinstellungen</translation>
     </message>
     <message>
         <location filename="../viper_window.cpp" line="731"/>
+        <source>&amp;Convolver Bookmarks</source>
+        <translation>&amp;Convolver Lesezeichen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="740"/>
+        <location filename="../viper_window.cpp" line="828"/>
+        <source>&amp;Reload Viper</source>
+        <translation>Viper &amp;neustarten</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="744"/>
+        <location filename="../viper_window.cpp" line="832"/>
+        <source>&amp;Quit</source>
+        <translation>Ver&amp;lassen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="748"/>
+        <source>Dynamic &amp;System Presets</source>
+        <translation>Dynamic &amp;System Voreinstellungen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="759"/>
+        <source>&amp;EQ Presets</source>
+        <translation>&amp;EQ Voreinstellungen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="763"/>
+        <source>Default</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="774"/>
+        <source>C&amp;olorful Music Presets</source>
+        <translation>Felds&amp;urround Voreinstellungen</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="776"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="786"/>
         <source>ViPER &amp;Bass Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ViPER Bassmodus</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="743"/>
+        <location filename="../viper_window.cpp" line="787"/>
+        <source>Natural Bass</source>
+        <translation>Naturaler Bass</translation>
+    </message>
+    <message>
+        <location filename="../viper_window.cpp" line="798"/>
         <source>ViPER C&amp;larity Mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="851"/>
+        <location filename="../viper_window.cpp" line="906"/>
         <source>Reset Configuration</source>
-        <translation type="unfinished">Konfiguration zurücksetzen</translation>
+        <translation>Konfiguration zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="851"/>
+        <location filename="../viper_window.cpp" line="906"/>
         <source>Are you sure?</source>
-        <translation type="unfinished">Sind Sie sich sicher?</translation>
+        <translation>Sind Sie sich sicher?</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="920"/>
+        <location filename="../viper_window.cpp" line="975"/>
         <source>Load custom audio.conf</source>
-        <translation type="unfinished"></translation>
+        <translation>Load benutzerdef. audio.conf</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="940"/>
+        <location filename="../viper_window.cpp" line="995"/>
         <source>Save current audio.conf</source>
-        <translation type="unfinished">Aktuelle audio.conf speichern</translation>
+        <translation>Aktuelle audio.conf speichern</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1249"/>
-        <location filename="../viper_window.cpp" line="1256"/>
-        <location filename="../viper_window.cpp" line="1270"/>
-        <location filename="../viper_window.cpp" line="1277"/>
+        <location filename="../viper_window.cpp" line="1304"/>
+        <location filename="../viper_window.cpp" line="1311"/>
+        <location filename="../viper_window.cpp" line="1325"/>
         <source>Mode %1</source>
-        <translation type="unfinished">Modus %1</translation>
+        <translation>Modus %1</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1260"/>
+        <location filename="../viper_window.cpp" line="1315"/>
         <source>Very Slight (%1)</source>
-        <translation type="unfinished">Sehr leicht (%1)</translation>
+        <translation>Sehr leicht (%1)</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1261"/>
+        <location filename="../viper_window.cpp" line="1316"/>
         <source>Slight (%1)</source>
-        <translation type="unfinished">Leicht (%1)</translation>
+        <translation>Leicht (%1)</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1262"/>
+        <location filename="../viper_window.cpp" line="1317"/>
         <source>Moderate (%1)</source>
-        <translation type="unfinished">Moderat (%1)</translation>
+        <translation>Moderat (%1)</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1263"/>
+        <location filename="../viper_window.cpp" line="1318"/>
         <source>Extreme (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1268"/>
-        <location filename="../viper_window.cpp" line="1275"/>
+        <location filename="../viper_window.cpp" line="1323"/>
         <source>Moderate</source>
-        <translation type="unfinished">Moderat</translation>
+        <translation>Moderat</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1314"/>
+        <location filename="../viper_window.cpp" line="1362"/>
         <source>Level %1</source>
-        <translation type="unfinished">Stärke %1</translation>
+        <translation>Stärke %1</translation>
     </message>
     <message>
-        <location filename="../viper_window.cpp" line="1345"/>
+        <location filename="../viper_window.cpp" line="1393"/>
         <source>Level </source>
-        <translation type="unfinished">Stärke </translation>
+        <translation>Stärke </translation>
     </message>
 </context>
 <context>
@@ -2878,83 +2644,83 @@ Hinweise:
     <message>
         <location filename="../dialog/menueditor.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="25"/>
         <source>Available entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorhandene Einträge</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="73"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach oben</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="76"/>
         <source>Moves the selected toolbar item up</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegt das ausgewählte Element nach oben</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="79"/>
         <source>&amp;Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach &amp;oben</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="114"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach unten</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="117"/>
         <source>moves the selected toolbar item down</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegt das ausgewählte Element nach unten</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="120"/>
         <source>&amp;Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach &amp;unten</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="168"/>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="171"/>
         <source>Adds the selected menu action to the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt das ausgewählte Element zu der Leiste hinzu</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="174"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hinzufügen</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="209"/>
         <source>Remove</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="212"/>
         <source>Removes the selected item from the active toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernt das ausgewählte Element von der Leiste</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="215"/>
         <source>&amp;Del</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Löschen</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="245"/>
         <location filename="../dialog/menueditor.ui" line="248"/>
         <source>Reset</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../dialog/menueditor.ui" line="278"/>
         <source>Context menu contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontextmenü</translation>
     </message>
 </context>
 <context>
@@ -3032,7 +2798,7 @@ Hinweise:
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="161"/>
-        <location filename="../dialog/settings.ui" line="495"/>
+        <location filename="../dialog/settings.ui" line="508"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -3091,7 +2857,7 @@ Hinweise:
         <translation type="vanished">Verwende Farbpaletten</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="411"/>
+        <location filename="../dialog/settings.ui" line="424"/>
         <source>Edit</source>
         <translation>Editor</translation>
     </message>
@@ -3103,334 +2869,339 @@ Hinweise:
     <message>
         <location filename="../dialog/settings.ui" line="67"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorie</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="87"/>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Geräte</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="92"/>
         <source>Systray</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemleiste</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="96"/>
         <source>Context Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontextmenü</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="102"/>
         <source>Spectrum Analyser</source>
-        <translation type="unfinished"></translation>
+        <translation>Spektrum-Analyzer</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="106"/>
-        <location filename="../dialog/settings.ui" line="326"/>
+        <location filename="../dialog/settings.ui" line="345"/>
         <source>Design</source>
-        <translation type="unfinished"></translation>
+        <translation>Design</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="111"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="117"/>
         <source>GStreamer Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="146"/>
         <source>Configuration Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationspfad</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="297"/>
+        <location filename="../dialog/settings.ui" line="273"/>
+        <source>Driver Troubleshooting</source>
+        <translation>Treiber-Problembehebung</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="279"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not enable unless absolutely neccessary!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It may cause unintended sideeffects and should solely be used for troubleshooting your GStreamer installation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nicht aktivieren außer absolut nötig!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Es kann unvorhergesehene Nebeneffekte erzeugen und nur verwendet werden um Deine GStreamer Installation zu prüfen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="282"/>
+        <source>Disable property synchronization</source>
+        <translation>Eigenschaft-Synchronisierung deaktivieren</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="316"/>
         <source>Launch setup wizard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="343"/>
-        <source>Base theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Einrichtung starten</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="362"/>
-        <location filename="../dialog/settings.ui" line="958"/>
+        <source>Base theme</source>
+        <translation>Basis-Style</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="381"/>
+        <location filename="../dialog/settings.ui" line="951"/>
         <source>Color scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbschema</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="370"/>
-        <source>Phantom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="433"/>
+        <location filename="../dialog/settings.ui" line="446"/>
         <source>Equalizer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="439"/>
+        <location filename="../dialog/settings.ui" line="452"/>
         <source>Always display handles</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebel immer anzeigen</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="480"/>
+        <location filename="../dialog/settings.ui" line="493"/>
         <source>Default IRS Path</source>
         <translation>Standard IRS Pfad</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="505"/>
+        <location filename="../dialog/settings.ui" line="518"/>
         <source>Default Tab</source>
         <translation>Standardtab</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="511"/>
+        <location filename="../dialog/settings.ui" line="524"/>
         <source>Favorites</source>
         <translation>Favoriten</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="518"/>
+        <location filename="../dialog/settings.ui" line="531"/>
         <source>Local</source>
-        <translation type="unfinished">Lokal</translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="545"/>
-        <source>Select sink/device to be processed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="551"/>
-        <source>Automatically detect device</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokal</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="558"/>
+        <source>Select sink/device to be processed</source>
+        <translation>Ausgabegerät, welches verarbeitet werden soll, auswählen</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="564"/>
+        <source>Automatically detect device</source>
+        <translation>Gerät automatisch erkennen</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="571"/>
         <source>Manually select device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät manuell auswählen</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="570"/>
+        <location filename="../dialog/settings.ui" line="583"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="615"/>
-        <source>PulseEffects Compatibility</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="641"/>
+        <location filename="../dialog/settings.ui" line="635"/>
         <source>Reload viper</source>
-        <translation type="unfinished">Viper neuladen</translation>
+        <translation>Viper neuladen</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="661"/>
+        <source>Systray Behaviour</source>
+        <translation>Verhalten der Systemleiste</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="667"/>
-        <source>Systray Behaviour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="673"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Keines</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="680"/>
+        <location filename="../dialog/settings.ui" line="674"/>
         <source>Show tray icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintrag in der Leiste anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="681"/>
+        <source>Tray Icon</source>
+        <translation>Leisteneintrag</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="687"/>
-        <source>Tray Icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="693"/>
         <source>Start minimized on boot</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimiert nach dem Bootprozess starten</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="700"/>
+        <location filename="../dialog/settings.ui" line="694"/>
         <source>Autostart viper service</source>
-        <translation type="unfinished"></translation>
+        <translation>Viper-Service automatisch starten</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="707"/>
+        <location filename="../dialog/settings.ui" line="701"/>
         <source>Delay autostart by 5 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatischer Start durch 5 Sekunden verzögern</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="730"/>
+        <location filename="../dialog/settings.ui" line="723"/>
         <source>Systray not supported on this system</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemleiste nicht von diesem System unterstützt</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="761"/>
+        <location filename="../dialog/settings.ui" line="754"/>
         <source>Enable visualizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualisierung aktivieren</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="787"/>
+        <location filename="../dialog/settings.ui" line="780"/>
         <source>Number of bands</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Bänder</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="800"/>
+        <location filename="../dialog/settings.ui" line="793"/>
         <source> bands</source>
-        <translation type="unfinished"></translation>
+        <translation> Bänder</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="812"/>
+        <source>Minimum frequency</source>
+        <translation>Minimale Frequenz</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="819"/>
-        <source>Minimum frequency</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum frequency</source>
+        <translation>Maximale Frequenz</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="826"/>
-        <source>Maximum frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="833"/>
         <source>Audio input sink</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabegerät</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="846"/>
-        <location filename="../dialog/settings.ui" line="865"/>
+        <location filename="../dialog/settings.ui" line="839"/>
+        <location filename="../dialog/settings.ui" line="858"/>
         <source>Hz</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="894"/>
+        <location filename="../dialog/settings.ui" line="887"/>
         <source>Graph Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphtyp</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="908"/>
+        <location filename="../dialog/settings.ui" line="901"/>
         <source>Bars</source>
-        <translation type="unfinished"></translation>
+        <translation>Balken</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="913"/>
+        <location filename="../dialog/settings.ui" line="906"/>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation>Umriss</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="918"/>
+        <location filename="../dialog/settings.ui" line="911"/>
         <source>Line (gradient)</source>
-        <translation type="unfinished"></translation>
+        <translation>Linie (Farbverlauf)</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="928"/>
+        <location filename="../dialog/settings.ui" line="921"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; If the selected audio source sink is unavailable, the visualizer will automatically switch to the system default input device (e.g. internal microphone).&lt;/p&gt;&lt;p&gt;If you use the line or outline graph type, you should set the number of bands &lt;span style=&quot; font-weight:600;&quot;&gt;to at least 100&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Hinweis:&lt;/span&gt; Wenn das gewählte Eingabegerät nicht verfügbar ist, schaltet die Visualisierung automatisch zum standardmäßigen Eingabegerät um. (bspw.: internes Mikrofon).Falls Du den Linien-/Umrissgraphen auswählst, sollte die Anzahl der Bänder für ein gutes Ergebnis &lt;span style=&quot; font-weight:600;&quot;&gt;mind. 100&lt;/span&gt; betragen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="964"/>
+        <location filename="../dialog/settings.ui" line="957"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="974"/>
+        <location filename="../dialog/settings.ui" line="967"/>
         <source>Inherit from color palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Von Farbpalette erben</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="984"/>
+        <location filename="../dialog/settings.ui" line="977"/>
         <source>Display grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster anzeigen</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1008"/>
+        <location filename="../dialog/settings.ui" line="1001"/>
         <source>Advanced options</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte Optionen</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="1018"/>
+        <source>Value multiplier</source>
+        <translation>Multiplikator</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1025"/>
-        <source>Value multiplier</source>
-        <translation type="unfinished"></translation>
+        <source>Refresh interval</source>
+        <translation>Aktualisierungsrate</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1032"/>
-        <source>Refresh interval</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="1039"/>
         <source>ms</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1055"/>
+        <location filename="../dialog/settings.ui" line="1048"/>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1076"/>
+        <location filename="../dialog/settings.ui" line="1069"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recommended multiplication value: 0.15x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empfohlener Multiplikatorwert: 0.15x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1109"/>
+        <location filename="../dialog/settings.ui" line="1102"/>
         <source>GStreamer Plugin Details</source>
-        <translation type="unfinished"></translation>
+        <translation>GStreamer Plugin Details</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1123"/>
+        <location filename="../dialog/settings.ui" line="1116"/>
         <source>Is plugin installed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ist das Plugin installiert?</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="1126"/>
+        <location filename="../dialog/settings.ui" line="1143"/>
+        <location filename="../dialog/settings.ui" line="1153"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1133"/>
-        <location filename="../dialog/settings.ui" line="1150"/>
-        <location filename="../dialog/settings.ui" line="1160"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="1140"/>
         <source>Supports D-Bus IPC?</source>
-        <translation type="unfinished"></translation>
+        <translation>Unterstützt es D-Bus IPC?</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1167"/>
+        <location filename="../dialog/settings.ui" line="1160"/>
         <source>Plugin version code</source>
-        <translation type="unfinished"></translation>
+        <translation>Pluginversionscode</translation>
+    </message>
+    <message>
+        <location filename="../dialog/settings.ui" line="1170"/>
+        <source>x.x.x</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1177"/>
-        <source>x.x.x</source>
-        <translation type="unfinished"></translation>
+        <source>Plugin install path</source>
+        <translation>Plugininstallationspfad</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1184"/>
-        <source>Plugin install path</source>
-        <translation type="unfinished"></translation>
+        <location filename="../dialog/settings.ui" line="1187"/>
+        <source>/xxx/xxx</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1194"/>
-        <source>/xxx/xxx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog/settings.ui" line="1201"/>
         <source>Plugin version</source>
-        <translation type="unfinished"></translation>
+        <translation>Pluginversion</translation>
     </message>
     <message>
         <source>Filesystem</source>
         <translation type="vanished">Local</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1243"/>
+        <location filename="../dialog/settings.ui" line="1236"/>
         <source>View Github Repo</source>
         <translation>GitHub Repo anzeigen</translation>
     </message>
     <message>
-        <location filename="../dialog/settings.ui" line="1263"/>
+        <location filename="../dialog/settings.ui" line="1256"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

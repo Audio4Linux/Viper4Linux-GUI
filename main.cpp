@@ -26,6 +26,8 @@
 #include "crashhandler/stacktrace.h"
 #include <sys/stat.h>
 #include <sys/time.h>
+
+#include <config/appconfigwrapper.h>
 void crash_handled(int fd){
     safe_printf(STDERR_FILENO, "Done! Crash report saved to /tmp/viper-gui.\n");
 }
@@ -48,6 +50,14 @@ int main(int argc, char *argv[])
     gst_init(&argc, &argv);
 
     QApplication a(argc, argv);
+    auto* appConf = new AppConfigWrapper();
+    appConf->loadAppConfig();
+    auto* translator = new QTranslator();
+    translator->load("lang_" + appConf->getLanguage(), QLatin1String(":/translations"));
+    appConf->deleteLater();
+
+    QApplication::installTranslator(translator);
+
     QApplication::setFallbackSessionManagementEnabled(false);
     QCommandLineParser parser;
     parser.setApplicationDescription("Graphical User Interface for Viper4Linux2");

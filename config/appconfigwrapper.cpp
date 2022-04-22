@@ -1,6 +1,7 @@
 #include "appconfigwrapper.h"
 
 #include <QDir>
+#include <QTranslator>
 #include <QDebug>
 
 #include "misc/stylehelper.h"
@@ -58,7 +59,8 @@ QString AppConfigWrapper::getPath(){
 #endif
 void AppConfigWrapper::setColorpalette(const QString& s){
     appconf->setValue("theme.palette",QVariant(s));
-    m_stylehelper->SetStyle();
+    if(m_stylehelper != nullptr)
+        m_stylehelper->SetStyle();
     emit styleChanged();
     saveAppConfig();
 }
@@ -67,7 +69,8 @@ QString AppConfigWrapper::getColorpalette(){
 }
 void AppConfigWrapper::setCustompalette(const QString& s){
     appconf->setValue("theme.palette.custom",QVariant(s));
-    m_stylehelper->SetStyle();
+    if(m_stylehelper != nullptr)
+        m_stylehelper->SetStyle();
     emit styleChanged();
     saveAppConfig();
 }
@@ -77,7 +80,8 @@ QString AppConfigWrapper::getCustompalette(){
 
 void AppConfigWrapper::setWhiteIcons(bool b){
     appconf->setValue("theme.icons.white",QVariant(b));
-    m_stylehelper->SetStyle();
+    if(m_stylehelper != nullptr)
+        m_stylehelper->SetStyle();
     emit styleChanged();
     saveAppConfig();
 }
@@ -124,7 +128,8 @@ void AppConfigWrapper::setConv_DefTab(int mode){
 }
 void AppConfigWrapper::setTheme(const QString& thm){
     appconf->setValue("theme.name",QVariant(thm));
-    m_stylehelper->SetStyle();
+    if(m_stylehelper != nullptr)
+        m_stylehelper->SetStyle();
     emit styleChanged();
     saveAppConfig();
 }
@@ -134,6 +139,21 @@ QString AppConfigWrapper::getTheme(){
         name = "Fusion";
         appconf->setValue("theme.name",name);
         emit styleChanged();
+    }
+    return name;
+}
+void AppConfigWrapper::setLanguage(const QString& thm){
+    appconf->setValue("language",QVariant(thm));
+    saveAppConfig();
+    emit languageChanged();
+}
+QString AppConfigWrapper::getLanguage(){
+    QString name = appconf->getString("language");
+    if(name.isEmpty()){
+        name = "en";
+        appconf->setValue("language", name);
+        saveAppConfig();
+        emit languageChanged();
     }
     return name;
 }
