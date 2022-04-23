@@ -107,6 +107,7 @@ sudo wget -O /usr/share/pixmaps/viper-gui.png https://raw.githubusercontent.com/
 ![GIF](/screenshots/eq.gif)
 
 ## Credits
+* [Chinese translation by Hope2333](https://github.com/Hope2333)
 * [Material Icons](https://material.io/tools/icons/)
 * [QSS Stylesheets by GTRONICK (modified by @ThePBone)](https://github.com/GTRONICK/QSS)
 * [Viper4Linux by noahbliss](https://github.com/noahbliss)
