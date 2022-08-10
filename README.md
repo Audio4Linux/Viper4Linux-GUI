@@ -5,6 +5,12 @@ Official UI for Viper4Linux [https://github.com/Audio4Linux/Viper4Linux](https:/
 * Telegram: @ThePBone
 * Supports both Viper4Linux2 and legacy Viper4Linux
 
+## Repository status
+
+This project will likely not receive any more feature updates, as my focus has shifted towards [JamesDSP for Linux](https://github.com/Audio4Linux/JDSP4Linux).
+
+[JDSP](https://github.com/Audio4Linux/JDSP4Linux) is a **free & open-source audio effects processor** with more DSP algorithms that are actively developed. It also includes an updated GUI with more features, such as AutoEQ integration, a scripting engine for custom audio effects, and **full Pipewire support**.
+
 ## Installation
 
 * [Arch](#arch)
