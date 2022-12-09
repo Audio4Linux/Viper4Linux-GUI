@@ -64,14 +64,6 @@ Notices:
     </message>
 </context>
 <context>
-    <name>CategoryFragment</name>
-    <message>
-        <source>Dialog</source>
-        <translatorcomment>?对话</translatorcomment>
-        <translation type="vanished">对话</translation>
-    </message>
-</context>
-<context>
     <name>Convolver</name>
     <message>
         <location filename="../dialog/convolver.ui" line="20"/>
@@ -159,80 +151,6 @@ Notices:
     </message>
 </context>
 <context>
-    <name>ExpandableItemPanel</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>ViperFX</source>
-        <translation type="vanished">ViperFX</translation>
-    </message>
-    <message>
-        <source>Installed</source>
-        <translation type="vanished">已安装</translation>
-    </message>
-    <message>
-        <source>View all packages</source>
-        <translation type="vanished">查看所有包</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="vanished">添加</translation>
-    </message>
-    <message>
-        <source>Linux port of Viper</source>
-        <translation type="vanished">Viper 的 Linux 端口</translation>
-    </message>
-    <message>
-        <source>Custom UI included</source>
-        <translation type="vanished">包括自定义用户界面</translation>
-    </message>
-</context>
-<context>
-    <name>FilterSelectionDialog</name>
-    <message>
-        <source>Add new element</source>
-        <translation type="vanished">添加新元素</translation>
-    </message>
-    <message>
-        <source>Discover</source>
-        <translation type="vanished">发现</translation>
-    </message>
-    <message>
-        <source>Failed to fetch contents from GitHub</source>
-        <translation type="vanished">无法从 GitHub 获取内容</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translation type="vanished">重试</translation>
-    </message>
-    <message>
-        <source>Local plugins</source>
-        <translation type="vanished">本地插件</translation>
-    </message>
-    <message>
-        <source>Filter by name or description</source>
-        <translation type="vanished">按名称或描述过滤</translation>
-    </message>
-    <message>
-        <source> Show mono plugins</source>
-        <translation type="vanished"> 显示单声道插件</translation>
-    </message>
-    <message>
-        <source> Show unsupported plugins</source>
-        <translation type="vanished"> 显示不支持的插件</translation>
-    </message>
-    <message>
-        <source>Reset search</source>
-        <translation type="vanished">重置搜索</translation>
-    </message>
-    <message>
-        <source>Categories...</source>
-        <translation type="vanished">类别...</translation>
-    </message>
-</context>
-<context>
     <name>FirstLaunchWizard</name>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="20"/>
@@ -258,7 +176,8 @@ Notices:
         <source>Thank you for installing this app!
 However, before you can begin playing around with Viper4Linux, we&apos;ll need to make some adjustments in order to ensure the best possible experience with Viper.</source>
         <translation>感谢您安装此应用程序！
-但是，在您开始使用 Viper4Linux 之前，我们需要进行一些调整以确保使用 Viper 获得最佳体验。</translation>
+但是在您使用 Viper4Linux 之前，我们需要进行一些调整以确保您使用 ViperFX 时获得最佳体验。
+ #中文翻译v1.2preview</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="209"/>
@@ -272,8 +191,8 @@ However, before you can begin playing around with Viper4Linux, we&apos;ll need t
 Make sure you installed Viper4Linux correctly and double-check the README instructions.
 You can also run &apos;gst-inspect-1.0 viperfx&apos; to check if the plugin was correctly installed.</source>
         <translation>找不到 GStreamer viperfx 插件。
-确保您正确安装了 Viper4Linux 并仔细检查 README 说明。
-您还可以运行“gst-inspect-1.0 viperfx”来检查插件是否安装正确。</translation>
+请确保您正确安装了 Viper4Linux 并仔细检查 README 说明。
+您还可以运行“gst-inspect-1.0 viperfx”来检查插件是否正确安装。</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="309"/>
@@ -288,19 +207,19 @@ You can also run &apos;gst-inspect-1.0 viperfx&apos; to check if the plugin was 
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="472"/>
         <source>Get Help on Telegram</source>
-        <translation>在Telegram获取帮助</translation>
+        <translation>去Telegram获取帮助</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="492"/>
         <source>Old version detected</source>
-        <translation>驱动程序故障排除</translation>
+        <translation>驱动版本排查</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="509"/>
         <source>It looks like you installed the legacy version of the Viper4Linux GStreamer plugin driver.
 While this GUI is still backward-compatible, I recommend you to upgrade to the Audio4Linux version in order to make use of all new features and optimizations.</source>
-        <translation>看起来您安装了旧版 Viper4Linux GStreamer 插件驱动程序。
-虽然这个 GUI 仍然向后兼容，但我建议您升级到 Audio4Linux 版本，以便使用所有新功能和优化。</translation>
+        <translation>您似乎安装了旧版 Viper4Linux GStreamer 驱动程序插件。
+虽然这个 GUI 仍然向后兼容，但我建议您升级到 Audio4Linux 的版本，使产品的功能和优化更完善。</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="604"/>
@@ -310,7 +229,7 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="679"/>
         <source>How to upgrade?</source>
-        <translation>如何升级？</translation>
+        <translation>怎么升级？</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="783"/>
@@ -321,11 +240,6 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
         <location filename="../dialog/firstlaunchwizard.ui" line="1231"/>
         <source>Auto-detect output device</source>
         <translation>自动检测输出设备</translation>
-    </message>
-    <message>
-        <source>Hold on!</source>
-        <translatorcomment>Hold on!（机翻）</translatorcomment>
-        <translation type="vanished">坚持，稍等！</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="1660"/>
@@ -345,17 +259,17 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="2212"/>
         <source>Systray Mode</source>
-        <translation>    系统托盘模式</translation>
+        <translation>    托盘图标</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="2660"/>
         <source>Disable systray mode</source>
-        <translation>不显示系统托盘</translation>
+        <translation>隐藏（不推荐）</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="3086"/>
         <source>Show icon in traybar</source>
-        <translation>在托盘栏中显示图标</translation>
+        <translation>显示图标</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="3111"/>
@@ -375,7 +289,7 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="4052"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation>完成！</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="4070"/>
@@ -386,13 +300,13 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="4100"/>
         <source>You&apos;re good to go! You can change any choice you just made in the settings section. Check it out for further customization options. Visit our Telegram community for support and updates!</source>
-        <translatorcomment>机翻调整：你可以離開了！您可以更改您剛剛在設置部分所做的任何選擇。查看更多自定義選項。訪問我們的電報社區以獲得支持和更新！</translatorcomment>
-        <translation>你现在可以离开了！ 您可以更改您刚刚在设置部分所做的任何选择。 查看更多自定义选项。 访问我们的Telegram社区以获得支持和更新！</translation>
+        <translation>好啦，您现在可以离开向导了♪
+您可以去设置更改更多的设定与查看更多自定义选项。 还可以去访问我们的Telegram社区以获得支持和更新！</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.ui" line="4181"/>
         <source>Telegram</source>
-        <translation>Telegram</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.cpp" line="80"/>
@@ -402,8 +316,7 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     <message>
         <location filename="../dialog/firstlaunchwizard.cpp" line="80"/>
         <source>Still no luck. No GStreamer plugin named &apos;viperfx&apos; has been found!</source>
-        <translatorcomment>仍然没有运气。 没有找到名为“viperfx”的 GStreamer 插件！</translatorcomment>
-        <translation>很遗憾，找不到名为“viperfx”的 GStreamer 插件！</translation>
+        <translation>很抱歉，找不到名为“viperfx”的 GStreamer 插件！</translation>
     </message>
     <message>
         <location filename="../dialog/firstlaunchwizard.cpp" line="203"/>
@@ -420,49 +333,11 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     </message>
 </context>
 <context>
-    <name>LinkPanel</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>View all installed plugins</source>
-        <translation type="vanished">查看所有已安装的插件</translation>
-    </message>
-</context>
-<context>
     <name>LogDlg</name>
     <message>
         <location filename="../dialog/logdlg.cpp" line="43"/>
         <source>&lt;Failed to open &apos;%1&apos;&gt;</source>
         <translation>&lt;未能打开 &apos;%1&apos;&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>MainWindow</name>
-    <message>
-        <source>MainWindow</source>
-        <translation type="vanished">主窗口</translation>
-    </message>
-    <message>
-        <source>Load state</source>
-        <translation type="vanished">负载状态</translation>
-    </message>
-    <message>
-        <source>Dump state</source>
-        <translation type="vanished">转储状态</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">删除</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="vanished">添加</translation>
-    </message>
-    <message>
-        <source>No plugin selected</source>
-        <translation type="vanished">未选择插件</translation>
     </message>
 </context>
 <context>
@@ -473,43 +348,6 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
         <location filename="../misc/overlaymsgproxy.h" line="29"/>
         <source>Close</source>
         <translation>关闭</translation>
-    </message>
-</context>
-<context>
-    <name>PackageListDiscover</name>
-    <message>
-        <source>Available packages</source>
-        <translation type="vanished">可用包</translation>
-    </message>
-    <message>
-        <source>Don&apos;t forget to restart this app after installing a new plugin!</source>
-        <translation type="vanished">安装新插件后不要忘记重新启动此应用程序！</translation>
-    </message>
-</context>
-<context>
-    <name>PackageTextView</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Frame</translation>
-    </message>
-    <message>
-        <source>Arch (AUR)</source>
-        <translation type="vanished">Arch (AUR)</translation>
-    </message>
-    <message>
-        <source>yay -S gst-plugin-viperfx</source>
-        <translation type="vanished">yay -S gst-plugin-viperfx</translation>
-    </message>
-</context>
-<context>
-    <name>PanelCarousel</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>Featured</source>
-        <translation type="vanished">精选</translation>
     </message>
 </context>
 <context>
@@ -722,49 +560,6 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
         <location filename="../dialog/presetdlg.cpp" line="526"/>
         <source>Downloading Config...</source>
         <translation>正在下载配置...</translation>
-    </message>
-</context>
-<context>
-    <name>PulseeffectsCompatibility</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">脉冲效果设置向导</translation>
-    </message>
-    <message>
-        <source>Next &gt;</source>
-        <translation type="vanished">下一个 &gt;</translation>
-    </message>
-    <message>
-        <source>Select your headphones</source>
-        <translation type="vanished">选择您的耳机或扬声器</translation>
-    </message>
-    <message>
-        <source>In order to use PulseEffects along with Viper, you&apos;ll need to perform a few adjustements. Please choose the desired output sink, your headphones or speaker are connected to. Make sure you haven&apos;t selected &apos;PulseEffects_*&apos; as your output device location.</source>
-        <translation type="vanished">为了使 PulseEffects 与 Viper 能够一起使用，您需要进行一些调整： 请选择所需的输出接收器，确保您的耳机或扬声器已连接到设备上且您没有选择“PulseEffects_*”作为输出设备。</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>PulseEffects configuration</source>
-        <translation type="vanished">脉冲效果配置</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;1. Start PulseEffects and open the settings menu. Then switch to the &apos;Pulseaudio&apos; tab and select the speaker icon.&lt;/p&gt;&lt;p&gt;2. Disable the &apos;Use default&apos; button and select the same output device/sink you chose for Viper just now.&lt;/p&gt;&lt;p&gt;3. You might need to restart PulseEffects for the changes to take effect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;1. 启动脉冲效果并打开设置菜单。 然后切换到“Pulseaudio”选项卡并选择扬声器图标。&lt;/p&gt;&lt;p&gt;2. 禁用“使用默认”按钮并选择您刚才为 Viper 选择的相同输出设备/接收器。&lt;/p&gt;&lt;p&gt;3. 您可能需要重新启动脉冲效果才能使更改生效。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">关闭</translation>
-    </message>
-    <message>
-        <source>Done!</source>
-        <translation type="vanished">完毕！</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PulseEffects and Viper should now be set up correctly!&lt;/p&gt;&lt;p&gt;Keep in mind that you will have to restart Viper after launching/terminating PulseEffects (and the other way around).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PulseEffects 和 Viper 现在应该已正确设置！&lt;/p&gt;&lt;p&gt;请记住，您必须在启动/终止 PulseEffects 后重新启动 Viper（反之亦然）。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1045,375 +840,6 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
     </message>
 </context>
 <context>
-    <name>QtBoolEdit</name>
-    <message>
-        <source>True</source>
-        <translation type="vanished">对</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="vanished">错</translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolPropertyManager</name>
-    <message>
-        <source>True</source>
-        <translation type="vanished">对</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="vanished">错</translation>
-    </message>
-</context>
-<context>
-    <name>QtCharEdit</name>
-    <message>
-        <source>Clear Char</source>
-        <translation type="vanished">清除字符</translation>
-    </message>
-</context>
-<context>
-    <name>QtColorEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QtColorPropertyManager</name>
-    <message>
-        <source>Red</source>
-        <translation type="vanished">红</translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="vanished">绿</translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="vanished">蓝</translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="vanished">Alpha</translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="vanished">箭头</translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="vanished">向上箭头</translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="vanished">交叉</translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="vanished">等待</translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="vanished">光束</translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="vanished">垂直尺寸</translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="vanished">水平尺寸</translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="vanished">反斜杠</translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="vanished">斜杠</translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="vanished">全部尺寸</translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="vanished">空白</translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="vanished">垂直分割</translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="vanished">水平分割</translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="vanished">指向</translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="vanished">禁止</translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="vanished">舒张</translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="vanished">收缩</translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translatorcomment>这是啥</translatorcomment>
-        <translation type="vanished">？？？</translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="vanished">忙</translation>
-    </message>
-</context>
-<context>
-    <name>QtFontEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="vanished">选择字体</translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="vanished">系列</translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="vanished">字体大小</translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="vanished">粗体</translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="vanished">斜体</translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="vanished">下画线</translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="vanished">删除线</translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="vanished">字距調整</translation>
-    </message>
-</context>
-<context>
-    <name>QtFractionPropertyManager</name>
-    <message>
-        <source>%1/%2</source>
-        <translation type="vanished">%1/%2</translation>
-    </message>
-    <message>
-        <source>Numerator</source>
-        <translation type="vanished">分子</translation>
-    </message>
-    <message>
-        <source>Denominator</source>
-        <translation type="vanished">分母</translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
-        <translation type="vanished">清除快捷方式</translation>
-    </message>
-</context>
-<context>
-    <name>QtLocalePropertyManager</name>
-    <message>
-        <source>%1, %2</source>
-        <translation type="vanished">%1, %2</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation type="vanished">Language（语言）</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="vanished">国家</translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="vanished">(%1, %2)</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="vanished">(%1, %2)</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="vanished">[%1, %2, %3] (%4)</translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="vanished">[%1, %2]</translation>
-    </message>
-</context>
-<context>
-    <name>QtRectFPropertyManager</name>
-    <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">宽度</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">高度</translation>
-    </message>
-</context>
-<context>
-    <name>QtRectPropertyManager</name>
-    <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">宽度</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">高度</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizeFPropertyManager</name>
-    <message>
-        <source>%1 x %2</source>
-        <translation type="vanished">%1 x %2</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">宽度</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">高度</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="vanished">&lt;无效&gt;</translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="vanished">[%1, %2, %3, %4]</translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="vanished">横向政策</translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="vanished">纵向政策</translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="vanished">水平拉伸</translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="vanished">垂直拉伸</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePropertyManager</name>
-    <message>
-        <source>%1 x %2</source>
-        <translation type="vanished">%1 x %2</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">宽度</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">高度</translation>
-    </message>
-</context>
-<context>
-    <name>QtTreePropertyBrowser</name>
-    <message>
-        <source>Property</source>
-        <translation type="vanished">财产</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">价值</translation>
-    </message>
-</context>
-<context>
     <name>SettingsDlg</name>
     <message>
         <location filename="../dialog/settingsdlg.cpp" line="64"/>
@@ -1504,16 +930,6 @@ While this GUI is still backward-compatible, I recommend you to upgrade to the A
         <location filename="../dialog/settingsdlg.cpp" line="109"/>
         <source>Custom</source>
         <translation>风俗</translation>
-    </message>
-    <message>
-        <source>Restart required</source>
-        <translation type="vanished">需要重启</translation>
-    </message>
-    <message>
-        <source>Please restart this application to make sure all changes are applied correctly.
-Press &apos;OK&apos; to quit or &apos;Cancel&apos; if you want to continue without a restart.</source>
-        <translation type="vanished">请重新启动此应用程序以确保正确应用所有更改。
-如果您想在不重新启动的情况下继续，请按“确定”退出或“取消”。</translation>
     </message>
     <message>
         <location filename="../dialog/settingsdlg.cpp" line="162"/>
@@ -1627,7 +1043,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="26"/>
         <source>Viper4Linux GUI</source>
-        <translation>蝰蛇音效 [ Viper4Linux GUI ]    翻译[v1.1pre]by幽零小喵</translation>
+        <translation>蝰蛇音效 [ Viper4Linux GUI ]</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="95"/>
@@ -1693,7 +1109,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="291"/>
         <source>Tube Simulator</source>
-        <translation>电子管模拟器</translation>
+        <translation>电子管模拟器（6N1J）</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="318"/>
@@ -1709,7 +1125,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="341"/>
         <source>Clarity Mode</source>
-        <translation>清晰模式</translation>
+        <translation>清晰处理模式</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="369"/>
@@ -1728,7 +1144,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="386"/>
         <source>Clarity Level</source>
-        <translation>清晰度等级</translation>
+        <translation>清晰度</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="418"/>
@@ -1745,7 +1161,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
         <location filename="../viper_window.ui" line="886"/>
         <location filename="../viper_window.ui" line="962"/>
         <source>Level</source>
-        <translation>级别</translation>
+        <translation>效果级别</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="498"/>
@@ -1783,14 +1199,14 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
         <location filename="../viper_window.ui" line="629"/>
         <location filename="../viper_window.ui" line="2410"/>
         <source>Presets</source>
-        <translation>预设</translation>
+        <translation>设备种类预设</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="637"/>
         <location filename="../viper_window.ui" line="2418"/>
         <location filename="../viper_window.ui" line="2772"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>               -=选择=-</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="642"/>
@@ -1913,7 +1329,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="872"/>
         <source>Headphone Engine</source>
-        <translation>耳机引擎</translation>
+        <translation>VHS+</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="942"/>
@@ -1929,7 +1345,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="1025"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Reverbation&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It uses mathematical methods to simulate the environmental feeling sensation. For example, a song can be felt playing inside the auditorium, living room, bathroom, and so on.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Size:&lt;/span&gt; This value defines the virtual environment area size. The larger the value, the sound is wider and more echoes.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Room Width: &lt;/span&gt;This value defines the width of the room above, in meters. Assumed that the above room size is 100 square meters, here to set a width of 14 meters, then the length of the room will be 7.14 m. Therefore, the room size and width defines the aspect ratio of the virtual environment. The larger the value, the sound coming from both sides will felt more apparent.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Damping Factor:&lt;/span&gt; This value defines the humidity of air in the above virtual environment; the moisture vapor in the air will easily absorb the echoes. So the bigger this value, the fewer echoes heard.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wet Signal:&lt;/span&gt; This value defines the volume of the simulated environment effect.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dry Signal: &lt;/span&gt;This value defines the volume of the original sound.&lt;/p&gt;&lt;p&gt;For environments with low air humidity such as living room, auditorium, and other indoor environments, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​from 0 to 20, the reverb signal values ​​20 to 50, the proportion of the original signal to take value of about 50.&lt;br/&gt;For environments with high air humidity such as bathroom and other indoor environments that contains a lot of moisture, you can use room size and sound field to define the area of ​​the virtual environment, water vapor content values ​​of 50 to 100, the reverb signal values ​​40 to 80, the proportion of the original signal value of about 50.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;混响&lt;/span&gt;&lt;/p&gt;&lt;p&gt;使用数学方法模拟环境感觉的感觉。例如，可以感觉到在礼堂、客厅、浴室等场所播放歌曲。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;房间大小：&lt;/span&gt; 这个value 定义了虚拟环境区域的大小。数值越大，声音越宽，回声越多。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;房间宽度：&lt;/span&gt;这个值定义了上面房间的宽度，以米为单位。假设以上房间面积为100平方米，这里设置宽度为14米，那么房间长度为7.14米。因此，房间大小和宽度决定了虚拟环境的纵横比。数值越大，感觉两边发出的声音越明显。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;阻尼系数：&lt;/span&gt; 这个数值定义了空气的湿度在上述虚拟环境中；空气中的水汽很容易吸收回波。所以这个值越大，听到的回声越少。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wet Signal:&lt;/span&gt;这个值定义了模拟环境效果的音量。&lt; /p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;干信号：&lt;/span&gt;此值定义原始声音的音量。&lt;/p&gt;&lt;p&gt;对于空气湿度较低的环境，例如作为客厅、礼堂等室内环境，可以根据房间大小和声场来定义虚拟环境的面积，水汽含量值从0到20，混响信号值从20到50 ，原始信号的比例取值约为50。&lt;br/&gt;对于空气湿度较高的环境，如浴室等室内湿度较大的环境，可以使用房间大小和声场来定义区域虚拟环境中，水汽含量值50~100，混响信号值40~80，占原始信号值的比例约为50。&lt;/p&gt;&lt;/body&gt;&lt;/html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;混响&lt;/span&gt;&lt;/p&gt;&lt;p&gt;使用数学方法模拟环境感觉的感觉。例如，可以感觉到在礼堂、客厅、浴室等场所播放歌曲。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;房间大小：&lt;/span&gt; 这个值定义了虚拟环境区域的大小。数值越大，声音越宽，回声越多。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;声场大小：&lt;/span&gt;这个值定义了上面房间的宽度，以米为单位。假设以上房间面积为100平方米，这里设置宽度为14米，那么房间长度为7.14米。因此，房间大小和宽度决定了虚拟环境的纵横比。数值越大，感觉两边发出的声音越明显。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;阻尼系数：&lt;/span&gt; 这个数值定义了空气的湿度在上述虚拟环境中；空气中的水汽很容易吸收回波。所以这个值越大，听到的回声越少。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;湿信号（混响信号）：&lt;/span&gt;这个值定义了模拟环境效果的音量。&lt; /p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;干信号（原始信号）：&lt;/span&gt;此值定义原始声音的音量。&lt;/p&gt;&lt;p&gt;对于空气湿度较低的环境，例如作为客厅、礼堂等室内环境，可以根据房间大小和声场来定义虚拟环境的面积，水汽含量值从0到20，混响信号值从20到50 ，原始信号的比例取值约为50。&lt;br/&gt;对于空气湿度较高的环境，如浴室等室内湿度较大的环境，可以使用房间大小和声场来定义区域虚拟环境中，水汽含量值50~100，混响信号值40~80，占原始信号值的比例约为50。&lt;/p&gt;&lt;/body&gt;&lt;/html &gt;</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1028"/>
@@ -1944,12 +1360,12 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="1089"/>
         <source>Room Width</source>
-        <translation>房间宽度</translation>
+        <translation>声场大小</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1124"/>
         <source>Room Damp</source>
-        <translation>房间潮湿度</translation>
+        <translation>阻尼系数</translation>
     </message>
     <message>
         <location filename="../viper_window.ui" line="1164"/>
@@ -2367,7 +1783,7 @@ This prevents GLava to switch to another audio sink, while V4L is restarting.</s
     <message>
         <location filename="../viper_window.ui" line="2982"/>
         <source>Apply</source>
-        <translation>申请</translation>
+        <translation>应用</translation>
     </message>
     <message>
         <location filename="../viper_window.cpp" line="167"/>
@@ -2878,12 +2294,12 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="180"/>
         <source>Fix GLava sink switching</source>
-        <translation>修复 GLava 接收器切换</translation>
+        <translation>修复 GLava 的“接收器切换”</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="142"/>
         <source>Language</source>
-        <translation type="unfinished">Language（语言）</translation>
+        <translation>Language（语言）</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="220"/>
@@ -2893,17 +2309,17 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="238"/>
         <source>Apply automatically</source>
-        <translation>自动申请</translation>
+        <translation>自动应用效果</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="259"/>
         <source>Mouse release</source>
-        <translation>鼠标释放</translation>
+        <translation>修改后立即反应</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="272"/>
         <source>Instant</source>
-        <translation>马上</translation>
+        <translation>随时</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="77"/>
@@ -2918,7 +2334,7 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="82"/>
         <source>Convolver</source>
-        <translation>卷积器</translation>
+        <translation>卷积器（脉冲反馈处理）</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="67"/>
@@ -2962,10 +2378,6 @@ and try to restart it manually</source>
         <translation>GStreamer 插件</translation>
     </message>
     <message>
-        <source>Configuration Path</source>
-        <translation type="vanished">配置路径</translation>
-    </message>
-    <message>
         <location filename="../dialog/settings.ui" line="280"/>
         <source>Driver Troubleshooting</source>
         <translation>驱动程序故障排除</translation>
@@ -2973,7 +2385,7 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="286"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not enable unless absolutely neccessary!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;It may cause unintended sideeffects and should solely be used for troubleshooting your GStreamer installation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;除非绝对必要，否则不要启用！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;它可能会导致意想不到的副作用并且只能用于 GStreamer 安装进行故障排除。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;请不要顺便启用！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;用于对 GStreamer 安装进行故障排除，启用可能会导致出现严重问题。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="289"/>
@@ -2995,10 +2407,6 @@ and try to restart it manually</source>
         <location filename="../dialog/settings.ui" line="958"/>
         <source>Color scheme</source>
         <translation>配色方案</translation>
-    </message>
-    <message>
-        <source>Phantom</source>
-        <translation type="vanished">幻影</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="453"/>
@@ -3051,10 +2459,6 @@ and try to restart it manually</source>
         <translation>设备</translation>
     </message>
     <message>
-        <source>PulseEffects Compatibility</source>
-        <translation type="vanished">脉冲效果兼容性</translation>
-    </message>
-    <message>
         <location filename="../dialog/settings.ui" line="642"/>
         <source>Reload viper</source>
         <translation>刷新蝰蛇设备</translation>
@@ -3097,7 +2501,7 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="730"/>
         <source>Systray not supported on this system</source>
-        <translation>此系统不支持系统托盘XP</translation>
+        <translation>此系统不支持系统托盘（XP</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="761"/>
@@ -3183,7 +2587,7 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="1025"/>
         <source>Value multiplier</source>
-        <translation>增值乘数</translation>
+        <translation>增益倍数值</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1032"/>
@@ -3203,7 +2607,7 @@ and try to restart it manually</source>
     <message>
         <location filename="../dialog/settings.ui" line="1076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recommended multiplication value: 0.15x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;推荐乘法值：0.15倍&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;推荐增益倍数值为：0.15倍&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../dialog/settings.ui" line="1109"/>
