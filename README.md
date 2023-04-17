@@ -39,7 +39,7 @@ yay -S viper4linux-gui
 
 Add my PPA repository if you haven't already:
 ```bash
-curl -s --compressed "https://thepbone.github.io/PPA-Repository/KEY.gpg" | sudo apt-key add -
+curl -s --compressed "https://thepbone.github.io/PPA-Repository/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/thepbone_ppa.gpg
 sudo curl -s --compressed -o /etc/apt/sources.list.d/thepbone_ppa.list "https://thepbone.github.io/PPA-Repository/thepbone_ppa.list"
 sudo apt update
 ```
