@@ -107,6 +107,7 @@ FORMS += \
 
 TRANSLATIONS += $$PWD/translations/lang_en.ts \
                 $$PWD/translations/lang_de.ts \
+                $$PWD/translations/lang_pt_BR.ts \
                 $$PWD/translations/lang_zh_CN.ts \
                 $$PWD/translations/lang_zh_HK.ts
 
