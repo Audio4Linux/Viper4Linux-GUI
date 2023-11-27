@@ -110,6 +110,7 @@ SettingsDlg::SettingsDlg(ViperWindow* mainwin,QWidget *parent) :
 
     ui->languageSelect->addItem("English", "en");
     ui->languageSelect->addItem("German", "de");
+    ui->languageSelect->addItem("Brazilian Portuguese", "pt_BR");
     ui->languageSelect->addItem("Simplified Chinese", "zh_CN");
     ui->languageSelect->addItem("Traditional Chinese (Hong Kong)", "zh_HK");
 
