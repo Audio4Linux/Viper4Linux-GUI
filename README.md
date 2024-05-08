@@ -62,7 +62,7 @@ This GUI requires the following dependencies:
 
 Dependencies for Debian-based distros:
 ```bash
-sudo apt install libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev
+sudo apt install libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev libpulse-dev
 sudo apt install qtbase5-dev qtmultimedia5-dev libqt5svg5-dev  
 sudo apt install libqt5core5a libqt5dbus5 libqt5gui5 libqt5multimedia5 libqt5svg5 libqt5xml5 libqt5network5
 ```
